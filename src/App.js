@@ -6,6 +6,9 @@ import MainRoute from "./Components/Commons/MainRoute";
 import Login from "./Components/Login";
 import Sidebar from './Components/Commons/Sidebar';
 import Dashboard from './Components/Commons/Dashboard';
+import Mineria from './Components/Mineria/Mineria';
+import Tickets from './Components/Mineria/Tickets/Tickets'
+import DetailsTicket from './Components/Mineria/Tickets/DetailsTicket';
 
 const App = (props) => {
 
@@ -26,6 +29,9 @@ const App = (props) => {
               </Route>
               <Route >
                 <Route exact path="/dashboard" element={<Dashboard />} />
+                <Route exact path='/mineria' element={<Mineria />} />
+                <Route exact path='/tickets' element={<Tickets />} />
+                <Route exact path='/tickets/:id' element={<DetailsTicket />} />
               </Route>
             </Routes>
           </Fragment>

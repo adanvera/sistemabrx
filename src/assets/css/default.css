@@ -254,3 +254,59 @@ ul.menu-list ion-icon {
 a {
     color: rgba(107, 114, 128, 1) !important;
 }
+
+div#nicknameversion {
+    font-size: 10px;
+    text-align: center;
+    color: #008F8F;
+}
+
+/*Mineria*/
+.d-flex.mining-btn.col {
+    justify-content: end;
+}
+
+.btnadd {
+    border: 1px solid;
+    text-align: center;
+    border-radius: 4px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    cursor: pointer;
+}
+
+.btnadd:hover {
+    color: #008F8F;
+    border: 1px solid #008F8F;
+}
+
+.a-end {
+    justify-content: end;
+}
+
+.ml-2 {
+    margin-left: 5px;
+}
+
+tr.rowtable {
+    height: 50px !important;
+    background: white;
+    border: 1px solid #E5E7EB;
+}
+
+tr.rowtable td {
+    padding-top: 15px;
+}
+
+tr.rowtable td:first-child {
+    padding-left: 10px;
+    text-transform: capitalize;
+}
+
+tr.rowtable.clickeable {
+    cursor: pointer;
+}
+
+tr.rowtable.clickeable:hover {
+    background: rgba(238, 238, 238, 1);
+}

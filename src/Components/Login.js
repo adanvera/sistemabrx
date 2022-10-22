@@ -6,6 +6,7 @@ import urlLogo from '../assets/images/logologin.png'
 import { DataContext } from "./Commons/Context/DataContext";
 import { URL_AUTH_USER } from "./Helpers/helper";
 import { Col, FloatingLabel } from "react-bootstrap";
+import packageInfo from '../../package.json';
 
 const Login = () => {
 
@@ -92,8 +93,6 @@ const Login = () => {
         }
     }
 
-    console.log(dataToVerify);
-
     /**funcion onchange para setear el correo ingresado */
     const handleChangeCorreo = (e) => {
         setState(state => {
@@ -124,6 +123,8 @@ const Login = () => {
         // inverse the boolean state of passwordShown
         setPasswordShow(!passwordShow);
     }
+
+    const brxversion = packageInfo?.version
 
     /**el retorno de los datos correspondiente 
      * a la vista del componente */
@@ -181,6 +182,7 @@ const Login = () => {
                                 INICIAR SESION
                             </Button>
                         </div>
+                        <div className='mt-5' id='nicknameversion'>Brx {brxversion}</div>
                     </form>
                 </section>
             </div>
