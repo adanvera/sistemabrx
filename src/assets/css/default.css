@@ -1,0 +1,256 @@
+body {
+    font-family: 'Poppins' !important;
+    font-size: 14px !important;
+    background: #E5E5E5 !important;
+    color: #504B4B;
+}
+
+.App-logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: white;
+}
+
+.App-link {
+    color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.main-content {
+    height: calc(100vh - 20px);
+    left: 295px;
+    position: absolute;
+    width: calc(100vw - 325px) !important;
+    margin-top: 15px;
+}
+
+/* Login form */
+
+#background-login {
+    background-color: red;
+    height: 100vh;
+
+}
+
+button.login-btn.btn.btn-primary {
+    background: #008F8F;
+    border: none;
+}
+
+.btn:disabled {
+    opacity: 0.3 !important;
+}
+
+.d-flex {
+    display: flex
+}
+
+#loginbox {
+    background-image: url("../images/loginbkg.png");
+    display: flex;
+    position: relative;
+    height: 100vh;
+}
+
+.login-content {
+    background: white;
+    width: 50%;
+    margin: auto;
+    padding: 2rem;
+    border-radius: 10px;
+    height: 100vh;
+}
+
+section.col-md-6.sidetoside.login-content {
+    position: relative;
+}
+
+.headlogo img {
+    width: 35%;
+}
+
+button.mt-3.btn-log.btn.btn-primary {
+    background: #008F8F !important;
+    border: none;
+}
+
+form.mt-3 {
+    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    padding: 2rem;
+}
+
+.forgotpass {
+    margin-top: 10px;
+    font-size: 12px;
+    text-decoration: underline;
+    color: blue;
+}
+
+.a-center {
+    text-align: center;
+}
+
+button.mt-3.btn-log.btn.btn-primary {
+    width: 100%;
+    height: 50px;
+}
+
+.main-login {
+    display: flex;
+}
+
+.tgl-login {
+    position: relative;
+    top: 18px;
+    left: -26px;
+    font-size: 20px;
+}
+
+.psw {
+    display: flex;
+}
+
+
+/*Sidebar*/
+.sidebar {
+    width: 280px;
+    background-color: white;
+    position: fixed;
+    justify-content: center;
+    transition: .15s ease-in-out;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    justify-content: space-around;
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 25px);
+    margin: 15px;
+    border-radius: 8px;
+}
+
+ul.menu-list li {
+    list-style: none;
+    text-decoration: none;
+    border-bottom: 1px solid #D6D6D6;
+    height: 35px;
+}
+
+.actions ion-icon {
+    font-size: 20px;
+    padding-left: 15px;
+}
+
+.actionstwo ion-icon {
+    font-size: 20px;
+    padding-right: 15px;
+}
+
+div#_btnEdit {
+    cursor: pointer;
+}
+
+div#_btnBlock {
+    cursor: pointer;
+}
+
+div#_btnDelete {
+    cursor: pointer;
+}
+
+div#_btnEdit:hover {
+    color: green;
+}
+
+div#_btnBlock:hover {
+    color: red;
+}
+
+div#_btnDelete:hover {
+    color: red;
+}
+
+span.togglepss {
+    position: relative;
+    top: 8px;
+    left: -26px;
+    font-size: 20px;
+}
+
+.is-active a {
+    color: #008F8F !important;
+}
+
+ul.menu-list {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+ul.menu-list a {
+    text-decoration: none;
+}
+
+ul.menu-list li {
+    justify-content: center;
+}
+
+ul.menu-list.pb-6.pt-6 {
+    margin-bottom: 120px;
+}
+
+ul.menu-list a {
+    color: white;
+}
+
+.pl-3 {
+    padding-left: 0.5rem;
+}
+
+li#logout {
+    border-top: 1px solid #D6D6D6;
+    height: 45px;
+    padding-top: 10px;
+}
+
+li#logout ion-icon {
+    color: red !important;
+
+}
+
+ul.menu-list ion-icon {
+    font-size: 20px;
+}
+
+a {
+    color: rgba(107, 114, 128, 1) !important;
+}
