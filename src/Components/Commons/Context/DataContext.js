@@ -40,45 +40,44 @@ export const DataProvider = ({ children }) => {
         const idUser = localStorage.getItem("id") ? localStorage.getItem("id") : ''
         const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
 
-        // setIdAuthed(idUser)
+        setIdAuthed(idUser)
 
         /**consulta para obtener datos del usuario logueado */
-        // const getUser = async () => {
-        //     try {
-        //         const res = await fetch(GET_USER_BY_ID + idUser, {
-        //             method: 'GET',
-        //             headers: {
-        //                 'Accept': 'application/json, text/plain, */*',
-        //                 'token': token
-        //             },
-        //         }),
-        //             json = await res.json()
-        //         setUser(json)
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // }
-        // getUser()
+        const getUser = async () => {
+            try {
+                const res = await fetch(GET_USER_BY_ID + idUser, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'token': token
+                    },
+                }),
+                    json = await res.json()
+                setUser(json)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getUser()
 
-        // /**consulta para obtener el rol del usuario logueado */
-        // const getUserRole = async () => {
-        //     try {
-        //         const res = await fetch(GET_USER_ROLE + idUser, {
-        //             method: 'GET',
-        //             headers: {
-        //                 'Accept': 'application/json, text/plain, */*',
-        //                 'token': token
-        //             },
-        //         }),
-        //             json = await res.json()
-        //         setUserRol(json[0].description)
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // }
-        // getUserRole()
+        /**consulta para obtener el rol del usuario logueado */
+        const getUserRole = async () => {
+            try {
+                const res = await fetch(GET_USER_ROLE + idUser, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'token': token
+                    },
+                }),
+                    json = await res.json()
+                setUserRol(json[0].description)
+            } catch (error) {
+                console.log(error);
+            }
+        }
 
-        setUserRol('ADMINISTRADOR')
+        getUserRole()
 
     }, []);
 

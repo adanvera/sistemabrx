@@ -11,13 +11,13 @@ export default function TableRow(props) {
     const clickedItem = (e) => {
         e.preventDefault()
         if ((props?.link) && (pathname === '/tickets')) {
-            navigate(`${props?.link}${data?.ticketnumber}`)
+            navigate(`${props?.link}${data?.id_ticket}`)
         }
     }
 
     return (
 
-        <tr key={data?.ticketnumber ? data?.ticketnumber : data?.ticketnumber} className={data?.ticketnumber ? "rowtable clickeable" : "rowtable"} onClick={e => clickedItem(e)} >
+        <tr key={data?.id_ticket ? data?.id_ticket : data?.id_ticket} className={data?.id_ticket ? "rowtable clickeable" : "rowtable"} onClick={e => clickedItem(e)} >
             {Object.keys(data).map(col => {
                 return (
                     <Fragment key={col}>

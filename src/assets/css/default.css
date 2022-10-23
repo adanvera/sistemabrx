@@ -47,6 +47,8 @@ body {
     position: absolute;
     width: calc(100vw - 325px) !important;
     margin-top: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 /* Login form */
@@ -309,4 +311,51 @@ tr.rowtable.clickeable {
 
 tr.rowtable.clickeable:hover {
     background: rgba(238, 238, 238, 1);
+}
+
+/*tickets*/
+div#tkprev {
+    border: 0.5px solid rgba(71, 71, 71, 0.1);
+    list-style: none;
+    display: flex;
+    border-radius: 6px;
+    align-items: center;
+    padding-left: 50px;
+    cursor: pointer;
+    height: 120px;
+
+    border-radius: 10px;
+}
+
+.mr-1 {
+    margin-right: 10px;
+}
+
+.content-mineria {
+    margin-top: 20px;
+}
+
+div#tkprev:hover {
+    border: 1px solid #008F8F;
+}
+
+.imgtkg {
+    margin-left: 15px;
+}
+
+ul.menu-list.pb-6.pt-6 {
+    padding: 0;
+}
+
+.contentticket {
+    margin-left: 10px;
+}
+
+.main-dump {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: grid;
+    background: white;
+    padding: 10px;
 }

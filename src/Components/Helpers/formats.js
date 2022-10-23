@@ -6,16 +6,17 @@ export const formatedDataTicket = (data) => {
         data?.map(item => {
             obData = {
                 ...obData,
-                [item?.ticketnumber]: {
-                    ticketnumber: item.ticketnumber,
-                    observacion: item.observacion,
-                    registerdate: formatoDate(item.registerdate),
-                    state: item.state,
-                    createdby: item.createdby,
-                    asigned: item.asigned,
-                    update: formatoDate(item.update),
+                [item?.id_ticket]: {
+                    id_ticket: item.id_ticket,
+                    id_machine: item.id_machine,
+                    created_at: formatoDate(item.created_at),
+                    id_user: (item.id_user),
+                    description_ticket: item.description_ticket,
+                    status: item.status,
+                    updated_at: formatoDate(item.updated_at),
                     actions: 'x x',
                 }
+
             }
         })
     }
@@ -35,5 +36,17 @@ export const formatoDate = (fecha) => {
 
     }
     return null
+
+}
+
+/**funcion para limitar listado por paginas */
+export const perPage = (data, page) => {
+
+    const initialRange = (page === 1 ? 0 : ((page - 1) * 10));
+    const FinalRange = 10 * page;
+
+    return Object.keys(data).filter(item => {
+        return Object.keys(data).slice(initialRange, FinalRange).includes(item)
+    }).map(item => data[item])
 
 }

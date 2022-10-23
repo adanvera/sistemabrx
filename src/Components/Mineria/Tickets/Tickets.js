@@ -1,28 +1,33 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import SearchTable from '../../Commons/SearchTable'
 import Table from '../../Commons/Table/Table'
 import { formatedDataTicket } from '../../Helpers/formats'
+import { GET_TICKETS } from '../../Helpers/helper'
+import DumpTable from './DumpTable'
 
 
 const Tickets = props => {
 
     const initialState = {
         headers: {
-            ticketnumber: "Numero de ticket",
-            observacion: "Observación",
-            registerdate: "Fecha de creción",
-            state: "Estado ticket",
-            createdby: "Creado por",
-            asigned: "Asignado a",
-            update: "Fecha de actualización",
+            id_ticket: "Numero de ticket",
+            id_machine: "Maquina",
+            created_at: "Fecha de creación",
+            id_user: "Creado por",
+            description_ticket: "Descripcion",
+            status: "Estado",
+            update_at: "Fecha de actualización",
             actions: 'Acciones'
         },
         filtros: {
             name: '',
         },
     }
+
     const [state, setState] = useState(initialState)
+    const [dataList, setDataList] = useState('')
+
 
     //onchange correspondiente para hacer la busqueda 
     const handleSearch = data => {
@@ -36,29 +41,51 @@ const Tickets = props => {
         }))
     }
 
-    const getData = [
-        {
-            "ticketnumber": 52,
-            "observacion": "Mantenimiento, Maquina: 5545dd",
-            "registerdate": "2022-05-27T19:27:43.161Z",
-            "state": 1,
-            "createdby": "Adán",
-            "update": "2022-05-27T19:27:43.161Z",
-            "asigned": "Vera",
-        },
-        {
-            "ticketnumber": 53,
-            "observacion": "Mantenimiento, Maquina: 5545dd",
-            "registerdate": "2022-05-27T19:27:43.161Z",
-            "state": 1,
-            "createdby": "Adán",
-            "update": "2022-05-27T19:27:43.161Z",
-            "asigned": "Vera",
+    /**acciones que son utilizadas al cargar datos de
+  * las consultas
+  */
+    const [error, setError] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
+
+
+    const formatedList = formatedDataTicket(dataList)
+
+
+    useEffect(() => {
+
+        /** Obtenemos los valores que guardamos en el token para poder utilizarlos
+         * en la siguiente consulta
+        */
+        const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
+
+        /**mandamos el header de nuestra consulta */
+        const options = {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'token': token
+            },
         }
-    ]
 
+        const getTickets = async () => {
+            try {
+                const res = await fetch(GET_TICKETS, options),
+                    json = await res.json()
+                /**seteamos loading */
+                setIsLoaded(true);
+                /**seteamos el listado de usuarios */
+                setDataList(json);
+            } catch (error) {
+                setIsLoaded(true);
+                setError(error);
+                console.log(error);
+            }
+        }
 
-    const dataList = formatedDataTicket(getData)
+        getTickets()
+
+    }, []);
+
 
     return (
         <div className="main-content">
@@ -72,7 +99,12 @@ const Tickets = props => {
                         />
                     </Col>
                 </Row>
-                <Table link='/tickets/' headers={state?.headers} data={dataList} />
+                {
+                    isLoaded === false ?
+                        <DumpTable link='/tickets/' headers={state?.headers} data={formatedList} />
+                        :
+                        <Table link='/tickets/' headers={state?.headers} data={formatedList} />
+                }
             </Container>
         </div>
     )

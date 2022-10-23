@@ -1,11 +1,11 @@
 import { Fragment, useState } from "react";
 import { Pagination } from "react-bootstrap";
-import { perPage } from "../../Helpers/formats.js";
-import TableHeader from "./TableHeader.js";
-import TableRow from "./TableRow.js";
+import PuffLoader from "react-spinners/PuffLoader";
+import TableHeader from "../../Commons/Table/TableHeader";
+import { perPage } from "../../Helpers/formats";
 
 
-export default function Table(props) {
+export default function DumpTable(props) {
     const { headers, data } = props
     const [state, setState] = useState({ sort: {}, currentPage: 1 })
     const listData = perPage(Object.keys(data).reverse().map(item => data[item]), state.currentPage)
@@ -22,7 +22,6 @@ export default function Table(props) {
             <Pagination.Item key={number} active={number === active} onClick={(event) => paginationClicked(event)} >{number}</Pagination.Item>,
         );
     }
-
     /**funcion para setear pagina clickeada */
     const paginationClicked = (event) => {
         event.preventDefault()
@@ -38,19 +37,18 @@ export default function Table(props) {
 
     return (
         <Fragment>
-            <table className="table-list table mt-2">
+            <table className="table-list table">
                 <TableHeader headers={headers} />
-                <tbody>
-                    {
-                        Object.keys(listData).map(item => {
-                            return (
-                                <TableRow link={props?.link} data={listData[item]} />
-                            )
-                        })
-                    }
-                </tbody>
             </table>
-            <Pagination data={listData} activeLabel={state?.currentPage}> {items} </ Pagination>
+            <div className="main-dump">
+                <div className="ddd">
+                    <PuffLoader color="#36d7b7" />
+                </div>
+                <div className="ddd">
+                    <spam>Cargando...</spam>
+                </div>
+            </div>
+            <Pagination data={listData} activeLabel={state.currentPage}> {items} </ Pagination>
         </Fragment>
     )
 }
