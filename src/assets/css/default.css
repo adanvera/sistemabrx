@@ -42,13 +42,16 @@ body {
 }
 
 .main-content {
-    height: calc(100vh - 20px);
+    height: calc(100vh - 25px);
     left: 295px;
     position: absolute;
     width: calc(100vw - 325px) !important;
     margin-top: 15px;
     margin-left: 10px;
     margin-right: 10px;
+    margin-right: 10px;
+    background: white;
+    border-radius: 8px;
 }
 
 /* Login form */
@@ -296,9 +299,6 @@ tr.rowtable {
     border: 1px solid #E5E7EB;
 }
 
-tr.rowtable td {
-    padding-top: 15px;
-}
 
 tr.rowtable td:first-child {
     padding-left: 10px;
@@ -358,4 +358,143 @@ ul.menu-list.pb-6.pt-6 {
     display: grid;
     background: white;
     padding: 10px;
+}
+
+
+input.input.is-normal.searchinput {
+    height: 40px;
+    margin-right: 15px;
+    border-radius: 5px;
+    border: 1px solid #E5E7EB;
+    width: 300px;
+    padding-left: 10px;
+}
+
+button.button.btn-buscar.ml-2 {
+    border: none;
+    background: rgba(0, 143, 143, 1);
+    width: 120px;
+    color: #fff;
+    border-radius: 6px;
+}
+
+.endmain.col-md-6 {
+    justify-content: end;
+    text-align: end;
+    display: flex;
+}
+
+.limittic {
+    width: 50%;
+}
+
+/*dashboard*/
+
+.wlcmone {
+    width: 100%;
+    text-align: start;
+    display: flex;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    height: auto;
+}
+
+.iconwlc {
+    color: rgba(255, 206, 86, 1);
+    padding-right: 10px;
+    padding-top: 10px;
+    font-size: 25px;
+}
+
+.main-content-head {
+    left: 295px;
+    position: absolute;
+    width: calc(100vw - 325px) !important;
+    margin-top: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-right: 10px;
+    background: white;
+    border-radius: 8px;
+}
+
+div#dash {
+    height: calc(90vh - 25px);
+    left: 295px;
+    position: absolute;
+    width: calc(100vw - 325px) !important;
+    margin-top: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-right: 10px;
+    background: white;
+    border-radius: 8px;
+    margin-top: 106px;
+}
+
+.ticketicon {
+    justify-content: center;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 20px;
+    background: rgba(238, 238, 238, 1);
+    padding-top: 5px;
+}
+
+td.icontk {
+    justify-content: center;
+    text-align: center;
+    padding: 15px;
+    font-size: 20px;
+    text-align: center;
+}
+
+td {
+    vertical-align: baseline;
+}
+
+td.icontk {
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+td.icontk {
+    position: relative;
+}
+
+tr.table-header {
+    background: #e3e3e3;
+}
+
+.headtiket.col {
+    padding-top: 10px;
+}
+
+.headtiket.col h6 {
+    font-size: 20px;
+}
+
+.headtiket.col {
+    border-bottom: 1px solid #D6D6D6;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+/*info ticket*/
+.datashow {
+    display: grid;
+}
+
+input.inputshow {
+    height: 45px;
+    border-radius: 6px;
+    padding-left: 10px;
+    background: #efefef;
+    border: none;
+}
+
+label.labeltk {
+    margin-bottom: 5px;
 }

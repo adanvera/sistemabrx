@@ -15,6 +15,12 @@ export default function TableRow(props) {
         }
     }
 
+    const veifyData = (data, col) => {
+        if (col === 'icon') {
+            return (<div className="ticketicon" ><ion-icon  name={data}></ion-icon></div>)
+        } else return data
+    }
+
     return (
 
         <tr key={data?.id_ticket ? data?.id_ticket : data?.id_ticket} className={data?.id_ticket ? "rowtable clickeable" : "rowtable"} onClick={e => clickedItem(e)} >
@@ -28,8 +34,10 @@ export default function TableRow(props) {
                                         pathname === '/tickets' && <TicketActions />
                                     }
                                 </td>
-                                :
-                                <td>{(data[col])}</td>
+                                : col === "icon" ?
+                                    <td className="icontk">{veifyData(data[col], col)}</td>
+                                    :
+                                    <td>{(data[col])}</td>
                         }
                     </Fragment>
                 )

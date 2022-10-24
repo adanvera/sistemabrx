@@ -7,6 +7,7 @@ export const formatedDataTicket = (data) => {
             obData = {
                 ...obData,
                 [item?.id_ticket]: {
+                    icon: 'construct-outline',
                     id_ticket: item.id_ticket,
                     id_machine: item.id_machine,
                     created_at: formatoDate(item.created_at),

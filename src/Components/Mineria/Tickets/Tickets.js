@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
+import { DataContext } from '../../Commons/Context/DataContext'
+import ModalContainer from '../../Commons/ModalContainer'
 import SearchTable from '../../Commons/SearchTable'
 import Table from '../../Commons/Table/Table'
 import { formatedDataTicket } from '../../Helpers/formats'
-import { GET_TICKETS } from '../../Helpers/helper'
+import { GET_MACHINES, GET_TICKETS } from '../../Helpers/helper'
+import TicketForm from '../Forms/TicketForm'
 import DumpTable from './DumpTable'
 
 
@@ -11,6 +14,7 @@ const Tickets = props => {
 
     const initialState = {
         headers: {
+            icon: '',
             id_ticket: "Numero de ticket",
             id_machine: "Maquina",
             created_at: "Fecha de creación",
@@ -23,10 +27,14 @@ const Tickets = props => {
         filtros: {
             name: '',
         },
+        form: 'Machine',
+        title: 'MAQUINA',
     }
 
     const [state, setState] = useState(initialState)
     const [dataList, setDataList] = useState('')
+    const { modalstatus, setModalStatus } = useContext(DataContext)
+    
 
 
     //onchange correspondiente para hacer la busqueda 
@@ -42,13 +50,12 @@ const Tickets = props => {
     }
 
     /**acciones que son utilizadas al cargar datos de
-  * las consultas
-  */
+     * las consultas
+     */
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
-
-
     const formatedList = formatedDataTicket(dataList)
+    const modal = modalstatus
 
 
     useEffect(() => {
@@ -73,7 +80,7 @@ const Tickets = props => {
                     json = await res.json()
                 /**seteamos loading */
                 setIsLoaded(true);
-                /**seteamos el listado de usuarios */
+                /**seteamos el listado de tickets */
                 setDataList(json);
             } catch (error) {
                 setIsLoaded(true);
@@ -86,10 +93,38 @@ const Tickets = props => {
 
     }, []);
 
+    /** funcion onchange para seteo de form */
+    const handleModalForm = (form) => {
+        setModalStatus(true)
+        setState(prev => {
+            return {
+                ...prev,
+                form: form,
+                title: form
+            }
+        })
+    }
+
+    /**funcion para setear form clickeado */
+    const pickForm = () => {
+        switch (state?.form) {
+            case 'Ticket':
+                return <TicketForm  />
+        }
+    }
+
 
     return (
         <div className="main-content">
             <Container fluid={true} className="">
+                {modal && (
+                    <ModalContainer
+                        title={state?.title}
+                        form={pickForm()}
+                    // modalStatus={modal}
+                    // modalType={usermodal}
+                    />
+                )}
                 <Row className=" is-3 text-al-ini titlemodule"><h5 className="title-details ml-5 pt-3">Tickets</h5></Row>
                 <Row>
                     <Col md={6} >
@@ -97,6 +132,9 @@ const Tickets = props => {
                             placeholder='Buscar ticket...'
                             handleChange={handleSearch}
                         />
+                    </Col>
+                    <Col md={6} className="endmain">
+                        <div className='limittic'><div onClick={() => handleModalForm('Ticket')} className="btnadd" id='ticketmain'> Crear ticket</div></div>
                     </Col>
                 </Row>
                 {

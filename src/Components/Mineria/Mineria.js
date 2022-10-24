@@ -3,8 +3,6 @@ import { Col, Container, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { DataContext } from '../Commons/Context/DataContext'
 import ModalContainer from '../Commons/ModalContainer'
-import Table from '../Commons/Table/Table'
-import { formatedDataTicket } from '../Helpers/formats'
 import MachineForm from './Forms/MachineForm'
 import TicketForm from './Forms/TicketForm'
 import tktimg from "../../assets/images/ticketimg.png"
@@ -22,31 +20,6 @@ const Mineria = props => {
     const { modalType, setModalType } = useContext(DataContext)
     const modal = modalstatus
     let navigate = useNavigate()
-
-    const datadoomie = [
-        {
-            "ticketnumber": 52,
-            "observacion": "Mantenimiento, Maquina: 5545dd",
-            "registerdate": "2022-05-27T19:27:43.161Z",
-            "state": 1,
-            "createdby": "Adán",
-            "update": "2022-05-27T19:27:43.161Z",
-            "asigned": "Vera",
-        },
-        {
-            "ticketnumber": 53,
-            "observacion": "Mantenimiento, Maquina: 5545dd",
-            "registerdate": "2022-05-27T19:27:43.161Z",
-            "state": 1,
-            "createdby": "Adán",
-            "update": "2022-05-27T19:27:43.161Z",
-            "asigned": "Vera",
-        }
-    ]
-
-
-    const dataList = formatedDataTicket(datadoomie)
-
 
     /** funcion onchange para seteo de form */
     const handleModalForm = (form) => {
@@ -81,7 +54,7 @@ const Mineria = props => {
                 />
             )}
             <Container fluid={true} className="">
-                <Row>
+                <Row className='mt-3'>
                     <Col md={8}> </Col>
                     <Col md={2} className="a-end"> <div onClick={() => handleModalForm('Ticket')} className="btnadd"> Crear ticket</div></Col>
                     <Col md={2} className="a-end">  <div onClick={() => handleModalForm('Machine')} className="btnadd" > Registrar equipo</div></Col>

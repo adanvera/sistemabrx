@@ -13,9 +13,7 @@ const Sidebar = props => {
      */
     const { user } = useContext(DataContext)
     const userAuthed = user
-
-    console.log(userAuthed);
-
+    
     /**Declaramos las variables */
     const intialState = {
         dashboard: 'is-active',
