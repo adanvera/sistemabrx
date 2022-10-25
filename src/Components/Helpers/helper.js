@@ -5,6 +5,7 @@ const GET_USER_ROLE = "https://brxsgo.com/api/roles/"
 const GET_TICKETS = "https://brxsgo.com/api/tickets/"
 const URL_GET_TICKET_BY_ID = "https://brxsgo.com/api/tickets/"
 const GET_MACHINES = "https://brxsgo.com/api/machines/"
+const CREATE_CLIENT = 'https://brxsgo.com/api/client'
 
 
 /**exportamos nuestras declaraciones de valores
@@ -17,4 +18,5 @@ export {
     GET_TICKETS,
     URL_GET_TICKET_BY_ID,
     GET_MACHINES,
+    CREATE_CLIENT
 }
