@@ -51,6 +51,8 @@ function DetailsTicket() {
 
     const dataToUse = ticketData ? ticketData[0] : ''
 
+    const img_url = dataToUse.id_image
+
     const idCreated = ticketData ? dataToUse.id_user : ''
 
     return (

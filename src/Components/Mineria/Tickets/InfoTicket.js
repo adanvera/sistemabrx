@@ -9,42 +9,6 @@ const InfoTicket = (props) => {
     const [isLoading, setIsLoading] = useState(false)
 
 
-    useEffect(() => {
-
-        /** Obtenemos los valores que guardamos en el token para poder utilizarlos
-         * en la siguiente consulta
-        */
-        const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
-
-        /**mandamos el header de nuestra consulta */
-        const options = {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'token': token
-            },
-        }
-
-        /**funcion para acceder a datos de usuario  */
-        const getUserById = async () => {
-            try {
-                const res = await fetch(GET_USER_BY_ID + data.id_user, options),
-                    json = await res.json()
-                setUserData(json)
-            } catch (error) {
-                console.log(error);
-            }
-        }
-
-        getUserById()
-
-    }, []);
-
-
-    console.log(userData);
-
-
-
     return (
         <div className='d-flex'>
             {data &&
@@ -97,7 +61,12 @@ const InfoTicket = (props) => {
                                     <input className='inputshow' value={data.updated_at} disabled />
                                 </div>
                             </Col>
-                            <Col></Col>
+                            <Col>
+                                <div className='datashow'>
+                                    <label className='labeltk' >Actualizado el </label>
+                                    <input className='inputshow' value={data.url_image} disabled />
+                                </div>
+                            </Col>
                             <Col></Col>
                         </Row>
                     </Col>
