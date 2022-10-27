@@ -7,6 +7,7 @@ const URL_GET_TICKET_BY_ID = "https://brxsgo.com/api/tickets/"
 const GET_MACHINES = "https://brxsgo.com/api/machines/"
 const CREATE_CLIENT = 'https://brxsgo.com/api/client'
 const URL_USERS = "https://brxsgo.com/api/user/"
+const GET_CLIENTS = 'https://brxsgo.com/api/client/'
 
 /**exportamos nuestras declaraciones de valores
  * para poder utilizarlas en donde se requieran
@@ -19,5 +20,6 @@ export {
     URL_GET_TICKET_BY_ID,
     GET_MACHINES,
     CREATE_CLIENT,
-    URL_USERS
+    URL_USERS,
+    GET_CLIENTS
 }
