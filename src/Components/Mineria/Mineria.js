@@ -7,6 +7,7 @@ import MachineForm from './Forms/MachineForm'
 import TicketForm from './Forms/TicketForm'
 import tktimg from "../../assets/images/ticketimg.png"
 import mchimg from "../../assets/images/machine.png"
+import MineroForms from './Forms/MineroForms'
 
 const Mineria = props => {
 
@@ -36,8 +37,8 @@ const Mineria = props => {
     /**funcion para setear form clickeado */
     const pickForm = () => {
         switch (state?.form) {
-            case 'Machine':
-                return <MachineForm />
+            case 'Minero':
+                return <MineroForms />
             case 'Ticket':
                 return <TicketForm />
         }
@@ -57,7 +58,7 @@ const Mineria = props => {
                 <Row className='mt-3'>
                     <Col md={8}> </Col>
                     <Col md={2} className="a-end"> <div onClick={() => handleModalForm('Ticket')} className="btnadd"> Crear ticket</div></Col>
-                    <Col md={2} className="a-end">  <div onClick={() => handleModalForm('Machine')} className="btnadd" > Registrar equipo</div></Col>
+                    <Col md={2} className="a-end">  <div onClick={() => handleModalForm('Minero')} className="btnadd" > Agregar minero</div></Col>
                 </Row>
 
                 <Row className='content-mineria justify-content-between' >
@@ -82,7 +83,7 @@ const Mineria = props => {
                             </div>
                         </div>
                     </Col>
-                    <Col md={4} onClick={() => navigate('/maquinas')} >
+                    <Col md={4} onClick={() => navigate('/mineros')} >
                         <div id="tkprev">
                             <div className='imgtkg'>
                                 <img src={mchimg} />

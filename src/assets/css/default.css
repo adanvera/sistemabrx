@@ -498,3 +498,22 @@ input.inputshow {
 label.labeltk {
     margin-bottom: 5px;
 }
+
+.tkt.form-floating label {
+    padding-left: 26px;
+}
+
+.addusr.row {
+    border-top: 1px solid #dee2e6;
+    padding-top: 20px;
+}
+
+div#create {
+    text-align: end;
+}
+
+div#closeone button.btn.btn-primary {
+    background: gray;
+    border: none;
+    width: 120px;
+}

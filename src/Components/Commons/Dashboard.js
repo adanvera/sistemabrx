@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
-import { GET_TICKETS } from '../Helpers/helper';
+import { TICKETS } from '../Helpers/helper';
 import { DataContext } from './Context/DataContext';
 
 function Dashboard() {
@@ -58,7 +58,7 @@ function Dashboard() {
 
     const getTickets = async () => {
       try {
-        const res = await fetch(GET_TICKETS, options),
+        const res = await fetch(TICKETS, options),
           json = await res.json()
         /**seteamos loading */
         setIsLoaded(true);

@@ -5,7 +5,7 @@ import ModalContainer from '../../Commons/ModalContainer'
 import SearchTable from '../../Commons/SearchTable'
 import Table from '../../Commons/Table/Table'
 import { formatedDataTicket } from '../../Helpers/formats'
-import { GET_MACHINES, GET_TICKETS } from '../../Helpers/helper'
+import {  TICKETS } from '../../Helpers/helper'
 import TicketForm from '../Forms/TicketForm'
 import DumpTable from './DumpTable'
 
@@ -76,7 +76,7 @@ const Tickets = props => {
 
         const getTickets = async () => {
             try {
-                const res = await fetch(GET_TICKETS, options),
+                const res = await fetch(TICKETS, options),
                     json = await res.json()
                 /**seteamos loading */
                 setIsLoaded(true);
