@@ -4,10 +4,11 @@ import { DataContext } from '../Commons/Context/DataContext';
 import ModalContainer from '../Commons/ModalContainer';
 import SearchTable from '../Commons/SearchTable';
 import Table from '../Commons/Table/Table';
-import { filterDataList, formatDataClientes, takeDataSearch } from '../Helpers/formats';
-import DumpTable from './DumpTable';
+import { filterDataList, formatDataClientes, formatedDataClient, formatedDataTicket, takeDataSearch } from '../Helpers/formats';
+import { GET_CLIENTS } from '../Helpers/helper';
+import DumpTable from '../Commons/Table/DumpTable';
 import ClienteForm from './Forms/ClienteForm';
-import ClientForm from './Forms/ClienteForm';
+
 
 
 
@@ -16,10 +17,12 @@ const Clientes = props => {
     const initialState = {
         modalShow: false,
         headers: {
+            id:'Codigo ',
+            document: "Nro de documento",   
             name: 'Nombre y apellido',
-            document: "Nro de documento",
             address: 'Dirección',
             phone: 'Nro de telefono',
+            actions: 'Acciones'
         },
         title: 'Agregar Cliente',
         filtros: {
@@ -35,13 +38,14 @@ const Clientes = props => {
     */
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
-    //const formatedList = formatedDataTicket(dataList)
+    const formatedList = formatedDataClient(dataList)
+
     const modal = modalstatus
 
     /**funcion para setear form clickeado */
     const pickForm = () => {
         switch (state?.form) {
-            case 'Ticket':
+            case 'Cliente':
                 return <ClienteForm />
         }
     }
@@ -57,6 +61,43 @@ const Clientes = props => {
             }
         })
     }
+    
+    /*Aca obtenemos los clientes*/
+    useEffect(() => {
+
+        /** Obtenemos los valores que guardamos en el token para poder utilizarlos
+         * en la siguiente consulta
+        */
+        const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
+
+        /**mandamos el header de nuestra consulta */
+        const options = {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'token': token
+            },
+        }
+
+        const getClient = async () => {
+            try {
+                const res = await fetch(GET_CLIENTS, options),
+                    json = await res.json()
+                /**seteamos loading */
+                console.log(json);
+                setIsLoaded(true);
+                /**seteamos el listado de tickets */
+                setDataList(json);
+            } catch (error) {
+                setIsLoaded(true);
+                setError(error);
+                console.log("Esto es el error"+error);
+            }
+        }
+
+        getClient()
+
+    }, []);
 
 
     //onchange correspondiente para hacer la busqueda 
@@ -96,9 +137,9 @@ const Clientes = props => {
                 </Row>
                 {
                     isLoaded === false ?
-                        <DumpTable link='/clientes/' headers={state?.headers}  />
+                        <DumpTable link='/clientes/' headers={state?.headers} data={formatedList} />
                         :
-                        <Table link='/clientes/' headers={state?.headers}  />
+                        <Table link='/clientes/' headers={state?.headers} data={formatedList} />
                 }
             </Container>
         </div>
