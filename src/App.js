@@ -10,6 +10,7 @@ import Mineria from './Components/Mineria/Mineria';
 import Tickets from './Components/Mineria/Tickets/Tickets'
 import DetailsTicket from './Components/Mineria/Tickets/DetailsTicket';
 import Clientes from './Components/Clientes/Clientes';
+import ClientDetails from './Components/Clientes/ClientDetails';
 
 const App = (props) => {
 
@@ -34,6 +35,7 @@ const App = (props) => {
                 <Route exact path='/tickets' element={<Tickets />} />
                 <Route exact path='/tickets/:id' element={<DetailsTicket />} />
                 <Route exact path='/clientes' element={<Clientes />} />
+                <Route exact path='/clientes/:id' element={<ClientDetails />} />
               </Route>
             </Routes>
           </Fragment>

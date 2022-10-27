@@ -23,6 +23,28 @@ export const formatedDataTicket = (data) => {
     }
     return obData
 }
+export const formatedDataClient = (data) => {
+    let obData = {}
+    console.log(data);
+
+    if (data) {
+        data?.map(item => {
+            obData = {
+                ...obData,
+                [item?.id_client]: {
+                    id_cliente: item.id_client,
+                    documento: item.document,
+                    name:item.name + " "+item.last_name,
+                    direccion: item.address,
+                    telefono: item.phone,
+                    actions: 'x x',
+                }
+
+            }
+        })
+    }
+    return obData
+}
 
 export const formatoDate = (fecha) => {
 

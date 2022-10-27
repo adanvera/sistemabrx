@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import ClientActions from "../../Clientes/Actions/ClientActions";
 import TicketActions from "../../Mineria/Actions/TicketActions";
 
 export default function TableRow(props) {
@@ -13,6 +14,10 @@ export default function TableRow(props) {
         if ((props?.link) && (pathname === '/tickets')) {
             navigate(`${props?.link}${data?.id_ticket}`)
         }
+        if ((props?.link) && (pathname === '/clientes')) {
+            console.log("me voyo a otro lado");
+            navigate(`${props?.link}${data?.id_cliente}`)
+        }
     }
 
     const veifyData = (data, col) => {
@@ -23,7 +28,7 @@ export default function TableRow(props) {
 
     return (
 
-        <tr key={data?.id_ticket ? data?.id_ticket : data?.id_ticket} className={data?.id_ticket ? "rowtable clickeable" : "rowtable"} onClick={e => clickedItem(e)} >
+        <tr key={data?.id_ticket ? data?.id_ticket : data?.id_cliente } className={data?.id_ticket ? "rowtable clickeable" : "rowtable"} onClick={e => clickedItem(e)} >
             {Object.keys(data).map(col => {
                 return (
                     <Fragment key={col}>
@@ -32,6 +37,9 @@ export default function TableRow(props) {
                                 <td>
                                     {
                                         pathname === '/tickets' && <TicketActions />
+                                    }
+                                    {
+                                        pathname === '/clientes' && <ClientActions />
                                     }
                                 </td>
                                 : col === "icon" ?
