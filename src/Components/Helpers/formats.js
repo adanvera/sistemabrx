@@ -60,12 +60,11 @@ export const formatedDataUsers = (data) => {
             obData = {
                 ...obData,
                 [item?.id_user]: {
-                    id_user: item.id_user,
                     name: item.name + ' ' + item.last_name,
                     document: item.document,
                     email: item.email,
                     register: formatoDate(item.register),
-                    id_role: formatRole(item.id_role),
+                    rol: (item.rol),
                     status: formatStatus(item.status),
                     update_data: formatoDate(item.update_data),
                     actions: 'x x',

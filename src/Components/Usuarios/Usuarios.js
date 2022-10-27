@@ -21,7 +21,7 @@ const Usuarios = props => {
             document: 'Nro de documento',
             correo: "Correo",
             register: 'Fecha de registro',
-            id_role: 'Rol',
+            rol: 'Rol',
             estado: "Estado de cuenta",
             update_data: 'Fecha de modificación',
             actions: 'Acciones'
@@ -108,6 +108,8 @@ const Usuarios = props => {
     }
 
     const formatedList = formatedDataUsers(dataList)
+
+    console.log(dataList);
 
     return (
         <div className="main-content">
