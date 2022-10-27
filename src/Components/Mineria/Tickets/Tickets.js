@@ -3,12 +3,11 @@ import { Col, Container, Row } from 'react-bootstrap'
 import { DataContext } from '../../Commons/Context/DataContext'
 import ModalContainer from '../../Commons/ModalContainer'
 import SearchTable from '../../Commons/SearchTable'
+import DumpTable from '../../Commons/Table/DumpTable'
 import Table from '../../Commons/Table/Table'
 import { formatedDataTicket } from '../../Helpers/formats'
 import {  TICKETS } from '../../Helpers/helper'
 import TicketForm from '../Forms/TicketForm'
-import DumpTable from './DumpTable'
-
 
 const Tickets = props => {
 

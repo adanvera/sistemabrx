@@ -3,10 +3,10 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { DataContext } from '../Commons/Context/DataContext';
 import ModalContainer from '../Commons/ModalContainer';
 import SearchTable from '../Commons/SearchTable';
+import DumpTable from '../Commons/Table/DumpTable';
 import Table from '../Commons/Table/Table';
 import { filterDataList, formatDataClientes, formatedDataClient, formatedDataTicket, takeDataSearch } from '../Helpers/formats';
 import { GET_CLIENTS } from '../Helpers/helper';
-import DumpTable from '../Commons/Table/DumpTable';
 import ClienteForm from './Forms/ClienteForm';
 
 
