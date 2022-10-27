@@ -11,6 +11,7 @@ import Tickets from './Components/Mineria/Tickets/Tickets'
 import DetailsTicket from './Components/Mineria/Tickets/DetailsTicket';
 import Clientes from './Components/Clientes/Clientes';
 import Mineros from './Components/Mineria/Mineros/Mineros';
+import Usuarios from './Components/Usuarios/Usuarios';
 
 const App = (props) => {
 
@@ -36,6 +37,7 @@ const App = (props) => {
                 <Route exact path='/tickets/:id' element={<DetailsTicket />} />
                 <Route exact path='/clientes' element={<Clientes />} />
                 <Route exact path='/mineros' element={<Mineros />} />
+                <Route exact path='/usuarios' element={<Usuarios />} />
               </Route>
             </Routes>
           </Fragment>

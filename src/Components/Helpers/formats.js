@@ -51,3 +51,61 @@ export const perPage = (data, page) => {
     }).map(item => data[item])
 
 }
+
+export const formatedDataUsers = (data) => {
+    let obData = {}
+
+    if (data) {
+        data?.map(item => {
+            obData = {
+                ...obData,
+                [item?.id_user]: {
+                    id_user: item.id_user,
+                    name: item.name + ' ' + item.last_name,
+                    document: item.document,
+                    email: item.email,
+                    register: formatoDate(item.register),
+                    id_role: formatRole(item.id_role),
+                    status: formatStatus(item.status),
+                    update_data: formatoDate(item.update_data),
+                    actions: 'x x',
+                }
+
+            }
+        })
+    }
+    return obData
+}
+
+
+export const formatRole = (data) => {
+    if (data === 1) {
+        return <>ADMINISTRADOR</>
+    }
+    if (data === 2) {
+        return <>OPERADOR</>
+    }
+    if (data === 3) {
+        return <>SEGURIDAD</>
+    }
+}
+
+
+/**funcion para formatear estado de cuenta del usuario */
+export const formatStatus = (data) => {
+
+    if (data === 1) {
+        return (
+            <div className="w-100 status">
+                <div className="activeus">ACTIVA</div>
+            </div>
+        )
+    } else if (data === 0) {
+        return (
+            <div className="w-100 status">
+                <div className="blockedus">BLOQUEADA</div>
+            </div>
+        )
+    }
+}
+
