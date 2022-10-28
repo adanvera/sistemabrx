@@ -6,7 +6,7 @@ import SearchTable from '../../Commons/SearchTable'
 import DumpTable from '../../Commons/Table/DumpTable'
 import Table from '../../Commons/Table/Table'
 import { formatedDataTicket } from '../../Helpers/formats'
-import {  TICKETS } from '../../Helpers/helper'
+import { TICKETS } from '../../Helpers/helper'
 import TicketForm from '../Forms/TicketForm'
 
 const Tickets = props => {
@@ -33,7 +33,9 @@ const Tickets = props => {
     const [state, setState] = useState(initialState)
     const [dataList, setDataList] = useState('')
     const { modalstatus, setModalStatus } = useContext(DataContext)
-    
+    const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
+
+
 
 
     //onchange correspondiente para hacer la busqueda 
@@ -108,13 +110,13 @@ const Tickets = props => {
     const pickForm = () => {
         switch (state?.form) {
             case 'Ticket':
-                return <TicketForm  />
+                return <TicketForm />
         }
     }
 
 
     return (
-        <div className="main-content">
+        <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
             <Container fluid={true} className="">
                 {modal && (
                     <ModalContainer

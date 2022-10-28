@@ -12,8 +12,9 @@ const Sidebar = props => {
      * data context donde seteamos el usuario correspondiente al loguear
      */
     const { user } = useContext(DataContext)
+    const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
     const userAuthed = user
-    
+
     /**Declaramos las variables */
     const intialState = {
         dashboard: 'is-active',
@@ -61,10 +62,27 @@ const Sidebar = props => {
         navigate('/')
     }
 
+    const handleOnClick = (e) => {
+        e.preventDefault()
+
+        if (sidebarStatus === 'open') {
+            setSidebarStatus('closed')
+        } else {
+            setSidebarStatus('open')
+        }
+    }
+
+    console.log(sidebarStatus);
+
+    const handleOnLoad = () => { }
+
     return (
-        <aside className="sidebar">
+        <aside className={sidebarStatus === 'open' ? 'sidebar' : 'menu sidebar small'} onLoad={handleOnLoad()} >
             <ul className="menu-list pb-6 pt-6">
-                <img src={logo} alt="" className='main-logo' />
+                <div className="classss d-flex">
+                    <img  src={logo} alt="" className={sidebarStatus === 'open' ? 'main-logo' : 'hide'} />
+                    <div onClick={handleOnClick} className={sidebarStatus === 'open' ? 'triggerwidth' : 'triggerwidthsmall'} ><ion-icon name="menu-outline"></ion-icon></div>
+                </div>
             </ul>
             <ul className="menu-list">
                 <ProtectedComponent allowedRoles={['ADMINISTRADOR']}>

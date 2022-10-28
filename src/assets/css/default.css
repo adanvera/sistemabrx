@@ -45,7 +45,7 @@ body {
     height: calc(100vh - 25px);
     left: 295px;
     position: absolute;
-    width: calc(100vw - 325px) !important;
+    width: calc(100vw - 325px);
     margin-top: 15px;
     margin-left: 10px;
     margin-right: 10px;
@@ -532,4 +532,60 @@ div#closeone button.btn.btn-primary {
     border-radius: 4px;
     justify-content: center;
     color: white; 
+}
+
+aside.menu.sidebar.small {
+    width: 80px;
+}
+
+aside.menu.sidebar.small ul.menu-list {
+    margin: 0;
+    border: none;
+}
+
+aside.menu.sidebar.small ul.menu-list span {
+    display: none;
+}
+
+aside.menu.sidebar.small ul.menu-list li#operaciones {
+    border: none !important;
+}
+
+aside.menu.sidebar.small ul.menu-list li {
+    border: none;
+}
+
+.main-content.extend {
+    width: calc(100vw - 128px);
+    left: 103px;
+}
+
+ul.menu-list.pb-6.pt-6 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.triggerwidth {
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 3px;
+    margin-left: 10px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 8px;
+}
+
+.triggerwidth:hover {
+    border: 1px solid #D6D6D6;
+}
+
+.hide{
+    display: none;
+}
+
+.triggerwidthsmall {
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 3px;
 }

@@ -28,6 +28,7 @@ export const DataProvider = ({ children }) => {
     const [idAuthed, setIdAuthed] = useState()
     const [modalstatus, setModalStatus] = useState(false)
     const [modalType, setModalType] = useState('')
+    const [sidebarStatus, setSidebarStatus] = useState('open')
 
     /**conusltas para setear datos del usuario logueado
      * y el rolcorrespondiente
@@ -86,7 +87,7 @@ export const DataProvider = ({ children }) => {
             value={{
                 user, setUser, userRol, setUserRol,
                 idAuthed, setIdAuthed, modalstatus, setModalStatus,
-                modalType, setModalType,
+                modalType, setModalType, sidebarStatus, setSidebarStatus
             }}>
             {children}
         </DataContext.Provider>

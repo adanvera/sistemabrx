@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react"
 import { Button, Col, Container, FloatingLabel, Form, Row } from "react-bootstrap"
 import { DataContext } from "../../Commons/Context/DataContext"
-import { GET_MACHINES, TICKETS } from "../../Helpers/helper"
-import SelectMachine from "./SelectMachine"
+import { TICKETS } from "../../Helpers/helper"
+import SelectMachine from "../Forms/SelectMachine"
 
 const TicketForm = (props) => {
 
