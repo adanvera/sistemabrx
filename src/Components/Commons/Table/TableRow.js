@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ClientActions from "../../Clientes/Actions/ClientActions";
 import TicketActions from "../../Mineria/Actions/TicketActions";
+import UserActions from "../../Usuarios/Actions/UserActions";
 
 export default function TableRow(props) {
 
@@ -22,13 +23,13 @@ export default function TableRow(props) {
 
     const veifyData = (data, col) => {
         if (col === 'icon') {
-            return (<div className="ticketicon" ><ion-icon  name={data}></ion-icon></div>)
+            return (<div className="ticketicon" ><ion-icon name={data}></ion-icon></div>)
         } else return data
     }
 
     return (
 
-        <tr key={data?.id_ticket ? data?.id_ticket : data?.id_cliente } className={data?.id_ticket ? "rowtable clickeable" : "rowtable"} onClick={e => clickedItem(e)} >
+        <tr key={data?.id_ticket ? data?.id_ticket : data?.id_cliente} className={data?.id_ticket ? "rowtable clickeable" : "rowtable"} onClick={e => clickedItem(e)} >
             {Object.keys(data).map(col => {
                 return (
                     <Fragment key={col}>
@@ -40,6 +41,9 @@ export default function TableRow(props) {
                                     }
                                     {
                                         pathname === '/clientes' && <ClientActions />
+                                    }
+                                    {
+                                        pathname === '/usuarios' && <UserActions />
                                     }
                                 </td>
                                 : col === "icon" ?

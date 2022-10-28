@@ -34,7 +34,7 @@ export const formatedDataClient = (data) => {
                 [item?.id_client]: {
                     id_cliente: item.id_client,
                     documento: item.document,
-                    name:item.name + " "+item.last_name,
+                    name: item.name + " " + item.last_name,
                     direccion: item.address,
                     telefono: item.phone,
                     actions: 'x x',
@@ -86,7 +86,7 @@ export const formatedDataUsers = (data) => {
                     document: item.document,
                     email: item.email,
                     register: formatoDate(item.register),
-                    rol: (item.rol),
+                    rol: item.rol,
                     status: formatStatus(item.status),
                     update_data: formatoDate(item.update_data),
                     actions: 'x x',
@@ -98,32 +98,18 @@ export const formatedDataUsers = (data) => {
     return obData
 }
 
-
-export const formatRole = (data) => {
-    if (data === 1) {
-        return <>ADMINISTRADOR</>
-    }
-    if (data === 2) {
-        return <>OPERADOR</>
-    }
-    if (data === 3) {
-        return <>SEGURIDAD</>
-    }
-}
-
-
 /**funcion para formatear estado de cuenta del usuario */
 export const formatStatus = (data) => {
 
     if (data === 1) {
         return (
-            <div className="w-100 status">
+            <div className="status">
                 <div className="activeus">ACTIVA</div>
             </div>
         )
     } else if (data === 0) {
         return (
-            <div className="w-100 status">
+            <div className=" status">
                 <div className="blockedus">BLOQUEADA</div>
             </div>
         )

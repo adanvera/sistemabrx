@@ -517,3 +517,19 @@ div#closeone button.btn.btn-primary {
     border: none;
     width: 120px;
 }
+
+.activeus {
+    background-color: green;
+    text-align: center;
+    border-radius: 4px;
+    justify-content: center;
+    color: white;
+}
+
+.blockedus{
+    background-color: red;
+    text-align: center;
+    border-radius: 4px;
+    justify-content: center;
+    color: white; 
+}
