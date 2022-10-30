@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import { GET_USER_BY_ID, GET_USER_ROLE } from '../../Helpers/helper'
+import { ROLES, USER } from '../../Helpers/helper'
 
 
 export const DataContext = createContext()
@@ -30,6 +30,7 @@ export const DataProvider = ({ children }) => {
     const [modalType, setModalType] = useState('')
     const [sidebarStatus, setSidebarStatus] = useState('open')
 
+
     /**conusltas para setear datos del usuario logueado
      * y el rolcorrespondiente
      */
@@ -46,7 +47,7 @@ export const DataProvider = ({ children }) => {
         /**consulta para obtener datos del usuario logueado */
         const getUser = async () => {
             try {
-                const res = await fetch(GET_USER_BY_ID + idUser, {
+                const res = await fetch(USER + idUser, {
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json, text/plain, */*',
@@ -64,7 +65,7 @@ export const DataProvider = ({ children }) => {
         /**consulta para obtener el rol del usuario logueado */
         const getUserRole = async () => {
             try {
-                const res = await fetch(GET_USER_ROLE + idUser, {
+                const res = await fetch(ROLES + idUser, {
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json, text/plain, */*',
@@ -72,7 +73,7 @@ export const DataProvider = ({ children }) => {
                     },
                 }),
                     json = await res.json()
-                setUserRol(json[0].description)
+                setUserRol(json[0])
             } catch (error) {
                 console.log(error);
             }

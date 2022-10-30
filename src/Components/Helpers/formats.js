@@ -9,11 +9,13 @@ export const formatedDataTicket = (data) => {
                 [item?.id_ticket]: {
                     icon: 'construct-outline',
                     id_ticket: item.id_ticket,
+                    ticket_name: item.ticket_name,
                     id_machine: item.id_machine,
                     created_at: formatoDate(item.created_at),
+                    created_at_filter: item.created_at,
                     id_user: (item.id_user),
-                    description_ticket: item.description_ticket,
-                    status: item.status,
+                    status: (item.status),
+                    priority: item.priority,
                     updated_at: formatoDate(item.updated_at),
                     actions: 'x x',
                 }
@@ -23,6 +25,7 @@ export const formatedDataTicket = (data) => {
     }
     return obData
 }
+
 export const formatedDataClient = (data) => {
     let obData = {}
     console.log(data);
@@ -116,3 +119,94 @@ export const formatStatus = (data) => {
     }
 }
 
+/**
+ * @param dataList Lista de Objetos con datos a ser filtrados
+ * @param filter Objeto con los filtros que debe ser iterado y filtrado el dataList
+* */
+export const filteredData = (dataList, filter) => {
+    /**
+     * Se asigna a la variables @filteredData para poder ir modificando
+     * */
+    let filteredData = dataList;
+
+    /**
+     * Se elimina los filtros vacios del objeto
+     * Dejando un objeto solo con los atributos con valores asignados.
+     * */
+    for (let key in filter) {
+        if (filter[key] === '') {
+            delete filter[key]
+        }
+    }
+
+    Object.keys(filter).forEach(filtro => {
+        /**
+         * Si el Filtro es distinta al valor TODAS procedera a filtrar, ya que TODAS implica que debe devolver el objeto
+         * tal cual se mando inicialmente
+         * */
+        (filter[filtro] !== 'TODAS') && (
+            filteredData =
+            // se obtiene array de keys para poder iterar el objeto
+            Object.keys(filteredData)
+                // Se verifica si el objeto del vendedor cumple con el filtro seleccionado
+                .filter(item => {
+
+                    if (filtro === 'hasta') {
+                        const fechaTicket = new Date(filteredData[item].created_at_filter)
+                        const fechaFiltro = filter[filtro]
+                        return fechaTicket.toISOString().substring(0, 10) <= fechaFiltro.toISOString().substring(0, 10)
+                    }
+
+                    if (filtro === 'desde') {
+                        const fechaTicket = new Date(filteredData[item].created_at_filter)
+                        const fechaFiltro = filter[filtro]
+                        return fechaTicket.toISOString().substring(0, 10) >= fechaFiltro.toISOString().substring(0, 10)
+                    }
+
+                    console.log(filter[filtro]);
+
+                    return (filteredData[item][filtro].toLowerCase().includes(filter[filtro].toLowerCase()))
+                })
+                // se devuelve el objeto del vendedor que cumplio con el filtro
+                .map(id => filteredData[id])
+        )
+
+    })
+
+    // Finalmente se retorna los datos filtrados
+    return filteredData
+
+}
+
+
+export const takeDataSearch = (data, page) => {
+    const initialRange = (page === 1 ? 0 : ((page - 1) * 10));
+    const FinalRange = 1000000;
+
+    return Object.keys(data).filter(item => {
+        return Object.keys(data).slice(initialRange, FinalRange).includes(item)
+    }).map(item => data[item])
+
+}
+
+
+export const formatedDataMiners = (data) => {
+    let obData = {}
+
+    if (data) {
+        data?.map(item => {
+            obData = {
+                ...obData,
+                [item?.id_machine]: {
+                    id_machine: item.id_machine,
+                    client: item.name,
+                    description_model: item.description_model,
+                    status: item.status,
+                    actions: 'x x',
+                }
+
+            }
+        })
+    }
+    return obData
+}

@@ -5,26 +5,32 @@ import ModalContainer from '../../Commons/ModalContainer'
 import SearchTable from '../../Commons/SearchTable'
 import DumpTable from '../../Commons/Table/DumpTable'
 import Table from '../../Commons/Table/Table'
-import { formatedDataTicket } from '../../Helpers/formats'
+import { filteredData, formatedDataTicket, takeDataSearch } from '../../Helpers/formats'
 import { TICKETS } from '../../Helpers/helper'
 import TicketForm from '../Forms/TicketForm'
+import FilterTicket from './FilterTicket'
 
 const Tickets = props => {
 
     const initialState = {
         headers: {
             icon: '',
-            id_ticket: "Numero de ticket",
+            id_ticket: "N°",
+            ticket_name: "Nombre",
             id_machine: "Maquina",
             created_at: "Fecha de creación",
             id_user: "Creado por",
-            description_ticket: "Descripcion",
             status: "Estado",
+            priority: "Prioridad",
             update_at: "Fecha de actualización",
             actions: 'Acciones'
         },
         filtros: {
-            name: '',
+            ticket_name: '',
+            status: '',
+            priority: '',
+            desde: '',
+            hasta: '',
         },
         form: 'Machine',
         title: 'MAQUINA',
@@ -35,16 +41,13 @@ const Tickets = props => {
     const { modalstatus, setModalStatus } = useContext(DataContext)
     const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
 
-
-
-
     //onchange correspondiente para hacer la busqueda 
     const handleSearch = data => {
         setState(prev => ({
             ...prev,
             filtros: {
                 ...prev.filtros,
-                name: data,
+                ticket_name: data,
             },
             currentPage: 1,
         }))
@@ -55,7 +58,6 @@ const Tickets = props => {
      */
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
-    const formatedList = formatedDataTicket(dataList)
     const modal = modalstatus
 
 
@@ -94,6 +96,8 @@ const Tickets = props => {
 
     }, []);
 
+    const formatedList = formatedDataTicket(dataList)
+
     /** funcion onchange para seteo de form */
     const handleModalForm = (form) => {
         setModalStatus(true)
@@ -112,6 +116,33 @@ const Tickets = props => {
             case 'Ticket':
                 return <TicketForm />
         }
+    }
+
+    //funcion para limpiar los valores de las variables a utilizar
+    const onCleanFilter = (data) => {
+
+        setState((prevState) => {
+            return {
+                ...prevState,
+                filtros: {
+                    ...data,
+                }
+            }
+        })
+    }
+
+    //funcion para setear y pasar que filtro se selecciono
+    const handleFilter = (data) => {
+
+        setState((prevState) => {
+            return {
+                ...prevState,
+                filtros: {
+                    ...prevState.filtros,
+                    [data.key]: data.value
+                }
+            }
+        })
     }
 
 
@@ -138,11 +169,14 @@ const Tickets = props => {
                         <div className='limittic'><div onClick={() => handleModalForm('Ticket')} className="btnadd" id='ticketmain'> Crear ticket</div></div>
                     </Col>
                 </Row>
+                <Row>
+                    <FilterTicket onCleanFilter={onCleanFilter} getFilter={handleFilter} />
+                </Row>
                 {
                     isLoaded === false ?
                         <DumpTable link='/tickets/' headers={state?.headers} data={formatedList} />
                         :
-                        <Table link='/tickets/' headers={state?.headers} data={formatedList} />
+                        <Table link='/tickets/' headers={state?.headers} data={takeDataSearch(filteredData(formatedList, state.filtros), state.currentPage)} exportdata={true} title="tickets" />
                 }
             </Container>
         </div>

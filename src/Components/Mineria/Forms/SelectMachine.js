@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { GET_MACHINES } from '../../Helpers/helper'
+import { MINING_MACHINES } from '../../Helpers/helper'
 
 const SelectMachine = (props) => {
 
@@ -26,9 +26,9 @@ const SelectMachine = (props) => {
             },
         }
 
-        const getMachines = async () => {
+        const getMiningMachine = async () => {
             try {
-                const res = await fetch(GET_MACHINES, options),
+                const res = await fetch(MINING_MACHINES, options),
                     json = await res.json()
                 /**seteamos loading */
                 setIsLoaded(true);
@@ -40,15 +40,18 @@ const SelectMachine = (props) => {
             }
         }
 
-        getMachines()
+        getMiningMachine()
+
     }, [])
+
+    console.log(machineList);
 
     return (
         <>
             <option>Seleccionar maquina</option>
             {
                 machineList?.map((item) => {
-                    return (<option value={item?.id_model}>{item?.description_model}</option>)
+                    return (<option value={item?.id_machine}>{item?.description_model}</option>)
                 })
             }
         </>

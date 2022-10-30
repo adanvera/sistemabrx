@@ -21,6 +21,7 @@ const Mineria = props => {
     const { modalType, setModalType } = useContext(DataContext)
     const modal = modalstatus
     let navigate = useNavigate()
+    const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
 
     /** funcion onchange para seteo de form */
     const handleModalForm = (form) => {
@@ -45,7 +46,7 @@ const Mineria = props => {
     }
 
     return (
-        <div className="main-content">
+        <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
             {modal && (
                 <ModalContainer
                     title={state?.title}
@@ -61,7 +62,7 @@ const Mineria = props => {
                     <Col md={2} className="a-end">  <div onClick={() => handleModalForm('Minero')} className="btnadd" > Agregar minero</div></Col>
                 </Row>
 
-                <Row className='content-mineria justify-content-between' >
+                <Row className='content-mineria justify-content-between mb-3' >
                     <Col md={4}>
                         <div id="tkprev">
                             <div className='imgtkg'>

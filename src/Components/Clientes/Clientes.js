@@ -32,6 +32,7 @@ const Clientes = props => {
     const [state, setState] = useState(initialState)
     const [dataList, setDataList] = useState('')
     const { modalstatus, setModalStatus } = useContext(DataContext)
+    const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
 
     /**acciones que son utilizadas al cargar datos de
     * las consultas
@@ -113,7 +114,7 @@ const Clientes = props => {
     }
 
     return (
-        <div className="main-content">
+        <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
             <Container fluid={true} className="">
                 {modal && (
                     <ModalContainer

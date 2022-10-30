@@ -1,7 +1,7 @@
 import './assets/css/default.css';
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { DataProvider } from "./Components/Commons/Context/DataContext";
+import { DataContext, DataProvider } from "./Components/Commons/Context/DataContext";
 import MainRoute from "./Components/Commons/MainRoute";
 import Login from "./Components/Login";
 import Sidebar from './Components/Commons/Sidebar';
@@ -13,6 +13,10 @@ import Clientes from './Components/Clientes/Clientes';
 import Mineros from './Components/Mineria/Mineros/Mineros';
 import Usuarios from './Components/Usuarios/Usuarios';
 import ClientDetails from './Components/Clientes/ClientDetails';
+import Seguridad from './Components/Seguridad/Seguridad';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { ROLES } from './Components/Helpers/helper';
 
 const App = (props) => {
 
@@ -40,6 +44,7 @@ const App = (props) => {
                 <Route exact path='/mineros' element={<Mineros />} />
                 <Route exact path='/usuarios' element={<Usuarios />} />
                 <Route exact path='/clientes/:id' element={<ClientDetails />} />
+                <Route exact path='/seguridad' element={<Seguridad />} />
               </Route>
             </Routes>
           </Fragment>

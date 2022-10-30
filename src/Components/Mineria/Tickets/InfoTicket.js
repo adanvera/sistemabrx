@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap';
-import { GET_USER_BY_ID } from '../../Helpers/helper';
 
 const InfoTicket = (props) => {
 

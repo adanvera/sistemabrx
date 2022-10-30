@@ -7,7 +7,7 @@ import SearchTable from '../Commons/SearchTable'
 import DumpTable from '../Commons/Table/DumpTable'
 import Table from '../Commons/Table/Table'
 import { formatedDataUsers } from '../Helpers/formats'
-import { URL_USERS } from '../Helpers/helper'
+import { USER } from '../Helpers/helper'
 import UsersForm from './Forms/UsersForm'
 
 const Usuarios = props => {
@@ -39,6 +39,8 @@ const Usuarios = props => {
     const [dataList, setDataList] = useState('')
     const modal = modalstatus
     let navigate = useNavigate()
+    const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
+
 
     useEffect(() => {
 
@@ -58,7 +60,7 @@ const Usuarios = props => {
 
         const getUsers = async () => {
             try {
-                const res = await fetch(URL_USERS, options),
+                const res = await fetch(USER, options),
                     json = await res.json()
                 /**seteamos loading */
                 setIsLoaded(true);
@@ -112,7 +114,7 @@ const Usuarios = props => {
     console.log(dataList);
 
     return (
-        <div className="main-content">
+        <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
             {modal && (
                 <ModalContainer
                     title={state?.title}

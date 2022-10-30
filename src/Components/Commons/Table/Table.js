@@ -3,7 +3,8 @@ import { Pagination } from "react-bootstrap";
 import { perPage } from "../../Helpers/formats.js";
 import TableHeader from "./TableHeader.js";
 import TableRow from "./TableRow.js";
-
+import { DownloadTableExcel, useDownloadExcel } from 'react-export-table-to-excel';
+import { useRef } from "react";
 
 export default function Table(props) {
     const { headers, data } = props
@@ -36,9 +37,23 @@ export default function Table(props) {
         setActive(toNumber)
     }
 
+    const exportData = props?.exportdata
+    const title = props?.title
+    const tableRef = useRef(null);
+
+    const { onDownload } = useDownloadExcel({
+        currentTableRef: tableRef.current,
+        filename: title,
+        sheet: title
+    })
+
+
     return (
         <Fragment>
-            <table className="table-list table mt-2">
+            {
+                exportData === true ? <div className="exportdata" onClick={onDownload}> Exportar datos </div> : ''
+            }
+            <table className="table-list table mt-2 " ref={tableRef}>
                 <TableHeader headers={headers} />
                 <tbody>
                     {

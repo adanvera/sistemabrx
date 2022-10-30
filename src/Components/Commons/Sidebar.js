@@ -23,6 +23,7 @@ const Sidebar = props => {
         usuarios: '',
         clientes: '',
         logOut: '',
+        seguridad: ''
     }
 
     const [modalShow, setModalShow] = useState(false)
@@ -40,7 +41,8 @@ const Sidebar = props => {
             mineria: '',
             usuarios: '',
             clientes: '',
-            logOut: ''
+            logOut: '',
+            seguridad: ''
         }
         setState(prevState => ({
             ...blankState,
@@ -72,20 +74,18 @@ const Sidebar = props => {
         }
     }
 
-    console.log(sidebarStatus);
-
     const handleOnLoad = () => { }
 
     return (
         <aside className={sidebarStatus === 'open' ? 'sidebar' : 'menu sidebar small'} onLoad={handleOnLoad()} >
             <ul className="menu-list pb-6 pt-6">
                 <div className="classss d-flex">
-                    <img  src={logo} alt="" className={sidebarStatus === 'open' ? 'main-logo' : 'hide'} />
+                    <img src={logo} alt="" className={sidebarStatus === 'open' ? 'main-logo' : 'hide'} />
                     <div onClick={handleOnClick} className={sidebarStatus === 'open' ? 'triggerwidth' : 'triggerwidthsmall'} ><ion-icon name="menu-outline"></ion-icon></div>
                 </div>
             </ul>
             <ul className="menu-list">
-                <ProtectedComponent allowedRoles={['ADMINISTRADOR']}>
+                <ProtectedComponent allowedRoles={['OPERACIONES', 'SEGURIDAD', 'MINERIA', 'USUARIOS', 'CLIENTES']}>
                     <li className={state?.dashboard ? "mt-4 classli is-active" : "mt-4 classli"}
                         id="dashboard"
                         onClick={(e) => handleSetActive('dashboard')}
@@ -98,7 +98,7 @@ const Sidebar = props => {
                         </Link>
                     </li>
                 </ProtectedComponent>
-                <ProtectedComponent allowedRoles={['ADMINISTRADOR']}>
+                <ProtectedComponent allowedRoles={['OPERACIONES']}>
                     <li className={state?.operaciones ? "mt-4 classli is-active" : "mt-4 classli"}
                         id="operaciones"
                         onClick={(e) => handleSetActive('operaciones')}
@@ -109,7 +109,7 @@ const Sidebar = props => {
                         </Link>
                     </li>
                 </ProtectedComponent>
-                <ProtectedComponent allowedRoles={['ADMINISTRADOR']}>
+                <ProtectedComponent allowedRoles={['MINERIA']}>
                     <li className={state?.mineria ? "mt-4 classli is-active" : "mt-4 classli"}
                         id="mineria"
                         onClick={(e) => handleSetActive('mineria')}
@@ -122,7 +122,7 @@ const Sidebar = props => {
                         </Link>
                     </li>
                 </ProtectedComponent>
-                <ProtectedComponent allowedRoles={['ADMINISTRADOR']}>
+                <ProtectedComponent allowedRoles={['USUARIOS']}>
                     <li className={state?.usuarios ? "mt-4 classli is-active" : "mt-4 classli"}
                         id="usuarios"
                         onClick={(e) => handleSetActive('usuarios')}
@@ -135,7 +135,7 @@ const Sidebar = props => {
                         </Link>
                     </li>
                 </ProtectedComponent>
-                <ProtectedComponent allowedRoles={['ADMINISTRADOR']}>
+                <ProtectedComponent allowedRoles={['CLIENTES']}>
                     <li className={state?.clientes ? "mt-4 classli is-active" : "mt-4 classli"}
                         id="clientes"
                         onClick={(e) => handleSetActive('clientes')}
@@ -145,6 +145,19 @@ const Sidebar = props => {
                                 <ion-icon name="people-outline"></ion-icon>
                             </div>
                             <span className="pl-3">Clientes</span>
+                        </Link>
+                    </li>
+                </ProtectedComponent>
+                <ProtectedComponent allowedRoles={['SEGURIDAD']}>
+                    <li className={state?.seguridad ? "mt-4 classli is-active" : "mt-4 classli"}
+                        id="seguridad"
+                        onClick={(e) => handleSetActive('seguridad')}
+                    >
+                        <Link to="/seguridad" className="d-flex">
+                            <div>
+                                <ion-icon name="finger-print-outline"></ion-icon>
+                            </div>
+                            <span className="pl-3">Seguridad</span>
                         </Link>
                     </li>
                 </ProtectedComponent>

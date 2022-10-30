@@ -42,7 +42,6 @@ body {
 }
 
 .main-content {
-    height: calc(100vh - 25px);
     left: 295px;
     position: absolute;
     width: calc(100vw - 325px);
@@ -277,11 +276,15 @@ div#nicknameversion {
     border-radius: 4px;
     padding-top: 5px;
     padding-bottom: 5px;
+    background: rgba(0, 143, 143, 1);
     cursor: pointer;
+    border: none;
+    color: white;
 }
 
 .btnadd:hover {
     color: #008F8F;
+    background-color: white;
     border: 1px solid #008F8F;
 }
 
@@ -526,12 +529,12 @@ div#closeone button.btn.btn-primary {
     color: white;
 }
 
-.blockedus{
+.blockedus {
     background-color: red;
     text-align: center;
     border-radius: 4px;
     justify-content: center;
-    color: white; 
+    color: white;
 }
 
 aside.menu.sidebar.small {
@@ -580,7 +583,7 @@ ul.menu-list.pb-6.pt-6 {
     border: 1px solid #D6D6D6;
 }
 
-.hide{
+.hide {
     display: none;
 }
 
@@ -588,4 +591,63 @@ ul.menu-list.pb-6.pt-6 {
     cursor: pointer;
     padding: 5px;
     border-radius: 3px;
+}
+
+.item-column {
+    display: grid;
+}
+
+.date-input {
+    height: 38px;
+    border-radius: 8px !important;
+    border-radius: 4px !important;
+}
+
+.react-date-picker__wrapper {
+    border-radius: 8px;
+    border: 1px solid rgba(85, 82, 217, 0.24) !important;
+}
+
+.select-options {
+    height: 38px !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(85, 82, 217, 0.24);
+}
+
+button.button.btn-other {
+    height: 38px;
+    border-radius: 8px;
+    border: 1px solid rgba(85, 82, 217, 0.24);
+}
+
+.column.align.col {
+    justify-content: center;
+    text-align: center;
+    vertical-align: center;
+    padding-top: 1.5rem;
+}
+
+.dataIsOk {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.dataIsOkContent.row {
+    margin-bottom: 25px;
+    margin-top: 15px;
+}
+
+.dataIsOkContent.row ion-icon {
+    color: green;
+    font-size: 50px;
+}
+
+.exportdata {
+    width: 180px;
+    cursor: pointer;
+}
+
+.exportdata:hover{
+    color: #008F8F;
 }

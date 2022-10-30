@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom';
-import { GET_USER_BY_ID, URL_GET_TICKET_BY_ID } from '../../Helpers/helper';
+import {  TICKETS } from '../../Helpers/helper';
 import InfoTicket from './InfoTicket';
 
 function DetailsTicket() {
@@ -32,7 +32,7 @@ function DetailsTicket() {
 
         const getTicket = async () => {
             try {
-                const res = await fetch(URL_GET_TICKET_BY_ID + id, options),
+                const res = await fetch(TICKETS + id, options),
                     json = await res.json()
                 /**seteamos loading */
                 setIsLoaded(true);
