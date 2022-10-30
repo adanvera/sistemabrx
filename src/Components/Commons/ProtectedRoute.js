@@ -10,12 +10,7 @@ const ProtectedRoute = ({ children }) => {
     const { user } = useContext(DataContext)
     const userAuthed = user
 
-    let navigate = useNavigate()
-
-    console.log();
-
     if (userAuthed.msg === "El token es obligatorio") {
-        console.log("im here");
         return <Navigate to="/" replace />;
     } else return children;
 };
