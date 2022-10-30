@@ -33,7 +33,7 @@ const Login = () => {
      * correctamente los datos sin la perdida de la misma
      */
     function redirectPage() {
-        timeToWait = setTimeout(pageAndAction, 500);
+        timeToWait = setTimeout(pageAndAction, 1000);
     }
 
     /**funcion correspondiente para redirigir la pagina
@@ -166,15 +166,9 @@ const Login = () => {
                             </span>
                         </FloatingLabel>
                         {
-                            dataToVerify === 0 ?
-                                <div className="red">Usuario bloqueado, comuniquese con su administrador</div>
-                                :
-                                ''
-                        }
-                        {
                             messageLog ?
-                                <div className="red">
-                                    {messageLog}
+                                <div className="red mt-3" >
+                                    {messageLog} <ion-icon name="alert-circle-outline"></ion-icon>
                                 </div> : ''
                         }
                         <div className="a-center mt-2">

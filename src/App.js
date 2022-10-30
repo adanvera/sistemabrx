@@ -17,6 +17,8 @@ import Seguridad from './Components/Seguridad/Seguridad';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { ROLES } from './Components/Helpers/helper';
+import NoRoute from './Components/Commons/NoRoute';
+import ProtectedRoute from './Components/Commons/ProtectedRoute';
 
 const App = (props) => {
 
@@ -35,16 +37,16 @@ const App = (props) => {
               <Route path="/" element={<MainRoute />}>
                 <Route index element={<Login />} />
               </Route>
-              <Route >
-                <Route exact path="/dashboard" element={<Dashboard />} />
-                <Route exact path='/mineria' element={<Mineria />} />
-                <Route exact path='/tickets' element={<Tickets />} />
-                <Route exact path='/tickets/:id' element={<DetailsTicket />} />
-                <Route exact path='/clientes' element={<Clientes />} />
-                <Route exact path='/mineros' element={<Mineros />} />
-                <Route exact path='/usuarios' element={<Usuarios />} />
-                <Route exact path='/clientes/:id' element={<ClientDetails />} />
-                <Route exact path='/seguridad' element={<Seguridad />} />
+              <Route>
+                <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                <Route path="/mineria" element={<ProtectedRoute><Mineria /></ProtectedRoute>} />
+                <Route path="/tickets" element={<ProtectedRoute><Tickets /></ProtectedRoute>} />
+                <Route path="/tickets/:id" element={<ProtectedRoute><DetailsTicket /></ProtectedRoute>} />
+                <Route path="/clientes" element={<ProtectedRoute><Clientes /></ProtectedRoute>} />
+                <Route path="/mineros" element={<ProtectedRoute><Mineros /></ProtectedRoute>} />
+                <Route path="/usuarios" element={<ProtectedRoute><Usuarios /></ProtectedRoute>} />
+                <Route path="/clientes/:id" element={<ProtectedRoute><ClientDetails /></ProtectedRoute>} />
+                <Route path="/seguridad" element={<ProtectedRoute><Seguridad /></ProtectedRoute>} />
               </Route>
             </Routes>
           </Fragment>

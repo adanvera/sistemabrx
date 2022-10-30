@@ -651,3 +651,14 @@ button.button.btn-other {
 .exportdata:hover{
     color: #008F8F;
 }
+
+input#custom-switch {
+    font-size: 15px;
+}
+
+.red{
+    color: red;
+    font-size: 12px;
+    justify-content: center;
+    text-align: center;
+}

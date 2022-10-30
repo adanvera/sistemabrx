@@ -210,3 +210,23 @@ export const formatedDataMiners = (data) => {
     }
     return obData
 }
+
+export const formatedDataRoles = (data) => {
+    let obData = {}
+
+    if (data) {
+        data?.map(item => {
+            obData = {
+                ...obData,
+                [item?.id_role]: {
+                    description: item.description,
+                    access: (item.access),
+                    status: item.status,
+                    actions: 'x x',
+                }
+
+            }
+        })
+    }
+    return obData
+}
