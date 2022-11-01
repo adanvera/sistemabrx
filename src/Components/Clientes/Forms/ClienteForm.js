@@ -1,9 +1,11 @@
 import React, { Fragment, useContext, useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap';
-import { CREATE_CLIENT } from '../../Helpers/helper';
+import { CLIENT} from '../../Helpers/helper';
 import { DataContext } from '../../Commons/Context/DataContext';
 
 const ClienteForm = (props) => {
+  console.log("Visualizando props");
+  console.log(props);
 
   /**delcaramos nuestras variables a utilizar */
   const { modalstatus, setModalStatus } = useContext(DataContext)
@@ -66,7 +68,7 @@ const ClienteForm = (props) => {
       body: JSON.stringify(clientToCreate)
     };
     try {
-      const res = await fetch(CREATE_CLIENT, option),
+      const res = await fetch(CLIENT, option),
         json = await res.json();
       setDataVerify(true)
       if (!res.ok) {
@@ -77,7 +79,7 @@ const ClienteForm = (props) => {
   }
 
   /**vista form correspondiente si el tipo de modal es añadir cliente */
-  if (props.modalType === 'Add') {
+  
     return (
 
       <Fragment>
@@ -178,6 +180,6 @@ const ClienteForm = (props) => {
         }
       </Fragment>)
   }
-}
+
 
 export default ClienteForm

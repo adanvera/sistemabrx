@@ -6,7 +6,7 @@ import SearchTable from '../Commons/SearchTable';
 import DumpTable from '../Commons/Table/DumpTable';
 import Table from '../Commons/Table/Table';
 import { filterDataList, formatDataClientes, formatedDataClient, formatedDataTicket, takeDataSearch } from '../Helpers/formats';
-import { GET_CLIENTS } from '../Helpers/helper';
+import { CLIENT} from '../Helpers/helper';
 import ClienteForm from './Forms/ClienteForm';
 
 
@@ -16,6 +16,7 @@ const Clientes = props => {
     /**declaramos variables a utlizar */
     const initialState = {
         modalShow: false,
+        form: 'Cliente',
         headers: {
             id:'Codigo ',
             document: "Nro de documento",   
@@ -33,6 +34,7 @@ const Clientes = props => {
     const [dataList, setDataList] = useState('')
     const { modalstatus, setModalStatus } = useContext(DataContext)
     const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
+    const {modalType,setModalType} = useContext(DataContext);
 
     /**acciones que son utilizadas al cargar datos de
     * las consultas
@@ -47,13 +49,14 @@ const Clientes = props => {
     const pickForm = () => {
         switch (state?.form) {
             case 'Cliente':
-                return <ClienteForm />
+                return <ClienteForm   />
         }
     }
 
 
     const handleModalForm = (form) => {
         setModalStatus(true)
+        setModalType('Add')
         setState(prev => {
             return {
                 ...prev,
@@ -82,7 +85,7 @@ const Clientes = props => {
 
         const getClient = async () => {
             try {
-                const res = await fetch(GET_CLIENTS, options),
+                const res = await fetch(CLIENT, options),
                     json = await res.json()
                 /**seteamos loading */
                 console.log(json);
@@ -120,8 +123,8 @@ const Clientes = props => {
                     <ModalContainer
                         title={state?.title}
                         form={pickForm()}
-                    // modalStatus={modal}
-                    // modalType={usermodal}
+                        modalStatus={modal}
+                        modalType={modalType}
                     />
                 )}
                 <Row className=" is-3 text-al-ini titlemodule"><h5 className="title-details ml-5 pt-3">Clientes</h5></Row>
