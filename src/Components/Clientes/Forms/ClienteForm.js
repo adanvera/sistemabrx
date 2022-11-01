@@ -5,6 +5,9 @@ import { DataContext } from '../../Commons/Context/DataContext';
 
 const ClienteForm = (props) => {
 
+
+  console.log(props);
+
   /**delcaramos nuestras variables a utilizar */
   const { modalstatus, setModalStatus } = useContext(DataContext)
   const [dataValidate, setDataVerify] = useState(false)
@@ -77,7 +80,7 @@ const ClienteForm = (props) => {
   }
 
   /**vista form correspondiente si el tipo de modal es añadir cliente */
-  if (props.modalType === 'Add') {
+  
     return (
 
       <Fragment>
@@ -177,7 +180,7 @@ const ClienteForm = (props) => {
             </Form>
         }
       </Fragment>)
-  }
+  
 }
 
 export default ClienteForm

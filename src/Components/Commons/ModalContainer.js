@@ -4,6 +4,8 @@ import { DataContext } from './Context/DataContext';
 
 const ModalContainer = (props) => {
 
+    console.log("Modal: ",props);
+
     const [show, setShow] = useState(false);
     const handleClose = () => setModalStatus(false);
     const handleShow = () => setShow(true);

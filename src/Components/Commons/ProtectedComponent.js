@@ -14,8 +14,9 @@ const ProtectedComponent = ({ allowedRoles, children }) => {
     let role = userRol
 
     try {
+        /**accedemos al rol y parseamos */
         const access = role?.access ? role?.access : ''
-        const accessTo = JSON.parse(access)
+        const accessTo = JSON.parse("[" + access + "]")
 
         /**filtramos y guardamos los accesos de los roles */
         const clientes = accessTo.filter((item) => { return item?.title.includes("CLIENTES") })

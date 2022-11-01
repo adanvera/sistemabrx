@@ -17,8 +17,8 @@ const Clientes = props => {
     const initialState = {
         modalShow: false,
         headers: {
-            id:'Codigo ',
-            document: "Nro de documento",   
+            id: 'Codigo ',
+            document: "Nro de documento",
             name: 'Nombre y apellido',
             address: 'Dirección',
             phone: 'Nro de telefono',
@@ -33,6 +33,7 @@ const Clientes = props => {
     const [dataList, setDataList] = useState('')
     const { modalstatus, setModalStatus } = useContext(DataContext)
     const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
+    const { modalType, setModalType } = useContext(DataContext)
 
     /**acciones que son utilizadas al cargar datos de
     * las consultas
@@ -54,6 +55,7 @@ const Clientes = props => {
 
     const handleModalForm = (form) => {
         setModalStatus(true)
+        setModalType('Add')
         setState(prev => {
             return {
                 ...prev,
@@ -62,7 +64,7 @@ const Clientes = props => {
             }
         })
     }
-    
+
     /*Aca obtenemos los clientes*/
     useEffect(() => {
 
@@ -92,7 +94,7 @@ const Clientes = props => {
             } catch (error) {
                 setIsLoaded(true);
                 setError(error);
-                console.log("Esto es el error"+error);
+                console.log("Esto es el error" + error);
             }
         }
 
@@ -113,6 +115,8 @@ const Clientes = props => {
         }))
     }
 
+    const usermodal = modalType
+
     return (
         <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
             <Container fluid={true} className="">
@@ -120,8 +124,8 @@ const Clientes = props => {
                     <ModalContainer
                         title={state?.title}
                         form={pickForm()}
-                    // modalStatus={modal}
-                    // modalType={usermodal}
+                        modalStatus={modal}
+                        modalType={usermodal}
                     />
                 )}
                 <Row className=" is-3 text-al-ini titlemodule"><h5 className="title-details ml-5 pt-3">Clientes</h5></Row>

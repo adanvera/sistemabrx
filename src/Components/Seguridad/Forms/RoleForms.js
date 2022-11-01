@@ -50,7 +50,7 @@ const RoleForms = (props) => {
     const createRol = {
       description: state.variables.description,
       status: Number(state.variables.status),
-      access: (seguridad, clientes, operaciones, usuarios, mineria)
+      access: `${ seguridad ? seguridad + "," : ''} ${clientes ? clientes + "," : ''} ${operaciones ? operaciones + "," : ''} ${usuarios ? usuarios + "," : ''} ${mineria ? mineria :''}`
     }
 
     const rolesOptions = {
