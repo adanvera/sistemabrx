@@ -3,9 +3,8 @@ import Modal from 'react-bootstrap/Modal';
 import { DataContext } from './Context/DataContext';
 
 const ModalContainer = (props) => {
-
-    console.log("Modal: ",props);
-
+    console.log('Visualizando props Modal Container');
+    console.log(props);
     const [show, setShow] = useState(false);
     const handleClose = () => setModalStatus(false);
     const handleShow = () => setShow(true);
