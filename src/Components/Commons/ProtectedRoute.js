@@ -12,7 +12,8 @@ const ProtectedRoute = ({ children }) => {
 
     if (userAuthed.msg === "El token es obligatorio") {
         return <Navigate to="/" replace />;
-    } else return children;
-};
+    } else return children
+
+}
 
 export default ProtectedRoute;
