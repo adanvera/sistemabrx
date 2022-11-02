@@ -87,7 +87,7 @@ const Usuarios = props => {
 
         getUsers()
 
-    }, []);
+    }, [dataList]);
 
     /**guardamos id de usuario clikeado en la tabla
   * seteado mediante el use context
@@ -199,7 +199,7 @@ const Usuarios = props => {
                     isLoaded === false ?
                         <DumpTable headers={state?.headers} data={formatedList} />
                         :
-                        <Table headers={state?.headers} data={filteredDataUsers(formatedList, state?.filtros)} exportdata={true} />
+                        <Table headers={state?.headers} data={filteredDataUsers(formatedList, state?.filtros)} exportdata={true}  title="Usuarios" />
                 }
             </Container>
         </div>
