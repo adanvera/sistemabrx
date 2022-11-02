@@ -54,7 +54,7 @@ const Seguridad = props => {
     const pickForm = () => {
         switch (state?.form) {
             case 'Roles':
-                return <RoleForms />
+                return <RoleForms modalType={modalType} />
         }
     }
 
@@ -89,7 +89,7 @@ const Seguridad = props => {
             },
         }
 
-        const getUsers = async () => {
+        const getRoles = async () => {
             try {
                 const res = await fetch(ROLES, options),
                     json = await res.json()
@@ -104,12 +104,25 @@ const Seguridad = props => {
             }
         }
 
-        getUsers()
+        getRoles()
 
 
-    }, [])
+    }, [dataList])
 
     const formatedList = formatedDataRoles(dataList)
+
+    /**seteamos tipo de modal al dar click
+   * en boton de añadir rol
+   */
+    const handleOnClick = (e, btn) => {
+        e.preventDefault()
+        setModalStatus(true)
+
+        if (btn === '_AddRole') {
+            setModalType('Add')
+        }
+    }
+
 
     return (
         <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
@@ -131,7 +144,7 @@ const Seguridad = props => {
                         />
                     </Col>
                     <Col md={6} className="endmain">
-                        <div className='limittic'><div onClick={() => handleModalForm('Roles')} className="btnadd" id='ticketmain'> Crear rol</div></div>
+                        <div className='limittic'><div onClick={(e) => handleOnClick(e, '_AddRole')} className="btnadd" id='ticketmain'> Crear rol</div></div>
                     </Col>
                 </Row>
                 {

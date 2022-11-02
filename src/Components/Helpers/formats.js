@@ -219,9 +219,10 @@ export const formatedDataRoles = (data) => {
             obData = {
                 ...obData,
                 [item?.id_role]: {
+                    id_role: item?.id_role,
                     description: item.description,
                     access: (item.access),
-                    status: item.status,
+                    status: dataStatus(item.status),
                     actions: 'x x',
                 }
 
@@ -229,4 +230,34 @@ export const formatedDataRoles = (data) => {
         })
     }
     return obData
+}
+
+
+// export const dataAccess = (data) => {
+//     if (data) {
+
+//         const dete = data ? data : ''
+
+//         const accessTo = JSON.parse("[" + dete + "]")
+
+//         /**filtramos y guardamos los accesos de los roles */
+//         const clientes = accessTo ? accessTo.filter((item) => { return item?.title?.includes("CLIENTES") }) : ''
+//         const seguridad = accessTo ? accessTo.filter((item) => { return item?.title?.includes("SEGURIDAD") }) : ''
+//         const usuarios = accessTo ? accessTo.filter((item) => { return item?.title?.includes("USUARIOS") }) : ''
+//         const mineria = accessTo ? accessTo.filter((item) => { return item?.title?.includes("MINERIA") }) : ''
+//         const operaciones = accessTo ? accessTo.filter((item) => { return item?.title?.includes("OPERACIONES") }) : ''
+
+//         return `${seguridad[0]?.title === undefined ? '' : seguridad[0]?.title + ","} 
+//     ${clientes[0]?.title === undefined ? '' : clientes[0]?.title + ","} ${operaciones[0]?.title === undefined ? '' : operaciones[0]?.title + ","}
+//      ${usuarios[0]?.title === undefined ? '' : usuarios[0]?.title + ","} ${mineria[0]?.title === undefined ? '' : mineria[0]?.title}`
+//     }
+
+// }
+
+export const dataStatus = (data) => {
+
+    if (data !== 1) {
+        return <div>INACTIVO</div>
+    } else { return <div>ACTIVO</div> }
+
 }

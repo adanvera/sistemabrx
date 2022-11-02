@@ -8,7 +8,9 @@ import DumpTable from '../Commons/Table/DumpTable'
 import Table from '../Commons/Table/Table'
 import { formatedDataUsers } from '../Helpers/formats'
 import { USER } from '../Helpers/helper'
+import UserFilter from './Forms/UserFilter'
 import UsersForm from './Forms/UsersForm'
+
 
 const Usuarios = props => {
 
@@ -40,6 +42,7 @@ const Usuarios = props => {
     const modal = modalstatus
     let navigate = useNavigate()
     const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
+    const { dataidrow } = useContext(DataContext)
 
 
     useEffect(() => {
@@ -77,11 +80,16 @@ const Usuarios = props => {
 
     }, []);
 
+    /**guardamos id de usuario clikeado en la tabla
+  * seteado mediante el use context
+ */
+    const id_user = dataidrow
+
     /**funcion para setear form clickeado */
     const pickForm = () => {
         switch (state?.form) {
             case 'Usuarios':
-                return <UsersForm />
+                return <UsersForm modalType={modalType} id_user={id_user} />
         }
     }
 
@@ -97,21 +105,53 @@ const Usuarios = props => {
         }))
     }
 
-    /** funcion onchange para seteo de form */
-    const handleModalForm = (form) => {
+    const formatedList = formatedDataUsers(dataList)
+
+    /**seteamos tipo de modal al dar click
+   * en boton de añadir usuario
+   */
+    const handleOnClick = (e, btn, form) => {
+        e.preventDefault()
         setModalStatus(true)
-        setState(prev => {
+
+        if (btn === '_AddUser') {
+            setModalType('Add')
+            setState(prev => {
+                return {
+                    ...prev,
+                    form: form,
+                    title: "Añadir " + form
+                }
+            })
+        }
+    }
+
+    //funcion para limpiar los valores de las variables a utilizar
+    const onCleanFilter = (data) => {
+
+        setState((prevState) => {
             return {
-                ...prev,
-                form: form,
-                title: form
+                ...prevState,
+                filtros: {
+                    ...data,
+                }
             }
         })
     }
 
-    const formatedList = formatedDataUsers(dataList)
+    //funcion para setear y pasar que filtro se selecciono
+    const handleFilter = (data) => {
 
-    console.log(dataList);
+        setState((prevState) => {
+            return {
+                ...prevState,
+                filtros: {
+                    ...prevState.filtros,
+                    [data.key]: data.value
+                }
+            }
+        })
+    }
 
     return (
         <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
@@ -133,8 +173,11 @@ const Usuarios = props => {
                         />
                     </Col>
                     <Col md={6} className="endmain">
-                        <div className='limittic'><div onClick={() => handleModalForm('Usuarios')} className="btnadd" id='ticketmain'> Crear usuario</div></div>
+                        <div className='limittic'><div onClick={(e) => handleOnClick(e, '_AddUser', state?.form)} className="btnadd" id='ticketmain'> Crear usuario</div></div>
                     </Col>
+                </Row>
+                <Row>
+                    <UserFilter onCleanFilter={onCleanFilter} getFilter={handleFilter} />
                 </Row>
                 {
                     isLoaded === false ?
