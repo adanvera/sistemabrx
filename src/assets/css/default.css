@@ -681,3 +681,11 @@ div#_btnBlock {
 aside.menu.sidebar.small ul.menu-list {
     padding: 0;
 }
+
+.dataIsOkContent.warning.row ion-icon {
+    color: orange;
+}
+
+.modaltitle.modal-title.h4 {
+    text-transform: uppercase;
+}

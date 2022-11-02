@@ -8,7 +8,7 @@ import ModalContainer from "../Commons/ModalContainer"
 import SearchTable from "../Commons/SearchTable"
 import DumpTable from "../Commons/Table/DumpTable"
 import Table from "../Commons/Table/Table"
-import { formatedDataRoles } from "../Helpers/formats"
+import { filteredDataRole, formatedDataRoles } from "../Helpers/formats"
 import { ROLES } from "../Helpers/helper"
 import RoleForms from "./Forms/RoleForms"
 
@@ -123,6 +123,19 @@ const Seguridad = props => {
         }
     }
 
+    //funcion para setear y pasar que filtro se selecciono
+    const handleFilter = (data) => {
+
+        setState((prevState) => {
+            return {
+                ...prevState,
+                filtros: {
+                    ...prevState.filtros,
+                    [data.key]: data.value
+                }
+            }
+        })
+    }
 
     return (
         <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
@@ -151,7 +164,7 @@ const Seguridad = props => {
                     isLoaded === false ?
                         <DumpTable headers={state?.headers} data={formatedList} />
                         :
-                        <Table headers={state?.headers} data={formatedList} />
+                        <Table headers={state?.headers} data={filteredDataRole(formatedList, state?.filtros)} />
                 }
             </Container>
         </div>

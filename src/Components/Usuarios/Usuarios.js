@@ -3,11 +3,12 @@ import { Col, Container, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { DataContext } from '../Commons/Context/DataContext'
 import ModalContainer from '../Commons/ModalContainer'
+import ProtectedComponent from '../Commons/ProtectedComponent'
 import SearchTable from '../Commons/SearchTable'
 import DumpTable from '../Commons/Table/DumpTable'
 import Table from '../Commons/Table/Table'
-import { formatedDataUsers } from '../Helpers/formats'
-import { USER } from '../Helpers/helper'
+import { filteredDataUsers, formatedDataUsers } from '../Helpers/formats'
+import { ROLES, USER } from '../Helpers/helper'
 import UserFilter from './Forms/UserFilter'
 import UsersForm from './Forms/UsersForm'
 
@@ -28,6 +29,13 @@ const Usuarios = props => {
             update_data: 'Fecha de modificación',
             actions: 'Acciones'
         },
+        filtros: {
+            name: '',
+            estado: '',
+            rol: '',
+            desde: '',
+            hasta: '',
+        },
     }
 
     /**acciones que son utilizadas al cargar datos de
@@ -43,7 +51,8 @@ const Usuarios = props => {
     let navigate = useNavigate()
     const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
     const { dataidrow } = useContext(DataContext)
-
+    const modaal = modalstatus
+    const usermodal = modalType
 
     useEffect(() => {
 
@@ -120,7 +129,7 @@ const Usuarios = props => {
                 return {
                     ...prev,
                     form: form,
-                    title: "Añadir " + form
+                    title: form
                 }
             })
         }
@@ -159,8 +168,8 @@ const Usuarios = props => {
                 <ModalContainer
                     title={state?.title}
                     form={pickForm()}
-                // modalStatus={modal}
-                // modalType={usermodal}
+                    modalStatus={modal}
+                    modalType={usermodal}
                 />
             )}
             <Container fluid={true} className="">
@@ -172,9 +181,16 @@ const Usuarios = props => {
                             handleChange={handleSearch}
                         />
                     </Col>
-                    <Col md={6} className="endmain">
-                        <div className='limittic'><div onClick={(e) => handleOnClick(e, '_AddUser', state?.form)} className="btnadd" id='ticketmain'> Crear usuario</div></div>
-                    </Col>
+                    <ProtectedComponent allowedRoles={['SEGURIDAD']}>
+                        <Col md={6} className="endmain">
+                            <div className='limittic'>
+                                <div onClick={(e) => handleOnClick(e, '_AddUser', state?.form)} className="btnadd" id='ticketmain'>
+                                    Crear usuario
+                                </div>
+                            </div>
+                        </Col>
+
+                    </ProtectedComponent>
                 </Row>
                 <Row>
                     <UserFilter onCleanFilter={onCleanFilter} getFilter={handleFilter} />
@@ -183,7 +199,7 @@ const Usuarios = props => {
                     isLoaded === false ?
                         <DumpTable headers={state?.headers} data={formatedList} />
                         :
-                        <Table headers={state?.headers} data={formatedList} />
+                        <Table headers={state?.headers} data={filteredDataUsers(formatedList, state?.filtros)} exportdata={true} />
                 }
             </Container>
         </div>

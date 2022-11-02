@@ -85,12 +85,14 @@ export const formatedDataUsers = (data) => {
             obData = {
                 ...obData,
                 [item?.id_user]: {
+                    id_user: item.id_user,
                     name: item.name + ' ' + item.last_name,
                     document: item.document,
                     email: item.email,
                     register: formatoDate(item.register),
+                    created_at_user: item.register,
                     rol: item.rol,
-                    status: formatStatus(item.status),
+                    estado: formatStatus(item.status),
                     update_data: formatoDate(item.update_data),
                     actions: 'x x',
                 }
@@ -163,8 +165,6 @@ export const filteredData = (dataList, filter) => {
                         return fechaTicket.toISOString().substring(0, 10) >= fechaFiltro.toISOString().substring(0, 10)
                     }
 
-                    console.log(filter[filtro]);
-
                     return (filteredData[item][filtro].toLowerCase().includes(filter[filtro].toLowerCase()))
                 })
                 // se devuelve el objeto del vendedor que cumplio con el filtro
@@ -220,7 +220,7 @@ export const formatedDataRoles = (data) => {
                 ...obData,
                 [item?.id_role]: {
                     id_role: item?.id_role,
-                    description: item.description,
+                    description: item?.description,
                     access: (item.access),
                     status: dataStatus(item.status),
                     actions: 'x x',
@@ -261,3 +261,109 @@ export const dataStatus = (data) => {
     } else { return <div>ACTIVO</div> }
 
 }
+
+
+
+/**
+ * @param dataList Lista de Objetos con datos a ser filtrados
+ * @param filter Objeto con los filtros que debe ser iterado y filtrado el dataList
+* */
+export const filteredDataUsers = (dataList, filter) => {
+    /**
+     * Se asigna a la variables @filteredData para poder ir modificando
+     * */
+    let filteredData = dataList;
+
+    /**
+     * Se elimina los filtros vacios del objeto
+     * Dejando un objeto solo con los atributos con valores asignados.
+     * */
+    for (let key in filter) {
+        if (filter[key] === '') {
+            delete filter[key]
+        }
+    }
+
+    Object.keys(filter).forEach(filtro => {
+        /**
+         * Si el Filtro es distinta al valor TODAS procedera a filtrar, ya que TODAS implica que debe devolver el objeto
+         * tal cual se mando inicialmente
+         * */
+        (filter[filtro] !== 'TODAS') && (
+            filteredData =
+            // se obtiene array de keys para poder iterar el objeto
+            Object.keys(filteredData)
+                // Se verifica si el objeto del vendedor cumple con el filtro seleccionado
+                .filter(item => {
+
+                    if (filtro === 'hasta') {
+                        const fechaTicket = new Date(filteredData[item].created_at_user)
+                        const fechaFiltro = filter[filtro]
+                        return fechaTicket.toISOString().substring(0, 10) <= fechaFiltro.toISOString().substring(0, 10)
+                    }
+
+                    if (filtro === 'desde') {
+                        const fechaTicket = new Date(filteredData[item].created_at_user)
+                        const fechaFiltro = filter[filtro]
+                        return fechaTicket.toISOString().substring(0, 10) >= fechaFiltro.toISOString().substring(0, 10)
+                    }
+
+                    return (filteredData[item][filtro].toLowerCase().includes(filter[filtro].toLowerCase()))
+                })
+                // se devuelve el objeto del vendedor que cumplio con el filtro
+                .map(id => filteredData[id])
+        )
+
+    })
+
+    // Finalmente se retorna los datos filtrados
+    return filteredData
+
+}
+
+
+
+/**
+ * @param dataList Lista de Objetos con datos a ser filtrados
+ * @param filter Objeto con los filtros que debe ser iterado y filtrado el dataList
+* */
+export const filteredDataRole = (dataList, filter) => {
+    /**
+     * Se asigna a la variables @filteredData para poder ir modificando
+     * */
+    let filteredData = dataList;
+
+    /**
+     * Se elimina los filtros vacios del objeto
+     * Dejando un objeto solo con los atributos con valores asignados.
+     * */
+    for (let key in filter) {
+        if (filter[key] === '') {
+            delete filter[key]
+        }
+    }
+
+    Object.keys(filter).forEach(filtro => {
+        /**
+         * Si el Filtro es distinta al valor TODAS procedera a filtrar, ya que TODAS implica que debe devolver el objeto
+         * tal cual se mando inicialmente
+         * */
+        (filter[filtro] !== 'TODAS') && (
+            filteredData =
+            // se obtiene array de keys para poder iterar el objeto
+            Object.keys(filteredData)
+                // Se verifica si el objeto del vendedor cumple con el filtro seleccionado
+                .filter(item => {
+                    return (filteredData[item][filtro].toLowerCase().includes(filter[filtro].toLowerCase()))
+                })
+                // se devuelve el objeto del vendedor que cumplio con el filtro
+                .map(id => filteredData[id])
+        )
+
+    })
+
+    // Finalmente se retorna los datos filtrados
+    return filteredData
+
+}
+

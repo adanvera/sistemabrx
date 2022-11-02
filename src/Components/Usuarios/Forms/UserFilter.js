@@ -8,8 +8,8 @@ const UserFilter = props => {
 
     //declaramos variables a utilizar
     const initialState = {
-        status: 'TODAS',
-        priority: 'TODAS',
+        estado: 'TODAS',
+        rol: 'TODAS',
         desde: '',
         hasta: ''
     }
@@ -38,27 +38,27 @@ const UserFilter = props => {
 
     // Select para estado del ticket
     const selectStatus = {
-        slice: 'status',
+        slice: 'estado',
         label: 'Estado',
         default: '',
         disabled: 'Seleccionar estado',
         options: {
             TODAS: 'Todas',
-            1: 'ACTIVA',
-            0: 'BLOQUEADA',
+            ACTIVA: 'ACTIVA',
+            BLOQUEADA: 'BLOQUEADA',
         }
     }
 
     // Select para prioridad del ticket
     const selectPriority = {
-        slice: 'priority',
-        label: 'Prioridad',
+        slice: 'rol',
+        label: 'Rol',
         default: '',
-        disabled: 'Seleccionar estado',
+        disabled: 'Seleccionar rol',
         options: {
             TODAS: 'Todas',
-            LOW: 'BAJA',
-            LOWEST: 'MUY BAJA',
+            ADMINISTRADOR: 'ADMINISTRADOR',
+            SEGURIDAD: 'SEGURIDAD',
         }
     }
 
@@ -121,12 +121,12 @@ const UserFilter = props => {
             </Col>
             <Col>
                 <div className="item-column has-text-left">
-                    <Select defaultValue={state.status} optionList={selectStatus} setSelected={setSelectedValue} />
+                    <Select defaultValue={state.estado} optionList={selectStatus} setSelected={setSelectedValue} />
                 </div>
             </Col>
             <Col>
                 <div className="item-column has-text-left">
-                    <Select defaultValue={state.priority} optionList={selectPriority} setSelected={setSelectedValue} />
+                    <Select defaultValue={state.rol} optionList={selectPriority} setSelected={setSelectedValue} />
                 </div>
             </Col>
             <Col className="column align">

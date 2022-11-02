@@ -4,8 +4,6 @@ import ProtectedComponent from '../../Commons/ProtectedComponent';
 
 const RoleActions = (props) => {
 
-    console.log(props);
-
     const { modalType, setModalType } = useContext(DataContext)
     const { modalStatus, setModalStatus } = useContext(DataContext)
     const { setDataIdRow } = useContext(DataContext)
