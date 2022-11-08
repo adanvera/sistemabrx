@@ -15,9 +15,9 @@ const RoleActions = (props) => {
         setModalStatus(true)
         const dataIDc = e.target.getAttribute("dataid")
 
-
         if (btn === '_btnEdit') {
             setModalType('Edit')
+            setDataIdRow(dataIDc)
         }
         if (btn === '_btnDelete') {
             setModalType('Delete')

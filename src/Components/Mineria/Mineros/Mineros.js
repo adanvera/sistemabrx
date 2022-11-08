@@ -8,6 +8,7 @@ import DumpTable from '../../Commons/Table/DumpTable'
 import Table from '../../Commons/Table/Table'
 import { filteredData, formatedDataMiners } from '../../Helpers/formats'
 import { MINING_MACHINES } from '../../Helpers/helper'
+import { ALL_MINERS_DETAILS, API_KEY } from '../../Utils/Queries/Queries'
 import MachineForm from '../Forms/MachineForm'
 import MineroForms from '../Forms/MineroForms'
 

@@ -107,7 +107,7 @@ const Seguridad = props => {
         getRoles()
 
 
-    }, [dataList])
+    }, [])
 
     const formatedList = formatedDataRoles(dataList)
 
