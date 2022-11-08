@@ -1,17 +1,17 @@
 /**declaramos las apis correspondientes y asignamos su dirección correspondiente*/
-const URL_AUTH_USER = 'https://brxsgo.com/api/auth/login'
+const URL_AUTH_USER = 'http://backend.brxsgo.com/api/auth/login'
 
-const USER = 'https://brxsgo.com/api/user/'
-const ROLES = "https://brxsgo.com/api/roles/"
+const USER = 'http://backend.brxsgo.com/api/user/'
+const ROLES = "http://backend.brxsgo.com/api/roles/"
 
-const TICKETS = "https://brxsgo.com/api/tickets/"
+const TICKETS = "http://backend.brxsgo.com/api/tickets/"
 
 
-const MINING_MACHINES = "https://brxsgo.com/api/mining/"
+const MINING_MACHINES = "http://backend.brxsgo.com/api/mining/"
 
-const MACHINES = "https://brxsgo.com/api/machines/"
+const MACHINES = "http://backend.brxsgo.com/api/machines/"
 
-const CLIENT = 'https://brxsgo.com/api/client/'
+const CLIENT = 'http://backend.brxsgo.com/api/client/'
 
 
 /**exportamos nuestras declaraciones de valores
