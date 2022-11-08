@@ -16,10 +16,10 @@ export default function TableRow(props) {
         if ((props?.link) && (pathname === '/tickets')) {
             navigate(`${props?.link}${data?.id_ticket}`)
         }
-        if ((props?.link) && (pathname === '/clientes')) {
+        /* if ((props?.link) && (pathname === '/clientes')) {
             console.log("me voyo a otro lado");
             navigate(`${props?.link}${data?.id_cliente}`)
-        }
+        }  */
     }
 
     const veifyData = (data, col) => {
@@ -41,7 +41,7 @@ export default function TableRow(props) {
                                         pathname === '/tickets' && <TicketActions />
                                     }
                                     {
-                                        pathname === '/clientes' && <ClientActions />
+                                        pathname === '/clientes' && <ClientActions dataID={data?.id_cliente}/>
                                     }
                                     {
                                         pathname === '/usuarios' && <UserActions dataID={data?.id_user} />

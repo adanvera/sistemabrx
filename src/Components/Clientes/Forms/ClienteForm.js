@@ -4,15 +4,14 @@ import { CLIENT} from '../../Helpers/helper';
 import { DataContext } from '../../Commons/Context/DataContext';
 
 const ClienteForm = (props) => {
-  console.log("Visualizando props");
-  console.log(props);
-
-
+  const modalType = props.modalType
+  const id_client = props.id_client
   console.log(props);
 
   /**delcaramos nuestras variables a utilizar */
   const { modalstatus, setModalStatus } = useContext(DataContext)
   const [dataValidate, setDataVerify] = useState(false)
+  const [isDelete,setIsDelete] = useState(false)
   const initialState = {
     name: '',
     last_name: '',
@@ -24,6 +23,34 @@ const ClienteForm = (props) => {
 
   /**inicializamos la variable initialstate */
   const [state, setState] = useState(initialState)
+  const handleDelete = async (e)=>{
+    e.preventDefault()
+    console.log('Eliminando');
+    console.log(e);
+    const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
+
+    let option = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        'token': token
+      },
+      
+    }
+    try{
+      const req = await fetch(CLIENT+id_client,option),
+            res = await req.json()
+          console.log(res);
+          setDataVerify(true)
+    }catch(e){
+      console.log(e);
+    }     
+
+
+
+
+
+  }
 
   /**funcion onchange para setear los valores ingresados */
   const handleChange = (e) => {
@@ -82,8 +109,8 @@ const ClienteForm = (props) => {
   }
 
   /**vista form correspondiente si el tipo de modal es añadir cliente */
-  
-    return (
+    //para agregar clientes
+    if(modalType === 'Add') return (
 
       <Fragment>
         {
@@ -181,7 +208,49 @@ const ClienteForm = (props) => {
               </Row>
             </Form>
         }
-      </Fragment>)
+      </Fragment>
+    )
+
+
+    //para eliminar cliente
+    if(modalType === 'Delete') return (
+
+      <Fragment>
+        {
+          dataValidate === true ?
+            <div className='dataIsOk'>
+              <Row className='dataIsOkContent'>
+                <ion-icon name="checkmark-circle-outline"></ion-icon>
+                <span>Cliente eliminado exitosamente</span>
+              </Row>
+              <Row id='close'>
+                <Button className='btn closeBtn' onClick={() => setModalStatus(false)}>Cerrar</Button>
+              </Row>
+            </div>
+            :
+            <Form onSubmit={handleDelete}>
+                    <div className='dataIsOk'>
+                        <Row className='dataIsOkContent warning'>
+                            <ion-icon name="alert-circle-outline"></ion-icon>
+                            <div className='mt-3'>
+                                {
+                                <span>¿Estas seguro de eliminar este cliente?</span>
+                                }
+                            </div>
+                        </Row>
+                        <Row className='addusr mt-3'>
+                            <Col id='create'>
+                                <Button type="submit">Aceptar</Button>
+                            </Col>
+                            <Col id='closeone' className='closee'>
+                                <Button onClick={() => setModalStatus(false)}>Cerrar</Button>
+                            </Col>
+                        </Row>
+                    </div>
+                </Form>
+        }
+      </Fragment>
+    )
   }
 
 

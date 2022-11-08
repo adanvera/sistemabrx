@@ -35,6 +35,7 @@ const Clientes = props => {
     const { modalstatus, setModalStatus } = useContext(DataContext)
     const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
     const {modalType,setModalType} = useContext(DataContext);
+    const { dataidrow } = useContext(DataContext)
 
     /**acciones que son utilizadas al cargar datos de
     * las consultas
@@ -43,13 +44,15 @@ const Clientes = props => {
     const [isLoaded, setIsLoaded] = useState(false);
     const formatedList = formatedDataClient(dataList)
 
+
+
     const modal = modalstatus
 
     /**funcion para setear form clickeado */
     const pickForm = () => {
         switch (state?.form) {
             case 'Cliente':
-                return <ClienteForm   />
+                return <ClienteForm modalType= {modalType} id_client={dataidrow}/>
         }
     }
 
