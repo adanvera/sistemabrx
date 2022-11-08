@@ -26,12 +26,14 @@ const RoleForms = (props) => {
   const [dataValidate, setDataVerify] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false);
   const { dataidrow } = useContext(DataContext)
+  const [confirmChange, setConfirmChange] = useState(false)
   /**onchange correspondiente para validar por su estado */
   const handleClickSeguridad = (data, checked) => { checked === true ? setSeguridad(data) : setSeguridad('') }
   const handleClickMineria = (data, checked) => { checked === true ? setMineria(data) : setMineria('') }
   const handleClickUsuarios = (data, checked) => { checked === true ? setUsuarios(data) : setUsuarios('') }
   const handleClickClientes = (data, checked) => { checked === true ? setClientes(data) : setClientes('') }
   const handleClickOperaciones = (data, checked) => { checked === true ? setOperaciones(data) : setOperaciones('') }
+  const handleConfirmChange = (data, checked) => { checked === true ? setConfirmChange(true) : setConfirmChange(false) }
   const [NewDesc, setNewDesc] = useState('')
   const [accessToModify, setAccessToModify] = useState('')
 
@@ -86,12 +88,7 @@ const RoleForms = (props) => {
 
   }, [])
 
-
-  console.log(accessToModify);
-
   const accessTo = accessToModify ? JSON.parse("[" + accessToModify + "]") : ''
-
-  console.log(accessTo);
 
   /**filtramos y guardamos los accesos de los roles */
   const newClientes = accessTo ? accessTo?.filter((item) => { return item?.title?.includes("CLIENTES") }) : ''
@@ -139,7 +136,8 @@ const RoleForms = (props) => {
       const id_role = dataidrow ? dataidrow : ''
 
       const toUp = {
-        description: NewDesc
+        description: NewDesc,
+        // access: `${seguridad ? seguridad + "," : ''} ${clientes ? clientes + "," : ''} ${operaciones ? operaciones + "," : ''} ${usuarios ? usuarios + "," : ''} ${mineria ? mineria : ''}`
       }
 
       const rolesOptions = {
@@ -191,10 +189,6 @@ const RoleForms = (props) => {
     } catch (error) {
       console.log(error.msg);
     }
-  }
-
-  const editMode = async (e) => {
-
   }
 
   if (props.modalType === "Add") {
@@ -313,62 +307,89 @@ const RoleForms = (props) => {
                   </div>
                   :
                   <>
-
                     <FloatingLabel className="tkt" controlId="floatingInputGrid" label="Agregar nombre al rol">
                       <Form.Control type="text" name="description" value={NewDesc} placeholder="description" onChange={handleChangeEdit} />
                     </FloatingLabel>
+                    <Row className='mt-3 mb-3'>
+                      <label className='mt-3 mb-2'>Permisos actuales del rol:</label>
+                      <Col className='permissonbox'>
+                        {
+                          newClientes[0]?.title + " " +
+                          newSeguridad[0]?.title + " " +
+                          newUsuarios[0]?.title + " " +
+                          newMineria[0]?.title + " " +
+                          newOperaciones[0]?.title
+                        }
+                      </Col>
+                    </Row>
                     <div className='addper'>
-                      <label className='mt-3 mb-2'>Modificar permisos a rol:</label>
-                      <Form.Check
-                        className='my-3'
-                        type='switch'
-                        label='OPERACIONES'
-                        id='OPERACIONES'
-                        name='OPERACIONES'
-                        value='{"title":"OPERACIONES"}'
-                        defaultChecked={false}
-                        onClick={(e) => { handleClickOperaciones(e.target.value, e.target.checked) }}
-                      />
-                      <Form.Check
-                        className='my-3'
-                        type='switch'
-                        label='CLIENTES'
-                        id='CLIENTES'
-                        name='CLIENTES'
-                        value='{"title":"CLIENTES"}'
-                        defaultChecked={false}
-                        onClick={(e) => { handleClickClientes(e.target.value, e.target.checked) }}
-                      />
-                      <Form.Check
-                        className='my-3'
-                        type='switch'
-                        label='USUARIOS'
-                        id='USUARIOS'
-                        name='USUARIOS'
-                        value='{"title":"USUARIOS"}'
-                        defaultChecked={false}
-                        onClick={(e) => { handleClickUsuarios(e.target.value, e.target.checked) }}
-                      />
-                      <Form.Check
-                        className='my-3'
-                        type='switch'
-                        label='MINERIA'
-                        id='MINERIA'
-                        name='MINERIA'
-                        defaultChecked={false}
-                        value='{"title":"MINERIA"}'
-                        onClick={(e) => { handleClickMineria(e.target.value, e.target.checked) }}
-                      />
-                      <Form.Check
-                        className='my-3'
-                        type='switch'
-                        label='SEGURIDAD'
-                        id='SEGURIDAD'
-                        name='SEGURIDAD'
-                        value='{"title":"SEGURIDAD"}'
-                        defaultChecked={false}
-                        onClick={(e) => { handleClickSeguridad(e.target.value, e.target.checked) }}
-                      />
+                      <div className='d-flex orderrrr'>
+                        <label className='mt-3 mb-2'>¿Modificar permisos a rol?</label>
+                        <Form.Check
+                          className='my-3'
+                          type='switch'
+                          label='SI'
+                          id='confirmChange'
+                          name='confirmChange'
+                          value={true}
+                          defaultChecked={false}
+                          onClick={(e) => { handleConfirmChange(e.target.value, e.target.checked) }}
+                        />
+                      </div>
+                      {confirmChange === true &&
+                        <>
+                          <Form.Check
+                            className='my-3'
+                            type='switch'
+                            label='OPERACIONES'
+                            id='OPERACIONES'
+                            name='OPERACIONES'
+                            value='{"title":"OPERACIONES"}'
+                            defaultChecked={false}
+                            onClick={(e) => { handleClickOperaciones(e.target.value, e.target.checked) }}
+                          />
+                          <Form.Check
+                            className='my-3'
+                            type='switch'
+                            label='CLIENTES'
+                            id='CLIENTES'
+                            name='CLIENTES'
+                            value='{"title":"CLIENTES"}'
+                            defaultChecked={false}
+                            onClick={(e) => { handleClickClientes(e.target.value, e.target.checked) }}
+                          />
+                          <Form.Check
+                            className='my-3'
+                            type='switch'
+                            label='USUARIOS'
+                            id='USUARIOS'
+                            name='USUARIOS'
+                            value='{"title":"USUARIOS"}'
+                            defaultChecked={false}
+                            onClick={(e) => { handleClickUsuarios(e.target.value, e.target.checked) }}
+                          />
+                          <Form.Check
+                            className='my-3'
+                            type='switch'
+                            label='MINERIA'
+                            id='MINERIA'
+                            name='MINERIA'
+                            defaultChecked={false}
+                            value='{"title":"MINERIA"}'
+                            onClick={(e) => { handleClickMineria(e.target.value, e.target.checked) }}
+                          />
+                          <Form.Check
+                            className='my-3'
+                            type='switch'
+                            label='SEGURIDAD'
+                            id='SEGURIDAD'
+                            name='SEGURIDAD'
+                            value='{"title":"SEGURIDAD"}'
+                            defaultChecked={false}
+                            onClick={(e) => { handleClickSeguridad(e.target.value, e.target.checked) }}
+                          />
+                        </>
+                      }
                     </div>
                     <Row className='addusr mt-3'>
                       <Col id='create'>
