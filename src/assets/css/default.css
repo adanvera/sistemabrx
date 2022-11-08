@@ -216,7 +216,7 @@ span.togglepss {
 }
 
 ul.menu-list {
-    margin-left: 50px;
+    /* margin-left: 50px; */
     margin-right: 50px;
 }
 
@@ -648,7 +648,7 @@ button.button.btn-other {
     cursor: pointer;
 }
 
-.exportdata:hover{
+.exportdata:hover {
     color: #008F8F;
 }
 
@@ -656,9 +656,36 @@ input#custom-switch {
     font-size: 15px;
 }
 
-.red{
+.red {
     color: red;
     font-size: 12px;
     justify-content: center;
     text-align: center;
+}
+
+aside.menu.sidebar.small ul.menu-list li#logout {
+    margin: 0;
+    border-top: none;
+}
+
+ul.menu-list li {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+}
+
+div#_btnBlock {
+    cursor: pointer;
+}
+
+aside.menu.sidebar.small ul.menu-list {
+    padding: 0;
+}
+
+.dataIsOkContent.warning.row ion-icon {
+    color: orange;
+}
+
+.modaltitle.modal-title.h4 {
+    text-transform: uppercase;
 }

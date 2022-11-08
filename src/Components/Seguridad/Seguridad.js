@@ -8,7 +8,7 @@ import ModalContainer from "../Commons/ModalContainer"
 import SearchTable from "../Commons/SearchTable"
 import DumpTable from "../Commons/Table/DumpTable"
 import Table from "../Commons/Table/Table"
-import { formatedDataRoles } from "../Helpers/formats"
+import { filteredDataRole, formatedDataRoles } from "../Helpers/formats"
 import { ROLES } from "../Helpers/helper"
 import RoleForms from "./Forms/RoleForms"
 
@@ -54,7 +54,7 @@ const Seguridad = props => {
     const pickForm = () => {
         switch (state?.form) {
             case 'Roles':
-                return <RoleForms />
+                return <RoleForms modalType={modalType} />
         }
     }
 
@@ -89,7 +89,7 @@ const Seguridad = props => {
             },
         }
 
-        const getUsers = async () => {
+        const getRoles = async () => {
             try {
                 const res = await fetch(ROLES, options),
                     json = await res.json()
@@ -104,12 +104,38 @@ const Seguridad = props => {
             }
         }
 
-        getUsers()
+        getRoles()
 
 
-    }, [])
+    }, [dataList])
 
     const formatedList = formatedDataRoles(dataList)
+
+    /**seteamos tipo de modal al dar click
+   * en boton de añadir rol
+   */
+    const handleOnClick = (e, btn) => {
+        e.preventDefault()
+        setModalStatus(true)
+
+        if (btn === '_AddRole') {
+            setModalType('Add')
+        }
+    }
+
+    //funcion para setear y pasar que filtro se selecciono
+    const handleFilter = (data) => {
+
+        setState((prevState) => {
+            return {
+                ...prevState,
+                filtros: {
+                    ...prevState.filtros,
+                    [data.key]: data.value
+                }
+            }
+        })
+    }
 
     return (
         <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
@@ -131,14 +157,14 @@ const Seguridad = props => {
                         />
                     </Col>
                     <Col md={6} className="endmain">
-                        <div className='limittic'><div onClick={() => handleModalForm('Roles')} className="btnadd" id='ticketmain'> Crear rol</div></div>
+                        <div className='limittic'><div onClick={(e) => handleOnClick(e, '_AddRole')} className="btnadd" id='ticketmain'> Crear rol</div></div>
                     </Col>
                 </Row>
                 {
                     isLoaded === false ?
                         <DumpTable headers={state?.headers} data={formatedList} />
                         :
-                        <Table headers={state?.headers} data={formatedList} />
+                        <Table headers={state?.headers} data={filteredDataRole(formatedList, state?.filtros)} />
                 }
             </Container>
         </div>

@@ -19,16 +19,16 @@ const ProtectedComponent = ({ allowedRoles, children }) => {
         const accessTo = JSON.parse("[" + access + "]")
 
         /**filtramos y guardamos los accesos de los roles */
-        const clientes = accessTo.filter((item) => { return item?.title.includes("CLIENTES") })
-        const seguridad = accessTo.filter((item) => { return item?.title.includes("SEGURIDAD") })
-        const usuarios = accessTo.filter((item) => { return item?.title.includes("USUARIOS") })
-        const mineria = accessTo.filter((item) => { return item?.title.includes("MINERIA") })
-        const operaciones = accessTo.filter((item) => { return item?.title.includes("OPERACIONES") })
+        const clientes = accessTo?.filter((item) => { return item?.title?.includes("CLIENTES") })
+        const seguridad = accessTo?.filter((item) => { return item?.title?.includes("SEGURIDAD") })
+        const usuarios = accessTo?.filter((item) => { return item?.title?.includes("USUARIOS") })
+        const mineria = accessTo?.filter((item) => { return item?.title?.includes("MINERIA") })
+        const operaciones = accessTo?.filter((item) => { return item?.title?.includes("OPERACIONES") })
 
         /**verificamos si el usuario esta logueado y verificamos el acceso a los modulos */
         if (userAuthed) {
-            if ((allowedRoles.includes(seguridad[0].title)) || (allowedRoles.includes(usuarios[0].title)) || (allowedRoles.includes(clientes[0].title))
-                || (allowedRoles.includes(mineria[0].title)) || (allowedRoles.includes(operaciones[0].title))
+            if ((allowedRoles?.includes(seguridad[0]?.title)) || (allowedRoles?.includes(usuarios[0]?.title)) || (allowedRoles?.includes(clientes[0]?.title))
+                || (allowedRoles?.includes(mineria[0]?.title)) || (allowedRoles?.includes(operaciones[0]?.title))
             ) {
                 return children
             } else {
