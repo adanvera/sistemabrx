@@ -20,7 +20,7 @@ const ClienteForm = (props) => {
   const [dataValidate, setDataVerify] = useState(false)
   const [isDelete, setIsDelete] = useState(false)
   const [currentClient, setCurrentClient] = useState(false)
-
+  
   const initialState = {
     name: '',
     last_name: '',
@@ -34,6 +34,8 @@ const ClienteForm = (props) => {
   const [state, setState] = useState(initialState)
 
   function refreshPage() {
+    setModalStatus(false)
+    setTimeout(()=>{},600)
     window.location.reload(false);
   }
 
@@ -62,8 +64,11 @@ const ClienteForm = (props) => {
         console.log("Esto es el error" + error);
       }
     }
+    if(modalType === 'Edit'){
 
-    getClient()
+      getClient()
+    }
+
   
 
   }, []);
@@ -155,7 +160,7 @@ const ClienteForm = (props) => {
   }
 
 
-  /**enviamos al recurso de creacion de clientes */
+  /**enviamos al recurso de actualizar de clientes */
   const handleUpdate = async (e) => {
     e.preventDefault()
     const form = e.currentTarget;
@@ -186,7 +191,7 @@ const ClienteForm = (props) => {
       body: JSON.stringify(clientToUpdate)
     };
     try {
-      const res = await fetch("http://localhost:4048/api/client/" + id_client, option),
+      const res = await fetch(CLIENT + id_client, option),
         json = await res.json();
       if (!res.ok) {
         console.log(json);
@@ -214,7 +219,7 @@ const ClienteForm = (props) => {
               <span>Cliente creado exitosamente</span>
             </Row>
             <Row id='close'>
-              <Button className='btn closeBtn' onClick={() => setModalStatus(false)}>Cerrar</Button>
+              <Button className='btn closeBtn' onClick={() => refreshPage() }>Cerrar</Button>
             </Row>
           </div>
           :
@@ -317,7 +322,7 @@ const ClienteForm = (props) => {
               <span>Cliente eliminado exitosamente</span>
             </Row>
             <Row id='close'>
-              <Button className='btn closeBtn' onClick={() => setModalStatus(false)}>Cerrar</Button>
+              <Button className='btn closeBtn' onClick={() => refreshPage()}>Cerrar</Button>
             </Row>
           </div>
           :
@@ -356,7 +361,7 @@ const ClienteForm = (props) => {
               <span>Cliente modificado exitosamente</span>
             </Row>
             <Row id='close'>
-              <Button className='btn closeBtn' onClick={() => setModalStatus(false)}>Cerrar</Button>
+              <Button className='btn closeBtn' onClick={() => refreshPage()}>Cerrar</Button>
             </Row>
           </div>
           :
