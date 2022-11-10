@@ -135,18 +135,13 @@ const RoleForms = (props) => {
 
       const id_role = dataidrow ? dataidrow : ''
 
-      const toUp = {
-        description: NewDesc,
-        // access: `${seguridad ? seguridad + "," : ''} ${clientes ? clientes + "," : ''} ${operaciones ? operaciones + "," : ''} ${usuarios ? usuarios + "," : ''} ${mineria ? mineria : ''}`
-      }
-
       const rolesOptions = {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           'token': token
         },
-        body: JSON.stringify(toUp)
+        body: JSON.stringify({ description: NewDesc })
       }
 
       try {
@@ -156,6 +151,39 @@ const RoleForms = (props) => {
       } catch (error) {
         console.log(error.msg);
       }
+
+
+      if (confirmChange === true) {
+
+        console.log("AVEEEEER: ", confirmChange);
+        const id_role = dataidrow ? dataidrow : ''
+
+
+        const toUp = {
+          description: NewDesc,
+          access: `${seguridad ? seguridad + "," : ''} ${clientes ? clientes + "," : ''} ${operaciones ? operaciones + "," : ''} ${usuarios ? usuarios + "," : ''} ${mineria ? mineria : ''}`
+        }
+
+        console.log(toUp);
+
+        const rolesOptions = {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            'token': token
+          },
+          body: JSON.stringify({ toUp })
+        }
+
+        try {
+          const res = await fetch(ROLES + id_role, rolesOptions),
+            json = await res.json();
+          setDataVerify(true)
+        } catch (error) {
+          console.log(error.msg);
+        }
+      }
+
     }
 
   }
@@ -312,13 +340,15 @@ const RoleForms = (props) => {
                     </FloatingLabel>
                     <Row className='mt-3 mb-3'>
                       <label className='mt-3 mb-2'>Permisos actuales del rol:</label>
-                      <Col className='permissonbox'>
+                      <Col className='permissonbox d-flex'>
                         {
-                          newClientes[0]?.title + " " +
-                          newSeguridad[0]?.title + " " +
-                          newUsuarios[0]?.title + " " +
-                          newMineria[0]?.title + " " +
-                          newOperaciones[0]?.title
+                          <>
+                            <div className='mr-1 prm'>{newClientes[0]?.title} </div>
+                            <div className='mr-1 prm'>{newSeguridad[0]?.title} </div>
+                            <div className='mr-1 prm'>{newUsuarios[0]?.title} </div>
+                            <div className='mr-1 prm'>{newMineria[0]?.title} </div>
+                            <div className='mr-1 prm'>{newOperaciones[0]?.title} </div>
+                          </>
                         }
                       </Col>
                     </Row>
@@ -338,62 +368,65 @@ const RoleForms = (props) => {
                       </div>
                       {confirmChange === true &&
                         <>
-                          <Form.Check
-                            className='my-3'
-                            type='switch'
-                            label='OPERACIONES'
-                            id='OPERACIONES'
-                            name='OPERACIONES'
-                            value='{"title":"OPERACIONES"}'
-                            defaultChecked={false}
-                            onClick={(e) => { handleClickOperaciones(e.target.value, e.target.checked) }}
-                          />
-                          <Form.Check
-                            className='my-3'
-                            type='switch'
-                            label='CLIENTES'
-                            id='CLIENTES'
-                            name='CLIENTES'
-                            value='{"title":"CLIENTES"}'
-                            defaultChecked={false}
-                            onClick={(e) => { handleClickClientes(e.target.value, e.target.checked) }}
-                          />
-                          <Form.Check
-                            className='my-3'
-                            type='switch'
-                            label='USUARIOS'
-                            id='USUARIOS'
-                            name='USUARIOS'
-                            value='{"title":"USUARIOS"}'
-                            defaultChecked={false}
-                            onClick={(e) => { handleClickUsuarios(e.target.value, e.target.checked) }}
-                          />
-                          <Form.Check
-                            className='my-3'
-                            type='switch'
-                            label='MINERIA'
-                            id='MINERIA'
-                            name='MINERIA'
-                            defaultChecked={false}
-                            value='{"title":"MINERIA"}'
-                            onClick={(e) => { handleClickMineria(e.target.value, e.target.checked) }}
-                          />
-                          <Form.Check
-                            className='my-3'
-                            type='switch'
-                            label='SEGURIDAD'
-                            id='SEGURIDAD'
-                            name='SEGURIDAD'
-                            value='{"title":"SEGURIDAD"}'
-                            defaultChecked={false}
-                            onClick={(e) => { handleClickSeguridad(e.target.value, e.target.checked) }}
-                          />
+                          <label className='mt-3 mb-2'>Asginación de nuevos permisos</label>
+                          <Col className='newpermissons'>
+                            <Form.Check
+                              className='my-3'
+                              type='switch'
+                              label='OPERACIONES'
+                              id='OPERACIONES'
+                              name='OPERACIONES'
+                              value='{"title":"OPERACIONES"}'
+                              defaultChecked={false}
+                              onClick={(e) => { handleClickOperaciones(e.target.value, e.target.checked) }}
+                            />
+                            <Form.Check
+                              className='my-3'
+                              type='switch'
+                              label='CLIENTES'
+                              id='CLIENTES'
+                              name='CLIENTES'
+                              value='{"title":"CLIENTES"}'
+                              defaultChecked={false}
+                              onClick={(e) => { handleClickClientes(e.target.value, e.target.checked) }}
+                            />
+                            <Form.Check
+                              className='my-3'
+                              type='switch'
+                              label='USUARIOS'
+                              id='USUARIOS'
+                              name='USUARIOS'
+                              value='{"title":"USUARIOS"}'
+                              defaultChecked={false}
+                              onClick={(e) => { handleClickUsuarios(e.target.value, e.target.checked) }}
+                            />
+                            <Form.Check
+                              className='my-3'
+                              type='switch'
+                              label='MINERIA'
+                              id='MINERIA'
+                              name='MINERIA'
+                              defaultChecked={false}
+                              value='{"title":"MINERIA"}'
+                              onClick={(e) => { handleClickMineria(e.target.value, e.target.checked) }}
+                            />
+                            <Form.Check
+                              className='my-3'
+                              type='switch'
+                              label='SEGURIDAD'
+                              id='SEGURIDAD'
+                              name='SEGURIDAD'
+                              value='{"title":"SEGURIDAD"}'
+                              defaultChecked={false}
+                              onClick={(e) => { handleClickSeguridad(e.target.value, e.target.checked) }}
+                            />
+                          </Col>
                         </>
                       }
                     </div>
                     <Row className='addusr mt-3'>
                       <Col id='create'>
-                        <Button type="submit">Crear rol</Button>
+                        <Button type="submit">Aceptar</Button>
                       </Col>
                       <Col id='closeone' className='closee'>
                         <Button onClick={() => setModalStatus(false)}>Cerrar</Button>
@@ -409,6 +442,7 @@ const RoleForms = (props) => {
       </Container>
     )
   }
+
 
   if (props.modalType === "Delete") {
     return (
