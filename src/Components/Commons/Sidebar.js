@@ -23,7 +23,8 @@ const Sidebar = props => {
         usuarios: '',
         clientes: '',
         logOut: '',
-        seguridad: ''
+        seguridad: '',
+        changePass: ''
     }
 
     const [modalShow, setModalShow] = useState(false)
@@ -42,7 +43,8 @@ const Sidebar = props => {
             usuarios: '',
             clientes: '',
             logOut: '',
-            seguridad: ''
+            seguridad: '',
+            changePass: ''
         }
         setState(prevState => ({
             ...blankState,
@@ -62,6 +64,10 @@ const Sidebar = props => {
         localStorage.clear()
         window.location.reload();
         navigate('/')
+    }
+
+    const changePass = () => {
+        navigate('/adjust')
     }
 
     const handleOnClick = (e) => {
@@ -162,7 +168,17 @@ const Sidebar = props => {
                     </li>
                 </ProtectedComponent>
             </ul>
+           
             <ul className="menu-list">
+                <li className={state?.logOut ? "mt-4 classli is-active " : "mt-4 classli"}
+                    id="adust"
+                    onClick={(e) => changePass()}
+                >
+                    <Link to="/" className="d-flex" >
+                        <div><ion-icon name="person-circle-outline"></ion-icon></div>
+                        <span className="pl-3">{userAuthed?.name + ' ' + userAuthed.last_name}</span>
+                    </Link>
+                </li>
                 <li className={state?.logOut ? "mt-4 classli log-out is-active " : "mt-4 classli log-out"}
                     id="logout"
                     onClick={(e) => logOut()}

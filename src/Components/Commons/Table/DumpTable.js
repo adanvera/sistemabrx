@@ -7,7 +7,6 @@ import { perPage } from "../../Helpers/formats";
 
 
 export default function DumpTable(props) {
-    console.log(props);
 
     const { headers, data } = props
     const [state, setState] = useState({ sort: {}, currentPage: 1 })
@@ -21,7 +20,7 @@ export default function DumpTable(props) {
     /**push de la paginación en donde seteamos la pagina activa
      * y la data correspondiente a ver
      */
-     for (let number = 1; number <= total; number++) {
+    for (let number = 1; number <= total; number++) {
         items.push(
             <Pagination.Item key={number} active={number === active} onClick={(event) => paginationClicked(event)} >{number}</Pagination.Item>,
         );
@@ -53,7 +52,7 @@ export default function DumpTable(props) {
                     <spam>Cargando...</spam>
                 </div>
             </div>
-            {<Pagination data={listData} activeLabel={state.currentPage}> {items} </ Pagination> } 
+            {<Pagination data={listData} activeLabel={state.currentPage}> {items} </ Pagination>}
         </Fragment>
     )
 }

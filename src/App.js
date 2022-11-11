@@ -19,6 +19,7 @@ import { useState } from 'react';
 import { ROLES } from './Components/Helpers/helper';
 import NoRoute from './Components/Commons/NoRoute';
 import ProtectedRoute from './Components/Commons/ProtectedRoute';
+import ChangePass from './Components/Commons/ChangePass';
 
 const App = (props) => {
 
@@ -47,6 +48,7 @@ const App = (props) => {
                 <Route path="/usuarios" element={<ProtectedRoute><Usuarios /></ProtectedRoute>} />
                 <Route path="/clientes/:id" element={<ProtectedRoute><ClientDetails /></ProtectedRoute>} />
                 <Route path="/seguridad" element={<ProtectedRoute><Seguridad /></ProtectedRoute>} />
+                <Route path='/adjust'element={<ProtectedRoute><ChangePass /></ProtectedRoute>} />
               </Route>
             </Routes>
           </Fragment>

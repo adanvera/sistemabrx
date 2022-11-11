@@ -48,6 +48,7 @@ const Usuarios = props => {
     const { modalType, setModalType } = useContext(DataContext)
     const [dataList, setDataList] = useState('')
     const modal = modalstatus
+    const { subPermissons, setSubPermissons } = useContext(DataContext)
     let navigate = useNavigate()
     const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
     const { dataidrow } = useContext(DataContext)
@@ -162,6 +163,30 @@ const Usuarios = props => {
         })
     }
 
+    const verifyRoleSub = (data) => {
+        if (data === 1) {
+            return (
+                <Col md={6} className="endmain">
+                    <div className='limittic'>
+                        <div onClick={(e) => handleOnClick(e, '_AddUser', state?.form)} className="btnadd" id='ticketmain'>
+                            Crear usuario
+                        </div>
+                    </div>
+                </Col>
+            )
+        } else {
+            return (
+                <Col md={6} className="endmainnn notallowed">
+                    <div className='limittic'>
+                        <div className="btnadd-not-allowed" id='ticketmain'>
+                            Crear usuario
+                        </div>
+                    </div>
+                </Col>
+            )
+        }
+    }
+
     return (
         <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
             {modal && (
@@ -181,16 +206,7 @@ const Usuarios = props => {
                             handleChange={handleSearch}
                         />
                     </Col>
-                    <ProtectedComponent allowedRoles={['SEGURIDAD']}>
-                        <Col md={6} className="endmain">
-                            <div className='limittic'>
-                                <div onClick={(e) => handleOnClick(e, '_AddUser', state?.form)} className="btnadd" id='ticketmain'>
-                                    Crear usuario
-                                </div>
-                            </div>
-                        </Col>
-
-                    </ProtectedComponent>
+                    {verifyRoleSub(subPermissons)}
                 </Row>
                 <Row>
                     <UserFilter onCleanFilter={onCleanFilter} getFilter={handleFilter} />
@@ -199,7 +215,7 @@ const Usuarios = props => {
                     isLoaded === false ?
                         <DumpTable headers={state?.headers} data={formatedList} />
                         :
-                        <Table headers={state?.headers} data={filteredDataUsers(formatedList, state?.filtros)} exportdata={true}  title="Usuarios" />
+                        <Table headers={state?.headers} data={filteredDataUsers(formatedList, state?.filtros)} exportdata={true} title="Usuarios" />
                 }
             </Container>
         </div>

@@ -716,3 +716,73 @@ aside.menu.sidebar.small ul.menu-list {
     border: 1px solid #D6D6D6;
     border-radius: 8px;
 }
+
+.endmainnn.notallowed.col-md-6 {
+    cursor: not-allowed;
+    justify-content: end;
+    text-align: end;
+    display: flex;
+}
+
+.btnadd-not-allowed {
+    border: 1px solid;
+    text-align: center;
+    border-radius: 4px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background: rgba(0, 143, 143, 1);
+    border: none;
+    color: white;
+    opacity: 0.3;
+}
+
+.no-data {
+    text-align: center;
+    justify-content: center;
+}
+
+.no-data ion-icon {
+    font-size: 30px;
+    color: rgba(0, 143, 143, 1);
+}
+
+li#adust {
+    border: 1px solid #D6D6D6;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+ul.menu-list li#adust:hover {
+    background-color: rgba(0, 143, 143, 1) !important;
+    border: 1px solid rgba(0, 143, 143, 1);
+    color: white !important;
+}
+
+li#adust a:hover{
+    color: white !important;  
+}
+
+.data-confirm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    background-attachment: fixed;
+}
+
+.Confirm-data {
+    border: 1px solid #D6D6D6;
+    justify-content: center;
+    text-align: center;
+    padding: 5rem;
+    border-radius: 20px;
+    background-color: #fff;
+    margin-bottom: 20px;
+}
+
+
+span.icon-mail ion-icon.md.hydrated {
+    color: green;
+    font-size: 45px;
+}

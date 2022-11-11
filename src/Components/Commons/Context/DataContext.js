@@ -30,6 +30,7 @@ export const DataProvider = ({ children }) => {
     const [modalType, setModalType] = useState('')
     const [sidebarStatus, setSidebarStatus] = useState('open')
     const [dataidrow, setDataIdRow] = useState('')
+    const [subPermissons, setSubPermissons] = useState('')
 
     /**conusltas para setear datos del usuario logueado
      * y el rolcorrespondiente
@@ -74,6 +75,7 @@ export const DataProvider = ({ children }) => {
                 }),
                     json = await res.json()
                 setUserRol(json[0])
+                setSubPermissons(json[0]?.sub_permissons)
             } catch (error) {
                 console.log(error);
             }
@@ -82,14 +84,14 @@ export const DataProvider = ({ children }) => {
         getUserRole()
 
     }, []);
-
+    
     return (
         <DataContext.Provider
             value={{
                 user, setUser, userRol, setUserRol,
                 idAuthed, setIdAuthed, modalstatus, setModalStatus,
                 modalType, setModalType, sidebarStatus, setSidebarStatus,
-                dataidrow, setDataIdRow
+                dataidrow, setDataIdRow , subPermissons, setSubPermissons
             }}>
             {children}
         </DataContext.Provider>

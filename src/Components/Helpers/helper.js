@@ -1,6 +1,7 @@
 /**declaramos las apis correspondientes y asignamos su dirección correspondiente*/
 const URL_AUTH_USER = 'https://backend.brxsgo.com/api/auth/login'
 const USER = 'https://backend.brxsgo.com/api/user/'
+const USER_PSW =  'https://backend.brxsgo.com/api/user/psw/'
 const ROLES = "https://backend.brxsgo.com/api/roles/"
 const ROLEID = "https://backend.brxsgo.com/api/roles/get/"
 const TICKETS = "https://backend.brxsgo.com/api/tickets/"
@@ -22,4 +23,5 @@ export {
     MINING_MACHINES,
     MACHINES,
     CLIENT,
+    USER_PSW,
 }

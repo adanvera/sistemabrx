@@ -24,12 +24,14 @@ const Seguridad = props => {
         headers: {
             description: "Descripción",
             access: "Permisos",
+            subpermissons: "Subpermisos",
             status: "Estado",
             actions: "Acciones"
         }
     }
     const [state, setState] = useState(initialState)
     const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
+    const { subPermissons, setSubPermissons } = useContext(DataContext)
     const { modalstatus, setModalStatus } = useContext(DataContext)
     const { modalType, setModalType } = useContext(DataContext)
     const modal = modalstatus
@@ -137,6 +139,22 @@ const Seguridad = props => {
         })
     }
 
+    const verifyRoleSub = (data) => {
+        if (data === 1) {
+            return (
+                <Col md={6} className="endmain">
+                    <div className='limittic'><div onClick={(e) => handleOnClick(e, '_AddRole')} className="btnadd" id='ticketmain'> Crear rol</div></div>
+                </Col>
+            )
+        } else {
+            return (
+                <Col md={6} className="endmainnn notallowed">
+                    <div className='limittic'><div className="btnadd-not-allowed" id='ticketmain'> Crear rol</div></div>
+                </Col>
+            )
+        }
+    }
+
     return (
         <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
             <Container fluid={true} className="mb-3">
@@ -156,9 +174,7 @@ const Seguridad = props => {
                             handleChange={handleSearch}
                         />
                     </Col>
-                    <Col md={6} className="endmain">
-                        <div className='limittic'><div onClick={(e) => handleOnClick(e, '_AddRole')} className="btnadd" id='ticketmain'> Crear rol</div></div>
-                    </Col>
+                    {verifyRoleSub(subPermissons)}
                 </Row>
                 {
                     isLoaded === false ?

@@ -324,7 +324,6 @@ const UsersForm = (props) => {
         } catch (error) { console.log(error); }
     }
 
-
     if (modalType === 'Add') {
         return (<Fragment>
             {

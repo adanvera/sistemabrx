@@ -221,7 +221,8 @@ export const formatedDataRoles = (data) => {
                 [item?.id_role]: {
                     id_role: item?.id_role,
                     description: item?.description,
-                    access: (item.access),
+                    access: dataAccess(item.access),
+                    subpermissons: subPermissonsFormat(item.sub_permissons),
                     status: dataStatus(item.status),
                     actions: 'x x',
                 }
@@ -233,26 +234,35 @@ export const formatedDataRoles = (data) => {
 }
 
 
-// export const dataAccess = (data) => {
-//     if (data) {
+export const dataAccess = (data) => {
+    if (data) {
 
-//         const dete = data ? data : ''
+        const dete = data ? data : ''
 
-//         const accessTo = JSON.parse("[" + dete + "]")
+        const accessTo = JSON.parse("[" + dete + "]")
 
-//         /**filtramos y guardamos los accesos de los roles */
-//         const clientes = accessTo ? accessTo.filter((item) => { return item?.title?.includes("CLIENTES") }) : ''
-//         const seguridad = accessTo ? accessTo.filter((item) => { return item?.title?.includes("SEGURIDAD") }) : ''
-//         const usuarios = accessTo ? accessTo.filter((item) => { return item?.title?.includes("USUARIOS") }) : ''
-//         const mineria = accessTo ? accessTo.filter((item) => { return item?.title?.includes("MINERIA") }) : ''
-//         const operaciones = accessTo ? accessTo.filter((item) => { return item?.title?.includes("OPERACIONES") }) : ''
+        /**filtramos y guardamos los accesos de los roles */
+        const clientes = accessTo ? accessTo.filter((item) => { return item?.title?.includes("CLIENTES") }) : ''
+        const seguridad = accessTo ? accessTo.filter((item) => { return item?.title?.includes("SEGURIDAD") }) : ''
+        const usuarios = accessTo ? accessTo.filter((item) => { return item?.title?.includes("USUARIOS") }) : ''
+        const mineria = accessTo ? accessTo.filter((item) => { return item?.title?.includes("MINERIA") }) : ''
+        const operaciones = accessTo ? accessTo.filter((item) => { return item?.title?.includes("OPERACIONES") }) : ''
 
-//         return `${seguridad[0]?.title === undefined ? '' : seguridad[0]?.title + ","} 
-//     ${clientes[0]?.title === undefined ? '' : clientes[0]?.title + ","} ${operaciones[0]?.title === undefined ? '' : operaciones[0]?.title + ","}
-//      ${usuarios[0]?.title === undefined ? '' : usuarios[0]?.title + ","} ${mineria[0]?.title === undefined ? '' : mineria[0]?.title}`
-//     }
+        return `${seguridad[0]?.title === undefined ? '' : seguridad[0]?.title + ","} 
+    ${clientes[0]?.title === undefined ? '' : clientes[0]?.title + ","} ${operaciones[0]?.title === undefined ? '' : operaciones[0]?.title + ","}
+     ${usuarios[0]?.title === undefined ? '' : usuarios[0]?.title + ","} ${mineria[0]?.title === undefined ? '' : mineria[0]?.title}`
+    }
 
-// }
+}
+
+export const subPermissonsFormat = (data) => {
+    if (data === 1) {
+        return <div className="">SI</div>
+    } else {
+        return <div className="">NO</div>
+    }
+
+}
 
 export const dataStatus = (data) => {
 
@@ -365,5 +375,23 @@ export const filteredDataRole = (dataList, filter) => {
     // Finalmente se retorna los datos filtrados
     return filteredData
 
+}
+
+export const formmrmr = (data) => {
+    let obData = {}
+
+    if (data) {
+        data?.map(item => {
+            obData = {
+                ...obData,
+                [item?.id_role]: {
+                    description: item?.description,
+                }
+
+            }
+        })
+    }
+    
+    return obData
 }
 

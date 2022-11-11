@@ -13,7 +13,8 @@ const RoleForms = (props) => {
     variables: {
       description: '',
       status: 1,
-      access: ''
+      access: '',
+      sub_permissons: ''
     }
   }
   const [state, setState] = useState(initialState)
@@ -27,6 +28,10 @@ const RoleForms = (props) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const { dataidrow } = useContext(DataContext)
   const [confirmChange, setConfirmChange] = useState(false)
+  const [subp, setSubp] = useState('')
+  const [NewDesc, setNewDesc] = useState('')
+  const [accessToModify, setAccessToModify] = useState('')
+  const [newwSub, setNewSub] = useState('')
   /**onchange correspondiente para validar por su estado */
   const handleClickSeguridad = (data, checked) => { checked === true ? setSeguridad(data) : setSeguridad('') }
   const handleClickMineria = (data, checked) => { checked === true ? setMineria(data) : setMineria('') }
@@ -34,8 +39,8 @@ const RoleForms = (props) => {
   const handleClickClientes = (data, checked) => { checked === true ? setClientes(data) : setClientes('') }
   const handleClickOperaciones = (data, checked) => { checked === true ? setOperaciones(data) : setOperaciones('') }
   const handleConfirmChange = (data, checked) => { checked === true ? setConfirmChange(true) : setConfirmChange(false) }
-  const [NewDesc, setNewDesc] = useState('')
-  const [accessToModify, setAccessToModify] = useState('')
+  const handleConfirmChangeSub = (data, checked) => { checked === true ? setSubp(1) : setSubp(0) }
+  const handleNewSub = (data, checked) => { checked === true ? setNewSub(1) : setNewSub(0) }
 
   /**onchange para setear descipcion */
   const handleChange = (e) => {
@@ -78,17 +83,18 @@ const RoleForms = (props) => {
           setIsLoaded(true)
           setNewDesc(json[0]?.description)
           setAccessToModify(json[0]?.access)
-
+          setNewSub(json[0]?.sub_permissons)
         } catch (error) {
           console.log(error.msg);
         }
       }
       getDataRole()
     }
-
   }, [])
 
   const accessTo = accessToModify ? JSON.parse("[" + accessToModify + "]") : ''
+
+  console.log(subp);
 
   /**filtramos y guardamos los accesos de los roles */
   const newClientes = accessTo ? accessTo?.filter((item) => { return item?.title?.includes("CLIENTES") }) : ''
@@ -110,6 +116,7 @@ const RoleForms = (props) => {
       const createRol = {
         description: state.variables.description,
         status: Number(state.variables.status),
+        sub_permissons: subp,
         access: `${seguridad ? seguridad + "," : ''} ${clientes ? clientes + "," : ''} ${operaciones ? operaciones + "," : ''} ${usuarios ? usuarios + "," : ''} ${mineria ? mineria : ''}`
       }
 
@@ -141,30 +148,16 @@ const RoleForms = (props) => {
           "Content-Type": "application/json",
           'token': token
         },
-        body: JSON.stringify({ description: NewDesc })
+        body: JSON.stringify({
+          description: NewDesc,
+          status: 1,
+          sub_permissons: newwSub
+        })
       }
-
-      try {
-        const res = await fetch(ROLES + id_role, rolesOptions),
-          json = await res.json();
-        setDataVerify(true)
-      } catch (error) {
-        console.log(error.msg);
-      }
-
 
       if (confirmChange === true) {
 
-        console.log("AVEEEEER: ", confirmChange);
-        const id_role = dataidrow ? dataidrow : ''
-
-
-        const toUp = {
-          description: NewDesc,
-          access: `${seguridad ? seguridad + "," : ''} ${clientes ? clientes + "," : ''} ${operaciones ? operaciones + "," : ''} ${usuarios ? usuarios + "," : ''} ${mineria ? mineria : ''}`
-        }
-
-        console.log(toUp);
+        const id_role = dataidrow ? Number(dataidrow) : ''
 
         const rolesOptions = {
           method: "PUT",
@@ -172,7 +165,12 @@ const RoleForms = (props) => {
             "Content-Type": "application/json",
             'token': token
           },
-          body: JSON.stringify({ toUp })
+          body: JSON.stringify({
+            description: NewDesc,
+            access: `${seguridad ? seguridad + "," : ''} ${clientes ? clientes + "," : ''} ${operaciones ? operaciones + "," : ''} ${usuarios ? usuarios + "," : ''} ${mineria ? mineria : ''}`,
+            status: 1,
+            sub_permissons: newwSub
+          })
         }
 
         try {
@@ -182,6 +180,18 @@ const RoleForms = (props) => {
         } catch (error) {
           console.log(error.msg);
         }
+      }
+
+      if (confirmChange === false) {
+        try {
+          const res = await fetch(ROLES + id_role, rolesOptions),
+            json = await res.json();
+          setDataVerify(true)
+        } catch (error) {
+          console.log(error.msg);
+        }
+
+
       }
 
     }
@@ -238,8 +248,21 @@ const RoleForms = (props) => {
               <FloatingLabel className="tkt" controlId="floatingInputGrid" label="Agregar nombre al rol">
                 <Form.Control type="text" name="description" placeholder="description" onChange={handleChange} />
               </FloatingLabel>
+              <div className='d-flex orderrrr'>
+                <label className='mt-3 mb-2'>¿ROL CON SUBPERMISOS?</label>
+                <Form.Check
+                  className='my-3'
+                  type='switch'
+                  label='SI'
+                  id='confirmChange'
+                  name='confirmChange'
+                  value={true}
+                  defaultChecked={false}
+                  onClick={(e) => { handleConfirmChangeSub(e.target.value, e.target.checked) }}
+                />
+              </div>
               <div className='addper'>
-                <label className='mt-3 mb-2'>Asignar permisos a rol:</label>
+                <label className='mt-3 mb-2'>ACCESOS A MODULOS</label>
                 <Form.Check
                   className='my-3'
                   type='switch'
@@ -352,6 +375,21 @@ const RoleForms = (props) => {
                         }
                       </Col>
                     </Row>
+
+                    <div className='d-flex orderrrr'>
+                      <label className='mt-3 mb-2'>POSEE SUBPERMISOS</label>
+                      <Form.Check
+                        className='my-3'
+                        type='switch'
+                        label='SI'
+                        id='confirmChange'
+                        name='confirmChange'
+                        value={newwSub}
+                        defaultChecked={newwSub === 1 ? true : false}
+                        onClick={(e) => { handleNewSub(e.target.value, e.target.checked) }}
+                      />
+                    </div>
+
                     <div className='addper'>
                       <div className='d-flex orderrrr'>
                         <label className='mt-3 mb-2'>¿Modificar permisos a rol?</label>

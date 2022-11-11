@@ -1,7 +1,9 @@
-import React, { Component, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import DatePicker from "react-date-picker";
 import Select from "../../Commons/Select";
+import { formmrmr } from "../../Helpers/formats";
+import { ROLES } from "../../Helpers/helper";
 
 
 const UserFilter = props => {
@@ -16,6 +18,42 @@ const UserFilter = props => {
 
     //inicializamos las variables 
     const [state, setState] = useState(initialState)
+    const [DataRol, setDataRol] = useState('')
+    const [dselectPriority, seettselectPriority] = useState('')
+
+    useEffect(() => {
+        /** Obtenemos los valores que guardamos en el token para poder utilizarlos
+         * en la siguiente consulta
+        */
+        const idUser = props?.id_user
+        const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
+
+        /**mandamos el header de nuestra consulta */
+        const options = {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'token': token
+            },
+        }
+
+        const getRoles = async () => {
+            try {
+                const res = await fetch(ROLES, options),
+                    json = await res.json()
+
+                /**seteamos el listado de tickets */
+                setDataRol(json);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getRoles()
+    }, [])
+
+    const derrdser = formmrmr(DataRol)
+    console.log(derrdser);
+
 
     //seteamos el select segun lo seleccionado
     const setSelectedValue = (data) => {
@@ -43,7 +81,7 @@ const UserFilter = props => {
         default: '',
         disabled: 'Seleccionar estado',
         options: {
-            TODAS: 'Todas',
+            TODAS: 'TODAS',
             ACTIVA: 'ACTIVA',
             BLOQUEADA: 'BLOQUEADA',
         }
@@ -56,9 +94,10 @@ const UserFilter = props => {
         default: '',
         disabled: 'Seleccionar rol',
         options: {
-            TODAS: 'Todas',
+            TODAS: 'TODAS',
             ADMINISTRADOR: 'ADMINISTRADOR',
             SEGURIDAD: 'SEGURIDAD',
+            OPERADOR: 'OPERADOR'
         }
     }
 
@@ -119,11 +158,11 @@ const UserFilter = props => {
                         className='date-input' />
                 </div>
             </Col>
-            <Col>
+            {/* <Col>
                 <div className="item-column has-text-left">
                     <Select defaultValue={state.estado} optionList={selectStatus} setSelected={setSelectedValue} />
                 </div>
-            </Col>
+            </Col> */}
             <Col>
                 <div className="item-column has-text-left">
                     <Select defaultValue={state.rol} optionList={selectPriority} setSelected={setSelectedValue} />

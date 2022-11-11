@@ -1,14 +1,16 @@
-import { Fragment, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import { Pagination } from "react-bootstrap";
 import { perPage } from "../../Helpers/formats.js";
 import TableHeader from "./TableHeader.js";
 import TableRow from "./TableRow.js";
 import { DownloadTableExcel, useDownloadExcel } from 'react-export-table-to-excel';
 import { useRef } from "react";
+import { DataContext } from "../Context/DataContext.js";
 
 export default function Table(props) {
     const { headers, data } = props
     const [state, setState] = useState({ sort: {}, currentPage: 1 })
+    const { subPermissons, setSubPermissons } = useContext(DataContext)
     const listData = perPage(Object.keys(data).reverse().map(item => data[item]), state.currentPage)
     // guardamos el total de los registros que tenemos y calulamos para el total
     //  de paginas para la paginación de nuestra tabla
@@ -48,23 +50,45 @@ export default function Table(props) {
     })
 
 
+    const validateExport = (sub, exp) => {
+        if (sub === 1 && exp === true) {
+            return <div className="exportdata" onClick={onDownload}> Exportar datos </div>
+        } else return ''
+
+    }
+
+    const dataSize = listData?.length
+
+    console.log();
+
     return (
         <Fragment>
-            {
-                exportData === true ? <div className="exportdata" onClick={onDownload}> Exportar datos </div> : ''
-            }
+            {validateExport(subPermissons, exportData)}
             <table className="table-list table mt-2 " ref={tableRef}>
                 <TableHeader headers={headers} />
                 <tbody>
                     {
+
                         Object.keys(listData).map(item => {
                             return (
                                 <TableRow link={props?.link} data={listData[item]} />
                             )
                         })
+
                     }
                 </tbody>
             </table>
+            {dataSize === 0 ?
+                <div className="no-data">
+                    <div>
+                        <ion-icon name="search-outline"></ion-icon>
+                    </div>
+                    <div>
+                        No se encontraron coincidencias
+                    </div>
+                </div>
+                : ''
+            }
             <Pagination data={listData} activeLabel={state?.currentPage}> {items} </ Pagination>
         </Fragment>
     )
