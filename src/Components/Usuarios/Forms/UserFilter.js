@@ -52,7 +52,7 @@ const UserFilter = props => {
     }, [])
 
     const derrdser = formmrmr(DataRol)
-    console.log(derrdser);
+   
 
 
     //seteamos el select segun lo seleccionado

@@ -88,7 +88,7 @@ const Usuarios = props => {
 
         getUsers()
 
-    }, [dataList]);
+    }, []);
 
     /**guardamos id de usuario clikeado en la tabla
   * seteado mediante el use context

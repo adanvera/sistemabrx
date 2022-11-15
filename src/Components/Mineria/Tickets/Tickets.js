@@ -23,7 +23,6 @@ const Tickets = props => {
             status: "Estado",
             priority: "Prioridad",
             update_at: "Fecha de actualización",
-            actions: 'Acciones'
         },
         filtros: {
             ticket_name: '',
@@ -95,6 +94,8 @@ const Tickets = props => {
         getTickets()
 
     }, []);
+
+    console.log(dataList);
 
     const formatedList = formatedDataTicket(dataList)
 

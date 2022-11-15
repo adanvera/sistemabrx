@@ -8,6 +8,8 @@ import TicketForm from './Forms/TicketForm'
 import tktimg from "../../assets/images/ticketimg.png"
 import mchimg from "../../assets/images/machine.png"
 import MineroForms from './Forms/MineroForms'
+import { ALL_MINERS_DETAILS } from '../Utils/Queries/Queries'
+import { useQuery } from '@apollo/client'
 
 const Mineria = props => {
 
@@ -44,6 +46,7 @@ const Mineria = props => {
                 return <TicketForm />
         }
     }
+    const usermodal = modalType
 
     return (
         <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
@@ -51,8 +54,8 @@ const Mineria = props => {
                 <ModalContainer
                     title={state?.title}
                     form={pickForm()}
-                // modalStatus={modal}
-                // modalType={usermodal}
+                    modalStatus={modal}
+                    modalType={usermodal}
                 />
             )}
             <Container fluid={true} className="">

@@ -20,6 +20,7 @@ import { ROLES } from './Components/Helpers/helper';
 import NoRoute from './Components/Commons/NoRoute';
 import ProtectedRoute from './Components/Commons/ProtectedRoute';
 import ChangePass from './Components/Commons/ChangePass';
+import Reset from './Components/Commons/Reset';
 
 const App = (props) => {
 
@@ -31,7 +32,7 @@ const App = (props) => {
         <BrowserRouter>
           <Fragment>
             {
-              !['/'].includes(window.location.pathname) ?
+              !['/', '/reset'].includes(window.location.pathname) ?
                 (<Sidebar sidebarStatus={sidebarStatus} />) : ''
             }
             <Routes>
@@ -48,7 +49,10 @@ const App = (props) => {
                 <Route path="/usuarios" element={<ProtectedRoute><Usuarios /></ProtectedRoute>} />
                 <Route path="/clientes/:id" element={<ProtectedRoute><ClientDetails /></ProtectedRoute>} />
                 <Route path="/seguridad" element={<ProtectedRoute><Seguridad /></ProtectedRoute>} />
-                <Route path='/adjust'element={<ProtectedRoute><ChangePass /></ProtectedRoute>} />
+                <Route path='/adjust' element={<ProtectedRoute><ChangePass /></ProtectedRoute>} />
+              </Route>
+              <Route>
+                <Route path='/reset' element={<Reset />} />
               </Route>
             </Routes>
           </Fragment>

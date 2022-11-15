@@ -2,6 +2,7 @@
 const URL_AUTH_USER = 'https://backend.brxsgo.com/api/auth/login'
 const USER = 'https://backend.brxsgo.com/api/user/'
 const USER_PSW =  'https://backend.brxsgo.com/api/user/psw/'
+const RESET_USER_PASS = "https://backend.brxsgo.com/api/user/reset/"
 const ROLES = "https://backend.brxsgo.com/api/roles/"
 const ROLEID = "https://backend.brxsgo.com/api/roles/get/"
 const TICKETS = "https://backend.brxsgo.com/api/tickets/"
@@ -24,4 +25,5 @@ export {
     MACHINES,
     CLIENT,
     USER_PSW,
+    RESET_USER_PASS
 }

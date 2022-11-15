@@ -3,12 +3,12 @@ import { useState } from 'react'
 import { useContext } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import { RESET_USER_PASS, USER_PSW } from '../Helpers/helper'
+import { RESET_USER_PASS } from '../Helpers/helper'
 import { DataContext } from './Context/DataContext'
 import { BounceLoader, PropagateLoader } from "react-spinners";
 import { override } from '../Helpers/formats'
 
-const ChangePass = (props) => {
+const Reset = (props) => {
 
     /**declaramos nuestras variables para crear un usuario */
     const initialState = {
@@ -105,7 +105,7 @@ const ChangePass = (props) => {
         if ((state.newPassword !== state.repeatpassword)) {
             return (
                 <Col id='createdd d-grid'>
-                    <span>Las nuevas contraseñas no coinciden</span>
+                    <span className='txtnoiden'>Las nuevas contraseñas no coinciden</span>
                     <Button disabled type="submit">Aceptar</Button>
                 </Col>
             )
@@ -133,11 +133,10 @@ const ChangePass = (props) => {
     }
 
     return (
-        <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
-            <Container fluid={true} className="">
-                <Row className=" is-3 text-al-ini titlemodule"><h5 className="title-detailsd ml-5 pt-3">Cambiar contraseña</h5></Row>
-                <Row>
-                    <Col md={6}>
+        <div className='box-reset'>
+            <Container fluid={true} className="content-reset">
+                <Row className='justify-content-around'>
+                    <Col md={6} className="contenttext">
                         {
                             dataValidate === true && error === false ?
                                 <>
@@ -157,6 +156,7 @@ const ChangePass = (props) => {
                                 </>
                                 :
                                 <Form onSubmit={handleSubmit}>
+                                    <h5 className="title-details ml-5 pt-3">Cambiar contraseña</h5>
                                     <Form.Group md="6" controlId="validationpassword">
                                         <Form.Label>Contraseña actual</Form.Label>
                                         <div className='d-flex'>
@@ -173,6 +173,7 @@ const ChangePass = (props) => {
                                                 }
                                             </span>
                                         </div>
+                                        <span className='txtnoiden'>{setMessageToShow(msg, "temp")}</span>
                                     </Form.Group>
 
                                     <Form.Group md="6" controlId="" className='mt-2'>
@@ -233,4 +234,4 @@ const ChangePass = (props) => {
     )
 }
 
-export default ChangePass
+export default Reset

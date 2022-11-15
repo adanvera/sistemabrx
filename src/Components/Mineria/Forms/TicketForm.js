@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import { Button, Col, Container, FloatingLabel, Form, Row } from "react-bootstrap"
 import { DataContext } from "../../Commons/Context/DataContext"
-import { TICKETS } from "../../Helpers/helper"
+import { TICKETS, USER } from "../../Helpers/helper"
 import SelectMachine from "../Forms/SelectMachine"
 
 const TicketForm = (props) => {
@@ -10,6 +10,7 @@ const TicketForm = (props) => {
     const { user } = useContext(DataContext)
     const userAuthed = user
     const [dataValidate, setDataVerify] = useState(false)
+    const [dataList, setDataList] = useState('')
 
     const initialState = {
         variables: {
@@ -20,10 +21,40 @@ const TicketForm = (props) => {
             ticket_comments: '',
             priority: 'NORMAL',
             ticket_name: '',
+            asigned_to: ''
         }
     }
 
     const [state, setState] = useState(initialState)
+
+    useEffect(() => {
+        /** Obtenemos los valores que guardamos en el token para poder utilizarlos
+         * en la siguiente consulta
+        */
+        const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
+
+        /**mandamos el header de nuestra consulta */
+        const options = {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'token': token
+            },
+        }
+
+        const getUsers = async () => {
+            try {
+                const res = await fetch(USER, options),
+                    json = await res.json()
+                setDataList(json);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        getUsers()
+
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -37,7 +68,8 @@ const TicketForm = (props) => {
             status: state.variables.status,
             ticket_comments: state.variables.ticket_comments,
             priority: state.variables.priority,
-            ticket_name: state.variables.ticket_name
+            ticket_name: state.variables.ticket_name,
+            asigned_to: state.variables.asigned_to ? Number(state.variables.asigned_to) : ''
         }
 
         const ticketOptions = {
@@ -131,6 +163,20 @@ const TicketForm = (props) => {
                             </Form.Select>
                         </FloatingLabel>
                     </Row>
+
+                    <Row md className="mt-2">
+                        <FloatingLabel className="tkt" controlId="asigned_to" label="Asginar a">
+                            <Form.Select aria-label="Asignar ticket" name="asigned_to" onChange={handleChange} value={state.variables.asigned_to} >
+                                <option value="" selected disabled>Seleccionar</option>
+                                {
+                                    Object.keys(dataList).map((item => {
+                                        return <option value={dataList[item]?.id_user}>{dataList[item]?.name + " " + dataList[item]?.last_name}</option>
+                                    }))
+                                }
+                            </Form.Select>
+                        </FloatingLabel>
+                    </Row>
+
                     <Row className='addusr mt-3' >
                         <Col id='create'>
                             <Button type="submit">Crear ticket</Button>

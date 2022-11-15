@@ -4,8 +4,11 @@ export const formatedDataTicket = (data) => {
 
     if (data) {
         data?.map(item => {
+            {console.log(item)}
             obData = {
                 ...obData,
+
+                
                 [item?.id_ticket]: {
                     icon: 'construct-outline',
                     id_ticket: item.id_ticket,
@@ -13,11 +16,10 @@ export const formatedDataTicket = (data) => {
                     id_machine: item.id_machine,
                     created_at: formatoDate(item.created_at),
                     created_at_filter: item.created_at,
-                    id_user: (item.id_user),
+                    created_by_user: item.id_user,
                     status: (item.status),
                     priority: item.priority,
                     updated_at: formatoDate(item.updated_at),
-                    actions: 'x x',
                 }
 
             }

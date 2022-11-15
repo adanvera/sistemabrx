@@ -7,6 +7,9 @@ import { DataContext } from "./Commons/Context/DataContext";
 import { URL_AUTH_USER } from "./Helpers/helper";
 import { Col, FloatingLabel } from "react-bootstrap";
 import packageInfo from '../../package.json';
+import ModalContainer from "./Commons/ModalContainer";
+import PuffLoader from "react-spinners/PuffLoader";
+
 
 const Login = () => {
 
@@ -25,6 +28,13 @@ const Login = () => {
     let timeToWait
     const [dataToVerify, setDataToVerify] = useState(5)
     const [messageLog, setMessageLog] = useState('')
+    const { modalstatus, setModalStatus } = useContext(DataContext)
+    const modal = modalstatus
+    const { modalType, setModalType } = useContext(DataContext)
+    const usermodal = modalType
+    const [error, setError] = useState('')
+    const [redirectPass, setRedirectPass] = useState(false)
+    const [allowed, setAllowed] = useState(false)
 
     /**funcion para asignar un tiempo de espera para cargar los
      * datos suministrados
@@ -49,6 +59,15 @@ const Login = () => {
      */
     const submittrigger = async (e) => {
         e.preventDefault()
+        setModalStatus(true)
+        setModalType('Login')
+
+
+        if(state.email === '' || !state.password === '' ){
+            setAllowed(false)
+        }else{
+            setAllowed(true)
+        }
 
         /**guardamos el valor del correo y contaseña cargada */
         const userToLog = state
@@ -69,26 +88,41 @@ const Login = () => {
                 json = await res.json()
             if (!res.ok) {
                 setMessageLog(json.msg)
+                setRedirectPass(true)
+                setError(json.msg)
+                setModalStatus(false)
                 return (console.log(json.msg))
             }
             setDataToVerify(json?.user?.status)
+            setRedirectPass(false)
             /**recurrimos al localstorage para guardar los
             * datos del usuario
             */
             window.localStorage.setItem("id", json.user.id_user)
             window.localStorage.setItem("token", (json.token))
-            window.localStorage.setItem("rol", "ADMINISTRADOR")
+            window.localStorage.setItem("rol", json.user.id_role)
             window.localStorage.setItem("status", json.user.status)
             //llamamos a la funcion de seteo de usuario para setear los
             //datos correspondientes
             setUser()
             // /**redireccionamos al dasboard/pagina principal del sistema
             //  * en caso de que conincida los datos del usuario logueado
+
             //  */
-            if (json.user.status == 1) {
+
+            console.log();
+
+            if (json.user.status === 1 && json.user.temp_active === 0) {
                 redirectPage()
+            } else if (json.user.temp_active === 1) {
+                redirectToResetPassword()
             }
+
         } catch (error) {
+
+            setError(error)
+
+
             return (console.log('Ocurrio un error ' + error))
         }
     }
@@ -126,11 +160,52 @@ const Login = () => {
 
     const brxversion = packageInfo?.version
 
+    function redirectToResetPassword() {
+        timeToWait = setTimeout(pageToRedirect, 1000);
+    }
+
+    /**funcion correspondiente para redirigir la pagina
+     * a otro path 
+     */
+    function pageToRedirect() {
+        navigate('/reset')
+        window.location.reload();
+    }
+
+    const loadForm = () => {
+
+        return (
+            <div className="main-dump">
+                <div className="ddd">
+                    <PuffLoader color="#36d7b7" />
+                </div>
+                <div className="ddd">
+                    {
+                        ((messageLog === 'Reseteo de contraseña requerida') && (redirectPass === true)) ?
+                            redirectToResetPassword() : ''
+                    }
+                    <spam>Iniciando...</spam>
+                </div>
+
+            </div>
+        )
+    }
+
     /**el retorno de los datos correspondiente 
      * a la vista del componente */
     return (
         <Fragment>
             <div className="main-login">
+                {
+                    modal && (
+                        <ModalContainer
+                            title={state?.title}
+                            form={loadForm()}
+                            modalStatus={modal}
+                            modalType='Login'
+                        />
+                    )
+                }
                 <Col md={6} id='loginbox'>
                 </Col>
                 <section className="col-md-6 sidetoside login-content">
@@ -150,7 +225,7 @@ const Login = () => {
                             aria-required={true}
                             onChange={(e) => handleChangeCorreo(e)}
                         >
-                            <Form.Control type="email" placeholder="name@example.com" />
+                            <Form.Control type="email" placeholder="name@example.com" required />
                         </FloatingLabel>
                         <FloatingLabel className="psw"
                             controlId="password"
@@ -158,7 +233,7 @@ const Login = () => {
                             name="password"
                             aria-required={true}
                             onChange={(e) => handleChange(e)}>
-                            <Form.Control placeholder="Password" type={passwordShow ? "text" : "password"} />
+                            <Form.Control placeholder="Password" type={passwordShow ? "text" : "password"} required/>
                             <span className="tgl-login" onClick={togglePassword}>
                                 {
                                     passwordShow ? <ion-icon name="eye-off-outline"></ion-icon> : <ion-icon name="eye-outline"></ion-icon>

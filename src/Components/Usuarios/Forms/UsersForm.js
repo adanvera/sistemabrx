@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useReducer } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap'
 import { DataContext } from '../../Commons/Context/DataContext'
-import { USER, ROLES, ASSIGNROLE } from '../../Helpers/helper'
+import { USER, ROLES, ASSIGNROLE, USER_PSW } from '../../Helpers/helper'
 import { PuffLoader } from 'react-spinners';
 
 const UsersForm = (props) => {
@@ -16,7 +16,7 @@ const UsersForm = (props) => {
         status: 1,
         last_name: "",
         phone: "",
-        password: "",
+        password: Math.random().toString(36).slice(-8),
         id_role: ''
     }
 
@@ -37,6 +37,9 @@ const UsersForm = (props) => {
     const [changeStatusBlock, SetchangeStatusBlock] = useState()
     const [reducerValue, forecUpdate] = useReducer(x => x + 1, 0)
     const [DataRol, setDataRol] = useState('')
+    const [error, setError] = useState(false)
+    const [msgErr, setMsgErr] = useState('')
+
 
     const togglePassword = () => {
         // When the handler is invoked
@@ -72,6 +75,9 @@ const UsersForm = (props) => {
          * en la siguiente consulta
         */
         const idUser = props?.id_user
+
+        console.log(idUser);
+
         const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
 
         /**mandamos el header de nuestra consulta */
@@ -89,6 +95,9 @@ const UsersForm = (props) => {
                 const res = await fetch(USER + idUser, options),
                     json = await res.json()
                 setUserToEdit(json)
+
+                console.log(json);
+
                 SetchangeStatusBlock(json.status)
                 setIsLoaded(true)
             } catch (error) {
@@ -128,7 +137,9 @@ const UsersForm = (props) => {
 
     }, []);
 
+
     const handleSubmit = async (e) => {
+
         e.preventDefault()
         const form = e.currentTarget;
 
@@ -161,10 +172,19 @@ const UsersForm = (props) => {
             const res = await fetch(USER, option),
                 json = await res.json();
             setDataVerify(true)
+
             if (!res.ok) {
                 console.log(json);
+                setError(true)
+                setDataVerify(false)
+                setMsgErr(json.message.errors[0].message)
             }
-        } catch (error) { console.log(error); }
+
+
+
+        } catch (error) {
+            console.log(error);
+        }
 
         /**variables a utilizar para hacer y mandar la consulta
          * de asignación del rol
@@ -203,6 +223,7 @@ const UsersForm = (props) => {
         });
 
     }
+
 
     const handleSubmitEdit = async (e) => {
         e.preventDefault()
@@ -296,8 +317,6 @@ const UsersForm = (props) => {
     const handleSubmitBlock = async (e) => {
         e.preventDefault()
 
-        e.preventDefault()
-
         const idUser = props?.id_user
         const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
 
@@ -324,10 +343,58 @@ const UsersForm = (props) => {
         } catch (error) { console.log(error); }
     }
 
+    const errorToShow = (msgErr, parametro) => {
+
+        if (msgErr === 'email must be unique' && parametro === "email") {
+            return <>Email ya existente</>
+        }
+
+        if (msgErr === 'document must be unique' && parametro === "document") {
+            return <>Documento ya existente</>
+        }
+    }
+
+    const [rested, setReseted] = useState(false)
+
+    //metodo para reseteo de contraseña
+    const resetUserPass = async (e) => {
+        e.preventDefault()
+
+        const idUser = props?.id_user ? Number(props?.id_user) : ''
+        const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
+        const newPassword = Math.random().toString(36).slice(-8)
+        console.log(newPassword);
+
+        /**metodo para setear y enviar a 
+         * recurso de modificacion de usuario
+         */
+        let option = {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                'token': token
+            },
+            body: JSON.stringify({ password: newPassword })
+        };
+
+        try {
+            const res = await fetch(USER_PSW + idUser, option),
+                json = await res.json();
+            setDataVerify(true)
+            setReseted(true)
+            forecUpdate()
+            if (!res.ok) {
+                setDataVerify(false)
+                console.log(json);
+            }
+        } catch (error) { console.log(error); }
+
+    }
+
     if (modalType === 'Add') {
         return (<Fragment>
             {
-                dataValidate === true ?
+                ((dataValidate === true) && error === false) ?
                     <div className='dataIsOk'>
                         <Row className='dataIsOkContent'>
                             <ion-icon name="checkmark-circle-outline"></ion-icon>
@@ -377,6 +444,7 @@ const UsersForm = (props) => {
                                     name='document'
                                     onChange={(e) => handleChange(e)} />
                                 <Form.Control.Feedback type="invalid">Escribir número de cédula</Form.Control.Feedback>
+                                <div className='alertUnique'>{errorToShow(msgErr, "document")}</div>
                             </Form.Group>
                             <Form.Group as={Col} md="6" controlId="validationphone">
                                 <Form.Label>Número de celular</Form.Label>
@@ -400,25 +468,9 @@ const UsersForm = (props) => {
                                     onChange={(e) => handleChange(e)} />
                                 <Form.Control.Feedback type="invalid">Escribir correo electrónico válido</Form.Control.Feedback>
                             </Form.Group>
+                            <div className='alertUnique'>{errorToShow(msgErr, "email")}</div>
                         </Row>
                         <Row className="mb-5">
-                            <Form.Group as={Col} md="6" controlId="validationpassword">
-                                <Form.Label>Contraseña</Form.Label>
-                                <div className='d-flex'>
-                                    <Form.Control
-                                        type={passwordShow ? "text" : "password"}
-                                        placeholder="Contraseña"
-                                        required
-                                        name='password'
-                                        onChange={(e) => handleChange(e)} />
-                                    <Form.Control.Feedback type="invalid">Escribir una contraseña</Form.Control.Feedback>
-                                    <span className="togglepss" onClick={togglePassword}>
-                                        {
-                                            passwordShow ? <ion-icon name="eye-off-outline"></ion-icon> : <ion-icon name="eye-outline"></ion-icon>
-                                        }
-                                    </span>
-                                </div>
-                            </Form.Group>
                             <Form.Group as={Col} md="6" controlId="validationRol">
                                 <Form.Label>Rol de usuario:</Form.Label>
                                 <Form.Select onChange={(e) => setIdRole(e.target.value)}  >
@@ -462,7 +514,11 @@ const UsersForm = (props) => {
                         <div className='dataIsOk'>
                             <Row className='dataIsOkContent'>
                                 <ion-icon name="checkmark-circle-outline"></ion-icon>
-                                <span>Usuario modificado exitosamente</span>
+                                {
+                                    (dataValidate === true && rested === true) ?
+                                        <span>Reseteo de contraseña realizado exitisamente</span> :
+                                        <span>Usuario modificado exitosamente</span>
+                                }
                             </Row>
                             <Row id='close'>
                                 <div className='mddlebtn'>
@@ -549,6 +605,10 @@ const UsersForm = (props) => {
                                         }
                                     </Form.Select>
                                 </Form.Group>
+                                <Col md="6" >
+                                    <Form.Label>Reseteo de contraseña:</Form.Label>
+                                    <Button className='resetpassword' onClick={resetUserPass} >Resetear</Button>
+                                </Col>
                             </Row>
                             <Row className='addusr' >
                                 <Col id='create'>

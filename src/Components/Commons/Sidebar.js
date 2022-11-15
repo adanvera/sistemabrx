@@ -12,8 +12,9 @@ const Sidebar = props => {
      * data context donde seteamos el usuario correspondiente al loguear
      */
     const { user } = useContext(DataContext)
-    const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
+    const { sidebarStatus, setSidebarStatus, userRol } = useContext(DataContext)
     const userAuthed = user
+    const roleFilter = userRol?.description
 
     /**Declaramos las variables */
     const intialState = {
@@ -24,7 +25,8 @@ const Sidebar = props => {
         clientes: '',
         logOut: '',
         seguridad: '',
-        changePass: ''
+        changePass: '',
+        importaciones: '',
     }
 
     const [modalShow, setModalShow] = useState(false)
@@ -44,7 +46,8 @@ const Sidebar = props => {
             clientes: '',
             logOut: '',
             seguridad: '',
-            changePass: ''
+            changePass: '',
+            importaciones: ''
         }
         setState(prevState => ({
             ...blankState,
@@ -167,8 +170,20 @@ const Sidebar = props => {
                         </Link>
                     </li>
                 </ProtectedComponent>
+                <ProtectedComponent allowedRoles={['USUARIOS']}>
+                    <li className={state?.importaciones ? "mt-4 classli is-active" : "mt-4 classli"}
+                        id="importaciones"
+                        onClick={(e) => handleSetActive('importaciones')}
+                    >
+                        <Link to="/importaciones" className="d-flex">
+                            <div>
+                                <ion-icon name="briefcase-outline"></ion-icon>
+                            </div>
+                            <span className="pl-3">IMPORTACIONES</span>
+                        </Link>
+                    </li>
+                </ProtectedComponent>
             </ul>
-           
             <ul className="menu-list">
                 <li className={state?.logOut ? "mt-4 classli is-active " : "mt-4 classli"}
                     id="adust"

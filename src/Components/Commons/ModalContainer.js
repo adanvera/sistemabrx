@@ -4,6 +4,7 @@ import { DataContext } from './Context/DataContext';
 
 const ModalContainer = (props) => {
 
+
     console.log(props);
     const [show, setShow] = useState(false);
     const handleClose = () => setModalStatus(false);
@@ -17,9 +18,12 @@ const ModalContainer = (props) => {
     return (
         <Fragment>
             <Modal show={modalstatus} onHide={handleClose} backdrop="static" size="md" aria-labelledby="contained-modal-title-vcenter" centered >
-                <Modal.Header closeButton>
-                    <Modal.Title className='modaltitle' >{subjectTitle + " "}{title}</Modal.Title>
-                </Modal.Header>
+                {
+                    props?.modalType === 'Login' ? '' :
+                        <Modal.Header closeButton>
+                            <Modal.Title className='modaltitle' >{subjectTitle + " "}{title}</Modal.Title>
+                        </Modal.Header>
+                }
                 <Modal.Body>
                     {props?.form}
                 </Modal.Body>
