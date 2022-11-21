@@ -29,11 +29,12 @@ const client = new ApolloClient({
   link: link,
   headers: {
     'x-lux-api-key': 'lxk.26d95b3c433f82192765db00837b8d08',
-    'Access-Control-Allow-Origin': 'http://localhost:3000',
-    'Access-Control-Allow-Credentials': 'true',
-    mode: 'no-cors',
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Methods': 'POST',
+    'Access-Allow-header': 'x-lux-api-key',
   },
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  credentials: 'include',
 })
 
 root.render(

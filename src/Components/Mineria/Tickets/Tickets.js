@@ -95,8 +95,6 @@ const Tickets = props => {
 
     }, []);
 
-    console.log(dataList);
-
     const formatedList = formatedDataTicket(dataList)
 
     /** funcion onchange para seteo de form */

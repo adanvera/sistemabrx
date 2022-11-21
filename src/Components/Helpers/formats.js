@@ -4,7 +4,6 @@ export const formatedDataTicket = (data) => {
 
     if (data) {
         data?.map(item => {
-            {console.log(item)}
             obData = {
                 ...obData,
 
