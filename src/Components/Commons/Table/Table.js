@@ -59,7 +59,6 @@ export default function Table(props) {
 
     const dataSize = listData?.length
 
-    console.log();
 
     return (
         <Fragment>
