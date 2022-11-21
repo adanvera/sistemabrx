@@ -24,7 +24,7 @@ const Operaciones = () => {
             comision: 'Comision',
             tipoMonedad: 'Tipo operacion',
         },
-        title: 'Agregar Cliente',
+        
         filtros: {
             name: '',
         },
