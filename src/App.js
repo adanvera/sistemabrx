@@ -21,6 +21,7 @@ import NoRoute from './Components/Commons/NoRoute';
 import ProtectedRoute from './Components/Commons/ProtectedRoute';
 import ChangePass from './Components/Commons/ChangePass';
 import Reset from './Components/Commons/Reset';
+import Operaciones from './Components/Operaciones/Operaciones';
 
 const App = (props) => {
 
@@ -50,6 +51,7 @@ const App = (props) => {
                 <Route path="/clientes/:id" element={<ProtectedRoute><ClientDetails /></ProtectedRoute>} />
                 <Route path="/seguridad" element={<ProtectedRoute><Seguridad /></ProtectedRoute>} />
                 <Route path='/adjust' element={<ProtectedRoute><ChangePass /></ProtectedRoute>} />
+                <Route path='/operaciones' element={<ProtectedRoute><Operaciones /></ProtectedRoute>} />
               </Route>
               <Route>
                 <Route path='/reset' element={<Reset />} />

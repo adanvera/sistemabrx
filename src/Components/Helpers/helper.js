@@ -10,6 +10,8 @@ const MINING_MACHINES = "https://backend.brxsgo.com/api/mining/"
 const MACHINES = "https://backend.brxsgo.com/api/machines/"
 const CLIENT = 'https://backend.brxsgo.com/api/client/'
 const ASSIGNROLE = "https://backend.brxsgo.com/api/roles/roleadd/"
+const OPERATION_PROD ="https://backend.brxsgo.com/api/operation"
+const OPERATION_TEST ="http://localhost:4000/api/operation"
 
 /**exportamos nuestras declaraciones de valores
  * para poder utilizarlas en donde se requieran
@@ -25,5 +27,7 @@ export {
     MACHINES,
     CLIENT,
     USER_PSW,
-    RESET_USER_PASS
+    RESET_USER_PASS,
+    OPERATION_PROD,
+    OPERATION_TEST
 }
