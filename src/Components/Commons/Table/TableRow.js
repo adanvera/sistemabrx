@@ -30,7 +30,7 @@ export default function TableRow(props) {
 
     return (
 
-        <tr key={data?.id_ticket ? data?.id_ticket : data?.id_cliente ? data?.id_operaion:data?.id_ticket} className={data?.id_ticket ? "rowtable clickeable" : "rowtable"} onClick={e => clickedItem(e)} >
+        <tr key={data?.id_ticket ? data?.id_ticket : data?.id_cliente ? data?.id_operation:data?.id_ticket} className={data?.id_ticket ? "rowtable clickeable" : "rowtable"} onClick={e => clickedItem(e)} >
             {Object.keys(data).filter((col => col !== 'created_at_filter' && col !== 'id_role' && col !== 'created_at_user' && col !== 'id_user')).map(col => {
                 return (
                     <Fragment key={col}>
