@@ -22,9 +22,10 @@ const Operaciones = () => {
             cliente: "Cliente",
             monto: 'Monto',
             comision: 'Comision',
-            tipoMonedad: 'Tipo operacion',
+            tipoOperaciones: 'Tipo operacion',
+            tipoMoneda: 'Moneda',
         },
-        title: 'Agregar Cliente',
+        
         filtros: {
             name: '',
         },
@@ -51,10 +52,10 @@ const Operaciones = () => {
     
             const getOperations = async () => {
                 try {
-                    const res = await fetch(OPERATION_PROD, options),
+                    const res = await fetch(OPERATION_TEST, options),
                         json = await res.json()
                     /**seteamos loading */
-                    console.log(json);
+                    json.map( op => delete op.created)
                     setIsLoaded(true);
                     /**seteamos el listado de tickets */
                     setDataList(json);
