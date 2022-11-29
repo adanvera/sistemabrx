@@ -7,10 +7,12 @@ import Select from "../Commons/Select";
 import Table from "../Commons/Table/Table";
 import { OPERATION_PROD, OPERATION_TEST } from "../Helpers/helper";
 import InfoCliente from "./InfoCliente";
+import OperationsData from "./OperationsData";
 
 const Operaciones = () => {
     const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
-    const currency = [{ label: "USD", value: 1 }, { label: "GS", value: 0 }]
+    const [typesOperations,setTypesOperations] = useState([{ label: "Compra", value: 1 }, { label: "Venta", value: 0 }])
+    const currency = [{ label: "BTC", value: 1 }, { label: "USDT", value: 0 }]
     const [isLoaded, setIsLoaded] = useState(false);
 
 
@@ -25,7 +27,7 @@ const Operaciones = () => {
             tipoOperaciones: 'Tipo operacion',
             tipoMoneda: 'Moneda',
         },
-        
+
         filtros: {
             name: '',
         },
@@ -33,46 +35,46 @@ const Operaciones = () => {
     const [state, setSate] = useState(initialState)
     const [dataList, setDataList] = useState('')
 
-        /*Aca obtenemos todas las operaciones*/
-        useEffect(() => {
+    /*Aca obtenemos todas las operaciones*/
+    useEffect(() => {
 
-            /** Obtenemos los valores que guardamos en el token para poder utilizarlos
-             * en la siguiente consulta
-            */
-            const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
-    
-            /**mandamos el header de nuestra consulta */
-            const options = {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'token': token
-                },
-            }
-    
-            const getOperations = async () => {
-                try {
-                    const res = await fetch(OPERATION_TEST, options),
-                        json = await res.json()
-                    /**seteamos loading */
-                    json.map( op => delete op.created)
-                    setIsLoaded(true);
-                    /**seteamos el listado de tickets */
-                    setDataList(json);
-                } catch (error) {
-                    setIsLoaded(true);
-                    //setError(error);
-                    console.log("Esto es el error" + error);
-                }
-            }
-            
-            getOperations()
+        /** Obtenemos los valores que guardamos en el token para poder utilizarlos
+         * en la siguiente consulta
+        */
+        const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
 
-            //modificamos datalist
-            
-    
-        }, []);
-    
+        /**mandamos el header de nuestra consulta */
+        const options = {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'token': token
+            },
+        }
+
+        const getOperations = async () => {
+            try {
+                const res = await fetch(OPERATION_TEST, options),
+                    json = await res.json()
+                /**seteamos loading */
+                json.map(op => delete op.created)
+                setIsLoaded(true);
+                /**seteamos el listado de tickets */
+                setDataList(json);
+            } catch (error) {
+                setIsLoaded(true);
+                //setError(error);
+                console.log("Esto es el error" + error);
+            }
+        }
+
+        getOperations()
+
+        //modificamos datalist
+
+
+    }, []);
+
 
     //datos para pruebas
 
@@ -91,35 +93,8 @@ const Operaciones = () => {
                         </Col>
                     </Row>
                     <Row className="is-3 text-al-ini titlemodule">
-                        <form md={12} >
-                            <h5 className="title-details ml-5 pt-3 ">Datos de operacion</h5>
-                            <Col>
-                                <div className='datashow'>
-                                    <label className='labeltk' >Moneda</label>
-                                </div>
-                            </Col>
-                            <select>
-                                {currency.map((option) => (
-                                    <option value={option.value}>{option.label}</option>
-                                ))}
-                            </select>
-                            <Col>
-                                <div className='datashow mt-3'>
-                                    <label className='labeltk' >Monto transaccion</label>
-                                    <input className='inputshow' value={""} />
-
-                                </div>
-                            </Col>
-                            <Col>
-                                <div className='datashow mt-3'>
-                                    <input type="submit" className=" btnadd" value={"Realizar operacion"} />
-
-
-                                </div>
-
-                            </Col>
-
-                        </form>
+                        <OperationsData/>
+                        
                     </Row>
                 </Col>
 
