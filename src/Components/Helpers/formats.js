@@ -1,3 +1,4 @@
+import { USER } from "./helper"
 
 export const formatedDataTicket = (data) => {
     let obData = {}
@@ -7,7 +8,7 @@ export const formatedDataTicket = (data) => {
             obData = {
                 ...obData,
 
-                
+
                 [item?.id_ticket]: {
                     icon: 'construct-outline',
                     id_ticket: item.id_ticket,
@@ -18,6 +19,7 @@ export const formatedDataTicket = (data) => {
                     created_by_user: item.id_user,
                     status: (item.status),
                     priority: item.priority,
+                    assigned_to: formatTex(item.assigned_to),
                     updated_at: formatoDate(item.updated_at),
                 }
 
@@ -25,6 +27,14 @@ export const formatedDataTicket = (data) => {
         })
     }
     return obData
+}
+
+export const formatTex = (text) => {
+    if (text === null) {
+        return 'Sin asignar'
+    } else {
+        return <span className="assignedto">{text}</span>
+    }
 }
 
 export const formatedDataClient = (data) => {
@@ -392,7 +402,49 @@ export const formmrmr = (data) => {
             }
         })
     }
-    
+
     return obData
 }
 
+
+export const formatComments = (data) => {
+    let obData = {}
+
+    if (data) {
+        data?.map(item => {
+            obData = {
+                ...obData,
+                [item?.comment_at]: {
+                    comment: item?.comment,
+                    comment_at: formatoDate(item?.comment_at),
+                    id_user: (item?.id_user),
+                    userdata: item?.userdata,
+                }
+
+            }
+        })
+    }
+
+    return obData
+}
+
+export const formatHistorial = (data) => {
+    let obData = {}
+
+    if (data) {
+        data?.map(item => {
+            obData = {
+                ...obData,
+                [item?.historilal_id]: {
+                    historial_action: item?.historial_action,
+                    historial_date: formatoDate(item?.historial_date),
+                    id_user: (item?.id_user),
+                    userdata: item?.userdata,
+                }
+
+            }
+        })
+    }
+
+    return obData
+}

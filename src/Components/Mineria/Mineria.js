@@ -8,8 +8,6 @@ import TicketForm from './Forms/TicketForm'
 import tktimg from "../../assets/images/ticketimg.png"
 import mchimg from "../../assets/images/machine.png"
 import MineroForms from './Forms/MineroForms'
-import { ALL_MINERS_DETAILS, CURRENT_PROFILE } from '../GraphQL/Queries'
-import { useQuery } from '@apollo/client'
 
 const Mineria = props => {
 
@@ -48,9 +46,6 @@ const Mineria = props => {
     }
     const usermodal = modalType
 
-    const { data, loading, error } = useQuery(CURRENT_PROFILE)
-
-    console.log("Data disponible: ", data)
 
     return (
         <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
