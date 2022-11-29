@@ -103,7 +103,7 @@ const Mineria = props => {
                     </Col>
                 </Row>
                 <Row>
-
+                    
                 </Row>
             </Container>
         </div>
