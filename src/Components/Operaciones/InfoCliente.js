@@ -7,13 +7,13 @@ const InfoCliente = () => {
         codigoCliente:"",
         nroDocumento:"",
         nombre:"",
-        apellido:""
+        apellido:"",
+        direccion:""
     }
     const [data,setData] = useState(formData)
     const [clients,setClients] = useState('')
 
     const handleChange = (e) => {
-        console.log("CHnage");
         e.preventDefault();
         setData(prevState => {
           const updatedValues = {
@@ -66,51 +66,43 @@ const InfoCliente = () => {
         //si presiona Enter busacamos el cliente 
         //Obvio que React no adivinara
         if(e.key === 'Enter'){
-            console.log('Codigo cliente'+data.codigoCliente);
+            console.log('Codigo cliente'+data.nroDocumento);
             
-            const client = clients.filter( cl => cl.id_client === Number(data.codigoCliente))
-            if(client){
-                console.log(client);
-                data.nroDocumento = client.document
-                data.nombre = client.name
-                setData(data)
+            const clientFinded = clients.filter( cl => cl.document === data.nroDocumento)
+            console.log(clientFinded);
+            if(clientFinded){
+                const client = clientFinded[0]
+                formData.nroDocumento = client.document
+                formData.nombre = client.name
+                formData.apellido = client.last_name
+
+                
+                console.log(formData);
+                setData(formData)
+                
             }
+            console.log('No encontramos el cliente');
             
         }
     }  
 
     return (
         <Row className='mt-3'>
+            
             <Col>
                 <div className='datashow'>
-                    <label className='labeltk' >Codigo cliente</label>
-                    <input className='inputshow' name = "codigoCliente" value={data.codigoCliente} onChange={(e) => handleChange(e)} onKeyPress={(e) => handleKeyPress(e)}  />
-                </div>
-            </Col>
-            <Col>
-                <div className='datashow'>
-                    <label className='labeltk' >Nro documento</label>
-                    <input className='inputshow' value={data.nroDocumento} disabled  />
+                    <label className='labeltk' >Nro documento del cliente</label>
+                    <input className='inputshow' value={data.nroDocumento} name='nroDocumento' enabled  onChange={(e) => handleChange(e)} onKeyPress={(e) => handleKeyPress(e)} />
                 </div>
             </Col>
             <Col>
                 <div className='datashow'>
                     <label className='labeltk'>Nombre y Apellido</label>
-                    <input className='inputshow' value={""} disabled />
+                    <input className='inputshow' value={data.nombre +" "+ data.apellido} disabled />
                 </div>
             </Col>
-            <Col>
-                <div className='datashow'>
-                    <label className='labeltk' >Direccion</label>
-                    <input className='inputshow' value={""} disabled />
-                </div>
-            </Col>
-            <Col>
-                <div className='datashow'>
-                    <label className='labeltk' >Telefono</label>
-                    <input className='inputshow' value={""} disabled />
-                </div>
-            </Col>
+            
+            
         </Row>
 
     )
