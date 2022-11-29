@@ -19,6 +19,10 @@ export default function TableRow(props) {
             console.log("me voyo a otro lado");
             navigate(`${props?.link}${data?.id_cliente}`)
         }  */
+
+        if ((props?.link) && (pathname === '/mineros')) {
+            navigate(`${props?.link}${data?.id_machine}`)
+        }
     }
 
     const veifyData = (data, col) => {
@@ -29,15 +33,15 @@ export default function TableRow(props) {
 
     return (
 
-        <tr key={data?.id_ticket ? data?.id_ticket : data?.id_cliente ? data?.id_operaion:data?.id_ticket} className={data?.id_ticket ? "rowtable clickeable" : "rowtable"} onClick={e => clickedItem(e)} >
-            {Object.keys(data).filter((col => col !== 'created_at_filter' && col !== 'id_role' && col !== 'created_at_user' && col !== 'id_user')).map(col => {
+        <tr key={data?.id_ticket ? data?.id_ticket : data?.id_cliente ? data?.id_operaion : data?.id_ticket} className={data?.id_ticket ? "rowtable clickeable" : "rowtable"} onClick={e => clickedItem(e)} >
+            {Object.keys(data).filter((col => col !== 'created_at_filter' && col !== 'id_role' && col !== 'created_at_user' && col !== 'id_user' && col !== "id_machine")).map(col => {
                 return (
                     <Fragment key={col}>
                         {
                             col === 'actions' ?
                                 <td>
                                     {
-                                        pathname === '/clientes' && <ClientActions dataID={data?.id_cliente}/>
+                                        pathname === '/clientes' && <ClientActions dataID={data?.id_cliente} />
                                     }
                                     {
                                         pathname === '/usuarios' && <UserActions dataID={data?.id_user} />

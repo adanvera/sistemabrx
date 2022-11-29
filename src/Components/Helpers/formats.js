@@ -209,17 +209,43 @@ export const formatedDataMiners = (data) => {
             obData = {
                 ...obData,
                 [item?.id_machine]: {
+                    machine_name: item.machine_name,
                     id_machine: item.id_machine,
-                    client: item.name,
-                    description_model: item.description_model,
-                    status: item.status,
-                    actions: 'x x',
+                    status: verifyStatusMachine(item.status),
+                    name: item.name,
+                    hashrate: item.hashrate + " THs",
+                    tempmax: item.tempmax,
+                    maxfan: item.maxfan + " RPM",
+                    uptime: item.uptime,
                 }
 
             }
         })
     }
     return obData
+}
+
+export const verifyStatusMachine = (data) => {
+    if (data === 1) {
+        return (
+            <div className="status">
+                <div className="oktxt">Okay</div>
+            </div>
+        )
+    } else if (data === 0) {
+        return (
+            <div className=" status">
+                <div className="failtxt">Fail</div>
+            </div>
+        )
+    }
+    else if (data === 2) {
+        return (
+            <div className=" status">
+                <div className="warntxt">Warn</div>
+            </div>
+        )
+    }
 }
 
 export const formatedDataRoles = (data) => {

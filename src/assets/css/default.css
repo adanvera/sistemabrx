@@ -1059,3 +1059,15 @@ form#editticket {
 span.assignedto {
     text-transform: capitalize;
 }
+
+.failtxt {
+    color: red;
+}
+
+.oktxt{
+    color: green;
+}
+
+.warntxt{
+    color: orange;
+}

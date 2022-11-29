@@ -21,11 +21,13 @@ function Mineros() {
 
     },
     headers: {
-      id_machine: "Id Machine",
-      client: "Cliente",
-      description_model: "Descripción modelo",
-      status: "Estado",
-      actions: 'Acciones',
+      machine_name: "NOMBRE",
+      status: "ESTADO",
+      name: "CLIENTE",
+      hashrate: "HASHRATE",
+      tempmax: "TEMP MAX",
+      maxfan: "VENTILADOR MAX",
+      uptime: "UPTIME",
     }
   }
   const [state, setState] = useState(initialState)
@@ -128,9 +130,9 @@ function Mineros() {
         </Row>
         {
           isLoaded === false ?
-            <DumpTable link='/tickets/' headers={state?.headers} data={formatedList} />
+            <DumpTable link='/mineros/' headers={state?.headers} data={formatedList} />
             :
-            <Table link='/tickets/' headers={state?.headers} data={((formatedList))} />
+            <Table link='/mineros/' headers={state?.headers} data={((formatedList))} />
         }
       </Container>
     </div >

@@ -47,6 +47,10 @@ const Mineria = props => {
     const usermodal = modalType
 
 
+
+
+
+
     return (
         <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
             {modal && (
@@ -97,6 +101,9 @@ const Mineria = props => {
                             </div>
                         </div>
                     </Col>
+                </Row>
+                <Row>
+
                 </Row>
             </Container>
         </div>
