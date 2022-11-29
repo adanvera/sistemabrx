@@ -21,7 +21,11 @@ const TicketForm = (props) => {
             ticket_comments: '',
             priority: 'NORMAL',
             ticket_name: '',
-            asigned_to: ''
+            asigned_to: '',
+            historilal_id: Math.random().toString(36).slice(-8),
+            historial_action: '',
+            historial_date: new Date(),
+            userdata: userAuthed ? userAuthed.name + " " + userAuthed.last_name : '',
         }
     }
 
@@ -61,16 +65,26 @@ const TicketForm = (props) => {
         /**obtenemos el token */
         const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
 
+        const historial = JSON.stringify({
+            historilal_id: Math.random().toString(36).slice(-8),
+            historial_action: 'Ticket creado',
+            historial_date: new Date(),
+            userdata: userAuthed ? userAuthed.name + " " + userAuthed.last_name : '',
+            id_user: state.variables.id_user,
+        })
+
         const createTicket = {
             id_machine: Number(state.variables.id_machine),
             id_user: state.variables.id_user,
             description_ticket: state.variables.description_ticket,
             status: state.variables.status,
-            ticket_comments: state.variables.ticket_comments,
+            ticket_comments: null,
             priority: state.variables.priority,
             ticket_name: state.variables.ticket_name,
-            asigned_to: state.variables.asigned_to ? Number(state.variables.asigned_to) : ''
+            asigned_to: state.variables.asigned_to ? Number(state.variables.asigned_to) : '',
+            ticket_historial: historial,
         }
+
 
         const ticketOptions = {
             method: "POST",
@@ -153,18 +167,6 @@ const TicketForm = (props) => {
                         </FloatingLabel>
                     </Row>
                     <Row md className="mt-2">
-                        <FloatingLabel className="tkt" controlId="floatingInputGrid" label="Estado">
-                            <Form.Select aria-label="Seleccionar estado" name="status" onChange={handleChange} value={state.variables.status} >
-                                <option value="PENDING">PENDIENTE</option>
-                                <option value="INPROGRESS">EN PROGRESO</option>
-                                <option value="ONHOLD">DETENIDO</option>
-                                <option value="RMA">RMA</option>
-                                <option value="CLOSED">CERRADA</option>
-                            </Form.Select>
-                        </FloatingLabel>
-                    </Row>
-
-                    <Row md className="mt-2">
                         <FloatingLabel className="tkt" controlId="asigned_to" label="Asginar a">
                             <Form.Select aria-label="Asignar ticket" name="asigned_to" onChange={handleChange} value={state.variables.asigned_to} >
                                 <option value="" selected disabled>Seleccionar</option>
@@ -176,7 +178,6 @@ const TicketForm = (props) => {
                             </Form.Select>
                         </FloatingLabel>
                     </Row>
-
                     <Row className='addusr mt-3' >
                         <Col id='create'>
                             <Button type="submit">Crear ticket</Button>
@@ -185,6 +186,7 @@ const TicketForm = (props) => {
                             <Button onClick={() => setModalStatus(false)} >Cerrar</Button>
                         </Col>
                     </Row>
+
                 </Form>
             }
         </Container>

@@ -44,8 +44,6 @@ const SelectMachine = (props) => {
 
     }, [])
 
-    console.log(machineList);
-
     return (
         <>
             <option>Seleccionar maquina</option>

@@ -481,8 +481,6 @@ tr.table-header {
 
 .headtiket.col {
     border-bottom: 1px solid #D6D6D6;
-    margin-left: 10px;
-    margin-right: 10px;
 }
 
 /*info ticket*/
@@ -840,4 +838,236 @@ span.txtnoiden {
     padding-bottom: 10px;
     font-size: 10px;
     color: red;
+}
+
+.colorlink a {
+    text-decoration: none;
+    text-decoration: none;
+}
+
+.headtiket {
+    text-transform: uppercase;
+}
+
+.clipboard {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    border-radius: 5px;
+    position: relative;
+    border-radius: 50px;
+    border: 1px solid #D6D6D6;
+    font-size: 14px;
+}
+
+.txttd {
+    text-align: center !important;
+    justify-content: center !important;
+    position: absolute;
+    left: 4px;
+    top: 4px;
+}
+
+.clipboard:hover {
+    background-color: rgba(2, 255, 65, 0.21) !important;
+}
+
+.main-content-tkt {
+    left: 295px;
+    position: absolute;
+    width: calc(100vw - 329px);
+    margin-top: 15px;
+    margin-left: 20px;
+    margin-right: 10px;
+    border-radius: 8px;
+}
+
+.main-content-tkt.extend {
+    width: calc(100vw - 128px);
+    left: 103px;
+}
+
+.tiktop {
+    background-color: white;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+
+div#_btnDeletetkt {
+    cursor: pointer;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #D6D6D6;
+    border-radius: 5px;
+    height: 40px;
+    margin-bottom: 1rem;
+    padding: 5px;
+}
+
+div#_btnEdittkt:hover {
+    color: green;
+    border: 1px solid green;
+}
+
+div#_btnDeletetkt:hover {
+    color: red;
+    border: 1px solid red;
+}
+
+div#_btnEdittkt {
+    cursor: pointer;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #D6D6D6;
+    border-radius: 5px;
+    height: 40px;
+    margin-bottom: 1rem;
+    padding: 5px;
+}
+
+.lbltkt.row {
+    margin-left: 3px;
+}
+
+.no-borders.form-control {
+    background: none;
+}
+
+.no-borders.form-control:hover {
+    background: white;
+    border: 1px solid #D6D6D6 !important;
+}
+
+.card {
+    border: 1px solid #D6D6D6;
+    box-shadow: 5px 6px 6px 2px #e9ecef;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.dots {
+
+    height: 4px;
+    width: 4px;
+    margin-bottom: 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.badge {
+    padding: 7px;
+    padding-right: 9px;
+    padding-left: 16px;
+    box-shadow: 5px 6px 6px 2px #e9ecef;
+}
+
+.user-img {
+    margin-top: 4px;
+}
+
+.check-icon {
+    font-size: 17px;
+    color: #c3bfbf;
+    top: 1px;
+    position: relative;
+    margin-left: 3px;
+}
+
+.form-check-input {
+    margin-top: 6px;
+    margin-left: -24px !important;
+    cursor: pointer;
+}
+
+
+.form-check-input:focus {
+    box-shadow: none;
+}
+
+
+.icons i {
+
+    margin-left: 8px;
+}
+
+.reply {
+
+    margin-left: 12px;
+}
+
+.reply small {
+
+    color: #b7b4b4;
+
+}
+
+
+.reply small:hover {
+
+    color: green;
+    cursor: pointer;
+
+}
+
+.col-md-9 {
+    padding: 0;
+}
+
+.fw-bold {
+    font-weight: 700 !important;
+}
+
+.card-body.p-4 {
+    border-top: 1px solid #D6D6D6;
+}
+
+.mr-2 {
+    margin-right: 10px;
+}
+
+.tithis {
+    font-size: 14px;
+    font-weight: 400;
+    color: #000;
+}
+
+.colorfont {
+    color: #008F8F;
+}
+
+div#closeone {
+    text-align: start;
+}
+
+.dfasfd.mt-3.row {
+    border-top: 1px solid #D6D6D6 !important;
+    padding-top: 10px;
+}
+
+form#editticket {
+    width: 100%;
+}
+
+span.assignedto {
+    text-transform: capitalize;
+}
+
+.failtxt {
+    color: red;
+}
+
+.oktxt{
+    color: green;
+}
+
+.warntxt{
+    color: orange;
 }

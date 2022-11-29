@@ -8,7 +8,6 @@ import DumpTable from '../../Commons/Table/DumpTable'
 import Table from '../../Commons/Table/Table'
 import { filteredData, formatedDataMiners } from '../../Helpers/formats'
 import { MINING_MACHINES } from '../../Helpers/helper'
-import { ALL_MINERS_DETAILS, API_KEY } from '../../Utils/Queries/Queries'
 import MachineForm from '../Forms/MachineForm'
 import MineroForms from '../Forms/MineroForms'
 
@@ -22,11 +21,13 @@ function Mineros() {
 
     },
     headers: {
-      id_machine: "Id Machine",
-      client: "Cliente",
-      description_model: "Descripción modelo",
-      status: "Estado",
-      actions: 'Acciones',
+      machine_name: "NOMBRE",
+      status: "ESTADO",
+      name: "CLIENTE",
+      hashrate: "HASHRATE",
+      tempmax: "TEMP MAX",
+      maxfan: "VENTILADOR MAX",
+      uptime: "UPTIME",
     }
   }
   const [state, setState] = useState(initialState)
@@ -100,7 +101,6 @@ function Mineros() {
 
   const formatedList = formatedDataMiners(dataList)
 
-  console.log(dataList);
 
   return (
     <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
@@ -130,9 +130,9 @@ function Mineros() {
         </Row>
         {
           isLoaded === false ?
-            <DumpTable link='/tickets/' headers={state?.headers} data={formatedList} />
+            <DumpTable link='/mineros/' headers={state?.headers} data={formatedList} />
             :
-            <Table link='/tickets/' headers={state?.headers} data={((formatedList))} />
+            <Table link='/mineros/' headers={state?.headers} data={((formatedList))} />
         }
       </Container>
     </div >

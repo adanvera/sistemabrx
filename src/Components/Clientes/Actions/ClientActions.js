@@ -12,7 +12,7 @@ const ClientActions = (props) => {
      * opcion seleccionemos
      */
     const handleOnClick = (e, btn) => {
-        console.log('le he dado click');
+
         e.preventDefault()
         setModalStatus(true)
         const dataIDc = e.target.getAttribute("dataid")
