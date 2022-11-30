@@ -22,6 +22,8 @@ import ProtectedRoute from './Components/Commons/ProtectedRoute';
 import ChangePass from './Components/Commons/ChangePass';
 import Reset from './Components/Commons/Reset';
 import Operaciones from './Components/Operaciones/Operaciones';
+import MineroDetails from './Components/Mineria/Mineros/MineroDetails';
+import Importaciones from './Components/Importaciones/Importaciones';
 
 const App = (props) => {
 
@@ -52,6 +54,8 @@ const App = (props) => {
                 <Route path="/seguridad" element={<ProtectedRoute><Seguridad /></ProtectedRoute>} />
                 <Route path='/adjust' element={<ProtectedRoute><ChangePass /></ProtectedRoute>} />
                 <Route path='/operaciones' element={<ProtectedRoute><Operaciones /></ProtectedRoute>} />
+                <Route path="/mineros/:id"element={<ProtectedRoute><MineroDetails /></ProtectedRoute>} />
+                <Route path="/importaciones"element={<ProtectedRoute><Importaciones /></ProtectedRoute>} />
               </Route>
               <Route>
                 <Route path='/reset' element={<Reset />} />
