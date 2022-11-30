@@ -179,7 +179,7 @@ const Sidebar = props => {
                             <div>
                                 <ion-icon name="briefcase-outline"></ion-icon>
                             </div>
-                            <span className="pl-3">IMPORTACIONES</span>
+                            <span className="pl-3">Importaciones</span>
                         </Link>
                     </li>
                 </ProtectedComponent>

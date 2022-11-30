@@ -1071,3 +1071,23 @@ span.assignedto {
 .warntxt{
     color: orange;
 }
+
+input.inputshow.asgined {
+    text-transform: capitalize;
+}
+
+.ticketchart {
+    padding: 1rem;
+    border: 0.5px solid rgba(71, 71, 71, 0.1);
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.labeldata.row {
+    padding-left: 10px;
+    font-weight: 700;
+    text-align: center;
+    justify-content: center;
+    /* background: red; */
+    padding: 10px;
+}

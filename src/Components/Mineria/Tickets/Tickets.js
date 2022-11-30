@@ -81,6 +81,9 @@ const Tickets = props => {
             try {
                 const res = await fetch(TICKETS, options),
                     json = await res.json()
+
+                    console.log(json);
+
                 /**seteamos loading */
                 setIsLoaded(true);
                 /**seteamos el listado de tickets */

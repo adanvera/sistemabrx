@@ -12,6 +12,8 @@ const CLIENT = 'https://backend.brxsgo.com/api/client/'
 const ASSIGNROLE = "https://backend.brxsgo.com/api/roles/roleadd/"
 const OPERATION_PROD ="https://backend.brxsgo.com/api/operation"
 const OPERATION_TEST ="http://localhost:4000/api/operation"
+const TICKET_SUMMARY = "https://backend.brxsgo.com/api/tickets/get/summary"
+const MINING_SUMMARY = "https://backend.brxsgo.com/api/mining/get/summary"
 
 /**exportamos nuestras declaraciones de valores
  * para poder utilizarlas en donde se requieran
@@ -29,5 +31,7 @@ export {
     USER_PSW,
     RESET_USER_PASS,
     OPERATION_PROD,
-    OPERATION_TEST
+    OPERATION_TEST,
+    TICKET_SUMMARY,
+    MINING_SUMMARY
 }
