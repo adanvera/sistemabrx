@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { DataContext } from "../Commons/Context/DataContext";
+import ModalContainer from "../Commons/ModalContainer";
 import SearchTable from "../Commons/SearchTable";
 import Select from "../Commons/Select";
 import Table from "../Commons/Table/Table";
@@ -9,12 +10,18 @@ import { OPERATION_PROD, OPERATION_TEST } from "../Helpers/helper";
 import InfoCliente from "./InfoCliente";
 import OperationsData from "./OperationsData";
 
+
 const Operaciones = () => {
-    const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
+    const { sidebarStatus, setSidebarStatus, typeCurrency,setTypeCurrency} = useContext(DataContext)
     const [typesOperations,setTypesOperations] = useState([{ label: "Compra", value: 1 }, { label: "Venta", value: 0 }])
     const currency = [{ label: "BTC", value: 1 }, { label: "USDT", value: 0 }]
     const [isLoaded, setIsLoaded] = useState(false);
+    const { modalstatus, setModalStatus } = useContext(DataContext)
+    const {isBuying,setIsBuying} = useContext(DataContext)
 
+
+
+    const modal = modalstatus
 
     const initialState = {
         modalShow: false,
@@ -54,7 +61,7 @@ const Operaciones = () => {
 
         const getOperations = async () => {
             try {
-                const res = await fetch(OPERATION_TEST, options),
+                const res = await fetch(OPERATION_PROD, options),
                     json = await res.json()
                 /**seteamos loading */
                 json.map(op => delete op.created)
@@ -113,7 +120,15 @@ const Operaciones = () => {
                     </Row>
                     <Table link='/operaciones/' headers={state?.headers} data={dataList} />
                 </Col>
-
+                {modal && (
+                    <ModalContainer
+                        title={state?.title}
+                        //form={pickForm()}
+                        modalStatus={modal}
+                        typeCurrency = {typeCurrency}
+                        isBuying = {isBuying}
+                    />
+                )}
 
             </Container>
         </div>

@@ -1,5 +1,6 @@
 import { useContext, useState } from "react"
 import { Col } from "react-bootstrap"
+import { DataContext } from "../Commons/Context/DataContext"
 
 const OperationsData = ()=>{
 
@@ -7,22 +8,47 @@ const OperationsData = ()=>{
     const currency = [{ label: "BTC", value: 1 }, { label: "USDT", value: 0 }]
     const [comision,setComision ] = useState(0)
     const [isLoaded, setIsLoaded] = useState(false);
+    const {isBuying,setIsBuying,setModalStatus,typeCurrency,setTypeCurrency} = useContext(DataContext)
+    const [currentCurrency,setCurrentCurrency] = useState('')
 
     const handleTypeChange = (e)=>{
-     console.log(e.target.value);   
+        const type = e.target.value;
+        if(type === '1'){
+            
+            setIsBuying(true)
+        }else{
+            setIsBuying(false)
+
+        }   
 
     }
     const handleCurreyncyChange = (e)=>{
-        console.log(e.target.value);   
+        setCurrentCurrency(e.target.value);   
    
+    }
+    const handleSubmit = (e)=>{
+        e.preventDefault()
+        console.log('Hice click');
+        if(isBuying){
+            setModalStatus(true)
+            if(currentCurrency === '1'){
+                setTypeCurrency(currentCurrency)
+            }else{
+                setTypeCurrency(currentCurrency)
+
+            }
+
+        }
+
+
     }
     
     return (
-        <form md={12} >
+        <form md={12} onSubmit={handleSubmit} >
                             <h5 className="title-details ml-5 pt-3 ">Datos de operacion</h5>
                             <Col>
                                 <div className='datashow mt-3'>
-                                    <label className='labeltk' >Tipo de operacion</label>
+                                    <label className='labeltk'>Tipo de operacion</label>
                                     <select onChange={(e) => handleTypeChange(e)} >
 
                                         {typesOperations.map((option) => (
@@ -52,6 +78,8 @@ const OperationsData = ()=>{
                                 </div>
 
                             </Col>
+                            
+                            
                             <Col>
                                 <div className='datashow mt-3'>
                                     <label className='labeltk' >Comision</label>

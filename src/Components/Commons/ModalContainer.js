@@ -1,9 +1,12 @@
 import React, { Fragment, useContext, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { DataContext } from './Context/DataContext';
+import isBuyingImgBtc from '../../assets/images/btc.jpeg'
+import isBuyingImgUsdt from '../../assets/images/usdt.jpeg'
+import OperationsConfirmed from '../Operaciones/OperationsConfirmed';
+
 
 const ModalContainer = (props) => {
-
 
     console.log(props);
     const [show, setShow] = useState(false);
@@ -23,6 +26,14 @@ const ModalContainer = (props) => {
                         <Modal.Header closeButton>
                             <Modal.Title className='modaltitle' >{subjectTitle + " "}{title}</Modal.Title>
                         </Modal.Header>
+                }
+                {
+                    props.isBuying === true ?(
+                        <div className='qr-imagen'>
+                            <img src= { props.typeCurrency === '1'?isBuyingImgBtc:isBuyingImgUsdt}  width="350px  " height="350px"/>
+                            <OperationsConfirmed/>
+                        </div>
+                    ):''
                 }
                 <Modal.Body>
                     {props?.form}
