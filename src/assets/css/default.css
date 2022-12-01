@@ -1064,11 +1064,11 @@ span.assignedto {
     color: red;
 }
 
-.oktxt{
+.oktxt {
     color: green;
 }
 
-.warntxt{
+.warntxt {
     color: orange;
 }
 
@@ -1090,4 +1090,8 @@ input.inputshow.asgined {
     justify-content: center;
     /* background: red; */
     padding: 10px;
+}
+
+.qr-imagen {
+    text-align: center;
 }
