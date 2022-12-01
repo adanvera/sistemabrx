@@ -16,7 +16,7 @@ const TICKET_SUMMARY = "https://backend.brxsgo.com/api/tickets/get/summary"
 const MINING_SUMMARY = "https://backend.brxsgo.com/api/mining/get/summary"
 const MACHINES_API = "https://api.minerstat.com/v2/hardware"
 const API_COINS = "https://api.minerstat.com/v2/coins?list=BTC,BCH,BINANCE BTC,2MINERS FLUX,DOGE"
-const IMPORTACIONES = "http://localhost:4000/api/importaciones"
+const IMPORTACIONES = "https://backend.brxsgo.com/api/importaciones"
 
 /**exportamos nuestras declaraciones de valores
  * para poder utilizarlas en donde se requieran

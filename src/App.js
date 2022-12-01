@@ -24,6 +24,7 @@ import Reset from './Components/Commons/Reset';
 import Operaciones from './Components/Operaciones/Operaciones';
 import MineroDetails from './Components/Mineria/Mineros/MineroDetails';
 import Importaciones from './Components/Importaciones/Importaciones';
+import Negocio from './Components/Negocio/Negocio';
 
 const App = (props) => {
 
@@ -56,6 +57,8 @@ const App = (props) => {
                 <Route path='/operaciones' element={<ProtectedRoute><Operaciones /></ProtectedRoute>} />
                 <Route path="/mineros/:id"element={<ProtectedRoute><MineroDetails /></ProtectedRoute>} />
                 <Route path="/importaciones"element={<ProtectedRoute><Importaciones /></ProtectedRoute>} />
+                <Route path="/negocio"element={<ProtectedRoute><Negocio /></ProtectedRoute>} />
+
               </Route>
               <Route>
                 <Route path='/reset' element={<Reset />} />

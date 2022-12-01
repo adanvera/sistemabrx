@@ -19,11 +19,11 @@ function Dashboard() {
       created_at: "Fecha de creación",
       priority: "Prioridad",
     },
-    headerimp:{
-      tracking_number : "Tracking Number",
-      id_cliente : "ID Cliente",
-      id_proveedor : "ID Proveedor",
-      valor_envio : "Valor Envio",
+    headerimp: {
+      tracking_number: "Tracking Number",
+      id_cliente: "ID Cliente",
+      id_proveedor: "ID Proveedor",
+      valor_envio: "Valor Envio",
     }
   }
 
@@ -38,6 +38,8 @@ function Dashboard() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [dataList, setDataList] = useState('')
   const [shortImportaciones, setShortImportaciones] = useState('')
+  const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
+
 
   /**funcion para formatear fecha */
   const formatDate = () => {
@@ -125,21 +127,27 @@ function Dashboard() {
     getImportaciones()
 
 
-  }, []);
+  }, [state, dataList]);
 
 
   const formatedDataShortTciket = formatNowShoertTciket(datatest)
   const datashorimp = formatImpShort(shortImportaciones.slice(0, 5))
 
+  const actualDate = new Date().getHours()
+
 
   return (
     <>
-      <div className="main-content-head">
+      <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
         <Row>
           <Col className='col-md-10 msg-wlc'>
             <div className='wlcmone'>
               <div className='iconwlc'>
-                <ion-icon name="happy-outline"></ion-icon>
+                {
+                  actualDate > 17 ?
+                    <ion-icon name="moon-outline"></ion-icon> :
+                    <ion-icon name="sunny-outline"></ion-icon>
+                }
               </div>
               <div>
                 <h4>¡Hola, Bienvenido!</h4>
@@ -154,7 +162,7 @@ function Dashboard() {
           </Col>
         </Row>
       </div>
-      <div className="main-content" id='dash'>
+      <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} id='dash'>
         <Container fluid={true} className="">
           <Row>
             <Col md={4} className="mt-3">
@@ -167,7 +175,6 @@ function Dashboard() {
             </Col>
           </Row>
         </Container>
-
       </div>
     </>
   )

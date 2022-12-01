@@ -27,6 +27,7 @@ const Sidebar = props => {
         seguridad: '',
         changePass: '',
         importaciones: '',
+        negocio: ''
     }
 
     const [modalShow, setModalShow] = useState(false)
@@ -47,7 +48,8 @@ const Sidebar = props => {
             logOut: '',
             seguridad: '',
             changePass: '',
-            importaciones: ''
+            importaciones: '',
+            negocio: ''
         }
         setState(prevState => ({
             ...blankState,
@@ -177,9 +179,22 @@ const Sidebar = props => {
                     >
                         <Link to="/importaciones" className="d-flex">
                             <div>
-                                <ion-icon name="briefcase-outline"></ion-icon>
+                                <ion-icon name="rocket-outline"></ion-icon>
                             </div>
                             <span className="pl-3">Importaciones</span>
+                        </Link>
+                    </li>
+                </ProtectedComponent>
+                <ProtectedComponent allowedRoles={['OPERACIONES', 'SEGURIDAD', 'MINERIA', 'USUARIOS', 'CLIENTES']}>
+                    <li className={state?.negocio ? "mt-4 classli is-active" : "mt-4 classli"}
+                        id="negocio"
+                        onClick={(e) => handleSetActive('negocio')}
+                    >
+                        <Link to="/negocio" className="d-flex">
+                            <div>
+                                <ion-icon name="briefcase-outline"></ion-icon>
+                            </div>
+                            <span className="pl-3">Negocio</span>
                         </Link>
                     </li>
                 </ProtectedComponent>
