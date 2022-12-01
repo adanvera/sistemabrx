@@ -1168,3 +1168,37 @@ span.spantitle {
     font-size: 12px;
     height: 35px !important;
 }
+
+.sectioncrypto {
+    padding: 5px;
+    border: 0.5px solid rgba(71, 71, 71, 0.1);
+    border-radius: 8px;
+    margin: 10px;
+}
+
+.dolaricon {
+    color: green;
+    font-size: 30px;
+}
+
+.dolaricon {
+    color: green;
+    font-size: 40px;
+    text-align: center;
+    justify-content: center;
+    margin: auto;
+}
+
+.dolaricon {
+    color: green;
+    font-size: 40px;
+    text-align: center;
+    justify-content: center;
+    margin: auto;
+    margin-right: 43px;
+    margin-left: 10px;
+}
+
+p {
+    margin-bottom: 10px;
+}

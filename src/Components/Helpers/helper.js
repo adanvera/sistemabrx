@@ -17,6 +17,7 @@ const MINING_SUMMARY = "https://backend.brxsgo.com/api/mining/get/summary/"
 const MACHINES_API = "https://api.minerstat.com/v2/hardware"
 const API_COINS = "https://api.minerstat.com/v2/coins?list=BTC,BCH,BINANCE BTC,2MINERS FLUX,DOGE"
 const IMPORTACIONES = "https://backend.brxsgo.com/api/importaciones"
+const DOLLAR_API = "https://dolar.melizeche.com/api/1.0/"
 
 /**exportamos nuestras declaraciones de valores
  * para poder utilizarlas en donde se requieran
@@ -39,5 +40,6 @@ export {
     MINING_SUMMARY,
     MACHINES_API,
     API_COINS,
-    IMPORTACIONES
+    IMPORTACIONES,
+    DOLLAR_API
 }

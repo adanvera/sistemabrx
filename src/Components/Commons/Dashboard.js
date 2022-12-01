@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { formatedShortOp, formatImpShort, formatNowShoertTciket } from '../Helpers/formats';
-import { IMPORTACIONES, OPERATION_PROD, TICKETS } from '../Helpers/helper';
+import { DOLLAR_API, IMPORTACIONES, OPERATION_PROD, TICKETS } from '../Helpers/helper';
 import { DataContext } from './Context/DataContext';
 import Table from './Table/Table';
 
@@ -47,6 +47,7 @@ function Dashboard() {
   const [shortImportaciones, setShortImportaciones] = useState('')
   const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
   const [dataOperations, setDataOperations] = useState('')
+  const [dolar, setDolar] = useState('')
 
 
   /**funcion para formatear fecha */
@@ -152,15 +153,31 @@ function Dashboard() {
     }
 
     getOperations()
-    dataOperations.slice(0, 5)
+
+    const getDollar = async () => {
+
+      /**mandamos el header de nuestra consulta */
+      const options = {
+        method: 'GET',
+      }
+      try {
+        const res = await fetch(DOLLAR_API, options),
+          json = await res.json()
+        /**seteamos loading */
+        setIsLoaded(true);
+        setDolar(json.dolarpy.maxicambios);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getDollar()
 
   }, []);
 
-  
-
   const formatedDataShortTciket = formatNowShoertTciket(datatest)
   const datashorimp = formatImpShort(shortImportaciones.slice(0, 5))
-  const operations = (formatedShortOp(dataOperations))
+  const operations = (formatedShortOp(dataOperations.slice(0, 5)))
 
   console.log(operations);
 
@@ -194,6 +211,36 @@ function Dashboard() {
       </div>
       <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} id='dash'>
         <Container fluid={true} className="">
+          <Row>
+            <Col className='sectioncrypto'>
+              <div>
+                <h6 className='title-dash'>Crypto currencies and dollar api</h6>
+              </div>
+            </Col>
+            <Col md={3} className='sectioncrypto d-flex'>
+              <div className='dolaricon'>
+                <ion-icon name="cash-outline"></ion-icon>
+              </div>
+              <div className='dolar'>
+                <h6 className='title-dash'><strong>Cotización del dolar</strong></h6>
+                <div className='dolar-content'>
+                  <div className='dolar-content__icon'>
+                    {
+                      dolar ?
+                        <p>Compra: <strong>{dolar.compra} Gs.</strong></p> :
+                        <h4>0</h4>
+                    }
+                    {
+                      dolar ?
+                        <p>Venta: <strong>{dolar.venta}  Gs.</strong></p> :
+                        <h4>0</h4>
+                    }
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+          <Row><h6>Resumen de actividades</h6></Row>
           <Row className='justify-content-between'>
             <Col className="mt-3 " >
               <div className='shortlist'>
@@ -214,6 +261,7 @@ function Dashboard() {
               </div>
             </Col>
           </Row>
+
         </Container>
       </div>
     </>
