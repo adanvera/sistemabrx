@@ -15,7 +15,6 @@ function TableHeader(props) {
                             <div className='is-inline-flex'>
                                 <a className="btnSort" id={item} onclick={e => handleOnClick(e)} >
                                     <span className="is-uppercase">{header[item]}</span>
-                                    <ion-icon name="caret-down-outline"></ion-icon>
                                 </a>
                             </div>
                         </th>

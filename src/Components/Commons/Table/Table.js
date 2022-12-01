@@ -8,6 +8,7 @@ import { useRef } from "react";
 import { DataContext } from "../Context/DataContext.js";
 
 export default function Table(props) {
+    
     const { headers, data } = props
     const [state, setState] = useState({ sort: {}, currentPage: 1 })
     const { subPermissons, setSubPermissons } = useContext(DataContext)

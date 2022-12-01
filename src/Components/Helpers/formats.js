@@ -224,13 +224,13 @@ export const formatedDataMiners = (data) => {
 }
 
 export const verifyStatusMachine = (data) => {
-    if (data === 1) {
+    if (data === 0) {
         return (
             <div className="status">
                 <div className="oktxt">Okay</div>
             </div>
         )
-    } else if (data === 0) {
+    } else if (data === 1) {
         return (
             <div className=" status">
                 <div className="failtxt">Fail</div>
@@ -543,3 +543,26 @@ export const formatImpShort = (data) => {
     return obData
 }
 
+export const formatedShortOp = (data) => {
+
+    let obData = {}
+
+    if (data) {
+        data?.map(item => {
+            obData = {
+                ...obData,
+                [item?.id_operations]: {
+                    cliente: item?.id_client,
+                    monto: item?.amount,
+                    comision: item?.commission,
+                    tipoOperaciones: item?.id_operations,
+                    tipoMoneda: item?.type,
+                }
+
+            }
+        })
+    }
+
+    return obData
+
+}
