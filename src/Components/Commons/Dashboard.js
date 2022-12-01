@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
+import { formatNowShoertTciket } from '../Helpers/formats';
 import { TICKETS } from '../Helpers/helper';
 import { DataContext } from './Context/DataContext';
+import Table from './Table/Table';
 
 function Dashboard() {
 
@@ -12,10 +14,16 @@ function Dashboard() {
   const userAuthed = user
 
   const initialState = {
+    headers: {
+      ticket_name: "Nombre",
+      created_at: "Fecha de creación",
+      priority: "Prioridad",
 
+    }
   }
 
   const [state, setState] = useState(initialState)
+  const [datatest, setDatatest] = useState('')
 
 
   /**acciones que son utilizadas al cargar datos de
@@ -72,7 +80,23 @@ function Dashboard() {
     }
 
     getTickets()
-  }, []);
+
+
+    const shortTcicketList = dataList?.slice(0, 5)
+
+
+    const ticketListByDatae = shortTcicketList ? (shortTcicketList).sort((a, b) => { return new Date(b?.created_at) - new Date(a?.created_at) }) : ''
+
+    setDatatest(ticketListByDatae)
+
+  }, [datatest]);
+
+
+
+
+  const formatedDataShortTciket = formatNowShoertTciket(datatest)
+
+
 
   return (
     <>
@@ -98,9 +122,11 @@ function Dashboard() {
       </div>
       <div className="main-content" id='dash'>
         <Container fluid={true} className="">
-
           <Row>
-
+            <Col md={4} className="mt-3">
+              <h6>Últimos tickets añadidos</h6>
+              <Table headers={state?.headers} data={((formatedDataShortTciket))} nopagination={true}/>
+            </Col>
           </Row>
         </Container>
 

@@ -472,3 +472,23 @@ export const formatHistorial = (data) => {
 
     return obData
 }
+
+export const formatNowShoertTciket = (data) => {
+    let obData = {}
+
+    if (data) {
+        data?.map(item => {
+            obData = {
+                ...obData,
+                [item?.id_ticket]: {
+                    ticket_name: item?.ticket_name,
+                    created_at: formatoDate(item?.created_at),
+                    priority: item?.priority,
+                }
+
+            }
+        })
+    }
+
+    return obData
+}
