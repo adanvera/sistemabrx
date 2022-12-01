@@ -15,11 +15,9 @@ export default function TableRow(props) {
         if ((props?.link) && (pathname === '/tickets')) {
             navigate(`${props?.link}${data?.id_ticket}`)
         }
-        /* if ((props?.link) && (pathname === '/clientes')) {
-            console.log("me voyo a otro lado");
+        if ((props?.link) && (pathname === '/clientes')) {
             navigate(`${props?.link}${data?.id_cliente}`)
-        }  */
-
+        }
         if ((props?.link) && (pathname === '/mineros')) {
             navigate(`${props?.link}${data?.id_machine}`)
         }
@@ -40,9 +38,6 @@ export default function TableRow(props) {
                         {
                             col === 'actions' ?
                                 <td>
-                                    {
-                                        pathname === '/clientes' && <ClientActions dataID={data?.id_cliente} />
-                                    }
                                     {
                                         pathname === '/usuarios' && <UserActions dataID={data?.id_user} />
                                     }
