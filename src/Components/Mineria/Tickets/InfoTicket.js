@@ -100,6 +100,7 @@ const InfoTicket = (props) => {
             try {
                 const res = await fetch(TICKETS + id_ticket, options),
                     json = await res.json();
+                    window.location.reload()
             } catch (error) {
                 console.log(error.msg);
             }
@@ -108,6 +109,8 @@ const InfoTicket = (props) => {
         editTciket()
 
     }
+
+    console.log(data);
 
     return (
         <div className='d-flex'>
@@ -158,7 +161,7 @@ const InfoTicket = (props) => {
                                 <Col>
                                     <div className='datashow'>
                                         <label className='labeltk' >Asignado a</label>
-                                        <input className='inputshow' value={data.asigned_to} disabled />
+                                        <input className='inputshow asgined' value={data.assigned_to} disabled />
                                     </div>
                                 </Col>
                                 <Col>

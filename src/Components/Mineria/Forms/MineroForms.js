@@ -4,13 +4,13 @@ import { useContext } from 'react'
 import { useEffect } from 'react'
 import { Button, Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 import { DataContext } from '../../Commons/Context/DataContext'
-import { CLIENT, MACHINES, MINING_MACHINES } from '../../Helpers/helper'
+import { CLIENT, MACHINES, MACHINES_API, MINING_MACHINES } from '../../Helpers/helper'
 import SelectMachine from './SelectMachine'
 
 function MineroForms() {
 
   const initialState = {
-    id_model: "",
+    datamachine: "",
     documento: "",
     ip: "",
     machine_name: Math.random().toString(36).slice(-2) + ":" + Math.random().toString(36).slice(-2) + ":" + Math.random().toString(36).slice(-2) + ":" + Math.random().toString(36).slice(-2),
@@ -27,6 +27,9 @@ function MineroForms() {
   const [error, setError] = useState(null);
   const { modalstatus, setModalStatus } = useContext(DataContext)
   const [machineList, setMachineList] = useState()
+  const [externalData, setExternalData] = useState()
+
+  const [machineItem, setMachineItem] = useState()
 
   useEffect(() => {
 
@@ -79,9 +82,24 @@ function MineroForms() {
 
     getMachines()
 
+    const apiOptions = {
+      method: 'POST',
+
+    }
+    const gettingAllMachines = async () => {
+      try {
+        const res = await fetch(MACHINES_API, apiOptions),
+          json = await res.json()
+        setExternalData(json)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    gettingAllMachines()
+
 
   }, [])
-
 
   const handleChange = (e) => {
 
@@ -103,7 +121,7 @@ function MineroForms() {
       const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
 
       const createMiner = {
-        id_model: Number(state.id_model),
+        machinedata: JSON.stringify(externalData.filter((item) => item.id === state.datamachine)),
         document: state.documento,
         ip: state.ip,
         machine_name: state.ip + " / " + state.machine_name,
@@ -139,8 +157,6 @@ function MineroForms() {
 
   }
 
-  console.log(state);
-
   return (
     <>
       <Form onSubmit={submitMinero}>
@@ -173,11 +189,11 @@ function MineroForms() {
             controlId="floatingSelectGrid"
             label="Seleccionar maquina"
           >
-            <Form.Select aria-label="Seleccionar maquina" name="id_model" onChange={handleChange} value={state.id_model} >
+            <Form.Select aria-label="Seleccionar maquina" name="datamachine" onChange={handleChange} value={state.datamachine} >
               <option>Seleccionar maquina</option>
               {
-                machineList?.map((item) => {
-                  return (<option value={item?.id_model}>{item?.description_model}</option>)
+                externalData?.map((item) => {
+                  return (<option value={item.id} onClick={() => machineItem(item)} > {item?.name} {item?.brand} </option>)
                 })
               }
             </Form.Select>

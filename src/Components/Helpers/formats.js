@@ -7,19 +7,17 @@ export const formatedDataTicket = (data) => {
         data?.map(item => {
             obData = {
                 ...obData,
-
-
                 [item?.id_ticket]: {
                     icon: 'construct-outline',
                     id_ticket: item.id_ticket,
                     ticket_name: item.ticket_name,
-                    id_machine: item.id_machine,
+                    id_machine_to: item.id_machine,
                     created_at: formatoDate(item.created_at),
                     created_at_filter: item.created_at,
                     created_by_user: item.id_user,
                     status: (item.status),
                     priority: item.priority,
-                    assigned_to: formatTex(item.assigned_to),
+                    assigned_to: item.assigned_to,
                     updated_at: formatoDate(item.updated_at),
                 }
 

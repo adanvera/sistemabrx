@@ -4,6 +4,8 @@ import { DataContext } from '../../Commons/Context/DataContext';
 import { MINING_MACHINES } from '../../Helpers/helper';
 
 function MineroDetails() {
+
+    
     const { id } = useParams();
     const [minero, setMinero] = React.useState(null);
     const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
