@@ -521,3 +521,25 @@ export const formatedDataImportaciones = (data) => {
     return obData
 
 }
+
+export const formatImpShort = (data) => {
+    let obData = {}
+
+    if (data) {
+        data?.map(item => {
+            obData = {
+                ...obData,
+                [item?.id_importacion]: {
+                    tracking_number: item?.tracking_number,
+                    id_cliente: item?.id_cliente,
+                    id_proveedor: item?.id_proveedor,
+                    valor_envio: item?.valor_envio,
+                }
+
+            }
+        })
+    }
+
+    return obData
+}
+
