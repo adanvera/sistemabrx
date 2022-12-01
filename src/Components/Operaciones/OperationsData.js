@@ -1,6 +1,7 @@
 import { useContext, useState } from "react"
 import { Col } from "react-bootstrap"
 import { DataContext } from "../Commons/Context/DataContext"
+const BTC_COTIZACION = 0.00005
 
 const OperationsData = ()=>{
 
@@ -8,8 +9,10 @@ const OperationsData = ()=>{
     const currency = [{ label: "BTC", value: 1 }, { label: "USDT", value: 0 }]
     const [comision,setComision ] = useState(0)
     const [isLoaded, setIsLoaded] = useState(false);
-    const {isBuying,setIsBuying,setModalStatus,typeCurrency,setTypeCurrency} = useContext(DataContext)
+    const {isBuying,setIsBuying,setModalStatus,typeCurrency,setTypeCurrency,setDataOperation} = useContext(DataContext)
     const [currentCurrency,setCurrentCurrency] = useState('')
+    const [amount,setAmount] = useState(0)
+    const [totalAmount,setTotalAmount] = useState(0)
 
     const handleTypeChange = (e)=>{
         const type = e.target.value;
@@ -26,9 +29,27 @@ const OperationsData = ()=>{
         setCurrentCurrency(e.target.value);   
    
     }
-    const handleSubmit = (e)=>{
+    const handleSubmit = async(e)=>{
         e.preventDefault()
         console.log('Hice click');
+        //calculamos el totalAMoun
+        const amountCommission = amount*(comision/100)
+        console.log(amount);
+        console.log(comision);
+        console.log(amountCommission);
+        await setTotalAmount((amount+amountCommission))
+        let amountBTC = 0;
+        if(currentCurrency === '1'){
+            amountBTC = totalAmount*BTC_COTIZACION
+        }else{
+            setTypeCurrency(currentCurrency)
+            amountBTC = totalAmount
+
+
+        }
+        console.log(`TotalAmount ${totalAmount} amounBTC ${amountBTC}`);
+        setDataOperation({amount,comision,totalAmount,amountBTC,isBuying,currentCurrency})
+
         if(isBuying){
             setModalStatus(true)
             if(currentCurrency === '1'){
@@ -37,6 +58,10 @@ const OperationsData = ()=>{
                 setTypeCurrency(currentCurrency)
 
             }
+
+        }else{
+            setIsBuying(false)
+            setModalStatus(true)
 
         }
 
@@ -83,7 +108,7 @@ const OperationsData = ()=>{
                             <Col>
                                 <div className='datashow mt-3'>
                                     <label className='labeltk' >Comision</label>
-                                    <input className='inputshow' value={comision} onChange={(e)=>setComision(e.target.value)} />
+                                    <input className='inputshow' value={comision} onChange={(e)=>setComision(Number(e.target.value))} />
 
                                 </div>
                             </Col>
@@ -92,7 +117,7 @@ const OperationsData = ()=>{
                             >
                                 <div className='datashow mt-3'>
                                     <label className='labeltk' >Monto transaccion</label>
-                                    <input className='inputshow' value={""} />
+                                    <input className='inputshow' value={amount} onChange={(e)=>setAmount(Number(e.target.value))} />
 
                                 </div>
                             </Col>

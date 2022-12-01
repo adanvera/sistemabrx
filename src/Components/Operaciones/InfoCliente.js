@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Col, Row } from "react-bootstrap"
+import { DataContext } from "../Commons/Context/DataContext"
 import { CLIENT } from "../Helpers/helper"
 
 const InfoCliente = () => {
@@ -12,6 +13,7 @@ const InfoCliente = () => {
     }
     const [data,setData] = useState(formData)
     const [clients,setClients] = useState('')
+    const {setOperationsClient} = useContext(DataContext)
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -76,7 +78,10 @@ const InfoCliente = () => {
                 formData.nombre = client.name
                 formData.apellido = client.last_name
 
-                
+                setOperationsClient({
+                    documento:client.document,
+                    nombreApellido: (client.name +" "+client.last_name)
+                })
                 console.log(formData);
                 setData(formData)
                 

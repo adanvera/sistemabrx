@@ -34,7 +34,7 @@ const Operaciones = () => {
             tipoOperaciones: 'Tipo operacion',
             tipoMoneda: 'Moneda',
         },
-
+        title:'Compra',
         filtros: {
             name: '',
         },
@@ -122,7 +122,7 @@ const Operaciones = () => {
                 </Col>
                 {modal && (
                     <ModalContainer
-                        title={state?.title}
+                        title={'Compra'}
                         //form={pickForm()}
                         modalStatus={modal}
                         typeCurrency = {typeCurrency}
