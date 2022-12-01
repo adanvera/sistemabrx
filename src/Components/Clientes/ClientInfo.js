@@ -6,7 +6,6 @@ const ClientInfo = (props) => {
     const { data } = props
     const [userData, setUserData] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-    console.log("Recibo el dato",data);
 
     return (
         <div className='d-flex'>

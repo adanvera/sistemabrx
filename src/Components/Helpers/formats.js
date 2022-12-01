@@ -543,3 +543,26 @@ export const formatImpShort = (data) => {
     return obData
 }
 
+export const formatedShortOp = (data) => {
+
+    let obData = {}
+
+    if (data) {
+        data?.map(item => {
+            obData = {
+                ...obData,
+                [item?.id_operations]: {
+                    cliente: item?.id_client,
+                    monto: item?.amount,
+                    comision: item?.commission,
+                    tipoOperaciones: item?.id_operations,
+                    tipoMoneda: item?.type,
+                }
+
+            }
+        })
+    }
+
+    return obData
+
+}

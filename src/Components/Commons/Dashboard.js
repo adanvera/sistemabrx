@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
-import { formatImpShort, formatNowShoertTciket } from '../Helpers/formats';
-import { IMPORTACIONES, TICKETS } from '../Helpers/helper';
+import { formatedShortOp, formatImpShort, formatNowShoertTciket } from '../Helpers/formats';
+import { IMPORTACIONES, OPERATION_PROD, TICKETS } from '../Helpers/helper';
 import { DataContext } from './Context/DataContext';
 import Table from './Table/Table';
 
@@ -24,6 +24,13 @@ function Dashboard() {
       id_cliente: "ID Cliente",
       id_proveedor: "ID Proveedor",
       valor_envio: "Valor Envio",
+    },
+    headerOperation: {
+      cliente: "Cliente",
+      monto: 'Monto',
+      comision: 'Comision',
+      tipoOperaciones: 'Tipo operacion',
+      tipoMoneda: 'Moneda',
     }
   }
 
@@ -39,6 +46,7 @@ function Dashboard() {
   const [dataList, setDataList] = useState('')
   const [shortImportaciones, setShortImportaciones] = useState('')
   const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
+  const [dataOperations, setDataOperations] = useState('')
 
 
   /**funcion para formatear fecha */
@@ -89,18 +97,15 @@ function Dashboard() {
 
     getTickets()
 
-
     const shortTcicketList = dataList?.slice(0, 5)
     const ticketListByDatae = shortTcicketList ? (shortTcicketList).sort((a, b) => { return new Date(b?.created_at) - new Date(a?.created_at) }) : ''
     setDatatest(ticketListByDatae)
-
 
     const getImportaciones = async () => {
       /** Obtenemos los valores que guardamos en el token para poder utilizarlos
         * en la siguiente consulta
        */
       const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
-
       /**mandamos el header de nuestra consulta */
       const options = {
         method: 'GET',
@@ -115,26 +120,51 @@ function Dashboard() {
           json = await res.json()
         /**seteamos loading */
         setIsLoaded(true);
-        /**seteamos el listado de tickets */
         setShortImportaciones(json.content);
-
       } catch (error) {
         console.log(error);
       }
-
     }
 
     getImportaciones()
+    const getOperations = async () => {
+      /** Obtenemos los valores que guardamos en el token para poder utilizarlos
+        * en la siguiente consulta
+       */
+      const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
+      /**mandamos el header de nuestra consulta */
+      const options = {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'token': token
+        },
+      }
+      try {
+        const res = await fetch(OPERATION_PROD, options),
+          json = await res.json()
+        /**seteamos loading */
+        setIsLoaded(true);
+        setDataOperations(json);
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
+    getOperations()
+    dataOperations.slice(0, 5)
 
-  }, [state, dataList]);
+  }, []);
 
+  
 
   const formatedDataShortTciket = formatNowShoertTciket(datatest)
   const datashorimp = formatImpShort(shortImportaciones.slice(0, 5))
+  const operations = (formatedShortOp(dataOperations))
+
+  console.log(operations);
 
   const actualDate = new Date().getHours()
-
 
   return (
     <>
@@ -164,14 +194,24 @@ function Dashboard() {
       </div>
       <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} id='dash'>
         <Container fluid={true} className="">
-          <Row>
-            <Col md={4} className="mt-3">
-              <h6>Últimos tickets añadidos</h6>
-              <Table headers={state?.headers} data={((formatedDataShortTciket))} nopagination={true} />
+          <Row className='justify-content-between'>
+            <Col className="mt-3 " >
+              <div className='shortlist'>
+                <h6>Últimos tickets añadidos</h6>
+                <Table headers={state?.headers} data={((formatedDataShortTciket))} nopagination={true} />
+              </div>
             </Col>
-            <Col md={4} className="mt-3">
-              <h6>Últimas importaciones realizadas</h6>
-              <Table headers={state?.headerimp} data={((datashorimp))} nopagination={true} />
+            <Col className="mt-3 ">
+              <div className='shortlist'>
+                <h6>Últimas importaciones realizadas</h6>
+                <Table headers={state?.headerimp} data={((datashorimp))} nopagination={true} />
+              </div>
+            </Col>
+            <Col className="mt-3 ">
+              <div className='shortlist'>
+                <h6>Últimas operaciones realizadas</h6>
+                <Table headers={state?.headerOperation} data={((operations))} nopagination={true} />
+              </div>
             </Col>
           </Row>
         </Container>
