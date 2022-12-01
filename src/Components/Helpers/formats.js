@@ -492,3 +492,32 @@ export const formatNowShoertTciket = (data) => {
 
     return obData
 }
+
+export const formatedDataImportaciones = (data) => {
+    let obData = {}
+
+    if (data) {
+        data?.map(item => {
+            obData = {
+                ...obData,
+                [item?.id_importacion]: {
+                    id_importacion: item?.id_importacion,
+                    id_cliente: item?.id_cliente,
+                    id_proveedor: item?.id_proveedor,
+                    machinedata: item?.machinedata,
+                    empresa_envio: item?.empresa_envio,
+                    tracking_number: item?.tracking_number,
+                    valor_envio: item?.valor_envio,
+                    fecha_envio: formatoDate(item?.fecha_envio),
+                    fecha_arribo: formatoDate(item?.fecha_arribo),
+                    comentario_importacion: item?.comentario_importacion,
+                    articulos: item?.articulos,
+                }
+
+            }
+        })
+    }
+
+    return obData
+
+}
