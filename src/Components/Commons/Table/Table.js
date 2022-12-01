@@ -88,7 +88,10 @@ export default function Table(props) {
                 </div>
                 : ''
             }
-            <Pagination data={listData} activeLabel={state?.currentPage}> {items} </ Pagination>
+            {
+                props?.nopagination === true ? '' :
+                <Pagination data={listData} activeLabel={state?.currentPage}> {items} </ Pagination>
+            }
         </Fragment>
     )
 }

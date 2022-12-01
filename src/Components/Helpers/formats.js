@@ -472,3 +472,74 @@ export const formatHistorial = (data) => {
 
     return obData
 }
+
+export const formatNowShoertTciket = (data) => {
+    let obData = {}
+
+    if (data) {
+        data?.map(item => {
+            obData = {
+                ...obData,
+                [item?.id_ticket]: {
+                    ticket_name: item?.ticket_name,
+                    created_at: formatoDate(item?.created_at),
+                    priority: item?.priority,
+                }
+
+            }
+        })
+    }
+
+    return obData
+}
+
+export const formatedDataImportaciones = (data) => {
+    let obData = {}
+
+    if (data) {
+        data?.map(item => {
+            obData = {
+                ...obData,
+                [item?.id_importacion]: {
+                    id_importacion: item?.id_importacion,
+                    id_cliente: item?.id_cliente,
+                    id_proveedor: item?.id_proveedor,
+                    machinedata: item?.machinedata,
+                    empresa_envio: item?.empresa_envio,
+                    tracking_number: item?.tracking_number,
+                    valor_envio: item?.valor_envio,
+                    fecha_envio: formatoDate(item?.fecha_envio),
+                    fecha_arribo: formatoDate(item?.fecha_arribo),
+                    comentario_importacion: item?.comentario_importacion,
+                    articulos: item?.articulos,
+                }
+
+            }
+        })
+    }
+
+    return obData
+
+}
+
+export const formatImpShort = (data) => {
+    let obData = {}
+
+    if (data) {
+        data?.map(item => {
+            obData = {
+                ...obData,
+                [item?.id_importacion]: {
+                    tracking_number: item?.tracking_number,
+                    id_cliente: item?.id_cliente,
+                    id_proveedor: item?.id_proveedor,
+                    valor_envio: item?.valor_envio,
+                }
+
+            }
+        })
+    }
+
+    return obData
+}
+
