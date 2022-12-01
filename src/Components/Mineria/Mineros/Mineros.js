@@ -7,7 +7,7 @@ import SearchTable from '../../Commons/SearchTable'
 import DumpTable from '../../Commons/Table/DumpTable'
 import Table from '../../Commons/Table/Table'
 import { filteredData, formatedDataMiners } from '../../Helpers/formats'
-import { MINING_MACHINES } from '../../Helpers/helper'
+import { API_COINS, MINING_MACHINES } from '../../Helpers/helper'
 import MachineForm from '../Forms/MachineForm'
 import MineroForms from '../Forms/MineroForms'
 
@@ -97,6 +97,7 @@ function Mineros() {
 
     getMiningMachines()
 
+
   }, []);
 
   const formatedList = formatedDataMiners(dataList)
@@ -121,12 +122,12 @@ function Mineros() {
             // handleChange={handleSearch}
             />
           </Col>
-          <Col md={3} className="endmain">
+          <Col md={6} className="endmain">
             <div className='limittic'><div onClick={() => handleModalForm('Minero')} className="btnadd" id='ticketmain'> Agregar minero</div></div>
           </Col>
-          <Col md={3} className="endmain">
+          {/* <Col md={3} className="endmain">
             <div className='limittic'><div onClick={() => handleModalForm('Machine')} className="btnadd" id='ticketmain'> Registrar maquina</div></div>
-          </Col>
+          </Col> */}
         </Row>
         {
           isLoaded === false ?

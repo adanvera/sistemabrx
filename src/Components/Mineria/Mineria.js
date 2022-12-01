@@ -21,7 +21,7 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
-import { MINING_SUMMARY, TICKETS, TICKET_SUMMARY } from '../Helpers/helper'
+import { API_COINS, MINING_SUMMARY, TICKETS, TICKET_SUMMARY } from '../Helpers/helper'
 
 ChartJS.register(
     CategoryScale,
@@ -50,7 +50,7 @@ const Mineria = props => {
     let navigate = useNavigate()
     const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
     const [dataList, setDataList] = useState([])
-
+    const [coins, setCoins] = useState([])
     const [chartTicket, setChartTicket] = useState([])
 
     useEffect(() => {
@@ -96,7 +96,27 @@ const Mineria = props => {
         }
         miningSummary()
 
+        const optionsCoins = {
+            method: 'POST',
+        }
+        const getCoins = async () => {
+            try {
+                const response = await fetch(API_COINS, optionsCoins)
+                const data = await response.json();
+                setCoins(data);
+                console.log(data);
+
+            } catch (error) {
+                console.log(error);
+            }
+
+        }
+        getCoins()
+
     }, [])
+
+
+    console.log(coins);
 
     /** funcion onchange para seteo de form */
     const handleModalForm = (form) => {

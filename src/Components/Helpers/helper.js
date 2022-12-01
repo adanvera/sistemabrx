@@ -14,6 +14,8 @@ const OPERATION_PROD ="https://backend.brxsgo.com/api/operation"
 const OPERATION_TEST ="http://localhost:4000/api/operation"
 const TICKET_SUMMARY = "https://backend.brxsgo.com/api/tickets/get/summary"
 const MINING_SUMMARY = "https://backend.brxsgo.com/api/mining/get/summary"
+const MACHINES_API = "https://api.minerstat.com/v2/hardware"
+const API_COINS = "https://api.minerstat.com/v2/coins?list=BTC,BCH,BINANCE BTC,2MINERS FLUX,DOGE"
 
 /**exportamos nuestras declaraciones de valores
  * para poder utilizarlas en donde se requieran
@@ -33,5 +35,7 @@ export {
     OPERATION_PROD,
     OPERATION_TEST,
     TICKET_SUMMARY,
-    MINING_SUMMARY
+    MINING_SUMMARY,
+    MACHINES_API,
+    API_COINS
 }
