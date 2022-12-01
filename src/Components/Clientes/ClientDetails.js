@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Container, Nav, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom';
-import { CLIENT} from '../Helpers/helper';
+import Table from '../Commons/Table/Table';
+import { CLIENT, MINING_SUMMARY } from '../Helpers/helper';
 import ClientInfo from './ClientInfo';
 
 function ClientDetails() {
@@ -13,6 +14,15 @@ function ClientDetails() {
             mineria: false,
             modificaciones: false
         },
+        headerMiners: {
+            machine_name: "NOMBRE",
+            status: "ESTADO",
+            name: "CLIENTE",
+            hashrate: "HASHRATE",
+            tempmax: "TEMP MAX",
+            maxfan: "VENTILADOR MAX",
+            uptime: "UPTIME",
+        }
     }
 
     const [state, setState] = useState(initialState)
@@ -22,6 +32,7 @@ function ClientDetails() {
   */
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [miningData, setMiningData] = useState('')
 
     useEffect(() => {
 
@@ -56,7 +67,26 @@ function ClientDetails() {
 
         getClient()
 
-    }, []);
+        const getMiners = async () => {
+
+            console.log(clientData?.document);
+
+            try {
+                const res = await fetch(MINING_SUMMARY + clientData?.document, options),
+                    json = await res.json()
+                /**seteamos loading */
+                setIsLoaded(true);
+                /**seteamos datos del ticket */
+                setMiningData(json)
+            } catch (error) {
+                setIsLoaded(true);
+                setError(error);
+                console.log(error);
+            }
+        }
+        getMiners()
+
+    }, [state]);
 
     const onHandleClick = e => {
         e.preventDefault()
@@ -74,6 +104,16 @@ function ClientDetails() {
 
             }
         })
+    }
+
+    const minerHeader = {
+        machine_name: "NOMBRE",
+            status: "ESTADO",
+            name: "CLIENTE",
+            hashrate: "HASHRATE",
+            tempmax: "TEMP MAX",
+            maxfan: "VENTILADOR MAX",
+            uptime: "UPTIME",
     }
 
     return (
@@ -108,7 +148,7 @@ function ClientDetails() {
                             </div>
                             <div id="mineria" className={state?.tab?.mineria ? 'content-tab' : 'content-tab is-hidden'}>
                                 {state?.tab?.mineria &&
-                                    <>Tabla/info del cliente referente a mineria</>
+                                    <Table headers={minerHeader} data={((miningData))} />
                                 }
                             </div>
                             <div id="modificaciones" className={state?.tab?.modificaciones ? 'content-tab' : 'content-tab is-hidden'}>
