@@ -179,8 +179,6 @@ function Dashboard() {
   const datashorimp = formatImpShort(shortImportaciones.slice(0, 5))
   const operations = (formatedShortOp(dataOperations.slice(0, 5)))
 
-  console.log(operations);
-
   const actualDate = new Date().getHours()
 
   return (
@@ -197,14 +195,9 @@ function Dashboard() {
                 }
               </div>
               <div>
-                <h4>¡Hola, Bienvenido!</h4>
+                <h4>¡Hola {userAuthed.name} , Bienvenido/a!</h4>
                 <>{formatDate()}</>
               </div>
-            </div>
-          </Col>
-          <Col>
-            <div className='userdash'>
-              {userAuthed.name}
             </div>
           </Col>
         </Row>
@@ -240,24 +233,25 @@ function Dashboard() {
               </div>
             </Col>
           </Row>
-          <Row><h6>Resumen de actividades</h6></Row>
+          <Row><h4 className='resumen'>Sumario de actividades</h4></Row>
           <Row className='justify-content-between'>
             <Col className="mt-3 " >
+              <h6>Últimos tickets añadidos</h6>
               <div className='shortlist'>
-                <h6>Últimos tickets añadidos</h6>
                 <Table headers={state?.headers} data={((formatedDataShortTciket))} nopagination={true} />
               </div>
             </Col>
             <Col className="mt-3 ">
+              <h6>Últimas importaciones realizadas</h6>
               <div className='shortlist'>
-                <h6>Últimas importaciones realizadas</h6>
                 <Table headers={state?.headerimp} data={((datashorimp))} nopagination={true} />
               </div>
             </Col>
             <Col className="mt-3 ">
+              <h6>Últimas operaciones realizadas</h6>
               <div className='shortlist'>
-                <h6>Últimas operaciones realizadas</h6>
                 <Table headers={state?.headerOperation} data={((operations))} nopagination={true} />
+                <span></span>
               </div>
             </Col>
           </Row>

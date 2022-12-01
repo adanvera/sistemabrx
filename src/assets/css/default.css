@@ -1202,3 +1202,10 @@ span.spantitle {
 p {
     margin-bottom: 10px;
 }
+
+.row h4.resumen {
+    padding: 10px;
+    border-bottom: 1px solid#D6D6D6 !important;
+    border-top: 1px solid#D6D6D6 !important;
+    background-color: #d6d6d678 !important
+}
