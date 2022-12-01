@@ -1095,3 +1095,61 @@ input.inputshow.asgined {
 .qr-imagen {
     text-align: center;
 }
+
+div#datainfo {
+    text-align: center;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
+    justify-content: center;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+h6.datatitle {
+    font-weight: 600;
+    font-size: 1rem;
+    margin: 0 0 6px;
+    color: #213654;
+}
+
+span.spantitle {
+    font-size: 0.6rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding: 0;
+    margin: 0;
+}
+
+.icon-info {
+    color: #46c35f;
+    margin: auto;
+    padding-right: 10px;
+    padding-top: 10px;
+    font-size: 25px;
+}
+
+.icon-info-two {
+    color: #f29824;
+    margin: auto;
+    padding-right: 10px;
+    padding-top: 10px;
+    font-size: 25px;
+}
+
+.icon-info-three {
+    margin: auto;
+    padding-right: 10px;
+    padding-top: 10px;
+    font-size: 25px;
+    color: #FCC233;
+}
+
+.icon-info-four {
+    margin: auto;
+    padding-right: 10px;
+    padding-top: 10px;
+    font-size: 25px;
+    color: #008dd6;
+}

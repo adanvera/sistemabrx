@@ -89,7 +89,7 @@ function Dashboard() {
 
     setDatatest(ticketListByDatae)
 
-  }, [datatest]);
+  }, [datatest,dataList]);
 
 
 

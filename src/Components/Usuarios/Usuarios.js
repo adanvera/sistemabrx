@@ -211,6 +211,35 @@ const Usuarios = props => {
                 <Row>
                     <UserFilter onCleanFilter={onCleanFilter} getFilter={handleFilter} />
                 </Row>
+                <Row>
+                    <Col className='col-xl d-flex ' id='datainfo'>
+                        <div className='icon-info'>
+                            <ion-icon name="shield-checkmark-outline"></ion-icon>
+                        </div>
+                        <div className='w-100 datashow'>
+                            <h6 className='datatitle'>no data</h6>
+                            <span className='spantitle block-text-gray'>USUARIOS ACTIVOS</span>
+                        </div>
+                    </Col>
+                    <Col className='col-xl d-flex ' id='datainfo'>
+                        <div className='icon-info-three'>
+                            <ion-icon name="warning-outline"></ion-icon>
+                        </div>
+                        <div className='w-100 datashow'>
+                            <h6 className='datatitle'>no data</h6>
+                            <span className='spantitle block-text-gray'>USUARIOS BLOQUEADOS</span>
+                        </div>
+                    </Col>
+                    <Col className='col-xl d-flex ' id='datainfo'>
+                        <div className='icon-info-four'>
+                            <ion-icon name="accessibility-outline"></ion-icon>
+                        </div>
+                        <div className='w-100 datashow'>
+                            <h6 className='datatitle'>no data</h6>
+                            <span className='spantitle block-text-gray'>USUARIOS TOTALES</span>
+                        </div>
+                    </Col>
+                </Row>
                 {
                     isLoaded === false ?
                         <DumpTable headers={state?.headers} data={formatedList} />
