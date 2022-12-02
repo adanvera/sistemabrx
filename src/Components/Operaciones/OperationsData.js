@@ -70,7 +70,7 @@ const OperationsData = ()=>{
     }
     const handleAmount = (e)=>{
         setAmount(e.target.value)
-        updateTotalAMount(amount,comision)
+        updateTotalAMount(e.target.value,comision)
         
         
 
@@ -80,7 +80,7 @@ const OperationsData = ()=>{
     const handleComssion = (e)=>{
         setComision(e.target.value)
         console.log('La comision es ',e.target.value);
-        updateTotalAMount(amount,comision)
+        updateTotalAMount(amount,e.target.value)
     }
     function updateTotalAMount  (amount,comision) {
         const amountCommission = (Number(amount))*(comision/100)
