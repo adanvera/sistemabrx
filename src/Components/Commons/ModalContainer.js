@@ -14,7 +14,7 @@ const ModalContainer = (props) => {
     const [show, setShow] = useState(false);
     const handleClose = () => setModalStatus(false);
     const handleShow = () => setShow(true);
-    const { modalstatus, setModalStatus } = useContext(DataContext)
+    const { modalstatus, setModalStatus,isSelling,setIsSelling } = useContext(DataContext)
 
     const subjectTitle = props?.modalType === 'Delete' ? 'ELIMINAR' : props?.modalType === 'Block' ? 'BLOQUEAR' : props?.modalType === 'Edit' ? "EDITAR" : 'AÑADIR'
     const title = props?.title
@@ -33,6 +33,11 @@ const ModalContainer = (props) => {
                     props.isBuying === true ?(
                         
                             <OperationsBuyConfirmed props = {props}/>
+                    ):''
+                }{
+                    isSelling?(
+                        <OperationsSaleConfirmed props = {props}/>
+
                     ):''
                 }
                 <Modal.Body>
