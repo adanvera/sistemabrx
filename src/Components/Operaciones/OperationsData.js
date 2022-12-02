@@ -9,17 +9,22 @@ const OperationsData = ()=>{
     const currency = [{ label: "BTC", value: 1 }, { label: "USDT", value: 0 }]
     const [comision,setComision ] = useState(0)
     const [isLoaded, setIsLoaded] = useState(false);
-    const {isBuying,setIsBuying,setModalStatus,typeCurrency,setTypeCurrency,setDataOperation} = useContext(DataContext)
+    const {isBuying,setIsBuying,setModalStatus,typeCurrency,setTypeCurrency,setDataOperation,setIsSelling} = useContext(DataContext)
     const [currentCurrency,setCurrentCurrency] = useState('')
     const [amount,setAmount] = useState(0)
     const [totalAmount,setTotalAmount] = useState(0)
 
     const handleTypeChange = (e)=>{
         const type = e.target.value;
+        console.log("Cambiando");
+        console.log(type );
         if(type === '1'){
             
             setIsBuying(true)
+            setIsSelling(false)
+
         }else{
+            setIsSelling(true)
             setIsBuying(false)
 
         }   
@@ -33,11 +38,7 @@ const OperationsData = ()=>{
         e.preventDefault()
         console.log('Hice click');
         //calculamos el totalAMoun
-        const amountCommission = amount*(comision/100)
-        console.log(amount);
-        console.log(comision);
-        console.log(amountCommission);
-        await setTotalAmount((amount+amountCommission))
+        updateTotalAMount(amount,comision)
         let amountBTC = 0;
         if(currentCurrency === '1'){
             amountBTC = totalAmount*BTC_COTIZACION
@@ -67,7 +68,33 @@ const OperationsData = ()=>{
 
 
     }
-    
+    const handleAmount = (e)=>{
+        setAmount(e.target.value)
+        updateTotalAMount(amount,comision)
+        
+        
+
+
+
+    }
+    const handleComssion = (e)=>{
+        setComision(e.target.value)
+        console.log('La comision es ',e.target.value);
+        updateTotalAMount(amount,comision)
+    }
+    function updateTotalAMount  (amount,comision) {
+        const amountCommission = (Number(amount))*(comision/100)
+        console.log('comision');
+        console.log(amountCommission);
+        console.log('amount');
+        console.log(Number(amount));
+        setTotalAmount(amountCommission+Number(amount))
+
+         
+        
+
+
+    }
     return (
         <form md={12} onSubmit={handleSubmit} >
                             <h5 className="title-details ml-5 pt-3 ">Datos de operacion</h5>
@@ -108,7 +135,7 @@ const OperationsData = ()=>{
                             <Col>
                                 <div className='datashow mt-3'>
                                     <label className='labeltk' >Comision</label>
-                                    <input className='inputshow' value={comision} onChange={(e)=>setComision(Number(e.target.value))} />
+                                    <input className='inputshow' onChange={(e)=>handleComssion(e)} />
 
                                 </div>
                             </Col>
@@ -117,7 +144,7 @@ const OperationsData = ()=>{
                             >
                                 <div className='datashow mt-3'>
                                     <label className='labeltk' >Monto transaccion</label>
-                                    <input className='inputshow' value={amount} onChange={(e)=>setAmount(Number(e.target.value))} />
+                                    <input className='inputshow'  onChange={(e)=>handleAmount(e)} />
 
                                 </div>
                             </Col>

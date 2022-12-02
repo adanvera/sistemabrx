@@ -3,16 +3,52 @@ import { Button, Col, Container, Row } from 'react-bootstrap';
 import isBuyingImgBtc from '../../assets/images/btc.jpeg'
 import isBuyingImgUsdt from '../../assets/images/usdt.jpeg'
 import { DataContext } from '../Commons/Context/DataContext';
+import { OPERATION_PROD } from '../Helpers/helper';
 
 const OperationsBuyConfirmed = (props) => {
     console.log(props);
-    const{operationsClient,dataOPeration} = useContext(DataContext)
+    const{operationsClient,dataOPeration,idClientToSale} = useContext(DataContext)
+    const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
+
     console.log(dataOPeration);
+    const handleConfirmed= async() => {
+        const operation={
+            id_client:idClientToSale,
+            amount:dataOPeration.totalAmount,
+            commission:dataOPeration.comision,
+            type:'1',
+            currency:'USD'
+        }
+        const options = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'token': token
+            },
+            body:JSON.stringify(operation)
+        }
+        console.log(`Enviaremos estos datos `);
+        console.log(operation);
+        const req = await fetch(OPERATION_PROD,options),
+              res = await req.json();
+              console.log(req);
+              console.log(res);
+              
+              if(req.ok){
+                setTimeout(()=>{
+                    window.location.reload()
+
+                },1000)
+              }
+        
+    }
     return (
         <Container fluid={true} className="row" >
             <Col md={12}>
                 <div className='datashow'>
-                    <label className='labeltk title' ><b>Datos de la compra</b></label>
+                <h5 className="title-details ml-5 pt-3 ">Datos de la compra</h5>
+
                 </div>
             </Col>
             <Col md={12}>
@@ -56,7 +92,7 @@ const OperationsBuyConfirmed = (props) => {
             </Col>
 
             <Col id='create'>
-                <Button type="submit" className=" btnadd">Confirmar</Button>
+                <Button type="submit" className=" btnadd" onClick={handleConfirmed}>Confirmar</Button>
             </Col>
           
         </Container>

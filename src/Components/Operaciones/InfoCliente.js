@@ -13,7 +13,7 @@ const InfoCliente = () => {
     }
     const [data,setData] = useState(formData)
     const [clients,setClients] = useState('')
-    const {setOperationsClient} = useContext(DataContext)
+    const {setOperationsClient,setIdClientToSale} = useContext(DataContext)
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -82,6 +82,7 @@ const InfoCliente = () => {
                     documento:client.document,
                     nombreApellido: (client.name +" "+client.last_name)
                 })
+                setIdClientToSale(client.id_client)
                 console.log(formData);
                 setData(formData)
                 
