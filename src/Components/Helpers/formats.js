@@ -566,3 +566,39 @@ export const formatedShortOp = (data) => {
     return obData
 
 }
+
+export const formatedCoins = (data) => {
+
+    let obData = {}
+
+    if (data) {
+        data?.map(item => {
+            obData = {
+                ...obData,
+                [item?.id]: {
+                    icon: addIcon(item.coin),
+                    name: item?.name,
+                    coin: item?.coin,
+                    reward: item?.reward,
+                    reward_block: item?.reward_block,
+                    price: item?.price,
+                    volume: item?.volume,
+                    updated: item?.updated,
+                }
+
+            }
+        })
+    }
+
+    return obData
+
+}
+
+const addIcon = (name) => {
+    // const setname = name.toLowerCase()
+    // console.log(setname)
+    
+
+    // return <img src={api    } alt={name} />
+
+}

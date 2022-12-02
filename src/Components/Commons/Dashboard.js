@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
-import { formatedShortOp, formatImpShort, formatNowShoertTciket } from '../Helpers/formats';
-import { DOLLAR_API, IMPORTACIONES, OPERATION_PROD, TICKETS } from '../Helpers/helper';
+import { formatedCoins, formatedShortOp, formatImpShort, formatNowShoertTciket } from '../Helpers/formats';
+import { API_COINS, DOLLAR_API, IMPORTACIONES, OPERATION_PROD, TICKETS } from '../Helpers/helper';
 import { DataContext } from './Context/DataContext';
 import Table from './Table/Table';
 
@@ -65,6 +65,8 @@ function Dashboard() {
     var currentDate = currenDay + " " + date.getDate() + " de " + month + " del " + date.getFullYear() + " , " + withPmAm;
     return (currentDate)
   }
+
+  const [coins, setCoins] = useState('')
 
   useEffect(() => {
     /** Obtenemos los valores que guardamos en el token para poder utilizarlos
@@ -173,6 +175,45 @@ function Dashboard() {
 
     getDollar()
 
+    const getCoins = async () => {
+
+      /**mandamos el header de nuestra consulta */
+      const options = {
+        method: 'GET',
+      }
+      try {
+        const res = await fetch(API_COINS, options),
+          json = await res.json()
+        /**seteamos loading */
+        setIsLoaded(true);
+        setCoins(json)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getCoins()
+
+
+    const getIcon = async () => {
+        
+        /**mandamos el header de nuestra consulta */
+        const options = {
+          method: 'GET',
+        }
+        try {
+          const res = await fetch("https://cryptoicons.org/api/icon/bch/200", options),
+            json = await res.json()
+          /**seteamos loading */
+          setIsLoaded(true);
+          console.log(json)
+        } catch (error) {
+          console.log(error);
+        }
+    }
+
+    getIcon()
+
   }, []);
 
   const formatedDataShortTciket = formatNowShoertTciket(datatest)
@@ -180,6 +221,20 @@ function Dashboard() {
   const operations = (formatedShortOp(dataOperations.slice(0, 5)))
 
   const actualDate = new Date().getHours()
+
+  const dataCoin = formatedCoins(coins)
+
+  const coinheader = {
+    name: "name",
+    coin: "coin",
+    reward: "reward",
+    reward_block: "reward_block",
+    price: "price",
+    volume: "volume",
+    updated: "Updated"
+  }
+
+
 
   return (
     <>
@@ -189,9 +244,9 @@ function Dashboard() {
             <div className='wlcmone'>
               <div className='iconwlc'>
                 {
-                  actualDate > 17 ?
-                    <ion-icon name="moon-outline"></ion-icon> :
-                    <ion-icon name="sunny-outline"></ion-icon>
+                  (actualDate > 5 && actualDate < 17) ?
+                    <ion-icon name="sunny-outline"></ion-icon> :
+                    <ion-icon name="moon-outline"></ion-icon>
                 }
               </div>
               <div>
@@ -204,16 +259,15 @@ function Dashboard() {
       </div>
       <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} id='dash'>
         <Container fluid={true} className="">
-          <Row>
-            <Col className='sectioncrypto'>
-              <div>
-                <h6 className='title-dash'>Crypto currencies and dollar api</h6>
+          <Row className="w-100">
+            <Col md={12}>
+              <div className='shortlist item'>
+                <Table headers={coinheader} data={((dataCoin))} nopagination={true} />
+                <span></span>
               </div>
             </Col>
-            <Col md={3} className='sectioncrypto d-flex'>
-              <div className='dolaricon'>
-                <ion-icon name="cash-outline"></ion-icon>
-              </div>
+            {/* <Col md={6} className='toillele'>
+
               <div className='dolar'>
                 <h6 className='title-dash'><strong>Cotización del dolar</strong></h6>
                 <div className='dolar-content'>
@@ -231,7 +285,7 @@ function Dashboard() {
                   </div>
                 </div>
               </div>
-            </Col>
+            </Col> */}
           </Row>
           <Row><h4 className='resumen'>Sumario de actividades</h4></Row>
           <Row className='justify-content-between'>

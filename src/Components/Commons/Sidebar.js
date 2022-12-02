@@ -89,7 +89,7 @@ const Sidebar = props => {
 
     return (
         <aside className={sidebarStatus === 'open' ? 'sidebar' : 'menu sidebar small'} onLoad={handleOnLoad()} >
-            <ul className="menu-list pb-6 pt-6">
+            <ul className="menu-list ">
                 <div className="classss d-flex">
                     <img src={logo} alt="" className={sidebarStatus === 'open' ? 'main-logo' : 'hide'} />
                     <div onClick={handleOnClick} className={sidebarStatus === 'open' ? 'triggerwidth' : 'triggerwidthsmall'} ><ion-icon name="menu-outline"></ion-icon></div>

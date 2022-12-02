@@ -8,7 +8,7 @@ import SearchTable from '../Commons/SearchTable'
 import DumpTable from '../Commons/Table/DumpTable'
 import Table from '../Commons/Table/Table'
 import { filteredDataUsers, formatedDataUsers } from '../Helpers/formats'
-import { ROLES, USER } from '../Helpers/helper'
+import { ROLES, USER, USER_SUMMARY_ONE } from '../Helpers/helper'
 import UserFilter from './Forms/UserFilter'
 import UsersForm from './Forms/UsersForm'
 
@@ -54,6 +54,9 @@ const Usuarios = props => {
     const { dataidrow } = useContext(DataContext)
     const modaal = modalstatus
     const usermodal = modalType
+    const [cantidadUsers, setCantidadUsers] = useState('')
+    const [blockedUsers, setBlockedUsers] = useState('')
+    const [actives, setActives] = useState('')
 
     useEffect(() => {
 
@@ -87,6 +90,45 @@ const Usuarios = props => {
         }
 
         getUsers()
+
+        const getCantUsers = async () => {
+            try {
+                const res = await fetch(USER_SUMMARY_ONE, options),
+                    json = await res.json()
+                setCantidadUsers(json[0]?.cantidad)
+            } catch (error) {
+                setError(error);
+                console.log(error);
+            }
+        }
+
+        getCantUsers()
+
+
+        const getCantUsersBlocked = async () => {
+            try {
+                const res = await fetch(USER_SUMMARY_ONE + "blocked", options),
+                    json = await res.json()
+                setBlockedUsers(json[0]?.cantidad)
+            } catch (error) {
+                setError(error);
+                console.log(error);
+            }
+        }
+
+        getCantUsersBlocked()
+
+        const getCantUsersActive = async () => {
+            try {
+                const res = await fetch(USER_SUMMARY_ONE + "active", options),
+                    json = await res.json()
+                setActives(json[0]?.cantidad)
+            } catch (error) {
+                setError(error);
+                console.log(error);
+            }
+        }
+        getCantUsersActive()
 
     }, []);
 
@@ -217,7 +259,7 @@ const Usuarios = props => {
                             <ion-icon name="shield-checkmark-outline"></ion-icon>
                         </div>
                         <div className='w-100 datashow'>
-                            <h6 className='datatitle'>no data</h6>
+                            <h6 className='datatitle'>{actives}</h6>
                             <span className='spantitle block-text-gray'>USUARIOS ACTIVOS</span>
                         </div>
                     </Col>
@@ -226,7 +268,7 @@ const Usuarios = props => {
                             <ion-icon name="warning-outline"></ion-icon>
                         </div>
                         <div className='w-100 datashow'>
-                            <h6 className='datatitle'>no data</h6>
+                            <h6 className='datatitle'>{blockedUsers}</h6>
                             <span className='spantitle block-text-gray'>USUARIOS BLOQUEADOS</span>
                         </div>
                     </Col>
@@ -235,7 +277,7 @@ const Usuarios = props => {
                             <ion-icon name="accessibility-outline"></ion-icon>
                         </div>
                         <div className='w-100 datashow'>
-                            <h6 className='datatitle'>no data</h6>
+                            <h6 className='datatitle'>{cantidadUsers}</h6>
                             <span className='spantitle block-text-gray'>USUARIOS TOTALES</span>
                         </div>
                     </Col>
