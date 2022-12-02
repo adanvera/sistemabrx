@@ -1,3 +1,5 @@
+@import '~mdb-ui-kit/css/mdb.min.css';
+
 body {
     font-family: 'Poppins' !important;
     font-size: 14px !important;
@@ -1224,4 +1226,14 @@ div#_btnBloq:hover {
 
 .shortlist.item {
     border: none;
+}
+
+.dolar-content__icon {
+    margin: auto;
+}
+
+span.spandollar {
+    color: black;
+    font-size: 18px;
+    font-weight: 700;
 }

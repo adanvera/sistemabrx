@@ -39,6 +39,9 @@ export default function TableRow(props) {
                             col === 'actions' ?
                                 <td>
                                     {
+                                        pathname === '/clientes' && <ClientActions data={data} dataID={dataID} />
+                                    }
+                                    {
                                         pathname === '/usuarios' && <UserActions dataID={data?.id_user} />
                                     }
                                     {

@@ -504,14 +504,13 @@ export const formatedDataImportaciones = (data) => {
                     id_importacion: item?.id_importacion,
                     id_cliente: item?.id_cliente,
                     id_proveedor: item?.id_proveedor,
-                    machinedata: item?.machinedata,
                     empresa_envio: item?.empresa_envio,
                     tracking_number: item?.tracking_number,
-                    valor_envio: item?.valor_envio,
+                    valor_envio: item?.valor_envio + " USD",
                     fecha_envio: formatoDate(item?.fecha_envio),
                     fecha_arribo: formatoDate(item?.fecha_arribo),
-                    comentario_importacion: item?.comentario_importacion,
-                    articulos: item?.articulos,
+                    // articulos: formatArticle(item?.articulos),
+                    articulos: "formateando"
                 }
 
             }
@@ -519,6 +518,16 @@ export const formatedDataImportaciones = (data) => {
     }
 
     return obData
+
+}
+
+const formatArticle = (data) => {
+
+    const myJSON = JSON.stringify(data);
+    const dasfdsfasdf = myJSON.toString().replace("[", "").replace("]", "").replace(/"/g, "").replace(/,/g, ", ").replace(/\\/gi, '')
+
+    console.log(dasfdsfasdf);
+
 
 }
 
@@ -597,7 +606,7 @@ export const formatedCoins = (data) => {
 const addIcon = (name) => {
     // const setname = name.toLowerCase()
     // console.log(setname)
-    
+
 
     // return <img src={api    } alt={name} />
 

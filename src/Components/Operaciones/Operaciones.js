@@ -117,7 +117,7 @@ const Operaciones = () => {
                             />
                         </Col>
                     </Row>
-                    <Table link='/operaciones/' headers={state?.headers} data={dataList} />
+                    <Table link='/operaciones/' headers={state?.headers} data={dataList} exportdata={true} title="Operaciones" />
                 </Col>
                 {modal && (
                     <ModalContainer

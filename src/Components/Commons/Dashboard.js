@@ -196,20 +196,20 @@ function Dashboard() {
 
 
     const getIcon = async () => {
-        
-        /**mandamos el header de nuestra consulta */
-        const options = {
-          method: 'GET',
-        }
-        try {
-          const res = await fetch("https://cryptoicons.org/api/icon/bch/200", options),
-            json = await res.json()
-          /**seteamos loading */
-          setIsLoaded(true);
-          console.log(json)
-        } catch (error) {
-          console.log(error);
-        }
+
+      /**mandamos el header de nuestra consulta */
+      const options = {
+        method: 'GET',
+      }
+      try {
+        const res = await fetch("https://cryptoicons.org/api/icon/bch/200", options),
+          json = await res.json()
+        /**seteamos loading */
+        setIsLoaded(true);
+        console.log(json)
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     getIcon()
@@ -225,6 +225,7 @@ function Dashboard() {
   const dataCoin = formatedCoins(coins)
 
   const coinheader = {
+    icon: '',
     name: "name",
     coin: "coin",
     reward: "reward",
@@ -255,38 +256,30 @@ function Dashboard() {
               </div>
             </div>
           </Col>
+          <Col className='col-md-2 d-flex dolarapi'>
+            <div className='dolaricon'>
+            <ion-icon name="cash-outline"></ion-icon>
+            </div>
+            <div className='dolar-content__icon'>
+            <span className='spandollar'>DOLAR</span>
+
+              {
+                dolar ?
+                  <p>Compra: <strong>{dolar.compra} Gs.</strong></p> :
+                  <h4>0</h4>
+              }
+              {
+                dolar ?
+                  <p>Venta: <strong>{dolar.venta}  Gs.</strong></p> :
+                  <h4>0</h4>
+              }
+            </div>
+          </Col>
         </Row>
       </div>
       <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} id='dash'>
         <Container fluid={true} className="">
-          <Row className="w-100">
-            <Col md={12}>
-              <div className='shortlist item'>
-                <Table headers={coinheader} data={((dataCoin))} nopagination={true} />
-                <span></span>
-              </div>
-            </Col>
-            {/* <Col md={6} className='toillele'>
 
-              <div className='dolar'>
-                <h6 className='title-dash'><strong>Cotización del dolar</strong></h6>
-                <div className='dolar-content'>
-                  <div className='dolar-content__icon'>
-                    {
-                      dolar ?
-                        <p>Compra: <strong>{dolar.compra} Gs.</strong></p> :
-                        <h4>0</h4>
-                    }
-                    {
-                      dolar ?
-                        <p>Venta: <strong>{dolar.venta}  Gs.</strong></p> :
-                        <h4>0</h4>
-                    }
-                  </div>
-                </div>
-              </div>
-            </Col> */}
-          </Row>
           <Row><h4 className='resumen'>Sumario de actividades</h4></Row>
           <Row className='justify-content-between'>
             <Col className="mt-3 " >
@@ -309,7 +302,16 @@ function Dashboard() {
               </div>
             </Col>
           </Row>
+          <Row className="w-100 mt-4">
+            <h6>Crypto currencies</h6>
 
+            <Col md={12}>
+              <div className='shortlist item'>
+                <Table headers={coinheader} data={((dataCoin))} nopagination={true} />
+                <span></span>
+              </div>
+            </Col>
+          </Row>
         </Container>
       </div>
     </>

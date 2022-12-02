@@ -22,13 +22,11 @@ function Importaciones() {
       id_importacion: "ID",
       id_cliente: "ID CLIENTE",
       id_proveedor: "ID PROVEEDOR",
-      machinedata: "MACHINEDATA",
       empresa_envio: "EMPRESA ENVIO",
       tracking_number: "TRACKING NUMBER",
       valor_envio: "VALOR ENVIO",
       fecha_envio: "FECHA ENVIO",
       fecha_arribo: "FECHA ARRIBO",
-      comentario_importacion: "COMENTARIO IMPORTACION",
       articulos: "ARTICULOS",
     },
     filtros: {
@@ -94,10 +92,7 @@ function Importaciones() {
     getImportaciones()
   }, [])
 
-
-  console.log(dataList);
-
-  const formatedList = formatedDataImportaciones(dataList)
+  const formatedList = dataList?  formatedDataImportaciones(dataList) :''
 
   /**guardamos id de usuario clikeado en la tabla
 * seteado mediante el use context

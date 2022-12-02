@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Col, Container, Nav, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom';
 import Table from '../Commons/Table/Table';
-import { CLIENT, MINING_SUMMARY } from '../Helpers/helper';
+import { CLIENT, MINING_SUMMARY, OPERATION_PROD } from '../Helpers/helper';
 import ClientInfo from './ClientInfo';
 
 function ClientDetails() {
@@ -33,6 +33,7 @@ function ClientDetails() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [miningData, setMiningData] = useState('')
+    const [dataOperations, setDataOperations] = useState('')
 
     useEffect(() => {
 
@@ -86,6 +87,22 @@ function ClientDetails() {
         }
         getMiners()
 
+        const getOperations = async () => {
+            try {
+                const res = await fetch(OPERATION_PROD+id, options),
+                    json = await res.json()
+                /**seteamos loading */
+                json.map(op => delete op.created)
+                /**seteamos el listado de tickets */
+                setDataOperations(json);
+            } catch (error) {
+                //setError(error);
+                console.log("Esto es el error" + error);
+            }
+        }
+
+        getOperations()
+
     }, [state]);
 
     const onHandleClick = e => {
@@ -108,12 +125,21 @@ function ClientDetails() {
 
     const minerHeader = {
         machine_name: "NOMBRE",
-            status: "ESTADO",
-            name: "CLIENTE",
-            hashrate: "HASHRATE",
-            tempmax: "TEMP MAX",
-            maxfan: "VENTILADOR MAX",
-            uptime: "UPTIME",
+        status: "ESTADO",
+        name: "CLIENTE",
+        hashrate: "HASHRATE",
+        tempmax: "TEMP MAX",
+        maxfan: "VENTILADOR MAX",
+        uptime: "UPTIME",
+    }
+
+    const dataOperationsHeader = {
+        id: 'Operacion ',
+        cliente: "Cliente",
+        monto: 'Monto',
+        comision: 'Comision',
+        tipoOperaciones: 'Tipo operacion',
+        tipoMoneda: 'Moneda',
     }
 
     return (
@@ -127,6 +153,7 @@ function ClientDetails() {
                 <Row>
                     <Col>
                         <ClientInfo data={clientData} />
+                        <Row className="mt-5"><h4 className='resumen details'>Actividades del cliente</h4></Row>
                         <section className='mt-3'>
                             <Nav variant="tabs" defaultActiveKey="operations">
                                 <Nav.Item >
@@ -143,7 +170,7 @@ function ClientDetails() {
                         <section className='tabcontent'>
                             <div id="operations" className={state?.tab?.operations ? 'content-tab' : 'content-tab is-hidden'}>
                                 {state?.tab?.operations &&
-                                    <>Tabla/info de operaciones del cliente</>
+                                    <Table headers={dataOperationsHeader} data={((dataOperations))} />
                                 }
                             </div>
                             <div id="mineria" className={state?.tab?.mineria ? 'content-tab' : 'content-tab is-hidden'}>
