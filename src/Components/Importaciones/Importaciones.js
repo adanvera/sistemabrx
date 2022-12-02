@@ -9,14 +9,15 @@ import DumpTable from '../Commons/Table/DumpTable'
 import Table from '../Commons/Table/Table'
 import { filteredDataUsers, formatedDataImportaciones, formatedDataUsers } from '../Helpers/formats'
 import { IMPORTACIONES } from '../Helpers/helper'
+import ImpForms from './Forms/ImpForms'
 
 
 function Importaciones() {
 
   /**declaramos e inicializamos variables a utilizar */
   const initialState = {
-    form: 'Usuarios',
-    title: 'USUARIO',
+    form: 'Importaciones',
+    title: 'IMPORTACIONES',
     headers: {
       id_importacion: "ID",
       id_cliente: "ID CLIENTE",
@@ -103,13 +104,13 @@ function Importaciones() {
 */
   const id_user = dataidrow
 
-  // /**funcion para setear form clickeado */
-  // const pickForm = () => {
-  //   switch (state?.form) {
-  //     case 'Usuarios':
-  //       return <UsersForm modalType={modalType} id_user={id_user} />
-  //   }
-  // }
+  /**funcion para setear form clickeado */
+  const pickForm = () => {
+    switch (state?.form) {
+      case 'Importaciones':
+        return <ImpForms modalType={modalType} id_user={id_user} />
+    }
+  }
 
   //onchange correspondiente para hacer la busqueda 
   const handleSearch = data => {
@@ -128,8 +129,8 @@ function Importaciones() {
       return (
         <Col md={6} className="endmain">
           <div className='limittic'>
-            <div onClick={(e) => handleOnClick(e, '_AddUser', state?.form)} className="btnadd" id='ticketmain'>
-            Crear importación
+            <div onClick={(e) => handleOnClick(e, '_AddImport', state?.form)} className="btnadd" id='ticketmain'>
+              Crear importación
             </div>
           </div>
         </Col>
@@ -151,7 +152,7 @@ function Importaciones() {
     e.preventDefault()
     setModalStatus(true)
 
-    if (btn === '_AddUser') {
+    if (btn === '_AddImport') {
       setModalType('Add')
       setState(prev => {
         return {
@@ -169,7 +170,7 @@ function Importaciones() {
       {modal && (
         <ModalContainer
           title={state?.title}
-          // form={pickForm()}
+          form={pickForm()}
           modalStatus={modal}
           modalType={usermodal}
         />
@@ -185,9 +186,7 @@ function Importaciones() {
           </Col>
           {verifyRoleSub(subPermissons)}
         </Row>
-        {/* <Row>
-          <UserFilter onCleanFilter={onCleanFilter} getFilter={handleFilter} />
-      </Row> */}
+        
         {
           isLoaded === false ?
             <DumpTable headers={state?.headers} data={formatedList} />
