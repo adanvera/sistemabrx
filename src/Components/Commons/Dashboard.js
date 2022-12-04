@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { formatedCoins, formatedShortOp, formatImpShort, formatNowShoertTciket } from '../Helpers/formats';
-import { API_COINS, DOLLAR_API, IMPORTACIONES, OPERATION_PROD, TICKETS } from '../Helpers/helper';
+import {  DOLLAR_API, IMPORTACIONES, OPERATION_PROD, TICKETS } from '../Helpers/helper';
 import { DataContext } from './Context/DataContext';
 import Table from './Table/Table';
 
@@ -175,46 +175,46 @@ function Dashboard() {
 
     getDollar()
 
-    const getCoins = async () => {
+    // const getCoins = async () => {
 
-      /**mandamos el header de nuestra consulta */
-      const options = {
-        method: 'GET',
-      }
-      try {
-        const res = await fetch(API_COINS, options),
-          json = await res.json()
-        /**seteamos loading */
-        setIsLoaded(true);
-        setCoins(json)
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    //   /**mandamos el header de nuestra consulta */
+    //   const options = {
+    //     method: 'GET',
+    //   }
+    //   try {
+    //     const res = await fetch(API_COINS, options),
+    //       json = await res.json()
+    //     /**seteamos loading */
+    //     setIsLoaded(true);
+    //     setCoins(json)
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // }
 
-    getCoins()
+    // getCoins()
 
 
-    const getIcon = async () => {
+    // const getIcon = async () => {
 
-      /**mandamos el header de nuestra consulta */
-      const options = {
-        method: 'GET',
-      }
-      try {
-        const res = await fetch("https://cryptoicons.org/api/icon/bch/200", options),
-          json = await res.json()
-        /**seteamos loading */
-        setIsLoaded(true);
-        console.log(json)
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    //   /**mandamos el header de nuestra consulta */
+    //   const options = {
+    //     method: 'GET',
+    //   }
+    //   try {
+    //     const res = await fetch("https://cryptoicons.org/api/icon/bch/200", options),
+    //       json = await res.json()
+    //     /**seteamos loading */
+    //     setIsLoaded(true);
+    //     console.log(json)
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // }
 
-    getIcon()
+    // getIcon()
 
-  }, []);
+  }, [dataList, shortImportaciones]);
 
   const formatedDataShortTciket = formatNowShoertTciket(datatest)
   const datashorimp = formatImpShort(shortImportaciones.slice(0, 5))

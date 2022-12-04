@@ -15,8 +15,8 @@ const OPERATION_TEST ="http://localhost:4000/api/operation"
 const TICKET_SUMMARY = "https://backend.brxsgo.com/api/tickets/get/summary"
 const MINING_SUMMARY = "https://backend.brxsgo.com/api/mining/get/summary/"
 const MACHINES_API = "https://api.minerstat.com/v2/hardware"
-const API_COINS = "https://api.minerstat.com/v2/coins?list=BTC,BCH,BINANCE BTC,2MINERS FLUX,DOGE"
-const IMPORTACIONES = "https://backend.brxsgo.com/api/importaciones"
+// const API_COINS = "https://api.minerstat.com/v2/coins?list=BTC,BCH,BINANCE BTC,2MINERS FLUX,DOGE"
+const IMPORTACIONES = "http://localhost:4000/api/importaciones"
 const DOLLAR_API = "https://dolar.melizeche.com/api/1.0/"
 const USER_SUMMARY_ONE = "https://backend.brxsgo.com/api/user/get/summary/"
 
@@ -40,7 +40,7 @@ export {
     TICKET_SUMMARY,
     MINING_SUMMARY,
     MACHINES_API,
-    API_COINS,
+    // API_COINS,
     IMPORTACIONES,
     DOLLAR_API,
     USER_SUMMARY_ONE

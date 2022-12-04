@@ -21,7 +21,7 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
-import { API_COINS, MINING_SUMMARY, TICKETS, TICKET_SUMMARY } from '../Helpers/helper'
+import {  MINING_SUMMARY, TICKETS, TICKET_SUMMARY } from '../Helpers/helper'
 
 ChartJS.register(
     CategoryScale,
@@ -99,19 +99,19 @@ const Mineria = props => {
         const optionsCoins = {
             method: 'POST',
         }
-        const getCoins = async () => {
-            try {
-                const response = await fetch(API_COINS, optionsCoins)
-                const data = await response.json();
-                setCoins(data);
-                console.log(data);
+        // const getCoins = async () => {
+        //     try {
+        //         const response = await fetch(API_COINS, optionsCoins)
+        //         const data = await response.json();
+        //         setCoins(data);
+        //         console.log(data);
 
-            } catch (error) {
-                console.log(error);
-            }
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
 
-        }
-        getCoins()
+        // }
+        // getCoins()
 
     }, [])
 
