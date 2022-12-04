@@ -1237,3 +1237,18 @@ span.spandollar {
     font-size: 18px;
     font-weight: 700;
 }
+
+.box-container-data {
+    margin: 10px;
+    border: 1px solid #E5E7EB;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+input.inputshow.client {
+    height: 45px;
+    border-radius: 6px;
+    padding-left: 10px;
+    background: white;
+    border: 1px solid #E5E7EB;
+}

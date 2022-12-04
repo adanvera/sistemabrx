@@ -12,15 +12,12 @@ import OperationsData from "./OperationsData";
 
 
 const Operaciones = () => {
-    const { sidebarStatus, setSidebarStatus, typeCurrency,setTypeCurrency} = useContext(DataContext)
-    const [typesOperations,setTypesOperations] = useState([{ label: "Compra", value: 1 }, { label: "Venta", value: 0 }])
+    const { sidebarStatus, setSidebarStatus, typeCurrency, setTypeCurrency } = useContext(DataContext)
+    const [typesOperations, setTypesOperations] = useState([{ label: "Compra", value: 1 }, { label: "Venta", value: 0 }])
     const currency = [{ label: "BTC", value: 1 }, { label: "USDT", value: 0 }]
     const [isLoaded, setIsLoaded] = useState(false);
     const { modalstatus, setModalStatus } = useContext(DataContext)
-    const {isBuying,setIsBuying} = useContext(DataContext)
-
-
-
+    const { isBuying, setIsBuying } = useContext(DataContext)
     const modal = modalstatus
 
     const initialState = {
@@ -38,6 +35,7 @@ const Operaciones = () => {
             name: '',
         },
     }
+
     const [state, setSate] = useState(initialState)
     const [dataList, setDataList] = useState('')
 
@@ -81,50 +79,44 @@ const Operaciones = () => {
 
     }, []);
 
-
-    //datos para pruebas
-
-
-
     return (
         <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
             <Container fluid={true} className="row">
-                {/* Aca creamos el formulario de datos del cliente y la operacion */}
-
-                <Col md={4}>
-                    <Row className="is-3 text-al-ini titlemodule">
-                        <Col md={12} >
-                            <h5 className="title-details ml-5 pt-3 ">Operaciones</h5>
-                            <InfoCliente />
-                        </Col>
-                    </Row>
-                    <Row className="is-3 text-al-ini titlemodule">
-                        <OperationsData/>
-                        
-                    </Row>
-                </Col>
-
-                {/* Tabla en donde se obtiene todas las operaciones */}
-                <Col md={8}>
-                    <Row className={"ml-6 pt-5"}>
-
-                    </Row>
-                    <Row>
-                        <Col md={12} className={"ml-5 pt-3"}>
-                            <SearchTable
-                                placeholder='Buscar operaciones...'
-
-                            />
-                        </Col>
-                    </Row>
-                    <Table link='/operaciones/' headers={state?.headers} data={dataList} exportdata={true} title="Operaciones" />
-                </Col>
+                <Row className="justify-content-between">
+                    {/* Aca creamos el formulario de datos del cliente y la operacion */}
+                    <Col md={4} className="operationbox">
+                        <div className="box-container-data">
+                            <Row className="is-3 text-al-ini titlemodule">
+                                <Col md={12} >
+                                    <h5 className="title-details ml-5 pt-3 ">Operaciones</h5>
+                                    <InfoCliente />
+                                </Col>
+                            </Row>
+                            <Row className="is-3 text-al-ini titlemodule">
+                                <OperationsData />
+                            </Row>
+                        </div>
+                    </Col>
+                    {/* Tabla en donde se obtiene todas las operaciones */}
+                    <Col md={8}>
+                        <Row className={"ml-6 pt-5"}>
+                        </Row>
+                        <Row>
+                            <Col md={12} className={"ml-5 pt-3"}>
+                                <SearchTable
+                                    placeholder='Buscar operaciones...'
+                                />
+                            </Col>
+                        </Row>
+                        <Table link='/operaciones/' headers={state?.headers} data={dataList} exportdata={true} title="Operaciones" />
+                    </Col>
+                </Row>
                 {modal && (
                     <ModalContainer
                         //form={pickForm()}
                         modalStatus={modal}
-                        typeCurrency = {typeCurrency}
-                        isBuying = {isBuying}
+                        typeCurrency={typeCurrency}
+                        isBuying={isBuying}
                     />
                 )}
 

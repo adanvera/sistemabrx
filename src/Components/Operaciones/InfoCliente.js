@@ -1,30 +1,31 @@
 import { useContext, useEffect, useState } from "react"
-import { Col, Row } from "react-bootstrap"
+import { Col, FloatingLabel, Form, Row } from "react-bootstrap"
 import { DataContext } from "../Commons/Context/DataContext"
 import { CLIENT } from "../Helpers/helper"
 
 const InfoCliente = () => {
+
     const formData = {
-        codigoCliente:"",
-        nroDocumento:"",
-        nombre:"",
-        apellido:"",
-        direccion:""
+        codigoCliente: "",
+        nroDocumento: "",
+        nombre: "",
+        apellido: "",
+        direccion: ""
     }
-    const [data,setData] = useState(formData)
-    const [clients,setClients] = useState('')
-    const {setOperationsClient,setIdClientToSale} = useContext(DataContext)
+    const [data, setData] = useState(formData)
+    const [clients, setClients] = useState('')
+    const { setOperationsClient, setIdClientToSale } = useContext(DataContext)
 
     const handleChange = (e) => {
         e.preventDefault();
         setData(prevState => {
-          const updatedValues = {
-            ...prevState,
-            [e.target.name]: e.target.value,
-          }
-          return { ...updatedValues };
+            const updatedValues = {
+                ...prevState,
+                [e.target.name]: e.target.value,
+            }
+            return { ...updatedValues };
         });
-    
+
     }
 
     /*Aca obtenemos los clientes*/
@@ -50,7 +51,7 @@ const InfoCliente = () => {
                     json = await res.json()
                 /**seteamos loading */
                 console.log(json);
-                
+
                 /**seteamos el listado de tickets */
                 setClients(json);
             } catch (error) {
@@ -64,52 +65,53 @@ const InfoCliente = () => {
     }, []);
 
 
-    const handleKeyPress = (e) =>{
+    const handleKeyPress = (e) => {
         //si presiona Enter busacamos el cliente 
         //Obvio que React no adivinara
-        if(e.key === 'Enter'){
-            console.log('Codigo cliente'+data.nroDocumento);
-            
-            const clientFinded = clients.filter( cl => cl.document === data.nroDocumento)
+        if (e.key === 'Enter') {
+            console.log('Codigo cliente' + data.nroDocumento);
+
+            const clientFinded = clients.filter(cl => cl.document === data.nroDocumento)
             console.log(clientFinded);
-            if(clientFinded){
+            if (clientFinded) {
                 const client = clientFinded[0]
                 formData.nroDocumento = client.document
                 formData.nombre = client.name
                 formData.apellido = client.last_name
 
                 setOperationsClient({
-                    documento:client.document,
-                    nombreApellido: (client.name +" "+client.last_name)
+                    documento: client.document,
+                    nombreApellido: (client.name + " " + client.last_name)
                 })
                 setIdClientToSale(client.id_client)
                 console.log(formData);
                 setData(formData)
-                
+
             }
             console.log('No encontramos el cliente');
-            
+
         }
-    }  
+    }
 
     return (
-        <Row className='mt-3'>
-            
-            <Col>
-                <div className='datashow'>
-                    <label className='labeltk' >Nro documento del cliente</label>
-                    <input className='inputshow' value={data.nroDocumento} name='nroDocumento' enabled  onChange={(e) => handleChange(e)} onKeyPress={(e) => handleKeyPress(e)} />
-                </div>
-            </Col>
-            <Col>
-                <div className='datashow'>
-                    <label className='labeltk'>Nombre y Apellido</label>
-                    <input className='inputshow' value={data.nombre +" "+ data.apellido} disabled />
-                </div>
-            </Col>
-            
-            
-        </Row>
+        <>
+            <Row className='mt-3'>
+                <Col>
+                    <div className='datashow'>
+                        <label className='labeltk client' >Nro documento</label>
+                        <input className='inputshow client' required value={data.nroDocumento} name='nroDocumento' enabled onChange={(e) => handleChange(e)} onKeyPress={(e) => handleKeyPress(e)} />
+                    </div>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <div className='datashow'>
+                        <label className='labeltk'>Nombre y Apellido</label>
+                        <input className='inputshow' value={data.nombre + " " + data.apellido} disabled />
+                    </div>
+                </Col>
+            </Row>
+        </>
 
     )
 
