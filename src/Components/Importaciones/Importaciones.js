@@ -62,11 +62,9 @@ function Importaciones() {
   useEffect(() => {
     const getImportaciones = async () => {
       /** Obtenemos los valores que guardamos en el token para poder utilizarlos
-        * en la siguiente consulta
-       */
+      * en la siguiente consulta
+      */
       const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
-
-      /**mandamos el header de nuestra consulta */
       const options = {
         method: 'GET',
         headers: {
@@ -81,7 +79,7 @@ function Importaciones() {
         /**seteamos loading */
         setIsLoaded(true);
         /**seteamos el listado de tickets */
-        setDataList(json.content);
+        setDataList(json);
 
       } catch (error) {
         console.log(error);
@@ -92,7 +90,7 @@ function Importaciones() {
     getImportaciones()
   }, [])
 
-  const formatedList = dataList?  formatedDataImportaciones(dataList) :''
+  const formatedList = dataList ? formatedDataImportaciones(dataList) : ''
 
   /**guardamos id de usuario clikeado en la tabla
 * seteado mediante el use context
@@ -181,7 +179,7 @@ function Importaciones() {
           </Col>
           {verifyRoleSub(subPermissons)}
         </Row>
-        
+
         {
           isLoaded === false ?
             <DumpTable headers={state?.headers} data={formatedList} />

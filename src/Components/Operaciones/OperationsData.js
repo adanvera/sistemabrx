@@ -110,7 +110,7 @@ const OperationsData = () => {
             <Col>
                 <div className='datashow mt-3'>
                     <label className='labeltk' >Comision</label>
-                    <input className='inputshow client' required  onChange={(e) => handleComssion(e)} />
+                    <input className='inputshow client' required onChange={(e) => handleComssion(e)} />
                 </div>
             </Col>
             <Col>

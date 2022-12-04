@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { formatedCoins, formatedShortOp, formatImpShort, formatNowShoertTciket } from '../Helpers/formats';
-import {  DOLLAR_API, IMPORTACIONES, OPERATION_PROD, TICKETS } from '../Helpers/helper';
+import { API_COINS, DOLLAR_API, IMPORTACIONES, OPERATION_PROD, TICKETS } from '../Helpers/helper';
 import { DataContext } from './Context/DataContext';
 import Table from './Table/Table';
 
@@ -106,10 +106,9 @@ function Dashboard() {
 
     const getImportaciones = async () => {
       /** Obtenemos los valores que guardamos en el token para poder utilizarlos
-        * en la siguiente consulta
-       */
+      * en la siguiente consulta
+      */
       const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
-      /**mandamos el header de nuestra consulta */
       const options = {
         method: 'GET',
         headers: {
@@ -123,13 +122,17 @@ function Dashboard() {
           json = await res.json()
         /**seteamos loading */
         setIsLoaded(true);
-        setShortImportaciones(json.content);
+        /**seteamos el listado de tickets */
+        setShortImportaciones(json);
+
       } catch (error) {
         console.log(error);
       }
+
     }
 
     getImportaciones()
+
     const getOperations = async () => {
       /** Obtenemos los valores que guardamos en el token para poder utilizarlos
         * en la siguiente consulta
@@ -175,46 +178,8 @@ function Dashboard() {
 
     getDollar()
 
-    // const getCoins = async () => {
 
-    //   /**mandamos el header de nuestra consulta */
-    //   const options = {
-    //     method: 'GET',
-    //   }
-    //   try {
-    //     const res = await fetch(API_COINS, options),
-    //       json = await res.json()
-    //     /**seteamos loading */
-    //     setIsLoaded(true);
-    //     setCoins(json)
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // }
-
-    // getCoins()
-
-
-    // const getIcon = async () => {
-
-    //   /**mandamos el header de nuestra consulta */
-    //   const options = {
-    //     method: 'GET',
-    //   }
-    //   try {
-    //     const res = await fetch("https://cryptoicons.org/api/icon/bch/200", options),
-    //       json = await res.json()
-    //     /**seteamos loading */
-    //     setIsLoaded(true);
-    //     console.log(json)
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // }
-
-    // getIcon()
-
-  }, [dataList, shortImportaciones]);
+  }, []);
 
   const formatedDataShortTciket = formatNowShoertTciket(datatest)
   const datashorimp = formatImpShort(shortImportaciones.slice(0, 5))
@@ -239,7 +204,7 @@ function Dashboard() {
 
   return (
     <>
-      <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
+      <div className={sidebarStatus === 'open' ? 'main-content mb-5' : 'main-content extend mb-5'} >
         <Row>
           <Col className='col-md-10 msg-wlc'>
             <div className='wlcmone'>
@@ -258,10 +223,10 @@ function Dashboard() {
           </Col>
           <Col className='col-md-2 d-flex dolarapi'>
             <div className='dolaricon'>
-            <ion-icon name="cash-outline"></ion-icon>
+              <ion-icon name="cash-outline"></ion-icon>
             </div>
             <div className='dolar-content__icon'>
-            <span className='spandollar'>DOLAR</span>
+              <span className='spandollar'>DOLAR</span>
 
               {
                 dolar ?
@@ -277,42 +242,43 @@ function Dashboard() {
           </Col>
         </Row>
       </div>
-      <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} id='dash'>
-        <Container fluid={true} className="">
+      <div className={sidebarStatus === 'open' ? 'main-content mapl' : 'main-content extend mapl'} >
 
-          <Row><h4 className='resumen'>Sumario de actividades</h4></Row>
-          <Row className='justify-content-between'>
-            <Col className="mt-3 " >
-              <h6>Últimos tickets añadidos</h6>
-              <div className='shortlist'>
-                <Table headers={state?.headers} data={((formatedDataShortTciket))} nopagination={true} />
-              </div>
-            </Col>
-            <Col className="mt-3 ">
-              <h6>Últimas importaciones realizadas</h6>
-              <div className='shortlist'>
-                <Table headers={state?.headerimp} data={((datashorimp))} nopagination={true} />
-              </div>
-            </Col>
-            <Col className="mt-3 ">
-              <h6>Últimas operaciones realizadas</h6>
-              <div className='shortlist'>
-                <Table headers={state?.headerOperation} data={((operations))} nopagination={true} />
-                <span></span>
-              </div>
-            </Col>
-          </Row>
-          <Row className="w-100 mt-4">
-            <h6>Crypto currencies</h6>
+        <Row>
+          <h4 className='resumen'>Sumario de actividades</h4>
+        </Row>
+        <Row className='justify-content-between'>
+          <Col className="mt-3 " >
+            <h6>Últimos tickets añadidos</h6>
+            <div className='shortlist'>
+              <Table headers={state?.headers} data={((formatedDataShortTciket))} nopagination={true} />
+            </div>
+          </Col>
+          <Col className="mt-3 ">
+            <h6>Últimas importaciones realizadas</h6>
+            <div className='shortlist'>
+              <Table headers={state?.headerimp} data={((datashorimp))} nopagination={true} />
+            </div>
+          </Col>
+          <Col className="mt-3 ">
+            <h6>Últimas operaciones realizadas</h6>
+            <div className='shortlist'>
+              <Table headers={state?.headerOperation} data={((operations))} nopagination={true} />
+              <span></span>
+            </div>
+          </Col>
+        </Row>
+        <Row className="w-100 mt-4">
+          <h6>Crypto currencies</h6>
 
-            <Col md={12}>
-              <div className='shortlist item'>
-                <Table headers={coinheader} data={((dataCoin))} nopagination={true} />
-                <span></span>
-              </div>
-            </Col>
-          </Row>
-        </Container>
+          <Col md={12}>
+            <div className='shortlist item'>
+              <Table headers={coinheader} data={((dataCoin))} nopagination={true} />
+              <span></span>
+            </div>
+          </Col>
+        </Row>
+
       </div>
     </>
   )
