@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ClientActions from "../../Clientes/Actions/ClientActions";
 import MaquinasActions from "../../Mineria/Actions/MaquinasActions";
+import OperationsActions from "../../Operaciones/OperationsActions";
 import RoleActions from "../../Seguridad/Actions/RoleActions";
 import UserActions from "../../Usuarios/Actions/UserActions";
 
@@ -45,8 +46,9 @@ export default function TableRow(props) {
                             
                                 <td>
                                     {
-                                        pathname === '/clientes' && <ClientActions data={data} dataID={dataID} />
+                                        pathname === '/operaciones' && <OperationsActions dataID={data?.id_operacion} />
                                     }
+
                                     {
                                         pathname === '/usuarios' && <UserActions dataID={data?.id_user} />
                                     }

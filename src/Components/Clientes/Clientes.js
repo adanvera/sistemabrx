@@ -23,7 +23,6 @@ const Clientes = props => {
             name: 'Nombre y apellido',
             address: 'Dirección',
             phone: 'Nro de telefono',
-            actions: 'Acciones'
         },
         title: 'Agregar Cliente',
         filtros: {

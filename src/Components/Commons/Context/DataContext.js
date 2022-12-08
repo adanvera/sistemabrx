@@ -37,6 +37,7 @@ export const DataProvider = ({ children }) => {
     const [operationsClient,setOperationsClient] = useState('')
     const [dataOPeration,setDataOperation] = useState('')
     const [idClientToSale,setIdClientToSale] = useState('')
+    const [showModalOperation,setShowModalOperation] = useState(false)
 
 
     /**conusltas para setear datos del usuario logueado
@@ -101,7 +102,8 @@ export const DataProvider = ({ children }) => {
                 dataidrow, setDataIdRow , subPermissons, setSubPermissons,
                 isBuying,setIsBuying, typeCurrency,setTypeCurrency,
                 operationsClient,setOperationsClient,dataOPeration,setDataOperation,
-                isSelling,setIsSelling,idClientToSale,setIdClientToSale
+                isSelling,setIsSelling,idClientToSale,setIdClientToSale,
+                showModalOperation,setShowModalOperation
             }}>
             {children}
         </DataContext.Provider>
