@@ -1207,10 +1207,11 @@ p {
 }
 
 .row h4.resumen {
+    color: white;
     padding: 10px;
     border-bottom: 1px solid#D6D6D6 !important;
     border-top: 1px solid#D6D6D6 !important;
-    background-color: #d6d6d678 !important
+    background-color: rgba(0, 143, 143, 1);
 }
 
 ul.menu-list {
@@ -1294,4 +1295,8 @@ table.table-list.table.mt-2 tr.table-header th.al .is-inline-flex a{
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
     padding-top: 10px;
+}
+
+.offtxt{
+    color: blue;
 }

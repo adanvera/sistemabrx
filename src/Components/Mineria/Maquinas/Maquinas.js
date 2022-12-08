@@ -16,7 +16,8 @@ const Maquinas = (props) => {
             name: "test",
             type: "Tipo",
             brand: "Marca",
-            status : "Estado"
+            status : "Estado",
+            actions: "Acciones"
         },
         form: 'Maquina'
     }
@@ -92,8 +93,6 @@ const Maquinas = (props) => {
         getMachines()
 
     }, [])
-
-    console.log(dataList);
 
     const dataFormated = formatMachines(dataList)
 

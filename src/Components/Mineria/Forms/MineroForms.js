@@ -83,12 +83,17 @@ function MineroForms() {
     getMachines()
 
     const apiOptions = {
-      method: 'POST',
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        token: token
+      },
 
     }
+
     const gettingAllMachines = async () => {
       try {
-        const res = await fetch(MACHINES_API, apiOptions),
+        const res = await fetch(MACHINES, apiOptions),
           json = await res.json()
         setExternalData(json)
       } catch (error) {
@@ -190,7 +195,7 @@ function MineroForms() {
             label="Seleccionar maquina"
           >
             <Form.Select aria-label="Seleccionar maquina" name="datamachine" onChange={handleChange} value={state.datamachine} >
-              <option>Seleccionar maquina</option>
+              <option disabled selected >Seleccionar maquina</option>
               {
                 externalData?.map((item) => {
                   return (<option value={item.id} onClick={() => machineItem(item)} > {item?.name} {item?.brand} </option>)

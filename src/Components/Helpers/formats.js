@@ -244,6 +244,13 @@ export const verifyStatusMachine = (data) => {
             </div>
         )
     }
+    else if (data === 3) {
+        return (
+            <div className=" status">
+                <div className="offtxt">Manteniance</div>
+            </div>
+        )
+    }
 }
 
 export const formatedDataRoles = (data) => {
@@ -620,10 +627,12 @@ export const formatMachines = (data) => {
             obData = {
                 ...obData,
                 [item?.id]: {
+                    id: item?.id,
                     name: item?.name,
                     type: item?.type,
                     brand: item?.brand,
                     status: item?.status,
+                    actions : 'x x'
                 }
 
             }
