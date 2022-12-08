@@ -2,7 +2,7 @@ import React from 'react'
 import { useContext } from 'react'
 import { DataContext } from '../Commons/Context/DataContext'
 
-function Negocio() {
+const Negocio = (props) => {
     const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
 
     return (

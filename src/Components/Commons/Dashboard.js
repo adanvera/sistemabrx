@@ -100,10 +100,6 @@ function Dashboard() {
 
     getTickets()
 
-    const shortTcicketList = dataList?.slice(0, 5)
-    const ticketListByDatae = shortTcicketList ? (shortTcicketList).sort((a, b) => { return new Date(b?.created_at) - new Date(a?.created_at) }) : ''
-    setDatatest(ticketListByDatae)
-
     const getImportaciones = async () => {
       /** Obtenemos los valores que guardamos en el token para poder utilizarlos
       * en la siguiente consulta
@@ -181,7 +177,11 @@ function Dashboard() {
 
   }, []);
 
-  const formatedDataShortTciket = formatNowShoertTciket(datatest)
+  const sortByDate = dataList ? dataList?.sort((a, b) => { return new Date(b.created_at) - new Date(a.created_at) }) : ''
+
+  const formatedDataShortTciket = formatNowShoertTciket(sortByDate)
+
+
   const datashorimp = formatImpShort(shortImportaciones.slice(0, 5))
   const operations = (formatedShortOp(dataOperations.slice(0, 5)))
 
@@ -243,42 +243,41 @@ function Dashboard() {
         </Row>
       </div>
       <div className={sidebarStatus === 'open' ? 'main-content mapl' : 'main-content extend mapl'} >
-
-        <Row>
-          <h4 className='resumen'>Sumario de actividades</h4>
+        <Row className='ml-2'>
+          <Row >
+            <h4 className='resumen'>Sumario de actividades</h4>
+          </Row>
+          <Row className='justify-content-between'>
+            <Col className="mt-3 " >
+              <h6>Últimos tickets añadidos</h6>
+              <div className='shortlist'>
+                <Table headers={state?.headers} data={((formatedDataShortTciket))} nopagination={true} />
+              </div>
+            </Col>
+            <Col className="mt-3 ">
+              <h6>Últimas importaciones realizadas</h6>
+              <div className='shortlist'>
+                <Table headers={state?.headerimp} data={((datashorimp))} nopagination={true} />
+              </div>
+            </Col>
+            <Col className="mt-3 ">
+              <h6>Últimas operaciones realizadas</h6>
+              <div className='shortlist'>
+                <Table headers={state?.headerOperation} data={((operations))} nopagination={true} />
+                <span></span>
+              </div>
+            </Col>
+          </Row>
+          <Row className="w-100 mt-4">
+            <h6>Crypto currencies</h6>
+            <Col md={12}>
+              <div className='shortlist item'>
+                <Table className="tabledash" headers={coinheader} data={((dataCoin))} nopagination={true} />
+                <span></span>
+              </div>
+            </Col>
+          </Row>
         </Row>
-        <Row className='justify-content-between'>
-          <Col className="mt-3 " >
-            <h6>Últimos tickets añadidos</h6>
-            <div className='shortlist'>
-              <Table headers={state?.headers} data={((formatedDataShortTciket))} nopagination={true} />
-            </div>
-          </Col>
-          <Col className="mt-3 ">
-            <h6>Últimas importaciones realizadas</h6>
-            <div className='shortlist'>
-              <Table headers={state?.headerimp} data={((datashorimp))} nopagination={true} />
-            </div>
-          </Col>
-          <Col className="mt-3 ">
-            <h6>Últimas operaciones realizadas</h6>
-            <div className='shortlist'>
-              <Table headers={state?.headerOperation} data={((operations))} nopagination={true} />
-              <span></span>
-            </div>
-          </Col>
-        </Row>
-        <Row className="w-100 mt-4">
-          <h6>Crypto currencies</h6>
-
-          <Col md={12}>
-            <div className='shortlist item'>
-              <Table headers={coinheader} data={((dataCoin))} nopagination={true} />
-              <span></span>
-            </div>
-          </Col>
-        </Row>
-
       </div>
     </>
   )

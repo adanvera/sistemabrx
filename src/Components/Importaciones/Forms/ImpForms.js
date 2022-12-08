@@ -103,6 +103,7 @@ const ImpForms = (props) => {
             method: 'POST',
 
         }
+        
         const gettingAllMachines = async () => {
             try {
                 const res = await fetch(MACHINES_API, apiOptions),

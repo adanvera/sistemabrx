@@ -470,7 +470,7 @@ td.icontk {
 }
 
 tr.table-header {
-    background: #e3e3e3;
+    background: rgba(0, 143, 143, 1);
 }
 
 .headtiket.col {
@@ -895,7 +895,8 @@ span.txtnoiden {
 
 .tiktop {
     background-color: white;
-    padding: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
     border-radius: 8px;
 }
 
@@ -1038,7 +1039,7 @@ div#_btnEdittkt {
 .tithis {
     font-size: 14px;
     font-weight: 400;
-    color: #000;
+    color:white;
 }
 
 .colorfont {
@@ -1255,4 +1256,42 @@ input.inputshow.client {
 
 .mapl {
     margin-top: 7.5rem;
+}
+
+.shortlist table.table-list.table.mt-2 tr.table-header {
+    background: rgba(0, 143, 143, 1);
+}
+
+.shortlist table.table-list.table.mt-2 tr.table-header th.al .is-inline-flex a {
+    color: white !important;
+}
+
+.operations.col-md-8 table.table-list.table.mt-2 tr.table-header {
+    background: rgba(0, 143, 143, 1);
+}
+
+.operations.col-md-8 table.table-list.table.mt-2 tr.table-header th.al .is-inline-flex a {
+    color: white !important;
+}
+
+table.table-list.table.mt-2 tr.table-header th.al .is-inline-flex a{
+    color: white !important;
+}
+
+.d-grid.pt-3.headerdetails.row {
+    background: rgba(0, 143, 143, 1);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    color: white;
+}
+
+.colorlink.ticketsdetails a {
+    color: white !important;
+}
+
+.d-flex.headsummary.col {
+    background: rgba(0, 143, 143, 1);
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    padding-top: 10px;
 }

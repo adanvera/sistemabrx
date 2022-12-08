@@ -98,7 +98,7 @@ const Operaciones = () => {
                         </div>
                     </Col>
                     {/* Tabla en donde se obtiene todas las operaciones */}
-                    <Col md={8}>
+                    <Col md={8} className="operations">
                         <Row className={"ml-6 pt-5"}>
                         </Row>
                         <Row>

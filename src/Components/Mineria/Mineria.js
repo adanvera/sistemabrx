@@ -7,6 +7,7 @@ import MachineForm from './Forms/MachineForm'
 import TicketForm from './Forms/TicketForm'
 import tktimg from "../../assets/images/ticketimg.png"
 import mchimg from "../../assets/images/machine.png"
+import mcc from "../../assets/images/machine_Aa.png"
 import MineroForms from './Forms/MineroForms'
 import { Link } from 'react-router-dom';
 import { Doughnut, Line } from 'react-chartjs-2'
@@ -286,12 +287,20 @@ const Mineria = props => {
                             </div>
                             <div className='contentticket'>
                                 <h6>Administracion</h6>
-                                <h6>de maquinas</h6>
+                                <h6>de mineros</h6>
                             </div>
                         </div>
                     </Col>
-                    <Col md={4}>
-
+                    <Col md={4} onClick={() => navigate('/maquinas')} >
+                        <div id="tkprev">
+                            <div className='imgtkg'>
+                                <img src={mcc} />
+                            </div>
+                            <div className='contentticket'>
+                                <h6>Administracion</h6>
+                                <h6>de maquinas</h6>
+                            </div>
+                        </div>
                     </Col>
                 </Row>
                 <Row>
