@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ClientActions from "../../Clientes/Actions/ClientActions";
+import MaquinasActions from "../../Mineria/Actions/MaquinasActions";
 import RoleActions from "../../Seguridad/Actions/RoleActions";
 import UserActions from "../../Usuarios/Actions/UserActions";
 
@@ -31,12 +32,17 @@ export default function TableRow(props) {
 
     return (
 
-        <tr key={data?.id_ticket ? data?.id_ticket : data?.id_cliente ? data?.id_operaion : data?.id_ticket} className={data?.id_ticket ? "rowtable clickeable" : "rowtable"} onClick={e => clickedItem(e)} >
-            {Object.keys(data).filter((col => col !== 'created_at_filter' && col !== 'id_role' && col !== 'created_at_user' && col !== 'id_user' && col !== "id_machine")).map(col => {
-                return (
+        <tr key={data?.id_ticket ? data?.id_ticket : data?.id_cliente ? data?.id_operaion : data?.id_ticket } className={data?.id_ticket ? "rowtable clickeable" : "rowtable"} onClick={e => clickedItem(e)} >
+            {Object.keys(data).filter((col => col !== 'created_at_filter' && col !== 'id_role' && col !== 'created_at_user' && col !== 'id' && col !== 'id_user' && col !== "id_machine")).map(col => {
+               
+               console.log(data.id)
+               return (
                     <Fragment key={col}>
                         {
+                            
                             col === 'actions' ?
+
+                            
                                 <td>
                                     {
                                         pathname === '/clientes' && <ClientActions data={data} dataID={dataID} />
@@ -46,6 +52,9 @@ export default function TableRow(props) {
                                     }
                                     {
                                         pathname === '/seguridad' && <RoleActions dataID={data?.id_role} />
+                                    }
+                                    {
+                                        pathname === '/maquinas' && <MaquinasActions dataID={data?.id} />   
                                     }
                                 </td>
                                 : col === "icon" ?

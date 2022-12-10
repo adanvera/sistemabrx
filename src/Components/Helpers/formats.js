@@ -244,6 +244,13 @@ export const verifyStatusMachine = (data) => {
             </div>
         )
     }
+    else if (data === 3) {
+        return (
+            <div className=" status">
+                <div className="offtxt">Manteniance</div>
+            </div>
+        )
+    }
 }
 
 export const formatedDataRoles = (data) => {

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import { Button, Col, Container, FloatingLabel, Form, Row } from "react-bootstrap"
 import { DataContext } from "../../Commons/Context/DataContext"
-import { TICKETS, USER } from "../../Helpers/helper"
+import { CLIENT, MINING_MACHINES, TICKETS, USER } from "../../Helpers/helper"
 import SelectMachine from "../Forms/SelectMachine"
 
 const TicketForm = (props) => {
@@ -21,7 +21,7 @@ const TicketForm = (props) => {
             ticket_comments: '',
             priority: 'NORMAL',
             ticket_name: '',
-            asigned_to: '',
+            assigned_to: '',
             historilal_id: Math.random().toString(36).slice(-8),
             historial_action: '',
             historial_date: new Date(),
@@ -30,6 +30,9 @@ const TicketForm = (props) => {
     }
 
     const [state, setState] = useState(initialState)
+    const [dataMining, setDataMining] = useState([])
+    const [dataClient, setDataClient] = useState([])
+    const [documento, setDocumento] = useState('')
 
     useEffect(() => {
         /** Obtenemos los valores que guardamos en el token para poder utilizarlos
@@ -58,6 +61,52 @@ const TicketForm = (props) => {
 
         getUsers()
 
+
+        const getClient = async () => {
+            const options = {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'token': token
+                },
+            }
+
+            try {
+                const res = await fetch(CLIENT, options),
+                    json = await res.json()
+                /**seteamos loading */
+                console.log(json);
+                /**seteamos el listado de tickets */
+                setDataClient(json);
+            } catch (error) {
+                console.log("Esto es el error" + error);
+            }
+        }
+
+        getClient()
+
+        const getMiningMachines = async () => {
+
+            const options = {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'token': token
+                },
+            }
+
+            try {
+                const res = await fetch(MINING_MACHINES, options),
+                    json = await res.json()
+                /**seteamos el listado de tickets */
+                setDataMining(json);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        getMiningMachines()
+
     }, [])
 
     const handleSubmit = async (e) => {
@@ -81,10 +130,9 @@ const TicketForm = (props) => {
             ticket_comments: null,
             priority: state.variables.priority,
             ticket_name: state.variables.ticket_name,
-            asigned_to: state.variables.asigned_to ? Number(state.variables.asigned_to) : '',
+            assigned_to: Number(state.variables.assigned_to),
             ticket_historial: historial,
         }
-
 
         const ticketOptions = {
             method: "POST",
@@ -119,6 +167,14 @@ const TicketForm = (props) => {
         });
     }
 
+    /**guardamos nombre del cliente para posteriormente usar */
+    const handleChangeDocumento = (e) => {
+        setDocumento(e.target.value)
+    }
+
+    /**filtra el listado de maquinas minando por el nombre del cliente */
+    const filterDataMining = dataMining.filter((item) => item.name.includes(documento))
+
     return (
         <Container>
             {dataValidate === true ?
@@ -145,16 +201,58 @@ const TicketForm = (props) => {
                                 style={{ height: '100px' }} />
                         </FloatingLabel>
                     </Row>
-                    <Row className="mt-2">
-                        <FloatingLabel className="tkt"
-                            controlId="floatingSelectGrid"
-                            label="Seleccionar maquina"
-                        >
-                            <Form.Select aria-label="Seleccionar maquina" name="id_machine" onChange={handleChange} value={(state.variables.id_machine)}>
-                                <SelectMachine defaultValue={state?.id_machine} />
+                    <Row md className="mt-2">
+                        <FloatingLabel className="tkt" controlId="documento" label="Seleccionar cliente">
+                            <Form.Select aria-label="Seleccionar cliente" name="documento" onChange={handleChangeDocumento} value={documento} >
+                                <option value="" selected disabled>Seleccionar cliente</option>
+                                {
+                                    Object.keys(dataClient).map((item => {
+                                        return <option value={dataClient[item]?.name + " " + dataClient[item]?.last_name}>{dataClient[item]?.name + " " + dataClient[item]?.last_name}</option>
+                                    }))
+                                }
                             </Form.Select>
                         </FloatingLabel>
                     </Row>
+                    {
+                        documento &&
+                        <Row className="mt-2">
+                            <FloatingLabel className="tkt"
+                                controlId="floatingSelectGrid"
+                                label="Seleccionar maquina"
+                            >
+                                <Form.Select aria-label="Seleccionar maquina" name="id_machine" onChange={handleChange} value={(state.variables.id_machine)}>
+                                    <option selected disabled>Seleccionar</option>
+
+                                    {
+                                        Object.keys(filterDataMining).map((key, index) => {
+                                            return (
+                                                <option key={index} value={filterDataMining[key].id_machine}>{filterDataMining[key].machine_name}</option>
+                                            )
+                                        })
+                                    }
+                                </Form.Select>
+                            </FloatingLabel>
+                        </Row>
+                    }
+                    {
+                        documento === '' &&
+                        <Row className="mt-2">
+                            <FloatingLabel className="tkt"
+                                controlId="floatingSelectGrid"
+                                label="Seleccionar maquina"
+                            >
+                                <Form.Select aria-label="Seleccionar maquina" name="id_machine" disabled onChange={handleChange} value={(state.variables.id_machine)}>
+                                    {
+                                        Object.keys(dataMining).map((key, index) => {
+                                            return (
+                                                <option selected disabled>Seleccionar</option>
+                                            )
+                                        })
+                                    }
+                                </Form.Select>
+                            </FloatingLabel>
+                        </Row>
+                    }
                     <Row md className="mt-2">
                         <FloatingLabel className="tkt" controlId="floatingInputGrid" label="Prioridad">
                             <Form.Select aria-label="Seleccionar prioridad" name="priority" onChange={handleChange} value={state.variables.priority} >
@@ -166,9 +264,10 @@ const TicketForm = (props) => {
                             </Form.Select>
                         </FloatingLabel>
                     </Row>
+
                     <Row md className="mt-2">
-                        <FloatingLabel className="tkt" controlId="asigned_to" label="Asginar a">
-                            <Form.Select aria-label="Asignar ticket" name="asigned_to" onChange={handleChange} value={state.variables.asigned_to} >
+                        <FloatingLabel className="tkt" controlId="assigned_to" label="Asginar a">
+                            <Form.Select aria-label="Asignar ticket" name="assigned_to" onChange={handleChange} value={state.variables.assigned_to} >
                                 <option value="" selected disabled>Seleccionar</option>
                                 {
                                     Object.keys(dataList).map((item => {
