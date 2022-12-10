@@ -30,6 +30,7 @@ const Operaciones = () => {
             comision: 'Comision',
             tipoOperaciones: 'Tipo operacion',
             tipoMoneda: 'Moneda',
+            actions:'Acciones'
         },
         filtros: {
             name: '',
