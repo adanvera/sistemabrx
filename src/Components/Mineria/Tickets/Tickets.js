@@ -82,7 +82,7 @@ const Tickets = props => {
                 const res = await fetch(TICKETS, options),
                     json = await res.json()
 
-                    console.log(json);
+                console.log(json);
 
                 /**seteamos loading */
                 setIsLoaded(true);
@@ -160,7 +160,7 @@ const Tickets = props => {
                     // modalType={usermodal}
                     />
                 )}
-                <Row className=" is-3 text-al-ini titlemodule"><h5 className="title-details ml-5 pt-3">Tickets</h5></Row>
+                <Row className=" text-al-ini titlemodule"><h5 className="title-details ml-5 pt-3">Tickets</h5></Row>
                 <Row>
                     <Col md={6} >
                         <SearchTable

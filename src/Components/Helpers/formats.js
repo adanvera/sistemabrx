@@ -611,3 +611,25 @@ const addIcon = (name) => {
     // return <img src={api    } alt={name} />
 
 }
+
+export const formatMachines = (data) => {
+    let obData = {}
+
+    if (data) {
+        data?.map(item => {
+            obData = {
+                ...obData,
+                [item?.id]: {
+                    name: item?.name,
+                    type: item?.type,
+                    brand: item?.brand,
+                    status: item?.status,
+                }
+
+            }
+        })
+    }
+
+    return obData
+}
+

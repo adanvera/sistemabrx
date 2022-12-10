@@ -167,8 +167,8 @@ function DetailsTicket() {
             <Row>
                 <Col md={9} className="tiktop ml-1">
                     <Container fluid={true} className="">
-                        <Row className='d-grid mt-3'>
-                            <Col><div className='colorlink'> <Link to="/tickets">{"< Tickets"}</Link> </div></Col>
+                        <Row className='d-grid pt-3 headerdetails'>
+                            <Col><div className='colorlink ticketsdetails'> <Link to="/tickets">{"< Tickets"}</Link> </div></Col>
                             <Col className='headtiket d-flex'>
                                 <div>
                                     <h6>{dataToUse?.id_ticket} - {dataToUse?.ticket_name}</h6>

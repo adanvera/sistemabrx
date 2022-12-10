@@ -93,7 +93,7 @@ const TicketTimeline = (props) => {
         <Fragment>
             <div className='tiktop'>
                 <Row>
-                    <Col className='d-flex'>
+                    <Col className='d-flex headsummary'>
                         <div className='d-flex mr-2' onClick={(e) => handleOnClick(e, '_ticketcomments')} >
                             <h6 className='mr-2 tithis'>Comentarios {comments.length} </h6> <ion-icon name="chatbubbles-outline"></ion-icon>
                         </div>
