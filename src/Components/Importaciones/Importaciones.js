@@ -7,8 +7,9 @@ import ModalContainer from '../Commons/ModalContainer'
 import SearchTable from '../Commons/SearchTable'
 import DumpTable from '../Commons/Table/DumpTable'
 import Table from '../Commons/Table/Table'
-import { filteredDataUsers, formatedDataImportaciones, formatedDataUsers } from '../Helpers/formats'
+import { filteredDataImportations, formatedDataImportaciones } from '../Helpers/formats'
 import { IMPORTACIONES } from '../Helpers/helper'
+import FilterImportaciones from './Forms/FilterImportaciones'
 import ImpForms from './Forms/ImpForms'
 
 
@@ -19,20 +20,20 @@ function Importaciones() {
     form: 'Importaciones',
     title: 'IMPORTACIONES',
     headers: {
-      id_importacion: "ID",
-      id_cliente: "ID CLIENTE",
+      id_cliente: "CLIENTE",
       id_proveedor: "ID PROVEEDOR",
       empresa_envio: "EMPRESA ENVIO",
       tracking_number: "TRACKING NUMBER",
       valor_envio: "VALOR ENVIO",
       fecha_envio: "FECHA ENVIO",
       fecha_arribo: "FECHA ARRIBO",
-      articulos: "ARTICULOS",
+      created_at_imp: "FECHA CREACION",
+      days_counter: "CONTADOR DIAS",
     },
     filtros: {
-      name: '',
+      id_cliente: '',
+      empresa_envio:'' ,
       estado: '',
-      rol: '',
       desde: '',
       hasta: '',
     },
@@ -88,7 +89,9 @@ function Importaciones() {
     }
 
     getImportaciones()
+
   }, [])
+
 
   const formatedList = dataList ? formatedDataImportaciones(dataList) : ''
 
@@ -111,7 +114,7 @@ function Importaciones() {
       ...prev,
       filtros: {
         ...prev.filtros,
-        name: data,
+        id_cliente: data,
       },
       currentPage: 1,
     }))
@@ -157,6 +160,30 @@ function Importaciones() {
     }
   }
 
+  //funcion para limpiar los valores de las variables a utilizar
+  const onCleanFilter = (data) => {
+    setState((prevState) => {
+      return {
+        ...prevState,
+        filtros: {
+          ...data,
+        }
+      }
+    })
+  }
+
+  //funcion para setear y pasar que filtro se selecciono
+  const handleFilter = (data) => {
+    setState((prevState) => {
+      return {
+        ...prevState,
+        filtros: {
+          ...prevState.filtros,
+          [data.key]: data.value
+        }
+      }
+    })
+  }
 
   return (
     <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
@@ -179,12 +206,14 @@ function Importaciones() {
           </Col>
           {verifyRoleSub(subPermissons)}
         </Row>
-
+        <Row>
+          <FilterImportaciones onCleanFilter={onCleanFilter} getFilter={handleFilter} />
+        </Row>
         {
           isLoaded === false ?
             <DumpTable headers={state?.headers} data={formatedList} />
             :
-            <Table headers={state?.headers} data={filteredDataUsers(formatedList, state?.filtros)} exportdata={true} title="Importaciones" />
+            <Table link='/importaciones/' headers={state?.headers} data={filteredDataImportations(formatedList, state?.filtros)} exportdata={true} title="Importaciones" />
         }
       </Container>
     </div>

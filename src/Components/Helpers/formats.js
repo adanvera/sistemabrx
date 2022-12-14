@@ -509,15 +509,16 @@ export const formatedDataImportaciones = (data) => {
                 ...obData,
                 [item?.id_importacion]: {
                     id_importacion: item?.id_importacion,
-                    id_cliente: item?.id_cliente,
+                    id_cliente: item?.id_cliente + " - " + item?.client,
                     id_proveedor: item?.id_proveedor,
                     empresa_envio: item?.empresa_envio,
                     tracking_number: item?.tracking_number,
                     valor_envio: item?.valor_envio + " USD",
                     fecha_envio: formatoDate(item?.fecha_envio),
                     fecha_arribo: formatoDate(item?.fecha_arribo),
-                    // articulos: formatArticle(item?.articulos),
-                    articulos: "formateando"
+                    articulos: (item?.articulos),
+                    created_at_imp: item.created_at,
+                    days_counter: counterDays(item?.fecha_arribo),
                 }
 
             }
@@ -528,14 +529,18 @@ export const formatedDataImportaciones = (data) => {
 
 }
 
-const formatArticle = (data) => {
+export const counterDays = (date) => {
+    let days = 0
+    if (date) {
+        const dateArrivo = new Date(date)
+        const dateNow = new Date()
+        const diffTime = Math.abs(dateNow - dateArrivo);
+        days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    }
 
-    const myJSON = JSON.stringify(data);
-    const dasfdsfasdf = myJSON.toString().replace("[", "").replace("]", "").replace(/"/g, "").replace(/,/g, ", ").replace(/\\/gi, '')
-
-    console.log(dasfdsfasdf);
-
-
+    if (days === 0) return (<span className="days today">Llegó hoy</span>)
+    if (days === 1) return (<span className=" days tommorrow">Llega mañana</span>)
+    else return (<span className="days counting">Faltan {days} dias</span>)
 }
 
 export const formatImpShort = (data) => {
@@ -708,6 +713,64 @@ export const filteredDataOperations = (dataList, filter) => {
                         const fechaTicket = new Date(filteredData[item].created)
                         const fechaFiltro = filter[filtro]
                         return fechaTicket.toISOString().substring(0, 10) >= fechaFiltro.toISOString().substring(0, 10)
+                    }
+
+                    return (filteredData[item][filtro].toLowerCase().includes(filter[filtro].toLowerCase()))
+                })
+                // se devuelve el objeto del vendedor que cumplio con el filtro
+                .map(id => filteredData[id])
+        )
+
+    })
+
+    // Finalmente se retorna los datos filtrados
+    return filteredData
+
+}
+
+
+/**
+ * @param dataList Lista de Objetos con datos a ser filtrados
+ * @param filter Objeto con los filtros que debe ser iterado y filtrado el dataList
+* */
+export const filteredDataImportations = (dataList, filter) => {
+    /**
+     * Se asigna a la variables @filteredData para poder ir modificando
+     * */
+    let filteredData = dataList;
+
+    /**
+     * Se elimina los filtros vacios del objeto
+     * Dejando un objeto solo con los atributos con valores asignados.
+     * */
+    for (let key in filter) {
+        if (filter[key] === '') {
+            delete filter[key]
+        }
+    }
+
+    Object.keys(filter).forEach(filtro => {
+        /**
+         * Si el Filtro es distinta al valor TODAS procedera a filtrar, ya que TODAS implica que debe devolver el objeto
+         * tal cual se mando inicialmente
+         * */
+        (filter[filtro] !== 'TODAS') && (
+            filteredData =
+            // se obtiene array de keys para poder iterar el objeto
+            Object.keys(filteredData)
+                // Se verifica si el objeto del vendedor cumple con el filtro seleccionado
+                .filter(item => {
+
+                    if (filtro === 'hasta') {
+                        const fechaImportacion = new Date(filteredData[item].created_at_imp)
+                        const fechaFiltro = filter[filtro]
+                        return fechaImportacion.toISOString().substring(0, 10) <= fechaFiltro.toISOString().substring(0, 10)
+                    }
+
+                    if (filtro === 'desde') {
+                        const fechaImportacion = new Date(filteredData[item].created_at_imp)
+                        const fechaFiltro = filter[filtro]
+                        return fechaImportacion.toISOString().substring(0, 10) >= fechaFiltro.toISOString().substring(0, 10)
                     }
 
                     return (filteredData[item][filtro].toLowerCase().includes(filter[filtro].toLowerCase()))

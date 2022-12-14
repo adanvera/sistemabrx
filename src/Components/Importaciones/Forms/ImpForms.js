@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useReducer } from 'react'
 import { Button, Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 import { DataContext } from '../../Commons/Context/DataContext'
-import { USER, ROLES, ASSIGNROLE, USER_PSW, CLIENT, IMPORTACIONES, MACHINES_API } from '../../Helpers/helper'
+import { USER, ROLES, ASSIGNROLE, USER_PSW, CLIENT, IMPORTACIONES, MACHINES_API, PROVEEDORES } from '../../Helpers/helper'
 import { PuffLoader } from 'react-spinners';
 import DatePicker from 'react-date-picker'
 import Select from 'react-select';
@@ -38,6 +38,9 @@ const ImpForms = (props) => {
     const [msgErr, setMsgErr] = useState('')
     const [dataList, setDataList] = useState('')
     const [externalData, setExternalData] = useState('')
+    const [proveedores, setProveedores] = useState('')
+    const { user } = useContext(DataContext)
+    const userAuthed = user
 
 
     const togglePassword = () => {
@@ -103,7 +106,7 @@ const ImpForms = (props) => {
             method: 'POST',
 
         }
-        
+
         const gettingAllMachines = async () => {
             try {
                 const res = await fetch(MACHINES_API, apiOptions),
@@ -116,13 +119,39 @@ const ImpForms = (props) => {
 
         gettingAllMachines()
 
-    }, []);
+        const provedorOptions = {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'token': token
+            }
+        }
 
-    console.log(state)
+        const getProveedores = async () => {
+            try {
+                const res = await fetch(PROVEEDORES, provedorOptions),
+                    json = await res.json()
+                setProveedores(json)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        getProveedores()
+
+    }, []);
 
     const handleSubmit = async (e) => {
 
         e.preventDefault()
+
+        const commentTo = {
+            id_comment: Math.random().toString(36).slice(-8),
+            comment: state.comentario_importacion,
+            id_user: userAuthed?.id_user,
+            userdata: userAuthed ? userAuthed.name + " " + userAuthed.last_name : '',
+            comment_at: new Date(),
+        }
 
         const createImportacion = {
             id_cliente: Number(state.id_cliente),
@@ -132,9 +161,9 @@ const ImpForms = (props) => {
             valor_envio: Number(state.valor_envio),
             fecha_envio: state.fecha_envio,
             fecha_arribo: state.fecha_arribo,
-            comentario_importacion: state.comentario_importacion,
+            comentario_importacion: state.comentario_importacion === '' ? '' : JSON.stringify(commentTo),
             cantidad: Number(state.cantidad),
-            articulos: JSON.stringify(externalData.filter((item) => item.id === state.ariculos)),
+            articulos: JSON.stringify(externalData.filter((item) => item.id === state.articulos)),
         }
 
         const pushImportación = async () => {
@@ -186,17 +215,16 @@ const ImpForms = (props) => {
         ))
     }
 
-    const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' }
-    ]
-
-    const articleOptions = [
-        Object.keys(externalData)?.map((item) => {
-            return { value: externalData[item]?.id, label: externalData[item].name + " " + externalData[item].brand }
-        })
-    ]
+    const handleChangeValue = (e) => {
+        e.preventDefault();
+        setState(prevState => {
+            const updatedValues = {
+                ...prevState,
+                [e.target.name]: e.target.value,
+            }
+            return { ...updatedValues };
+        });
+    }
 
     if (modalType === 'Add') {
         return (<Fragment>
@@ -215,11 +243,10 @@ const ImpForms = (props) => {
                     </div>
                     :
                     <Form onSubmit={handleSubmit}>
-
-                        <Row>
+                        <Row className="mb-3" >
                             <Form.Group as={Col} md="12" controlId="cliente">
                                 <Form.Label>Seleccionar articulo:</Form.Label>
-                                <Form.Select value={state.ariculos} name="ariculos" onChange={handleChange} >
+                                <Form.Select value={state.articulos} name="articulos" onChange={handleChange} required >
                                     <option selected disabled>Seleccionar articulo</option>
                                     {
                                         Object.keys(externalData).map((item) => {
@@ -229,17 +256,34 @@ const ImpForms = (props) => {
                                 </Form.Select>
                             </Form.Group>
                         </Row>
-                        <Row>
-                            <Form.Group as={Col} md="12" controlId="cantidad">
-                                <Form.Label>Cantidad de articulo</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Cantidad de articulo"
-                                    required
-                                    name='cantidad'
-                                    onChange={(e) => handleChange(e)} />
-                                <Form.Control.Feedback type="invalid">Escribir cantidad de articulo</Form.Control.Feedback>
-                            </Form.Group>
+                        <Row className="mb-3" id='box-cant-value'>
+                            <Col as={Col} md="5" >
+                                <Form.Group controlId="cantidad">
+                                    <Form.Label>Cantidad</Form.Label>
+                                    <Form.Control
+                                        type="number"
+                                        placeholder="Cantidad"
+                                        required
+                                        min="0"
+                                        name='cantidad'
+                                        onChange={(e) => handleChange(e)} />
+                                    <Form.Control.Feedback type="invalid">Escribir cantidad de articulo</Form.Control.Feedback>
+                                </Form.Group>
+                            </Col>
+                            <Col as={Col} md="7">
+                                <Form.Group controlId="valor_envio">
+                                    <Form.Label>Valor envio (USD)</Form.Label>
+                                    <Form.Control
+                                        type="number"
+                                        placeholder="Valor envio"
+                                        required
+                                        onWheel={() => document.activeElement.blur()}
+                                        min="0"
+                                        name='valor_envio'
+                                        onChange={(e) => handleChange(e)} />
+                                    <Form.Control.Feedback type="invalid">Escribir valor envio</Form.Control.Feedback>
+                                </Form.Group>
+                            </Col>
                         </Row>
                         <Row className="mb-3">
                             <Form.Group as={Col} md="12" controlId="cliente">
@@ -254,33 +298,32 @@ const ImpForms = (props) => {
                                 </Form.Select>
                             </Form.Group>
                         </Row>
-                        <Row className="mb-3">
-                            <Row className="mb-3">
-                                <Form.Group as={Col} md="12" controlId="id_proveedor">
+                        <Row className="mb-3 W-100" >
+                            <Col as={Col} md="6" >
+                                <Form.Group controlId="id_proveedor">
                                     <Form.Label>Proveedor:</Form.Label>
-                                    <Form.Select onChange={handleChange} value={state.id_proveedor} name="id_proveedor" >
-                                        <option selected disabled>Seleccionar Proveedor</option>
-                                        <option selected value={1}>Proveedor 1 </option>
-                                        <option selected value={2}>Proveedor 2 </option>
-                                        <option selected value={3}>Proveedor 3 </option>
-                                        <option selected value={4}>Proveedor 4 </option>
+                                    <Form.Select onChange={handleChangeValue} value={state.id_proveedor} name="id_proveedor" >
+                                        <option selected disabled>Seleccionar proveedor</option>
+                                        {
+                                            Object.keys(proveedores).map((item) => {
+                                                return <option value={proveedores[item]?.id_proveedor} >{proveedores[item]?.description}</option>
+                                            })
+                                        }
                                     </Form.Select>
                                 </Form.Group>
-                            </Row>
-                        </Row>
-                        <Row className="mb-3" >
-                            <Row className="mb-3">
-                                <Form.Group as={Col} md="12" controlId="empresa_envio">
+                            </Col>
+                            <Col as={Col} md="6"  >
+                                <Form.Group controlId="empresa_envio">
                                     <Form.Label>Empresa envio:</Form.Label>
                                     <Form.Select onChange={handleChange} value={state.empresa_envio} name="empresa_envio" >
                                         <option selected disabled>Seleccionar empresa</option>
-                                        <option selected value="DHL">DHL</option>
-                                        <option selected value="OTHER">opcion 2 </option>
+                                        <option selected value="DHL"> DHL </option>
+                                        <option selected value="FEDEX"> FEDEX </option>
                                     </Form.Select>
                                 </Form.Group>
-                            </Row>
+                            </Col>
                         </Row>
-                        <Row>
+                        <Row className="mb-3" >
                             <Form.Group as={Col} md="12" controlId="tracking_number">
                                 <Form.Label>Tracking Number</Form.Label>
                                 <Form.Control
@@ -292,19 +335,7 @@ const ImpForms = (props) => {
                                 <Form.Control.Feedback type="invalid">Escribir tracking number</Form.Control.Feedback>
                             </Form.Group>
                         </Row>
-                        <Row>
-                            <Form.Group as={Col} md="12" controlId="valor_envio">
-                                <Form.Label>Valor envio</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Valor envio"
-                                    required
-                                    name='valor_envio'
-                                    onChange={(e) => handleChange(e)} />
-                                <Form.Control.Feedback type="invalid">Escribir valor envio</Form.Control.Feedback>
-                            </Form.Group>
-                        </Row>
-                        <Row>
+                        <Row className="mb-3">
                             <Col>
                                 <div className="item-column">
                                     <label className="mb-1" htmlFor="">Fecha envio:</label>
@@ -332,7 +363,7 @@ const ImpForms = (props) => {
                             <Form.Group as={Col} md="12" controlId="comentario_importacion">
                                 <label className="mb-1" htmlFor="">Comentario:</label>
                                 <FloatingLabel className="tkt" controlId="comentario_importacion" label="Comentar">
-                                    <Form.Control as="textarea" name="comentario_importacion" onChange={handleChange}
+                                    <Form.Control as="textarea" name="comentario_importacion" required onChange={handleChange}
                                         placeholder="Deja una comentario"
                                         style={{ height: '80px' }} />
                                 </FloatingLabel>

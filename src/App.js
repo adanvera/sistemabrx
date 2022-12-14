@@ -26,6 +26,7 @@ import MineroDetails from './Components/Mineria/Mineros/MineroDetails';
 import Importaciones from './Components/Importaciones/Importaciones';
 import Negocio from './Components/Negocio/Negocio';
 import Maquinas from './Components/Mineria/Maquinas/Maquinas';
+import DetailsImportation from './Components/Importaciones/DetailsImportation';
 
 const App = (props) => {
 
@@ -59,6 +60,7 @@ const App = (props) => {
                 <Route path="/mineros/:id" element={<ProtectedRoute><MineroDetails /></ProtectedRoute>} />
                 <Route path="/maquinas/" element={<ProtectedRoute><Maquinas /></ProtectedRoute>} />
                 <Route path="/importaciones" element={<ProtectedRoute><Importaciones /></ProtectedRoute>} />
+                <Route path="/importaciones/:id" element={<ProtectedRoute><DetailsImportation /></ProtectedRoute>} />
                 <Route path="/negocio" element={<ProtectedRoute><Negocio /></ProtectedRoute>} />
 
               </Route>
