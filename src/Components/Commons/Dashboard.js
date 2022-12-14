@@ -61,7 +61,6 @@ function Dashboard() {
       hour: '2-digit',
       minute: '2-digit',
     });
-
     var currentDate = currenDay + " " + date.getDate() + " de " + month + " del " + date.getFullYear() + " , " + withPmAm;
     return (currentDate)
   }
@@ -73,7 +72,6 @@ function Dashboard() {
             * en la siguiente consulta
            */
     const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
-
     /**mandamos el header de nuestra consulta */
     const options = {
       method: 'GET',
@@ -82,7 +80,6 @@ function Dashboard() {
         'token': token
       },
     }
-
     const getTickets = async () => {
       try {
         const res = await fetch(TICKETS, options),
@@ -97,7 +94,6 @@ function Dashboard() {
         console.log(error);
       }
     }
-
     getTickets()
 
     const getImportaciones = async () => {
@@ -112,7 +108,6 @@ function Dashboard() {
           'token': token
         },
       }
-
       try {
         const res = await fetch(IMPORTACIONES, options),
           json = await res.json()
@@ -124,11 +119,9 @@ function Dashboard() {
       } catch (error) {
         console.log(error);
       }
-
     }
 
     getImportaciones()
-
     const getOperations = async () => {
       /** Obtenemos los valores que guardamos en el token para poder utilizarlos
         * en la siguiente consulta
@@ -152,11 +145,9 @@ function Dashboard() {
         console.log(error);
       }
     }
-
     getOperations()
 
     const getDollar = async () => {
-
       /**mandamos el header de nuestra consulta */
       const options = {
         method: 'GET',
@@ -171,22 +162,23 @@ function Dashboard() {
         console.log(error);
       }
     }
-
     getDollar()
-
-
   }, []);
 
-  const sortByDate = dataList ? dataList?.sort((a, b) => { return new Date(b.created_at) - new Date(a.created_at) }) : ''
-
-  const formatedDataShortTciket = formatNowShoertTciket(sortByDate)
-
-
+  /**sort by date ticketlist */
+  dataList && dataList.sort((a, b) => { return new Date(b.created_at) - new Date(a.created_at) })
+  /**shortlist ticket */
+  const formatedDataShortTciket = dataList ? formatNowShoertTciket(dataList.slice(0, 5)) : ''
+  /**sort by date importacion list */
+  shortImportaciones && shortImportaciones.sort((a, b) => { return new Date(b.created_at) - new Date(a.created_at) })
+  /**short list importaciones */
   const datashorimp = formatImpShort(shortImportaciones.slice(0, 5))
+  /**sort by date operations */
+  dataOperations && dataOperations.sort((a, b) => { return new Date(b.created) - new Date(a.created) })
+  /**short list operations */
   const operations = (formatedShortOp(dataOperations.slice(0, 5)))
 
   const actualDate = new Date().getHours()
-
   const dataCoin = formatedCoins(coins)
 
   const coinheader = {
@@ -199,8 +191,6 @@ function Dashboard() {
     volume: "volume",
     updated: "Updated"
   }
-
-
 
   return (
     <>

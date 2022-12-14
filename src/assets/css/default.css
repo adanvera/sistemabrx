@@ -1039,7 +1039,7 @@ div#_btnEdittkt {
 .tithis {
     font-size: 14px;
     font-weight: 400;
-    color:white;
+    color: white;
 }
 
 .colorfont {
@@ -1275,7 +1275,7 @@ input.inputshow.client {
     color: white !important;
 }
 
-table.table-list.table.mt-2 tr.table-header th.al .is-inline-flex a{
+table.table-list.table.mt-2 tr.table-header th.al .is-inline-flex a {
     color: white !important;
 }
 
@@ -1297,6 +1297,16 @@ table.table-list.table.mt-2 tr.table-header th.al .is-inline-flex a{
     padding-top: 10px;
 }
 
-.offtxt{
+.offtxt {
     color: blue;
+}
+
+.box-container-data {
+    padding-top: 0px;
+}
+
+h4.resumen.operations {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    text-align: center;
 }

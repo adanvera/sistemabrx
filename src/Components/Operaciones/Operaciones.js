@@ -6,7 +6,9 @@ import ModalContainer from "../Commons/ModalContainer";
 import SearchTable from "../Commons/SearchTable";
 import Select from "../Commons/Select";
 import Table from "../Commons/Table/Table";
+import { filteredDataOperations, formatedOperationsData } from "../Helpers/formats";
 import { OPERATION_PROD, OPERATION_TEST } from "../Helpers/helper";
+import FilterOperations from "./FilterOperations";
 import InfoCliente from "./InfoCliente";
 import OperationsData from "./OperationsData";
 
@@ -30,14 +32,18 @@ const Operaciones = () => {
             comision: 'Comision',
             tipoOperaciones: 'Tipo operacion',
             tipoMoneda: 'Moneda',
-            actions:'Acciones'
+            fecha: 'Fecha Operacion',
         },
         filtros: {
             name: '',
+            desde: '',
+            hasta: '',
         },
     }
 
-    const [state, setSate] = useState(initialState)
+   
+
+    const [state, setState] = useState(initialState)
     const [dataList, setDataList] = useState('')
 
     /*Aca obtenemos todas las operaciones*/
@@ -62,7 +68,7 @@ const Operaciones = () => {
                 const res = await fetch(OPERATION_PROD, options),
                     json = await res.json()
                 /**seteamos loading */
-                json.map(op => delete op.created)
+                // json.map(op => delete op.created)
                 setIsLoaded(true);
                 /**seteamos el listado de tickets */
                 setDataList(json);
@@ -75,10 +81,36 @@ const Operaciones = () => {
 
         getOperations()
 
-        //modificamos datalist
-
-
     }, []);
+
+    console.log(dataList);
+    const formatedData = formatedOperationsData(dataList)
+
+    //funcion para limpiar los valores de las variables a utilizar
+    const onCleanFilter = (data) => {
+        setState((prevState) => {
+            return {
+                ...prevState,
+                filtros: {
+                    ...data,
+                }
+            }
+        })
+    }
+
+    //funcion para setear y pasar que filtro se selecciono
+    const handleFilter = (data) => {
+
+        setState((prevState) => {
+            return {
+                ...prevState,
+                filtros: {
+                    ...prevState.filtros,
+                    [data.key]: data.value
+                }
+            }
+        })
+    }
 
     return (
         <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
@@ -89,7 +121,9 @@ const Operaciones = () => {
                         <div className="box-container-data">
                             <Row className="is-3 text-al-ini titlemodule">
                                 <Col md={12} >
-                                    <h5 className="title-details ml-5 pt-3 ">Operaciones</h5>
+                                    <Row >
+                                        <h4 className='resumen operations'>Operaciones</h4>
+                                    </Row>
                                     <InfoCliente />
                                 </Col>
                             </Row>
@@ -100,16 +134,14 @@ const Operaciones = () => {
                     </Col>
                     {/* Tabla en donde se obtiene todas las operaciones */}
                     <Col md={8} className="operations">
-                        <Row className={"ml-6 pt-5"}>
-                        </Row>
-                        <Row>
-                            <Col md={12} className={"ml-5 pt-3"}>
-                                <SearchTable
-                                    placeholder='Buscar operaciones...'
-                                />
-                            </Col>
-                        </Row>
-                        <Table link='/operaciones/' headers={state?.headers} data={dataList} exportdata={true} title="Operaciones" />
+                        <Row className=" is-3 text-al-ini titlemodule"><h5 className="title-details ml-5 pt-3">Listado de operaciones</h5></Row>
+                        <FilterOperations onCleanFilter={onCleanFilter} getFilter={handleFilter} />
+
+                        <Table link='/operaciones/' headers={state?.headers} data={filteredDataOperations(formatedData, state?.filtros)} exportdata={true} title="Operaciones" />
+
+                        {/* <Table link='/operaciones/' headers={state?.headers} data={dataList} exportdata={true} title="Operaciones" /> */}
+
+
                     </Col>
                 </Row>
                 {modal && (

@@ -33,17 +33,15 @@ export default function TableRow(props) {
 
     return (
 
-        <tr key={data?.id_ticket ? data?.id_ticket : data?.id_cliente ? data?.id_operaion : data?.id_ticket } className={data?.id_ticket ? "rowtable clickeable" : "rowtable"} onClick={e => clickedItem(e)} >
-            {Object.keys(data).filter((col => col !== 'created_at_filter' && col !== 'id_role' && col !== 'created_at_user' && col !== 'id' && col !== 'id_user' && col !== "id_machine")).map(col => {
-               
-               console.log(data.id)
-               return (
+        <tr key={data?.id_ticket ? data?.id_ticket : data?.id_cliente ? data?.id_operaion : data?.id_ticket} className={data?.id_ticket ? "rowtable clickeable" : "rowtable"} onClick={e => clickedItem(e)} >
+            {Object.keys(data).filter((col => col !== 'created_at_filter' && col !== 'created' && col !== 'id_role' && col !== 'created_at_user' && col !== 'id' && col !== 'id_user' && col !== "id_machine")).map(col => {
+                return (
                     <Fragment key={col}>
                         {
-                            
+
                             col === 'actions' ?
 
-                            
+
                                 <td>
                                     {
                                         pathname === '/operaciones' && <OperationsActions dataID={data?.id_operacion} />
@@ -56,7 +54,7 @@ export default function TableRow(props) {
                                         pathname === '/seguridad' && <RoleActions dataID={data?.id_role} />
                                     }
                                     {
-                                        pathname === '/maquinas' && <MaquinasActions dataID={data?.id} />   
+                                        pathname === '/maquinas' && <MaquinasActions dataID={data?.id} />
                                     }
                                 </td>
                                 : col === "icon" ?
