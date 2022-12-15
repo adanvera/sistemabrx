@@ -90,6 +90,8 @@ function Importaciones() {
 
     getImportaciones()
 
+    setModalStatus(false)
+
   }, [])
 
 

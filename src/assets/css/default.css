@@ -1348,3 +1348,14 @@ span.days.counting {
 select#clientimp {
     text-transform: capitalize;
 }
+
+.Box-article.col {
+    border: 1px solid #E5E7EB;
+    height: 100%;
+    border-radius: 8px;
+    padding-left: 20px;
+}
+
+.headtiket.imp.d-flex.col {
+    text-transform: none;
+}
