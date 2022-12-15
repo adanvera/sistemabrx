@@ -272,7 +272,7 @@ const ClienteForm = (props) => {
                 <Form.Control.Feedback type="invalid">Escribir número de celular</Form.Control.Feedback>
               </Form.Group>
             </Row>
-            {/* <Row className="mb-3" >
+            <Row className="mb-3" >
                 <Form.Group as={Col} md="12" controlId="validationmail">
                   <Form.Label>Correo electrónico</Form.Label>
                   <Form.Control
@@ -283,7 +283,7 @@ const ClienteForm = (props) => {
                     onChange={(e) => handleChange(e)} />
                   <Form.Control.Feedback type="invalid">Escribir correo electrónico válido</Form.Control.Feedback>
                 </Form.Group>
-              </Row> */}
+              </Row> *
             <Row className="mb-3" >
               <Form.Group as={Col} md="12" controlId="validationmail">
                 <Form.Label>Dirección</Form.Label>
