@@ -1,4 +1,4 @@
-import { Fragment, useContext, useState } from "react"
+import { Fragment, useContext, useEffect, useState } from "react"
 import { Button, Col, FloatingLabel, Form, Row } from "react-bootstrap"
 import { DataContext } from "../Commons/Context/DataContext"
 const BTC_COTIZACION = 0.00005
@@ -37,9 +37,18 @@ const OperationsData = () => {
         console.log('Hice click');
         //calculamos el totalAMoun
         updateTotalAMount(amount, comision)
+        
+        //llamamos al api en caso de que la moneda sea BTC
         let amountBTC = 0;
         if (currentCurrency === '1') {
-            amountBTC = totalAmount * BTC_COTIZACION
+            const req = await fetch(`https://blockchain.info/tobtc?currency=USD&value=${totalAmount}`),
+                res = await req.json()
+                console.log("res ->>>>>>>>",req);
+                if(req.ok){
+                    amountBTC = res
+                }else{ //en caso de que la API explote ponemos valor por defecto
+                    amountBTC = totalAmount * BTC_COTIZACION
+                }
         } else {
             setTypeCurrency(currentCurrency)
             amountBTC = totalAmount
@@ -82,6 +91,7 @@ const OperationsData = () => {
         setTotalAmount(amountCommission + Number(amount))
     }
 
+    
     return (
         <Fragment>
           
