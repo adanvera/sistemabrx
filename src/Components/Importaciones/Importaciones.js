@@ -32,7 +32,7 @@ function Importaciones() {
     },
     filtros: {
       id_cliente: '',
-      empresa_envio:'' ,
+      empresa_envio: '',
       estado: '',
       desde: '',
       hasta: '',

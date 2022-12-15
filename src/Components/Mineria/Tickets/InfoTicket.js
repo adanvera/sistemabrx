@@ -100,7 +100,7 @@ const InfoTicket = (props) => {
             try {
                 const res = await fetch(TICKETS + id_ticket, options),
                     json = await res.json();
-                    window.location.reload()
+                window.location.reload()
             } catch (error) {
                 console.log(error.msg);
             }
@@ -109,8 +109,6 @@ const InfoTicket = (props) => {
         editTciket()
 
     }
-
-    console.log(data);
 
     return (
         <div className='d-flex'>
