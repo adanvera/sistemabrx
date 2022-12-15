@@ -99,7 +99,7 @@ const InfoCliente = () => {
                 <Col>
                     <div className='datashow'>
                         <label className='labeltk client' >Nro documento</label>
-                        <input className='inputshow client' required value={data.nroDocumento} name='nroDocumento' enabled onChange={(e) => handleChange(e)} onKeyPress={(e) => handleKeyPress(e)} />
+                        <input className='inputshow client' required value={data.nroDocumento} name='nroDocumento'  onChange={(e) => handleChange(e)} onKeyPress={(e) => handleKeyPress(e)} />
                     </div>
                 </Col>
             </Row>
