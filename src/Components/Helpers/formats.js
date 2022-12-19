@@ -437,7 +437,6 @@ export const formmrmr = (data) => {
     return obData
 }
 
-
 export const formatComments = (data) => {
     let obData = {}
 
@@ -786,4 +785,87 @@ export const filteredDataImportations = (dataList, filter) => {
 
 }
 
+export const gastosFormated = (data) => {
+    let obData = {}
+
+    if (data) {
+        data?.map(item => {
+            obData = {
+                ...obData,
+                [item?.id_gasto]: {
+                    id_gasto: item?.id_gasto,
+                    description: item?.description,
+                    amount: formatNumber(item?.amount),
+                    type: item?.type,
+                    created_at: formatoDate(item?.created_at),
+                    updated_at: formatoDate(item?.updated_at),
+                    actions: 'x x',
+                }
+            }
+        })
+    }
+
+    return obData
+}
+
+export const formatNumber = (number) => {
+    return new Intl.NumberFormat("de-DE").format(number) + ' PYG'
+}
+
+/**
+ * @param dataList Lista de Objetos con datos a ser filtrados
+ * @param filter Objeto con los filtros que debe ser iterado y filtrado el dataList
+* */
+export const filteredDataGastos = (dataList, filter) => {
+    /**
+     * Se asigna a la variables @filteredData para poder ir modificando
+     * */
+    let filteredData = dataList;
+
+    /**
+     * Se elimina los filtros vacios del objeto
+     * Dejando un objeto solo con los atributos con valores asignados.
+     * */
+    for (let key in filter) {
+        if (filter[key] === '') {
+            delete filter[key]
+        }
+    }
+
+    Object.keys(filter).forEach(filtro => {
+        /**
+         * Si el Filtro es distinta al valor TODAS procedera a filtrar, ya que TODAS implica que debe devolver el objeto
+         * tal cual se mando inicialmente
+         * */
+        (filter[filtro] !== 'TODAS') && (
+            filteredData =
+            // se obtiene array de keys para poder iterar el objeto
+            Object.keys(filteredData)
+                // Se verifica si el objeto del vendedor cumple con el filtro seleccionado
+                .filter(item => {
+
+                    if (filtro === 'hasta') {
+                        const fechaGasto = new Date(filteredData[item].created_at)
+                        const fechaFiltro = filter[filtro]
+                        return fechaGasto.toISOString().substring(0, 10) <= fechaFiltro.toISOString().substring(0, 10)
+                    }
+
+                    if (filtro === 'desde') {
+                        const fechaGasto = new Date(filteredData[item].created_at)
+                        const fechaFiltro = filter[filtro]
+                        return fechaGasto.toISOString().substring(0, 10) >= fechaFiltro.toISOString().substring(0, 10)
+                    }
+
+                    return (filteredData[item][filtro].toLowerCase().includes(filter[filtro].toLowerCase()))
+                })
+                // se devuelve el objeto del vendedor que cumplio con el filtro
+                .map(id => filteredData[id])
+        )
+
+    })
+
+    // Finalmente se retorna los datos filtrados
+    return filteredData
+
+}
 

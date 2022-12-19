@@ -116,9 +116,6 @@ const Mineria = props => {
 
     }, [])
 
-
-    console.log(coins);
-
     /** funcion onchange para seteo de form */
     const handleModalForm = (form) => {
         setModalStatus(true)

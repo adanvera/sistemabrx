@@ -20,6 +20,7 @@ const IMPORTACIONES = "https://backend.brxsgo.com/api/importaciones/"
 const DOLLAR_API = "https://dolar.melizeche.com/api/1.0/"
 const USER_SUMMARY_ONE = "https://backend.brxsgo.com/api/user/get/summary/"
 const PROVEEDORES = "https://backend.brxsgo.com/api/proveedores/"
+const GASTOS = "http://localhost:4000/api/gastos/"
 
 /**exportamos nuestras declaraciones de valores
  * para poder utilizarlas en donde se requieran
@@ -45,5 +46,6 @@ export {
     IMPORTACIONES,
     DOLLAR_API,
     USER_SUMMARY_ONE,
-    PROVEEDORES
+    PROVEEDORES,
+    GASTOS
 }

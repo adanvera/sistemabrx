@@ -25,7 +25,7 @@ const DetailsImportation = (props) => {
 
     const [state, setState] = useState(initialState)
 
-    
+
     useEffect(() => {
         const token = localStorage.getItem('token')
         const options = {
@@ -64,7 +64,10 @@ const DetailsImportation = (props) => {
         }
     };
 
-    const comments = dataToUse ? JSON.parse(dataToUse?.comentario_importacion) : ''
+    const commetsToShow = dataToUse ? "[" + dataToUse?.comentario_importacion + "]" : ''
+    const comments = dataToUse ? JSON.parse(commetsToShow) : ''
+
+
 
     const handleSubmitDelete = (e) => {
         const id_importacion = dataidrow ? dataidrow : ''
@@ -134,7 +137,7 @@ const DetailsImportation = (props) => {
                             <Col><div className='colorlink ticketsdetails'> <Link to="/importaciones">{"< Importaciones"}</Link> </div></Col>
                             <Col className='headtiket imp d-flex'>
                                 <div>
-                                    <h4>Datos de la importación - {dataToUse?.tracking_number} </h4>
+                                    <h4>{dataToUse?.tracking_number} </h4>
                                 </div>
 
                                 <div className='text-end clipboard' onClick={() => copyToClipBoard(dataToUse?.tracking_number)} >

@@ -27,6 +27,7 @@ import Importaciones from './Components/Importaciones/Importaciones';
 import Negocio from './Components/Negocio/Negocio';
 import Maquinas from './Components/Mineria/Maquinas/Maquinas';
 import DetailsImportation from './Components/Importaciones/DetailsImportation';
+import Gastos from './Components/Negocio/Gastos/Gastos';
 
 const App = (props) => {
 
@@ -62,6 +63,7 @@ const App = (props) => {
                 <Route path="/importaciones" element={<ProtectedRoute><Importaciones /></ProtectedRoute>} />
                 <Route path="/importaciones/:id" element={<ProtectedRoute><DetailsImportation /></ProtectedRoute>} />
                 <Route path="/negocio" element={<ProtectedRoute><Negocio /></ProtectedRoute>} />
+                <Route path="/gastos" element={<ProtectedRoute><Gastos /></ProtectedRoute>} />
 
               </Route>
               <Route>

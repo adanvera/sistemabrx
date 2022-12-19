@@ -3,10 +3,11 @@ import { useEffect } from 'react'
 import { useReducer } from 'react'
 import { Button, Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 import { DataContext } from '../../Commons/Context/DataContext'
-import { USER, ROLES, ASSIGNROLE, USER_PSW, CLIENT, IMPORTACIONES, MACHINES_API, PROVEEDORES } from '../../Helpers/helper'
+import { USER, ROLES, ASSIGNROLE, USER_PSW, CLIENT, IMPORTACIONES, MACHINES_API, PROVEEDORES, MACHINES } from '../../Helpers/helper'
 import { PuffLoader } from 'react-spinners';
 import DatePicker from 'react-date-picker'
 import Select from 'react-select';
+import { toast } from 'react-hot-toast'
 
 
 const ImpForms = (props) => {
@@ -107,17 +108,18 @@ const ImpForms = (props) => {
 
         }
 
-        const gettingAllMachines = async () => {
+        const getMachines = async () => {
             try {
-                const res = await fetch(MACHINES_API, apiOptions),
+                const res = await fetch(MACHINES, options),
                     json = await res.json()
+                /**seteamos loading */
                 setExternalData(json)
             } catch (error) {
                 console.log(error);
             }
         }
 
-        gettingAllMachines()
+        getMachines()
 
         const provedorOptions = {
             method: 'GET',
@@ -225,6 +227,8 @@ const ImpForms = (props) => {
             return { ...updatedValues };
         });
     }
+
+
 
     if (modalType === 'Add') {
         return (<Fragment>

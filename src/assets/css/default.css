@@ -1025,7 +1025,9 @@ div#_btnEdittkt {
 }
 
 .fw-bold {
-    font-weight: 700 !important;
+    font-weight: 600 !important;
+    font-size: 12px;
+    color: rgba(0, 143, 143, 1);
 }
 
 .card-body.p-4 {
@@ -1351,11 +1353,69 @@ select#clientimp {
 
 .Box-article.col {
     border: 1px solid #E5E7EB;
-    height: 100%;
+    height: auto;
     border-radius: 8px;
     padding-left: 20px;
 }
 
 .headtiket.imp.d-flex.col {
     text-transform: none;
+}
+
+.iconimpr.col-md-1 {
+    font-size: 20px;
+    color: green;
+}
+
+.box-diff.col {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    height: 40px;
+    background: orange;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-radius: 8px;
+}
+
+.tdfe {
+    padding-top: 0.5rem;
+    font-weight: 800;
+}
+
+.card-body.dd {
+    border-top: 1px solid #D6D6D6;
+}
+
+.d-flex.flex-start {
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+}
+
+p#commentsection {
+    border-left: 1px solid #E5E7EB;
+    text-transform: capitalize;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+p.mb-0.styledate {
+    font-size: 12px;
+}
+
+.aend {
+    text-align: end;
+    color: blue;
+    font-size: 13px !important;
+    font-weight: 500;
+}
+
+.aend.col p:hover {
+    cursor: pointer;
+}
+
+select#changearticle {
+    border: 1px solid rgba(0, 143, 143, 1);
 }

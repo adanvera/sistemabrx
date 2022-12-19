@@ -68,8 +68,8 @@ const TicketTimeline = (props) => {
         try {
             const res = await fetch(TICKETS + idTicket, ticketOptions),
                 json = await res.json();
-                setState(initialState)
-                window.location.reload()
+            setState(initialState)
+            window.location.reload()
         } catch (error) {
             console.log(error.msg);
         }
@@ -113,7 +113,7 @@ const TicketTimeline = (props) => {
                                     style={{ height: '70px' }} />
                             </FloatingLabel>
                         </Row>
-                        <Row className='mt-3' >
+                        <Row className='mt-3 mb-3' >
                             <Col>
                                 {
                                     state.variables.comment &&
@@ -123,22 +123,23 @@ const TicketTimeline = (props) => {
                         </Row>
                     </Form>
                 }
-
                 {
                     clicked === 'comments' &&
                     Object.keys(comments).map((item => {
                         return (
-                            <div class="card-body p-4 mt-2">
+                            <div class="card-body dd">
                                 <div class="d-flex flex-start">
-                                    <div>
-                                        <h6 class="fw-bold mb-1">{comments[item]?.userdata}</h6>
-                                        <div class="d-flex align-items-center mb-3">
-                                            <p class="mb-0">{comments[item]?.comment_at}</p>
-                                            <a href="#!" class="link-muted"><i class="fas fa-pencil-alt ms-2"></i></a>
-                                            <a href="#!" class="link-muted"><i class="fas fa-redo-alt ms-2"></i></a>
-                                            <a href="#!" class="link-muted"><i class="fas fa-heart ms-2"></i></a>
+                                    <div className='d-flex'>
+                                        <div>
+                                            <h6 class="fw-bold">{comments[item]?.userdata}</h6>
+                                            <div class="d-flex align-items-center">
+                                                <p class="mb-0 styledate">{comments[item]?.comment_at}</p>
+                                                <a href="#!" class="link-muted"><i class="fas fa-pencil-alt ms-2"></i></a>
+                                                <a href="#!" class="link-muted"><i class="fas fa-redo-alt ms-2"></i></a>
+                                                <a href="#!" class="link-muted"><i class="fas fa-heart ms-2"></i></a>
+                                            </div>
                                         </div>
-                                        <p class="mb-0">
+                                        <p class="mb-0 pl-3 pt-3" id='commentsection'>
                                             {comments[item]?.comment}
                                         </p>
                                     </div>
