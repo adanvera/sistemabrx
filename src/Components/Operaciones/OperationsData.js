@@ -5,8 +5,8 @@ const BTC_COTIZACION = 0.00005
 
 const OperationsData = () => {
 
-    const [typesOperations, setTypesOperations] = useState([{ label: "Compra", value: 1 }, { label: "Venta", value: 0 }])
-    const currency = [{ label: "BTC", value: 1 }, { label: "USDT", value: 0 }]
+    const [typesOperations, setTypesOperations] = useState([{ label: "Seleccione", value: 2 },{ label: "Compra", value: 1 }, { label: "Venta", value: 0 }])
+    const currency = [{label: "Seleccione", value: 2},{ label: "BTC", value: 1 },{ label: "USDT", value: 0 }]
     const [comision, setComision] = useState(0)
     const [isLoaded, setIsLoaded] = useState(false);
     const { isBuying, setIsBuying, setModalStatus, typeCurrency, setTypeCurrency, setDataOperation, setIsSelling,showModalOperation,setShowModalOperation } = useContext(DataContext)
@@ -14,27 +14,47 @@ const OperationsData = () => {
     const [amount, setAmount] = useState(0)
     const [totalAmount, setTotalAmount] = useState(0)
     const [dataValidate, setDataVerify] = useState(false)
+    const [isTypeOperationSelected,setIsTypeOperationSelected]  = useState(false)
+    const [isTypeCurrencySelected,setIsTypeCurrencySelected]  = useState(false)
    
     const handleTypeChange = (e) => {
         const type = e.target.value;
         console.log("Cambiando");
         console.log(type);
         if (type === '1') {
+            setIsTypeOperationSelected(true)
             setIsBuying(true)
             setIsSelling(false)
-        } else {
+            return
+        } else if(type === '0'){
+            setIsTypeOperationSelected(true)
+
             setIsSelling(true)
             setIsBuying(false)
+            return
         }
+        setIsTypeOperationSelected(false)
+
     }
 
     const handleCurreyncyChange = (e) => {
-        setCurrentCurrency(e.target.value);
+        if(e.target.value === '2') {
+            setIsTypeCurrencySelected(false)
+        }else{
+            setIsTypeCurrencySelected(true)
+            setCurrentCurrency(e.target.value);
+
+        }
+            
+
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         console.log('Hice click');
+
+        if(isTypeOperationSelected === false)return alert("Seleccione el tipo de operacion")
+        if(isTypeCurrencySelected === false)return alert("Seleccione el tipo de moneda")
         //calculamos el totalAMoun
         updateTotalAMount(amount, comision)
         
