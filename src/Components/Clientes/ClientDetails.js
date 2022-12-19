@@ -89,11 +89,13 @@ function ClientDetails() {
 
         const getOperations = async () => {
             try {
-                const res = await fetch(OPERATION_PROD+id, options),
+                const res = await fetch(OPERATION_PROD+'extract/'+id, options),
                     json = await res.json()
                 /**seteamos loading */
-                json.map(op => delete op.created)
+                //json.map(op => delete op.created)
                 /**seteamos el listado de tickets */
+
+                
                 setDataOperations(json);
             } catch (error) {
                 //setError(error);
@@ -136,10 +138,12 @@ function ClientDetails() {
     const dataOperationsHeader = {
         id: 'Operacion ',
         cliente: "Cliente",
-        monto: 'Monto',
+        compra: 'Compra',
+        venta: 'Venta',
         comision: 'Comision',
-        tipoOperaciones: 'Tipo operacion',
         tipoMoneda: 'Moneda',
+        fecha:'Fecha',
+        
     }
 
     return (
