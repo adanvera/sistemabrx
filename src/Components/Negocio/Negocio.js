@@ -78,7 +78,7 @@ const Negocio = (props) => {
                         </div>
                     </Col>
 
-                    <Col md={4} onClick={() => navigate('/maquinas')} >
+                    <Col md={4} onClick={() => navigate('/reportes')} >
                         <div id="tkprev">
                             <div className='imgtkg'>
                                 <img src={reports} />
@@ -90,7 +90,7 @@ const Negocio = (props) => {
                         </div>
                     </Col>
 
-                    <Col md={4} onClick={() => navigate('/mineros')} >
+                    <Col md={4} onClick={() => navigate('/parametrizacioens')} >
                         <div id="tkprev">
                             <div className='imgtkg'>
                                 <img src={param} />
