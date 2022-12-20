@@ -1,30 +1,32 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Button, Col, Row } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { CLIENT } from '../Helpers/helper';
 
 const ClientInfo = (props) => {
-    
+    const navigate = useNavigate()
+
     const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
     const { data } = props
     const [isEditable, setIsEditable] = useState(false)
-    
-    const [changed, setChanged] = useState(false)
-    const [state,setState] = useState(data)
 
-    if(state === ''  && data !== ''){
+    const [changed, setChanged] = useState(false)
+    const [state, setState] = useState(data)
+
+    if (state === '' && data !== '') {
         setState(data
-            )
+        )
     }
-    
+
     const handleChange = (e) => {
 
         setState(prevState => {
             const updatedValues = {
                 ...prevState,
-                
-                    
-                    [e.target.name]: e.target.value,
-                
+
+
+                [e.target.name]: e.target.value,
+
             }
             setIsEditable(true)
             setChanged(true)
@@ -32,7 +34,7 @@ const ClientInfo = (props) => {
         });
     }
     //todo mejorar la UI
-    const handleSubmit = async ()=>{
+    const handleSubmit = async () => {
         console.log(`Estoy con estos dato s>>>>`);
         const options = {
             method: 'PUT',
@@ -40,26 +42,53 @@ const ClientInfo = (props) => {
                 'content-type': 'application/json',
                 'token': token
             },
-            body:JSON.stringify(state)
+            body: JSON.stringify(state)
         }
         console.log(JSON.stringify(state));
         try {
-            const req = await fetch(CLIENT+state.id_client,options),
-                    res = await req.json()
-            if(req.ok){
+            const req = await fetch(CLIENT + state.id_client, options),
+                res = await req.json()
+            if (req.ok) {
                 console.log("Actualizacion correcta");
-                setTimeout(()=>{
+                setTimeout(() => {
                     window.location.reload()
-                },300) 
+                }, 300)
             }
             alert(res.msg)
         } catch (error) {
             console.log(error);
             alert(error)
-            
+
         }
     }
 
+    const handleUserDelete = async () => {
+        const options = {
+            method: 'DELETE',
+            headers: {
+                'content-type': 'application/json',
+                'token': token
+            },
+            body: JSON.stringify(state)
+        }
+        console.log(JSON.stringify(state));
+        try {
+            const req = await fetch(CLIENT + state.id_client, options),
+                res = await req.json()
+            if (req.ok) {
+                console.log("Eliminado correctamente");
+                setTimeout(() => {
+                   navigate('/clientes')     
+                }, 300)
+            }
+            alert(res.msg)
+        } catch (error) {
+            console.log(error);
+            alert(error)
+
+        }
+
+    }    
 
     return (
         <div className='d-flex'>
@@ -79,7 +108,7 @@ const ClientInfo = (props) => {
                                     <input className='inputshow'
                                         value={state.name}
                                         name="name"
-                                        onChange={(e)=> handleChange(e)}
+                                        onChange={(e) => handleChange(e)}
                                     />
                                 </div>
                             </Col>
@@ -90,7 +119,7 @@ const ClientInfo = (props) => {
                                         value={state.last_name}
                                         disabled={isEditable === true ? false : true}
                                         name='last_name'
-                                        onChange={(e)=> handleChange(e)}
+                                        onChange={(e) => handleChange(e)}
                                     />
                                 </div>
                             </Col>
@@ -98,11 +127,11 @@ const ClientInfo = (props) => {
                                 <div className='datashow'>
                                     <label className='labeltk' >Direccion</label>
 
-                                    <input className='inputshow' 
-                                        value={state.address} 
-                                        name = "address"
-                                        disabled={isEditable === true ? false : true} 
-                                        onChange={(e)=> handleChange(e)}/>
+                                    <input className='inputshow'
+                                        value={state.address}
+                                        name="address"
+                                        disabled={isEditable === true ? false : true}
+                                        onChange={(e) => handleChange(e)} />
                                 </div>
                             </Col>
                         </Row>
@@ -110,51 +139,65 @@ const ClientInfo = (props) => {
                             <Col>
                                 <div className='datashow'>
                                     <label className='labeltk' >Documento</label>
-                                    <input className='inputshow' 
-                                    value={state.document} 
-                                    name = "document"
-                                    disabled={isEditable === true ? false : true} 
-                                    onChange={(e)=> handleChange(e)}/>
+                                    <input className='inputshow'
+                                        value={state.document}
+                                        name="document"
+                                        disabled={isEditable === true ? false : true}
+                                        onChange={(e) => handleChange(e)} />
                                 </div>
                             </Col>
                             <Col>
                                 <div className='datashow'>
                                     <label className='labeltk'>Telefono</label>
 
-                                    <input className='inputshow' 
-                                    name='phone'
-                                    value={state.phone} 
-                                    disabled={isEditable === true ? false : true}
-                                    onChange={(e)=> handleChange(e)} />
+                                    <input className='inputshow'
+                                        name='phone'
+                                        value={state.phone}
+                                        disabled={isEditable === true ? false : true}
+                                        onChange={(e) => handleChange(e)} />
                                 </div>
                             </Col>
                             <Col>
                                 <div className='datashow'>
                                     <label className='labeltk'>Correo</label>
 
-                                    <input className='inputshow' 
-                                    name='email'
-                                    value={state.email} 
-                                    disabled={isEditable === true ? false : true} 
-                                    onChange={(e)=> handleChange(e)}/>
+                                    <input className='inputshow'
+                                        name='email'
+                                        value={state.email}
+                                        disabled={isEditable === true ? false : true}
+                                        onChange={(e) => handleChange(e)} />
                                 </div>
                             </Col>
                             {
-                        changed === true &&
-                        <Row className='dfasfd mt-3'>
-                            <Col id='creatdfe'>
-                                <Button type="submit" onClick={handleSubmit}>Guardar cambios</Button>
-                            </Col>
-                        </Row>
-                    }
+                                changed === true &&
+                                <Row className='dfasfd mt-3'>
+                                    <Col id='creatdfe'>
+                                        <Button type="submit" onClick={handleSubmit}>Guardar cambios</Button>
+                                    </Col>
+                                </Row>
+                            }
 
                         </Row>
 
                     </Col>
                     <Col md={3}>
-
+                    <div className='tiktop'>
+                <Col className='headtiket d-flex'>
+                    <div>
+                        <h6>Acciones</h6>
+                    </div>
+                </Col>
+                <div className="actionstwo d-grid mt-3">
+                    <div className="delete-btn tkt d-flex" id='_btnDeletetkt' onClick={() => handleUserDelete()} >
+                        <span>Eliminar cliente </span>
+                        <div>
+                            <ion-icon name="trash-outline"></ion-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
                     </Col>
-                    
+
                 </>
             }
         </div>
