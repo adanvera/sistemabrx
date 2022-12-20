@@ -99,13 +99,13 @@ const ClientInfo = (props) => {
                             <Col>
                                 <div className='datashow'>
                                     <label className='labeltk' >Codigo</label>
-                                    <input className='inputshow' value={state.id_client} disabled />
+                                    <input className='form-control ' value={state.id_client} disabled />
                                 </div>
                             </Col>
                             <Col>
                                 <div className='datashow'>
                                     <label className='labeltk'>Nombre</label>
-                                    <input className='inputshow'
+                                    <input className='form-control '
                                         value={state.name}
                                         name="name"
                                         onChange={(e) => handleChange(e)}
@@ -115,9 +115,9 @@ const ClientInfo = (props) => {
                             <Col>
                                 <div className='datashow'>
                                     <label className='labeltk'>Apellido</label>
-                                    <input className='inputshow'
+                                    <input className='form-control'
                                         value={state.last_name}
-                                        disabled={isEditable === true ? false : true}
+                                       /*  disabled={isEditable === true ? false : true} */
                                         name='last_name'
                                         onChange={(e) => handleChange(e)}
                                     />
@@ -125,35 +125,25 @@ const ClientInfo = (props) => {
                             </Col>
                             <Col>
                                 <div className='datashow'>
-                                    <label className='labeltk' >Direccion</label>
-
-                                    <input className='inputshow'
-                                        value={state.address}
-                                        name="address"
-                                        disabled={isEditable === true ? false : true}
-                                        onChange={(e) => handleChange(e)} />
-                                </div>
-                            </Col>
-                        </Row>
-                        <Row className='mt-3'>
-                            <Col>
-                                <div className='datashow'>
                                     <label className='labeltk' >Documento</label>
-                                    <input className='inputshow'
+                                    <input className='form-control'
                                         value={state.document}
                                         name="document"
-                                        disabled={isEditable === true ? false : true}
+                                        /* disabled={isEditable === true ? false : true} */
                                         onChange={(e) => handleChange(e)} />
                                 </div>
                             </Col>
-                            <Col>
+                           
+                        </Row>
+                        <Row className='mt-3'>
+                        <Col>
                                 <div className='datashow'>
-                                    <label className='labeltk'>Telefono</label>
+                                    <label className='labeltk' >Direccion</label>
 
-                                    <input className='inputshow'
-                                        name='phone'
-                                        value={state.phone}
-                                        disabled={isEditable === true ? false : true}
+                                    <input className='form-control'
+                                        value={state.address}
+                                        name="address"
+                                        /* disabled={isEditable === true ? false : true} */
                                         onChange={(e) => handleChange(e)} />
                                 </div>
                             </Col>
@@ -161,16 +151,27 @@ const ClientInfo = (props) => {
                                 <div className='datashow'>
                                     <label className='labeltk'>Correo</label>
 
-                                    <input className='inputshow'
+                                    <input className='form-control'
                                         name='email'
                                         value={state.email}
-                                        disabled={isEditable === true ? false : true}
+                                        /* disabled={isEditable === true ? false : true} */
+                                        onChange={(e) => handleChange(e)} />
+                                </div>
+                            </Col>
+                            <Col>
+                                <div className='datashow'>
+                                    <label className='labeltk'>Telefono</label>
+
+                                    <input className='form-control'
+                                        name='phone'
+                                        value={state.phone}
+                                        /* disabled={isEditable === true ? false : true} */
                                         onChange={(e) => handleChange(e)} />
                                 </div>
                             </Col>
                             {
                                 changed === true &&
-                                <Row className='dfasfd mt-3'>
+                                <Row className=' mt-3'>
                                     <Col id='creatdfe'>
                                         <Button type="submit" onClick={handleSubmit}>Guardar cambios</Button>
                                     </Col>

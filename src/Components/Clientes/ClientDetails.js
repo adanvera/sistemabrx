@@ -1,10 +1,12 @@
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import React, { useContext, useEffect, useState } from 'react'
-import { Col, Container, Form, Nav, Row } from 'react-bootstrap'
+import { Button, Col, Container, Form, Nav, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom';
 import { DataContext } from '../Commons/Context/DataContext';
 import Table from '../Commons/Table/Table';
 import { CLIENT, MINING_SUMMARY, OPERATION_PROD } from '../Helpers/helper';
 import ClientInfo from './ClientInfo';
+import DocuPDF from './Pdf/DocuPDF';
 
 function ClientDetails() {
     const { id } = useParams();
@@ -185,6 +187,16 @@ function ClientDetails() {
         
         
     }
+    const PdfExtract = () => (
+   
+        <PDFDownloadLink
+          document={<DocuPDF operations={dataOperations} cliente = {clientData}/>}
+          fileName="extracto.pdf"
+        >
+          <Button variant="info">Descargar PDF</Button>
+        </PDFDownloadLink>
+      
+    );
 
     return (
         <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
@@ -242,11 +254,12 @@ function ClientDetails() {
                                                 />
                                             </Form.Group>
                                         </div>
-                                        <div className='col-2 mt-4'>
+                                        <div className='col-2 mt-3 delete-btn tkt d-flex'>
 
                                             <input type = "button" value='Filtrar' onClick={()=>handleFilterDateOperations()}/>
 
                                         </div>
+                                        {dataOperations !== ''?<PdfExtract/>:''}
                                     </div>
                                 ) : ''
                         }

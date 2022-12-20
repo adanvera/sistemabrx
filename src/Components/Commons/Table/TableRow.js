@@ -59,9 +59,9 @@ export default function TableRow(props) {
                                         <td className="icontk">{veifyData(data[col], col)}</td>
                                         :
                                         col === "compra" ?
-                                            <td className="compra"><strong>{(data[col])}</strong> USD</td> :
+                                            <td className="compra"><strong>{(data[col])}</strong></td> :
                                             col === "venta" ?
-                                                <td className="venta"><strong>{(data[col])}</strong> USD</td> : <td>{(data[col])}</td>
+                                                <td className="venta"><strong>{(data[col])}</strong></td> : <td>{(data[col])}</td>
                             }
                         </Fragment>
                     )
