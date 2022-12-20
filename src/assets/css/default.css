@@ -1030,7 +1030,7 @@ div#_btnEdittkt {
     color: rgba(0, 143, 143, 1);
 }
 
-.card-body.p-4 {
+.card-body.p-2 {
     border-top: 1px solid #D6D6D6;
 }
 
@@ -1428,4 +1428,25 @@ td.compra {
 td.venta {
     background: #efefef;
     border: 1px solid #D6D6D6;
+}
+
+.mt-2.row {
+    padding: 12px;
+}
+
+.mt-2.row textarea.txttt.form-control {
+    min-height: 100px;
+    height: auto;
+}
+
+div#historiaal {
+    padding-left: 10px;
+    border-left: 1px solid rgba(0, 143, 143, 1);
+    margin-left: 10px;
+    padding-top: 10px;
+}
+
+.cerradooo{
+    background-color: rgb(84, 203, 84)!important;
+    color: white;
 }

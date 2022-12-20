@@ -150,10 +150,6 @@ function DetailsTicket() {
     const { modalstatus, setModalStatus } = useContext(DataContext)
     const modal = modalstatus
 
-    if (modalType === 'delete') {
-
-    }
-
     return (
         <div className={sidebarStatus === 'open' ? 'main-content-tkt' : 'main-content-tkt extend'} >
             {modal && (
@@ -191,7 +187,7 @@ function DetailsTicket() {
             </Row>
             <Row className='mt-3'>
                 <Col md={9}>
-                    <TicketTimeline data={comments} dataToSend={dataToUse?.ticket_comments} idTicket={id} historial={historial} />
+                    <TicketTimeline data={comments} dataToSend={dataToUse?.ticket_comments} idTicket={id} historial={historial}  id_machine={dataToUse?.id_machine}/>
                 </Col>
             </Row>
         </div>

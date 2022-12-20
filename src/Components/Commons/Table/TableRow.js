@@ -13,6 +13,8 @@ export default function TableRow(props) {
     const { pathname } = useLocation();
     const navigate = useNavigate();
 
+    console.log(pathname);
+
     const clickedItem = (e) => {
         e.preventDefault()
         if ((props?.link) && (pathname === '/tickets')) {
@@ -44,8 +46,6 @@ export default function TableRow(props) {
                     return (
 
                         <Fragment key={col}>
-                            {console.log(data[col])}
-                            {console.log(col)}
                             {
                                 col === 'actions' ?
                                     <td>
