@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Col, Container, Nav, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom';
+import { DataContext } from '../Commons/Context/DataContext';
 import Table from '../Commons/Table/Table';
 import { CLIENT, MINING_SUMMARY, OPERATION_PROD } from '../Helpers/helper';
 import ClientInfo from './ClientInfo';
@@ -34,6 +35,7 @@ function ClientDetails() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [miningData, setMiningData] = useState('')
     const [dataOperations, setDataOperations] = useState('')
+    const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
 
     useEffect(() => {
 
@@ -147,7 +149,7 @@ function ClientDetails() {
     }
 
     return (
-        <div className="main-content">
+        <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
             <Container fluid={true} className="">
                 <Row>
                     <Col className='headtiket'>
