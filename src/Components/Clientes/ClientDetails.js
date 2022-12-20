@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Col, Container, Nav, Row } from 'react-bootstrap'
+import { Col, Container, Form, Nav, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom';
 import { DataContext } from '../Commons/Context/DataContext';
 import Table from '../Commons/Table/Table';
@@ -8,6 +8,8 @@ import ClientInfo from './ClientInfo';
 
 function ClientDetails() {
     const { id } = useParams();
+    const [fechaDesde,setFechaDesde] = useState('')
+    const [fechaHasta,setFechaHasta] = useState('')
 
     const initialState = {
         tab: {
@@ -52,7 +54,7 @@ function ClientDetails() {
                 'token': token
             },
         }
-
+        
         const getClient = async () => {
             try {
                 const res = await fetch(CLIENT + id, options),
@@ -91,13 +93,13 @@ function ClientDetails() {
 
         const getOperations = async () => {
             try {
-                const res = await fetch(OPERATION_PROD+'extract/'+id, options),
+                const res = await fetch(OPERATION_PROD + 'extract/' + id, options),
                     json = await res.json()
                 /**seteamos loading */
                 //json.map(op => delete op.created)
                 /**seteamos el listado de tickets */
 
-                
+
                 setDataOperations(json);
             } catch (error) {
                 //setError(error);
@@ -144,7 +146,43 @@ function ClientDetails() {
         venta: 'Venta',
         comision: 'Comision',
         tipoMoneda: 'Moneda',
-        fecha:'Fecha',
+        fecha: 'Fecha',
+
+    }
+    const handleFilterDateOperations = async()=>{
+        console.log('Enviare estas fechas');
+        if(fechaDesde === '' || fechaHasta === '') return alert('La fecha no puede ser vacia')
+        if(fechaDesde > fechaHasta)return alert('La fecha desde no puede ser mayor a la fecha hasta')
+
+        const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
+        const fecha = {}
+        const optionsToOperationsByDate = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'token': token,
+                'content-type':'application/json'
+            },
+            body:JSON.stringify({fechaDesde,fechaHasta})
+        }
+        console.log('ENviamos estos datos');
+        console.log(optionsToOperationsByDate);
+
+
+        try {
+            const res = await fetch(OPERATION_PROD + 'extractByDate/' + id, optionsToOperationsByDate),
+                json = await res.json()
+            /**seteamos loading */
+            //json.map(op => delete op.created)
+            /**seteamos el listado de tickets */
+
+
+            setDataOperations(json);
+        } catch (error) {
+            //setError(error);
+            console.log("Esto es el error" + error);
+        }
+        
         
     }
 
@@ -173,6 +211,45 @@ function ClientDetails() {
                                 </Nav.Item>
                             </Nav>
                         </section>
+                        {
+                            state?.tab?.operations
+                                ? (
+                                    <div className='row'>
+                                        <div className='col-2 mt-3'>
+                                            <label>Fecha desde:</label>
+                                            <Form.Group controlId="duedate" >
+                                                <Form.Control
+                                                    type="date"
+                                                    name="duedate"
+                                                    placeholder="--/--/--"
+                                                    value={fechaDesde}
+                                                    onChange={(e) => setFechaDesde(e.target.value)}
+                                                />
+
+                                            </Form.Group>
+                                            
+                                        </div>
+
+                                        <div className='col-2 mt-3'>
+                                            <label>Fecha hasta:</label>
+                                            <Form.Group controlId="duedate" >
+                                                <Form.Control
+                                                    type="date"
+                                                    name="duedate"
+                                                    placeholder="--/--/--"
+                                                    value={fechaHasta}
+                                                    onChange={(e) => setFechaHasta(e.target.value)}
+                                                />
+                                            </Form.Group>
+                                        </div>
+                                        <div className='col-2 mt-4'>
+
+                                            <input type = "button" value='Filtrar' onClick={()=>handleFilterDateOperations()}/>
+
+                                        </div>
+                                    </div>
+                                ) : ''
+                        }
                         <section className='tabcontent'>
                             <div id="operations" className={state?.tab?.operations ? 'content-tab' : 'content-tab is-hidden'}>
                                 {state?.tab?.operations &&
