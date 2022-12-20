@@ -42,7 +42,10 @@ export default function TableRow(props) {
                 && col !== 'articulos' && col !== 'created' && col !== 'id_role' && col !== 'created_at_user'
                 && col !== 'id' && col !== 'id_user' && col !== "id_machine" && col !== 'id_gasto')).map(col => {
                     return (
+
                         <Fragment key={col}>
+                            {console.log(data[col])}
+                            {console.log(col)}
                             {
                                 col === 'actions' ?
                                     <td>
@@ -55,7 +58,10 @@ export default function TableRow(props) {
                                     : col === "icon" ?
                                         <td className="icontk">{veifyData(data[col], col)}</td>
                                         :
-                                        <td>{(data[col])}</td>
+                                        col === "compra" ?
+                                            <td className="compra"><strong>{(data[col])}</strong> USD</td> :
+                                            col === "venta" ?
+                                                <td className="venta"><strong>{(data[col])}</strong> USD</td> : <td>{(data[col])}</td>
                             }
                         </Fragment>
                     )
