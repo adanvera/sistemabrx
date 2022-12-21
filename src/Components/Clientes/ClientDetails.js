@@ -7,11 +7,15 @@ import Table from '../Commons/Table/Table';
 import { CLIENT, MINING_SUMMARY, OPERATION_PROD } from '../Helpers/helper';
 import ClientInfo from './ClientInfo';
 import DocuPDF from './Pdf/DocuPDF';
+import pdfimg from "../../assets/images/pdf.png";
+
 
 function ClientDetails() {
     const { id } = useParams();
-    const [fechaDesde,setFechaDesde] = useState('')
-    const [fechaHasta,setFechaHasta] = useState('')
+    const [fechaDesde, setFechaDesde] = useState('')
+    const [fechaHasta, setFechaHasta] = useState('')
+
+    console.log(fechaHasta);
 
     const initialState = {
         tab: {
@@ -56,7 +60,7 @@ function ClientDetails() {
                 'token': token
             },
         }
-        
+
         const getClient = async () => {
             try {
                 const res = await fetch(CLIENT + id, options),
@@ -151,10 +155,10 @@ function ClientDetails() {
         fecha: 'Fecha',
 
     }
-    const handleFilterDateOperations = async()=>{
+    const handleFilterDateOperations = async () => {
         console.log('Enviare estas fechas');
-        if(fechaDesde === '' || fechaHasta === '') return alert('La fecha no puede ser vacia')
-        if(fechaDesde > fechaHasta)return alert('La fecha desde no puede ser mayor a la fecha hasta')
+        if (fechaDesde === '' || fechaHasta === '') return alert('La fecha no puede ser vacia')
+        if (fechaDesde > fechaHasta) return alert('La fecha desde no puede ser mayor a la fecha hasta')
 
         const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
         const fecha = {}
@@ -163,9 +167,9 @@ function ClientDetails() {
             headers: {
                 'Accept': 'application/json',
                 'token': token,
-                'content-type':'application/json'
+                'content-type': 'application/json'
             },
-            body:JSON.stringify({fechaDesde,fechaHasta})
+            body: JSON.stringify({ fechaDesde, fechaHasta })
         }
         console.log('ENviamos estos datos');
         console.log(optionsToOperationsByDate);
@@ -184,19 +188,32 @@ function ClientDetails() {
             //setError(error);
             console.log("Esto es el error" + error);
         }
-        
-        
+
+
     }
+
+    const currentMonthName = () => {
+        const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+            "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+        ];
+        const date = new Date();
+        const month = date.getMonth();
+        return monthNames[month];
+    }
+
+    const getCurrentMonth = currentMonthName();
+
     const PdfExtract = () => (
-   
+
         <PDFDownloadLink
-          document={<DocuPDF operations={dataOperations} cliente = {clientData}/>}
-          fileName="extracto.pdf"
+            document={<DocuPDF operations={dataOperations} cliente={clientData} />}
+            fileName="extracto.pdf"
         >
-          <Button variant="info">Descargar PDF</Button>
+            <Button variant="info">Descargar Extracto {getCurrentMonth} <img src={pdfimg} /></Button>
         </PDFDownloadLink>
-      
+
     );
+
 
     return (
         <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
@@ -226,8 +243,8 @@ function ClientDetails() {
                         {
                             state?.tab?.operations
                                 ? (
-                                    <div className='row'>
-                                        <div className='col-2 mt-3'>
+                                    <Row className='justify-content-between mb-3'>
+                                        <Col className='mt-3'>
                                             <label>Fecha desde:</label>
                                             <Form.Group controlId="duedate" >
                                                 <Form.Control
@@ -239,10 +256,10 @@ function ClientDetails() {
                                                 />
 
                                             </Form.Group>
-                                            
-                                        </div>
 
-                                        <div className='col-2 mt-3'>
+                                        </Col>
+
+                                        <Col className='mt-3'>
                                             <label>Fecha hasta:</label>
                                             <Form.Group controlId="duedate" >
                                                 <Form.Control
@@ -253,14 +270,19 @@ function ClientDetails() {
                                                     onChange={(e) => setFechaHasta(e.target.value)}
                                                 />
                                             </Form.Group>
-                                        </div>
-                                        <div className='col-2 mt-3 delete-btn tkt d-flex'>
-
-                                            <input type = "button" value='Filtrar' onClick={()=>handleFilterDateOperations()}/>
-
-                                        </div>
-                                        {dataOperations !== ''?<PdfExtract/>:''}
-                                    </div>
+                                        </Col>
+                                        <Col className="column align">
+                                            <div className="item-column">
+                                                <button className="button btn-other" onClick={() => handleFilterDateOperations()}>Filtrar</button>
+                                            </div>
+                                        </Col>
+                                        {/* <Col className='btnfilter'>
+                                            <input type="button" value='Filtrar' onClick={() => ()} />
+                                        </Col> */}
+                                        {dataOperations !== '' ?
+                                            <Col className='pdfend' ><PdfExtract /></Col>
+                                            : ''}
+                                    </Row>
                                 ) : ''
                         }
                         <section className='tabcontent'>

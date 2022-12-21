@@ -71,7 +71,7 @@ const TicketTimeline = (props) => {
         }
 
         getTickets()
-    }, [])
+    }, [dataList])
 
     const handleChange = (e) => {
 
@@ -135,6 +135,7 @@ const TicketTimeline = (props) => {
             setClicked('historialTickets')
         }
     }
+
 
     const formatedList = formatedDataTicket(dataList)
     console.log(formatedList);
