@@ -489,7 +489,9 @@ tr.table-header {
 .datashow {
     display: grid;
 }
-
+.bg-white{
+    background-color: rgb(155, 153, 153);
+}
 input.inputshow {
     height: 45px;
     border-radius: 6px;
@@ -1420,15 +1422,7 @@ select#changearticle {
     border: 1px solid rgba(0, 143, 143, 1);
 }
 
-td.compra {
-    background: #efefef;
-    border: 1px solid #D6D6D6;
-}
 
-td.venta {
-    background: #efefef;
-    border: 1px solid #D6D6D6;
-}
 
 .mt-2.row {
     padding: 12px;
