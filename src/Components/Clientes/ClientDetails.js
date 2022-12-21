@@ -192,14 +192,14 @@ function ClientDetails() {
 
     }
 
-    const currentMonthName = () => {
-        const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-            "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-        ];
-        const date = new Date();
-        const month = date.getMonth();
-        return monthNames[month];
-    }
+    // const currentMonthName = () => {
+    //     const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+    //         "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    //     ];
+    //     const date = new Date();
+    //     const month = date.getMonth();
+    //     return monthNames[month];
+    // }
 
     const getCurrentMonth = currentMonthName();
 
@@ -209,7 +209,7 @@ function ClientDetails() {
             document={<DocuPDF operations={dataOperations} cliente={clientData} />}
             fileName="extracto.pdf"
         >
-            <Button variant="info">Descargar Extracto {getCurrentMonth} <img src={pdfimg} /></Button>
+            <Button variant="info">Descargar Extracto <img src={pdfimg} /></Button>
         </PDFDownloadLink>
 
     );
