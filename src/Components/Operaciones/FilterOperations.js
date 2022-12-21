@@ -108,6 +108,7 @@ const FilterOperations = props => {
                     <Select defaultValue={state.tipoOperaciones} optionList={selectedOperation} setSelected={setSelectedValue} />
                 </div>
             </Col>
+            
             <Col className="column align">
                 <div className="item-column">
                     <button className="button btn-other" onClick={() => handleCleanFilter()}>Limpiar</button>
