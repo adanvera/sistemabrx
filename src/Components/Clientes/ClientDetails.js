@@ -5,18 +5,16 @@ import { useParams } from 'react-router-dom';
 import { DataContext } from '../Commons/Context/DataContext';
 import Table from '../Commons/Table/Table';
 import { CLIENT, MINING_SUMMARY, OPERATION_PROD } from '../Helpers/helper';
+import OperationsData from '../Operaciones/OperationsData';
 import ClientInfo from './ClientInfo';
 import DocuPDF from './Pdf/DocuPDF';
-import pdfimg from "../../assets/images/pdf.png";
-
 
 function ClientDetails() {
     const { id } = useParams();
-    const [fechaDesde, setFechaDesde] = useState('')
-    const [fechaHasta, setFechaHasta] = useState('')
-
-    console.log(fechaHasta);
-
+    const [fechaDesde,setFechaDesde] = useState('')
+    const [fechaHasta,setFechaHasta] = useState('')
+    const [numeroOperacion,setNumeroOperacion] = useState('')
+    const [operationTemporal,setOperationTemporal] = useState('')
     const initialState = {
         tab: {
             operations: true,
@@ -209,11 +207,26 @@ function ClientDetails() {
             document={<DocuPDF operations={dataOperations} cliente={clientData} />}
             fileName="extracto.pdf"
         >
-            <Button variant="info">Descargar Extracto <img src={pdfimg} /></Button>
+            <Button variant="info">Descargar Extracto </Button>
         </PDFDownloadLink>
 
     );
 
+    const handleFilterOperationNumber = (e)=>{
+        console.log(numeroOperacion);
+        const newData = dataOperations.filter(op => op.operation === Number(numeroOperacion))
+        console.log(newData);
+        if(newData !== '' ){
+            setOperationTemporal(dataOperations)
+            setDataOperations(newData)
+
+        }
+
+    }
+    const handleCleanOperations = ()=>{
+        setDataOperations(operationTemporal)
+        setNumeroOperacion('')
+    }
 
     return (
         <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
@@ -270,20 +283,42 @@ function ClientDetails() {
                                                     onChange={(e) => setFechaHasta(e.target.value)}
                                                 />
                                             </Form.Group>
-                                        </Col>
-                                        <Col className="column align">
-                                            <div className="item-column">
-                                                <button className="button btn-other" onClick={() => handleFilterDateOperations()}>Filtrar</button>
-                                            </div>
-                                        </Col>
-                                        {/* <Col className='btnfilter'>
-                                            <input type="button" value='Filtrar' onClick={() => ()} />
-                                        </Col> */}
-                                        {dataOperations !== '' ?
-                                            <Col className='pdfend' ><PdfExtract /></Col>
-                                            : ''}
-                                    </Row>
+                                        </Col>    
+                                        
+                                        <div className='col-2 mt-3 delete-btn tkt d-flex'>
+
+                                            <input type = "button" value='Filtrar' onClick={()=>handleFilterDateOperations()}/>
+
+                                        </div>
+                                        <div className='col-2 mt-3'>
+                                            <label>Nro operacion:</label>
+                                            <Form.Group controlId="duedate" >
+                                                <Form.Control
+                                                    type="text"
+                                                    name="nroOperacion"
+                                                    placeholder="Digite el numero de operacion"
+                                                    value={numeroOperacion}
+                                                    onChange={(e) => setNumeroOperacion(e.target.value)}
+                                                />
+
+                                            </Form.Group>
+                                            
+                                        </div>
+                                        <div className='col-2 mt-3 delete-btn tkt d-flex'>
+
+                                            <input type = "button" value='Filtrar' onClick={()=>handleFilterOperationNumber()}/>
+
+                                        </div>
+                                        <div className='col-2 mt-3 delete-btn tkt d-flex'>
+
+                                            <input type = "button" value='Limpiar' onClick={()=>handleCleanOperations()}/>
+
+                                        </div>
+                                        {dataOperations !== ''?<PdfExtract/>:''}
+                                    
+                                    </Row> 
                                 ) : ''
+                              
                         }
                         <section className='tabcontent'>
                             <div id="operations" className={state?.tab?.operations ? 'content-tab' : 'content-tab is-hidden'}>
