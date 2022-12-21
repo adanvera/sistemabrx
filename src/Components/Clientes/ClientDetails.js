@@ -201,7 +201,7 @@ function ClientDetails() {
     //     return monthNames[month];
     // }
 
-    const getCurrentMonth = currentMonthName();
+    // const getCurrentMonth = currentMonthName();
 
     const PdfExtract = () => (
 
