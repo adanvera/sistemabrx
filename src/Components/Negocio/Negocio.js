@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { useContext } from 'react'
-import { Col, Container, Row } from 'react-bootstrap'
+import { Card, Col, Container, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { DataContext } from '../Commons/Context/DataContext'
 import ModalContainer from '../Commons/ModalContainer'

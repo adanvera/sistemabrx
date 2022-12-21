@@ -78,7 +78,7 @@ const ClientInfo = (props) => {
             if (req.ok) {
                 console.log("Eliminado correctamente");
                 setTimeout(() => {
-                   navigate('/clientes')     
+                    navigate('/clientes')
                 }, 300)
             }
             alert(res.msg)
@@ -88,7 +88,7 @@ const ClientInfo = (props) => {
 
         }
 
-    }    
+    }
 
     return (
         <div className='d-flex'>
@@ -117,7 +117,7 @@ const ClientInfo = (props) => {
                                     <label className='labeltk'>Apellido</label>
                                     <input className='form-control'
                                         value={state.last_name}
-                                       /*  disabled={isEditable === true ? false : true} */
+                                        /*  disabled={isEditable === true ? false : true} */
                                         name='last_name'
                                         onChange={(e) => handleChange(e)}
                                     />
@@ -133,10 +133,10 @@ const ClientInfo = (props) => {
                                         onChange={(e) => handleChange(e)} />
                                 </div>
                             </Col>
-                           
+
                         </Row>
                         <Row className='mt-3'>
-                        <Col>
+                            <Col>
                                 <div className='datashow'>
                                     <label className='labeltk' >Direccion</label>
 
@@ -182,21 +182,21 @@ const ClientInfo = (props) => {
 
                     </Col>
                     <Col md={3}>
-                    <div className='tiktop'>
-                <Col className='headtiket d-flex'>
-                    <div>
-                        <h6>Acciones</h6>
-                    </div>
-                </Col>
-                <div className="actionstwo d-grid mt-3">
-                    <div className="delete-btn tkt d-flex" id='_btnDeletetkt' onClick={() => handleUserDelete()} >
-                        <span>Eliminar cliente </span>
-                        <div>
-                            <ion-icon name="trash-outline"></ion-icon>
+                        <div className='tiktop'>
+                            <Col className='headtiket d-flex'>
+                                <div>
+                                    <h6>Acciones</h6>
+                                </div>
+                            </Col>
+                            <div className="actionstwo d-grid mt-3">
+                                <div className="delete-btn tkt d-flex" id='_btnDeletetkt' onClick={() => handleUserDelete()} >
+                                    <span>Eliminar cliente </span>
+                                    <div>
+                                        <ion-icon name="trash-outline"></ion-icon>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
                     </Col>
 
                 </>

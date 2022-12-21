@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useContext } from 'react'
-import { Col, Row } from 'react-bootstrap'
+import { Card, Col, Row } from 'react-bootstrap'
 import { DataContext } from '../../Commons/Context/DataContext'
 import ModalContainer from '../../Commons/ModalContainer'
 import SearchTable from '../../Commons/SearchTable'
@@ -178,22 +178,52 @@ function Gastos() {
         </Row>
         <Row className='mt-3'>
           <Col>
-            <div className='weekamount'>
-              <h6>Gasto de la semana</h6>
-              {formatNumber(weekAmount)}
-            </div>
+            <Card
+              bg='white'
+
+              text='dark'
+              style={{ width: '18rem' }}
+              className="mb-2"
+            >
+              <Card.Body>
+                <Card.Title> Gasto de la semana </Card.Title>
+                <Card.Text>
+                  {formatNumber(weekAmount)}
+                </Card.Text>
+              </Card.Body>
+            </Card>
           </Col>
           <Col>
-            <div className='monthAmount'>
-              <h6>Gasto del mes</h6>
-              {formatNumber(monthAmount)}
-            </div>
+            <Card
+              bg='white'
+
+              text='dark'
+              style={{ width: '18rem' }}
+              className="mb-2"
+            >
+              <Card.Body>
+                <Card.Title>Gasto del mes</Card.Title>
+                <Card.Text>
+                  {formatNumber(monthAmount)}
+                </Card.Text>
+              </Card.Body>
+            </Card>
           </Col>
           <Col>
-            <div className='yearAmount'>
-              <h6>Gasto del año</h6>
-              {formatNumber(yearAmount)}
-            </div>
+            <Card
+              bg='white'
+
+              text='dark'
+              style={{ width: '18rem' }}
+              className="mb-2"
+            >
+              <Card.Body>
+                <Card.Title>Gastos totales del año</Card.Title>
+                <Card.Text>
+                  {formatNumber(yearAmount)}
+                </Card.Text>
+              </Card.Body>
+            </Card>
           </Col>
         </Row>
         {

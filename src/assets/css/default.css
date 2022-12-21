@@ -1444,3 +1444,8 @@ div#historiaal {
     background-color: rgb(84, 203, 84)!important;
     color: white;
 }
+
+.pdfend.col {
+    text-align: end;
+    margin-top: 10px;
+}
