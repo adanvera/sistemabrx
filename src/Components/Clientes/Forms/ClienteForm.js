@@ -12,7 +12,7 @@ const ClienteForm = (props) => {
   }
 
   const modalType = props.modalType
-  const id_client = props.id_client
+  const id_client = props.id_client 
 
 
   /**delcaramos nuestras variables a utilizar */
