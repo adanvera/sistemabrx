@@ -17,8 +17,13 @@ const DocuPDF = ({ operations, cliente }) => {
   }
   
 
-  let sumatoriaVenta = 150000
-  let sumatoriaCompra = 100000
+  let sumatoriaVenta = 0
+  let sumatoriaCompra = 0
+  //Calculamos el total de venta y compra
+  operations.forEach( op => {
+    sumatoriaVenta += Number(op.venta);  
+    sumatoriaCompra += Number(op.compra);  
+  });
 
   return (
     <Document>
@@ -57,6 +62,7 @@ const DocuPDF = ({ operations, cliente }) => {
             marginLeft: "20px",
             borderColor: "black",
             fontSize: "12px",
+            marginTop:"3px",
             borderBottomColor: '#bff0fd'
           }}
         >
@@ -70,6 +76,7 @@ const DocuPDF = ({ operations, cliente }) => {
           /* flexDirection: 'row',
           justifyContent:'space-between', */
           marginLeft: "20px",
+          marginTop:"3px",
           borderTopWidth:1,
           /* alignItems: 'center', */
           fontStyle: 'bold',
