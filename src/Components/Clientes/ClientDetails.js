@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { DataContext } from '../Commons/Context/DataContext';
 import Table from '../Commons/Table/Table';
 import { CLIENT, MINING_SUMMARY, OPERATION_PROD } from '../Helpers/helper';
+import OperationsData from '../Operaciones/OperationsData';
 import ClientInfo from './ClientInfo';
 import DocuPDF from './Pdf/DocuPDF';
 
@@ -12,7 +13,8 @@ function ClientDetails() {
     const { id } = useParams();
     const [fechaDesde,setFechaDesde] = useState('')
     const [fechaHasta,setFechaHasta] = useState('')
-
+    const [numeroOperacion,setNumeroOperacion] = useState('')
+    const [operationTemporal,setOperationTemporal] = useState('')
     const initialState = {
         tab: {
             operations: true,
@@ -198,6 +200,22 @@ function ClientDetails() {
       
     );
 
+    const handleFilterOperationNumber = (e)=>{
+        console.log(numeroOperacion);
+        const newData = dataOperations.filter(op => op.operation === Number(numeroOperacion))
+        console.log(newData);
+        if(newData !== '' ){
+            setOperationTemporal(dataOperations)
+            setDataOperations(newData)
+
+        }
+
+    }
+    const handleCleanOperations = ()=>{
+        setDataOperations(operationTemporal)
+        setNumeroOperacion('')
+    }
+
     return (
         <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
             <Container fluid={true} className="">
@@ -257,6 +275,30 @@ function ClientDetails() {
                                         <div className='col-2 mt-3 delete-btn tkt d-flex'>
 
                                             <input type = "button" value='Filtrar' onClick={()=>handleFilterDateOperations()}/>
+
+                                        </div>
+                                        <div className='col-2 mt-3'>
+                                            <label>Nro operacion:</label>
+                                            <Form.Group controlId="duedate" >
+                                                <Form.Control
+                                                    type="text"
+                                                    name="nroOperacion"
+                                                    placeholder="Digite el numero de operacion"
+                                                    value={numeroOperacion}
+                                                    onChange={(e) => setNumeroOperacion(e.target.value)}
+                                                />
+
+                                            </Form.Group>
+                                            
+                                        </div>
+                                        <div className='col-2 mt-3 delete-btn tkt d-flex'>
+
+                                            <input type = "button" value='Filtrar' onClick={()=>handleFilterOperationNumber()}/>
+
+                                        </div>
+                                        <div className='col-2 mt-3 delete-btn tkt d-flex'>
+
+                                            <input type = "button" value='Limpiar' onClick={()=>handleCleanOperations()}/>
 
                                         </div>
                                         {dataOperations !== ''?<PdfExtract/>:''}
