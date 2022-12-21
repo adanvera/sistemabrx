@@ -207,7 +207,7 @@ function ClientDetails() {
             document={<DocuPDF operations={dataOperations} cliente={clientData} />}
             fileName="extracto.pdf"
         >
-            <Button variant="info">Descargar Extracto <img src={pdfimg} /></Button>
+            <Button variant="info">Descargar Extracto </Button>
         </PDFDownloadLink>
 
     );
@@ -283,7 +283,8 @@ function ClientDetails() {
                                                     onChange={(e) => setFechaHasta(e.target.value)}
                                                 />
                                             </Form.Group>
-                                        </div>
+                                        </Col>    
+                                        
                                         <div className='col-2 mt-3 delete-btn tkt d-flex'>
 
                                             <input type = "button" value='Filtrar' onClick={()=>handleFilterDateOperations()}/>
@@ -314,8 +315,10 @@ function ClientDetails() {
 
                                         </div>
                                         {dataOperations !== ''?<PdfExtract/>:''}
-                                    </div>
+                                    
+                                    </Row> 
                                 ) : ''
+                              
                         }
                         <section className='tabcontent'>
                             <div id="operations" className={state?.tab?.operations ? 'content-tab' : 'content-tab is-hidden'}>
