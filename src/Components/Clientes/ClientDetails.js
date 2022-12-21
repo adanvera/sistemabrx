@@ -149,7 +149,8 @@ function ClientDetails() {
         compra: 'Compra',
         venta: 'Venta',
         comision: 'Comision',
-        tipoMoneda: 'Moneda',
+        btc: 'BTC',
+        usdt: 'USDT',
         fecha: 'Fecha',
 
     }

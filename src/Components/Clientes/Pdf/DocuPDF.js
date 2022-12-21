@@ -60,7 +60,7 @@ const DocuPDF = ({ operations, cliente }) => {
             borderBottomColor: '#bff0fd'
           }}
         >
-          <Text>{`${dataOperationsHeader.id}           ${dataOperationsHeader.compra}       ${dataOperationsHeader.venta}   ${dataOperationsHeader.comision}              ${dataOperationsHeader.fecha} `}</Text>
+          <Text>{`${dataOperationsHeader.id}           ${dataOperationsHeader.compra}       ${dataOperationsHeader.venta}                ${dataOperationsHeader.fecha} `}</Text>
 
         </View>
 
@@ -82,7 +82,7 @@ const DocuPDF = ({ operations, cliente }) => {
                 <Text style={{ width: "30%" }}>{ op.compra }</Text>
                 <Text style={{ width: "30%" }}>{ op.venta }</Text>
                 <Text style={{ width: "20%" }}>{ op.fecha }</Text> */}
-                {<Text >{ op.operation+'                  '+op.compra+'                  '+op.venta+'                  '+op.comision+'                  '+op.fecha }</Text> }
+                {<Text >{ op.operation+'                  '+op.compra+'                  '+op.venta+'                  '+'                  '+op.fecha }</Text> }
               </View>
 
             )

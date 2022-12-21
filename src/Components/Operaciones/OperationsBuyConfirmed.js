@@ -10,12 +10,23 @@ const OperationsBuyConfirmed = (props) => {
     const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
 
     const handleConfirmed = async () => {
+        let btc,usdt;
+        if(dataOPeration.currentCurrency === '1'){
+            btc = dataOPeration.amountBTC
+            usdt = 0
+        }else if(dataOPeration.currentCurrency === '0'){
+            btc = 0
+            usdt = dataOPeration.amountBTC
+
+        }
         const operation = {
             id_client: idClientToSale,
             amount: dataOPeration.totalAmount,
             commission: dataOPeration.comision,
             type: '1',
-            currency: 'USD'
+            currency: 'USD',
+            btc,
+            usdt
         }
         const options = {
             method: 'POST',
