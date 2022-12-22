@@ -2,7 +2,7 @@ import React, { Fragment, useContext } from 'react'
 import { Col } from 'react-bootstrap'
 import { DataContext } from '../../Commons/Context/DataContext'
 
-const TicketActions = (props) => {
+const MiningMachineActions = (props) => {
 
     const { sidebarStatus, setSidebarStatus, modalstatus, setModalStatus, setDataIdRow, modalType, setModalType } = useContext(DataContext)
 
@@ -13,24 +13,22 @@ const TicketActions = (props) => {
         e.preventDefault()
         setModalStatus(true)
         const dataIDc = props?.data?.id_ticket
-        setModalType('Delete')
 
         if (btn === '_btnDelete') {
             setModalType('Delete')
-            setDataIdRow(dataIDc)
+            setDataIdRow(props?.data?.id_machine)
         }
 
         if (btn === '_btnAlta') {
             setModalType('Alta')
-            setDataIdRow(dataIDc)
         }
 
         if (btn === '_btnBaja') {
             setModalType('Baja')
-            setDataIdRow(dataIDc)
         }
 
     }
+
 
     return (
         <Fragment>
@@ -58,7 +56,7 @@ const TicketActions = (props) => {
                 </div>
                 <div className="actionstwo d-grid mt-2">
                     <div className="delete-btn tkt d-flex" id='_btnDeletetkt' onClick={(e) => handleOnClick(e, '_btnDelete')} >
-                        <span>Eliminar ticket  </span>
+                        <span>Eliminar minero  </span>
                         <div className='ml-2'>
                             <ion-icon name="trash-outline"></ion-icon>
                         </div>
@@ -69,4 +67,4 @@ const TicketActions = (props) => {
     )
 }
 
-export default TicketActions
+export default MiningMachineActions

@@ -226,29 +226,21 @@ export const formatedDataMiners = (data) => {
 export const verifyStatusMachine = (data) => {
     if (data === 0) {
         return (
-            <div className="status">
-                <div className="oktxt">Okay</div>
-            </div>
+            <span className='statusinfo online'>Online</span>
         )
     } else if (data === 1) {
         return (
-            <div className=" status">
-                <div className="failtxt">Fail</div>
-            </div>
-        )
-    }
-    else if (data === 2) {
-        return (
-            <div className=" status">
-                <div className="warntxt">Warn</div>
-            </div>
+            <span className='statusinfo offline'>Offline</span>
         )
     }
     else if (data === 3) {
         return (
-            <div className=" status">
-                <div className="offtxt">Manteniance</div>
-            </div>
+            <span className="statusinfo offtxt">Manteniance</span>
+        )
+    }
+    else if (data === 4) {
+        return (
+            <span className="statusinfo failtxt">Out</span>
         )
     }
 }

@@ -57,7 +57,6 @@ function MaquinaForm() {
 
     }
 
-
     const handleSubmit = (e) => {
         e.preventDefault();
 

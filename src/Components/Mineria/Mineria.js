@@ -9,9 +9,7 @@ import tktimg from "../../assets/images/ticketimg.png"
 import mchimg from "../../assets/images/machine.png"
 import mcc from "../../assets/images/machine_Aa.png"
 import MineroForms from './Forms/MineroForms'
-import { Link } from 'react-router-dom';
-import { Doughnut, Line } from 'react-chartjs-2'
-import { faker } from '@faker-js/faker';
+import { Line } from 'react-chartjs-2'
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -22,7 +20,7 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
-import {  MINING_SUMMARY, TICKETS, TICKET_SUMMARY } from '../Helpers/helper'
+import { MINING_SUMMARY, TICKETS, TICKET_SUMMARY } from '../Helpers/helper'
 
 ChartJS.register(
     CategoryScale,

@@ -14,13 +14,16 @@ const OPERATION_PROD = "https://backend.brxsgo.com/api/operation/"
 const OPERATION_TEST = "https://backend.brxsgo.com/api/operation"
 const TICKET_SUMMARY = "https://backend.brxsgo.com/api/tickets/get/summary"
 const MINING_SUMMARY = "https://backend.brxsgo.com/api/mining/get/summary/"
-const MACHINES_API = "https://api.minerstat.com/v2/hardware"
+const MACHINES_API = "https://api.minerstat.com/v2/hardware?brand=antminer"
 const API_COINS = "https://api.minerstat.com/v2/coins?list=BTC,BCH,BINANCE BTC,2MINERS FLUX,DOGE"
 const IMPORTACIONES = "https://backend.brxsgo.com/api/importaciones/"
 const DOLLAR_API = "https://dolar.melizeche.com/api/1.0/"
 const USER_SUMMARY_ONE = "https://backend.brxsgo.com/api/user/get/summary/"
 const PROVEEDORES = "https://backend.brxsgo.com/api/proveedores/"
 const GASTOS = "https://backend.brxsgo.com/api/gastos/"
+const AMOUNT_MINER_BY_DAY = "https://backend.brxsgo.com/api/mining/get/day/coins/"
+const AMOUNT_POWER_BY_DAY = "https://backend.brxsgo.com/api/mining/get/power/amount"
+const CONSUMO = "http://localhost:4000/api/consumos/"
 
 /**exportamos nuestras declaraciones de valores
  * para poder utilizarlas en donde se requieran
@@ -47,5 +50,8 @@ export {
     DOLLAR_API,
     USER_SUMMARY_ONE,
     PROVEEDORES,
-    GASTOS
+    GASTOS,
+    AMOUNT_MINER_BY_DAY,
+    AMOUNT_POWER_BY_DAY,
+    CONSUMO
 }

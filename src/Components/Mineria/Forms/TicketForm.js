@@ -151,6 +151,31 @@ const TicketForm = (props) => {
             console.log(error.msg);
         }
 
+        const editarMaquinaNuevo = async () => {
+            const id_machine = Number(state.variables.id_machine)
+            console.log(" CAMBIO DE ESTADO A MAQUINA NUEVA. + " + id_machine + " A ESTADO 3");
+            console.log(id_machine);
+
+            const options = {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    'token': token
+                },
+                body: JSON.stringify({ status: 3 })
+            }
+            try {
+                const res = await fetch(MINING_MACHINES + "mantenience/" + id_machine, options),
+                    json = await res.json();
+                console.log("maquina dada de baja por mantenimiento");
+            } catch (error) {
+                console.log(error.msg);
+            }
+        }
+
+        editarMaquinaNuevo()
+
+
     }
 
     const handleChange = (e) => {
@@ -173,7 +198,13 @@ const TicketForm = (props) => {
     }
 
     /**filtra el listado de maquinas minando por el nombre del cliente */
-    const filterDataMining = dataMining.filter((item) => item.name.includes(documento))
+    const filterDataMining = dataMining.filter((item) => item.name.includes(documento) && item.status === 0)
+
+    /**parsear string y eliminar llaves y parentesis */
+    const parseData = (data, dataId) => {
+        const parseData = JSON.parse(data)
+        return dataId + " - " + parseData[0]?.name
+    }
 
     return (
         <Container>
@@ -226,7 +257,8 @@ const TicketForm = (props) => {
                                     {
                                         Object.keys(filterDataMining).map((key, index) => {
                                             return (
-                                                <option key={index} value={filterDataMining[key].id_machine}>{filterDataMining[key].machine_name}</option>
+                                                <option key={index} value={filterDataMining[key].id_machine}>{parseData(filterDataMining[key].machinedata, filterDataMining[key].id_machine)}
+                                                </option>
                                             )
                                         })
                                     }

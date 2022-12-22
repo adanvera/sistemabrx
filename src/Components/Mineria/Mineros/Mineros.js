@@ -56,6 +56,7 @@ function Mineros() {
 
   const handleModalForm = (form) => {
     setModalStatus(true)
+    setModalType("Add")
     setState(prev => {
       return {
         ...prev,
@@ -125,9 +126,18 @@ function Mineros() {
           <Col md={6} className="endmain">
             <div className='limittic'><div onClick={() => handleModalForm('Minero')} className="btnadd" id='ticketmain'> Agregar minero</div></div>
           </Col>
-          {/* <Col md={3} className="endmain">
-            <div className='limittic'><div onClick={() => handleModalForm('Machine')} className="btnadd" id='ticketmain'> Registrar maquina</div></div>
-          </Col> */}
+        </Row>
+        <Row>
+          <Col md={6} className="mt-3 mb-3">
+
+            <div class="css-89u161">
+              <div class="css-kb1ety"><dd class="css-pxccrj">454.11 TH</dd><dt class="css-6qnch9">Hashrate</dt></div>
+              <div class="css-kb1ety"><dd class="css-pxccrj">99.80%</dd><dt class="css-6qnch9">Share Efficiency</dt></div>
+              <div class="css-kb1ety"><dd class="css-pxccrj">0.00001696 BTC</dd><dt class="css-6qnch9">Mined Revenue</dt></div>
+            </div>
+
+          </Col>
+          
         </Row>
         {
           isLoaded === false ?

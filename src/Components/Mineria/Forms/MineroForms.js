@@ -1,13 +1,13 @@
 import React from 'react'
 import { useState } from 'react'
 import { useContext } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react'
 import { Button, Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 import { DataContext } from '../../Commons/Context/DataContext'
 import { CLIENT, MACHINES, MACHINES_API, MINING_MACHINES } from '../../Helpers/helper'
-import SelectMachine from './SelectMachine'
 
-function MineroForms() {
+const MineroForms = (props) => {
 
   const initialState = {
     datamachine: "",
@@ -19,17 +19,19 @@ function MineroForms() {
     hashrate: 102,
     tempmax: 100,
     maxfan: 9150,
+    speed: '',
   }
 
   const [state, setState] = useState(initialState)
   const [isLoaded, setIsLoaded] = useState(false);
   const [dataList, setDataList] = useState('')
   const [error, setError] = useState(null);
-  const { modalstatus, setModalStatus } = useContext(DataContext)
+  const { modalstatus, setModalStatus, dataidrow, setDataIdRow } = useContext(DataContext)
   const [machineList, setMachineList] = useState()
   const [externalData, setExternalData] = useState()
-
+  const { modalType, setModalType } = useContext(DataContext)
   const [machineItem, setMachineItem] = useState()
+  let navigate = useNavigate();
 
   useEffect(() => {
 
@@ -125,16 +127,29 @@ function MineroForms() {
 
       const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
 
+      const extractData = ((externalData.filter((item) => item.id === state.datamachine)));
+
+      const exxt = JSON.parse(extractData[0]?.algorithms)
+
+      const der = Object.keys(exxt).map((key) => {
+        return {
+          name: key,
+          value: exxt[key]
+        }
+      })
+
       const createMiner = {
         machinedata: JSON.stringify(externalData.filter((item) => item.id === state.datamachine)),
         document: state.documento,
         ip: state.ip,
         machine_name: state.ip + " / " + state.machine_name,
         porcentaje: 90,
-        consume_machine: 15000,
+        consume_machine: der[0]?.value?.power,
         hashrate: 102,
         tempmax: 100,
         maxfan: 9150,
+        speed: der[0]?.value?.speed,
+
       }
 
       const options = {
@@ -152,7 +167,6 @@ function MineroForms() {
           json = await res.json()
         console.log(json);
 
-
       } catch (error) {
         console.log(error);
       }
@@ -162,60 +176,202 @@ function MineroForms() {
 
   }
 
-  return (
-    <>
-      <Form onSubmit={submitMinero}>
-        <Row md className="mt-2">
-          <FloatingLabel className="tkt" controlId="documento" label="Seleccionar cliente">
-            <Form.Select aria-label="Seleccionar cliente" name="documento" onChange={handleChange} value={state.documento} >
-              <option value="" selected disabled>Seleccionar</option>
-              {
-                Object.keys(dataList).map((item => {
-                  return <option value={dataList[item]?.document}>{dataList[item]?.name + " " + dataList[item]?.last_name}</option>
-                }))
-              }
-            </Form.Select>
-          </FloatingLabel>
-        </Row>
-        <Row className='mt-3'>
-          <FloatingLabel
-            controlId="ip"
-            label="Agregar IP"
-            className="mb-3"
-            name="ip"
-            value={state.ip}
-            onChange={handleChange}
-          >
-            <Form.Control type="text" name='ip' placeholder="agregar ip" />
-          </FloatingLabel>
-        </Row>
-        <Row className="mt-2">
-          <FloatingLabel className="tkt"
-            controlId="floatingSelectGrid"
-            label="Seleccionar maquina"
-          >
-            <Form.Select aria-label="Seleccionar maquina" name="datamachine" onChange={handleChange} value={state.datamachine} >
-              <option disabled selected >Seleccionar maquina</option>
-              {
-                externalData?.map((item) => {
-                  return (<option value={item.id} onClick={() => machineItem(item)} > {item?.name} {item?.brand} </option>)
-                })
-              }
-            </Form.Select>
-          </FloatingLabel>
-        </Row>
+  const handleSubmitAlta = (e) => {
+    e.preventDefault();
+    const id_machine = props?.datID ? props?.datID : ''
+    const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json',
+        'token': token
+      },
+      body: JSON.stringify({ status: 0 })
+    }
+    const darDeAlta = async () => {
+      try {
+        const res = await fetch(MINING_MACHINES + id_machine, options),
+          json = await res.json();
+      } catch (error) {
+        console.log(error.msg);
+      }
+    }
+    darDeAlta()
+  }
 
-        <Row className='addusr' >
-          <Col id='create'>
-            <Button type="submit">Agregar minero</Button>
-          </Col>
-          <Col id='closeone' className='closee'>
-            <Button onClick={() => setModalStatus(false)}>Cerrar</Button>
-          </Col>
-        </Row>
+
+  const handleSubmitBaja = (e) => {
+    e.preventDefault();
+    const id_machine = props?.datID ? props?.datID : ''
+    const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json',
+        'token': token
+      },
+      body: JSON.stringify({ status: 4 })
+    }
+    const darDeBaja = async () => {
+      try {
+        const res = await fetch(MINING_MACHINES + id_machine, options),
+          json = await res.json();
+      } catch (error) {
+        console.log(error.msg);
+      }
+    }
+    darDeBaja()
+
+  }
+
+  const handleSubmitDelete = (e) => {
+    const id_machine = dataidrow ? dataidrow : ''
+    /**obtenemos el token */
+    const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
+
+    const deleletTicket = async () => {
+      const options = {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          'token': token
+        }
+      }
+
+      try {
+        const res = await fetch(MINING_MACHINES + id_machine, options),
+          json = await res.json();
+      } catch (error) {
+        console.log(error.msg);
+      }
+    }
+    deleletTicket()
+    setModalType('other')
+    setModalStatus(false)
+  }
+
+
+  if (modalType === "Add") {
+    return (
+      <>
+        <Form onSubmit={submitMinero}>
+          <Row md className="mt-2">
+            <FloatingLabel className="tkt" controlId="documento" label="Seleccionar cliente">
+              <Form.Select aria-label="Seleccionar cliente" name="documento" onChange={handleChange} value={state.documento} >
+                <option value="" selected disabled>Seleccionar</option>
+                {
+                  Object.keys(dataList).map((item => {
+                    return <option value={dataList[item]?.document}>{dataList[item]?.name + " " + dataList[item]?.last_name}</option>
+                  }))
+                }
+              </Form.Select>
+            </FloatingLabel>
+          </Row>
+          <Row className='mt-3'>
+            <FloatingLabel
+              controlId="ip"
+              label="Agregar IP"
+              className="mb-3"
+              name="ip"
+              value={state.ip}
+              onChange={handleChange}
+            >
+              <Form.Control type="text" name='ip' placeholder="agregar ip" />
+            </FloatingLabel>
+          </Row>
+          <Row className="mt-2">
+            <FloatingLabel className="tkt"
+              controlId="floatingSelectGrid"
+              label="Seleccionar maquina"
+            >
+              <Form.Select aria-label="Seleccionar maquina" name="datamachine" onChange={handleChange} value={state.datamachine} >
+                <option disabled selected >Seleccionar maquina</option>
+                {
+                  externalData?.map((item) => {
+                    return (<option value={item.id} onClick={() => machineItem(item)} > {item?.name} {item?.brand} </option>)
+                  })
+                }
+              </Form.Select>
+            </FloatingLabel>
+          </Row>
+
+          <Row className='addusr' >
+            <Col id='create'>
+              <Button type="submit">Agregar minero</Button>
+            </Col>
+            <Col id='closeone' className='closee'>
+              <Button onClick={() => setModalStatus(false)}>Cerrar</Button>
+            </Col>
+          </Row>
+        </Form>
+      </>
+    )
+  }
+
+  if (modalType === 'Alta') {
+    return (
+      <Form onSubmit={handleSubmitAlta}>
+        <div className='dataIsOk'>
+          <Row className='dataIsOkContent'>
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+            <span>¿Estas seguro de que quieres dar de alta a esta maquina?</span>
+          </Row>
+          <Row className='addusr mt-3'>
+            <Col id='create'>
+              <Button type="submit">Aceptar</Button>
+            </Col>
+            <Col id='closeone' className='closee'>
+              <Button onClick={() => setModalStatus(false)}>Cerrar</Button>
+            </Col>
+          </Row>
+        </div>
       </Form>
-    </>
-  )
+    )
+  }
+
+  if (modalType === 'Baja') {
+    return (
+      <Form onSubmit={handleSubmitBaja}>
+        <div className='dataIsOk'>
+          <Row className='dataIsOkContent'>
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+            <span>¿Estas seguro de que quieres dar de baja a esta maquina?</span>
+          </Row>
+          <Row className='addusr mt-3'>
+            <Col id='create'>
+              <Button type="submit">Aceptar</Button>
+            </Col>
+            <Col id='closeone' className='closee'>
+              <Button onClick={() => setModalStatus(false)}>Cerrar</Button>
+            </Col>
+          </Row>
+        </div>
+      </Form>
+    )
+  }
+
+  if (modalType === 'Delete') {
+    return (
+      <Form onSubmit={handleSubmitDelete}>
+        <div className='dataIsOk'>
+          <Row className='dataIsOkContent'>
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+            <span>¿Estas seguro de eliminar este minero?</span>
+          </Row>
+          <Row className='addusr mt-3'>
+            <Col id='create'>
+              <Button type="submit">Aceptar</Button>
+            </Col>
+            <Col id='closeone' className='closee'>
+              <Button onClick={() => setModalStatus(false)}>Cerrar</Button>
+            </Col>
+          </Row>
+        </div>
+      </Form>
+    )
+  }
 }
 
 export default MineroForms

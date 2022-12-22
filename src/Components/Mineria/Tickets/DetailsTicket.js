@@ -3,7 +3,7 @@ import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { DataContext } from '../../Commons/Context/DataContext';
 import ModalContainer from '../../Commons/ModalContainer';
-import { TICKETS } from '../../Helpers/helper';
+import { MINING_MACHINES, TICKETS } from '../../Helpers/helper';
 import TicketActions from '../Actions/TicketActions';
 import InfoTicket from './InfoTicket';
 import TicketTimeline from './TicketTimeline';
@@ -68,30 +68,126 @@ function DetailsTicket() {
         navigate('/tickets')
     }
 
+    const handleSubmitAlta = (e) => {
+        e.preventDefault();
+        const id_machine = ticketData ? ticketData[0].id_machine : ''
+        const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
+        const options = {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json',
+                'token': token
+            },
+            body: JSON.stringify({ status: 0 })
+        }
+        const darDeAlta = async () => {
+            try {
+                const res = await fetch(MINING_MACHINES + id_machine, options),
+                    json = await res.json();
+            } catch (error) {
+                console.log(error.msg);
+            }
+        }
+        darDeAlta()
+    }
+
+    const handleSubmitBaja = (e) => {
+        e.preventDefault();
+        const id_machine = ticketData ? ticketData[0].id_machine : ''
+        const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
+        const options = {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json',
+                'token': token
+            },
+            body: JSON.stringify({ status: 4 })
+        }
+        const darDeBaja = async () => {
+            try {
+                const res = await fetch(MINING_MACHINES + id_machine, options),
+                    json = await res.json();
+            } catch (error) {
+                console.log(error.msg);
+            }
+        }
+        darDeBaja()
+
+    }
+
     /**funcion para setear form clickeado */
     const pickForm = () => {
         switch (state?.form) {
             case 'Ticket':
-                return (
-                    <Form onSubmit={handleSubmitDelete}>
-                        <div className='dataIsOk'>
-                            <Row className='dataIsOkContent'>
-                                <ion-icon name="checkmark-circle-outline"></ion-icon>
-                                <span>¿Estas seguro de eliminar este ticket?</span>
-                            </Row>
-                            <Row className='addusr mt-3'>
-                                <Col id='create'>
-                                    <Button type="submit">Aceptar</Button>
-                                </Col>
-                                <Col id='closeone' className='closee'>
-                                    <Button onClick={() => setModalStatus(false)}>Cerrar</Button>
-                                </Col>
-                            </Row>
-                        </div>
-                    </Form>
-                )
+                if (modalType === 'Delete') {
+                    return (
+                        <Form onSubmit={handleSubmitDelete}>
+                            <div className='dataIsOk'>
+                                <Row className='dataIsOkContent'>
+                                    <ion-icon name="checkmark-circle-outline"></ion-icon>
+                                    <span>¿Estas seguro de eliminar este ticket?</span>
+                                </Row>
+                                <Row className='addusr mt-3'>
+                                    <Col id='create'>
+                                        <Button type="submit">Aceptar</Button>
+                                    </Col>
+                                    <Col id='closeone' className='closee'>
+                                        <Button onClick={() => setModalStatus(false)}>Cerrar</Button>
+                                    </Col>
+                                </Row>
+                            </div>
+                        </Form>
+                    )
+                }
+
+                if (modalType === 'Alta') {
+                    return (
+                        <Form onSubmit={handleSubmitAlta}>
+                            <div className='dataIsOk'>
+                                <Row className='dataIsOkContent'>
+                                    <ion-icon name="checkmark-circle-outline"></ion-icon>
+                                    <span>¿Estas seguro de que quieres dar de alta a esta maquina?</span>
+                                </Row>
+                                <Row className='addusr mt-3'>
+                                    <Col id='create'>
+                                        <Button type="submit">Aceptar</Button>
+                                    </Col>
+                                    <Col id='closeone' className='closee'>
+                                        <Button onClick={() => setModalStatus(false)}>Cerrar</Button>
+                                    </Col>
+                                </Row>
+                            </div>
+                        </Form>
+                    )
+                }
+
+                if (modalType === 'Baja') {
+                    return (
+                        <Form onSubmit={handleSubmitBaja}>
+                            <div className='dataIsOk'>
+                                <Row className='dataIsOkContent'>
+                                    <ion-icon name="checkmark-circle-outline"></ion-icon>
+                                    <span>¿Estas seguro de que quieres dar de baja a esta maquina?</span>
+                                </Row>
+                                <Row className='addusr mt-3'>
+                                    <Col id='create'>
+                                        <Button type="submit">Aceptar</Button>
+                                    </Col>
+                                    <Col id='closeone' className='closee'>
+                                        <Button onClick={() => setModalStatus(false)}>Cerrar</Button>
+                                    </Col>
+                                </Row>
+                            </div>
+                        </Form>
+                    )
+                }
+
         }
     }
+
+    const [dattee, setDataListDD] = useState([])
 
     useEffect(() => {
 
@@ -126,6 +222,23 @@ function DetailsTicket() {
 
         getTicket()
 
+        const id_madsadchine = ticketData ? ticketData[0].id_machine : ''
+
+
+        const getTickets = async () => {
+            try {
+                const res = await fetch(TICKETS + "/get/machines/" + id_madsadchine, options),
+                    json = await res.json();
+                /**seteamos el listado de tickets */
+                setDataListDD(json);
+                console.log(json);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        getTickets()
+
     }, []);
 
     const dataToUse = ticketData ? ticketData[0] : ''
@@ -157,7 +270,6 @@ function DetailsTicket() {
                     title={state?.title}
                     form={pickForm()}
                     modalStatus={modal}
-
                 />
             )}
             <Row>
@@ -187,7 +299,7 @@ function DetailsTicket() {
             </Row>
             <Row className='mt-3'>
                 <Col md={9}>
-                    <TicketTimeline data={comments} dataToSend={dataToUse?.ticket_comments} idTicket={id} historial={historial}  id_machine={dataToUse?.id_machine}/>
+                    <TicketTimeline data={comments} dataToSend={dataToUse?.ticket_comments} idTicket={id} historial={historial} id_machine={dataToUse?.id_machine} dattee={dattee} />
                 </Col>
             </Row>
         </div>

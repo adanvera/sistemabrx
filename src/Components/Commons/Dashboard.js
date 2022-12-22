@@ -259,10 +259,37 @@ function Dashboard() {
             </Col>
           </Row>
           <Row className="w-100 mt-4">
-            <h6>Crypto currencies</h6>
+            <Row >
+              <h4 className='resumen'>Market</h4>
+            </Row>
             <Col md={12}>
               <div className='shortlist item'>
-                <Table className="tabledash" headers={coinheader} data={((dataCoin))} nopagination={true} />
+                {/* <Table className="tabledash" headers={coinheader} data={((dataCoin))} nopagination={true} /> */}
+                < div class="row widget" ><div class="element">
+                  <h3 data-responsive="BTC">Bitcoin</h3>
+                  <div class="price">16,907.70 USD</div>
+                  <div class="change green"><div class="icon arrow_up"></div>1.17%</div>
+                </div><div class="element">
+                    <h3 data-responsive="ETC">Ethereum Classic</h3>
+                    <div class="price">15.84 USD</div>
+                    <div class="change green"><div class="icon arrow_up"></div>1.42%</div>
+                  </div><div class="element">
+                    <h3 data-responsive="RVN">Ravencoin</h3>
+                    <div class="price">0.020 USD</div>
+                    <div class="change green"><div class="icon arrow_up"></div>3.31%</div>
+                  </div><div class="element">
+                    <h3 data-responsive="ERG">Ergo</h3>
+                    <div class="price">1.29 USD</div>
+                    <div class="change red"><div class="icon arrow_down"></div>-1.76%</div>
+                  </div><div class="element">
+                    <h3 data-responsive="LTC">Litecoin</h3>
+                    <div class="price">66.65 USD</div>
+                    <div class="change green"><div class="icon arrow_up"></div>2.91%</div>
+                  </div><div class="element">
+                    <h3 data-responsive="BNB">Binance Coin</h3>
+                    <div class="price">250.65 USD</div>
+                    <div class="change green"><div class="icon arrow_up"></div>1.37%</div>
+                  </div></div >
                 <span></span>
               </div>
             </Col>

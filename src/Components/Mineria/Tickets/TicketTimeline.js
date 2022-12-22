@@ -16,6 +16,8 @@ const TicketTimeline = (props) => {
     const idTicket = props?.idTicket
     const historial = formatHistorial(props?.historial)
 
+    console.log(props);
+
     const id_machine = props?.id_machine
 
     const initialState = {
@@ -58,20 +60,13 @@ const TicketTimeline = (props) => {
             },
         }
 
-        const getTickets = async () => {
-            try {
-                const res = await fetch("https://backend.brxsgo.com/api/tickets/get/machines/"+id_machine, options),
-                    json = await res.json();
-                /**seteamos el listado de tickets */
-                setDataList(json);
-                console.log(json);
-            } catch (error) {
-                console.log(error);
-            }
-        }
+        setTimeout(() => {
+            
+        }, 2500);
 
-        getTickets()
-    }, [dataList])
+
+
+    }, [])
 
     const handleChange = (e) => {
 
