@@ -22,10 +22,10 @@ function OperacionesReporte() {
     const [fechaHasta,setFechaHasta] = useState("2022-12-31")
     const [data, setData] = useState(initialState);
     
+    const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
 
     useEffect(()=>{
         const getOperations = async ()=>{
-            const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
 
         /**mandamos el header de nuestra consulta */
         const dataRequest ={fechaDesde,fechaHasta}
@@ -50,7 +50,27 @@ function OperacionesReporte() {
     },[])
 
 
+    const handleFilter = async ()=>{
+        
 
+            /**mandamos el header de nuestra consulta */
+            const dataRequest ={fechaDesde,fechaHasta}
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'token': token,
+                    'content-type':'application/json'
+                },
+                body:JSON.stringify(dataRequest)
+            }
+            const request  =await fetch("http://localhost:4000/api/operation/extractByDate",options),
+            response = await request.json()
+            console.log(request);
+            console.log(response);
+            setData(response)
+    
+    }
 
 
     return (
@@ -63,7 +83,8 @@ function OperacionesReporte() {
                         fechaDesde={fechaDesde}
                         fechaHasta={fechaHasta}
                         setFechaDesde={setFechaDesde}
-                        setFechaHasta={setFechaHasta}/>          
+                        setFechaHasta={setFechaHasta}
+                        handleFilter= {handleFilter}/>          
             </Row>
             <Row className=' p-5'>
                 <Col>

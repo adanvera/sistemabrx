@@ -5,7 +5,7 @@ import { Card, Col, Form, Row } from 'react-bootstrap'
 import { DataContext } from '../../Commons/Context/DataContext'
 
 
-function FiltroFechaReportes({fechaDesde,setFechaDesde,setFechaHasta,fechaHasta}) {
+function FiltroFechaReportes({fechaDesde,setFechaDesde,setFechaHasta,fechaHasta,handleFilter}) {
     const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
 
 
@@ -46,7 +46,7 @@ function FiltroFechaReportes({fechaDesde,setFechaDesde,setFechaHasta,fechaHasta}
             </Col>
             <div className='col-2 mt-3 delete-btn tkt d-flex'>
 
-                <input type="button" value='Filtrar' /* onClick={() => handleFilterDateOperations()} */ />
+                <input type="button" value='Filtrar' onClick={() => handleFilter()}  />
 
             </div>
 
