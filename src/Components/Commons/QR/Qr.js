@@ -6,7 +6,6 @@ const QR = ({ data, size, images }) => {
     return (
         <QRCode
           value={data}
-          title={"BTC"}
           size={size}
           bgColor="#FFFFFF"
           fgColor="#000000"
