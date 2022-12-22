@@ -3,12 +3,16 @@ import { Button, Col, Container, Row } from 'react-bootstrap';
 import isBuyingImgBtc from '../../assets/images/btc.jpeg'
 import isBuyingImgUsdt from '../../assets/images/usdt.jpeg'
 import { DataContext } from '../Commons/Context/DataContext';
+import QR from '../Commons/QR/Qr';
 import { OPERATION_PROD, OPERATION_TEST } from '../Helpers/helper';
+import btcLogo from '../../assets/images/btc-logo.png'
+import usdtLogo from '../../assets/images/usdt-logo.png'
 
 const OperationsBuyConfirmed = (props) => {
     const { operationsClient, dataOPeration, idClientToSale, setShowModalOperation,showModalOperation,setModalStatus } = useContext(DataContext)
     const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
-
+    const data = dataOPeration.currentCurrency === '1'?'BTC-abcdefigxfasdfasdf':'USDT-zzzmamsfasdfasa'
+    const images = dataOPeration.currentCurrency === '1'?btcLogo:usdtLogo
     const handleConfirmed = async () => {
         let btc,usdt;
         if(dataOPeration.currentCurrency === '1'){
@@ -109,16 +113,17 @@ const OperationsBuyConfirmed = (props) => {
                         </div>
                     </Col>
 
-                    <Col md={12}>
+                    <Col md={12} >
                         <div className='datashow'>
-                            <div className='qr-imagen'>
-                                <img src={props.props.typeCurrency === '1' ? isBuyingImgBtc : isBuyingImgUsdt} width="300px  " height="300px" />
+                            <div className='qr-imagen mt-3 mb-3'>
+                                <QR data={data} images={images} size={300}/>
+                                {/* <img src={props.props.typeCurrency === '1' ? isBuyingImgBtc : isBuyingImgUsdt} width="300px  " height="300px" /> */}
                             </div>
                         </div>
                     </Col>
 
                     <Col id='create'>
-                        <Button type="submit" className=" btnadd" onClick={handleConfirmed}>Confirmar</Button>
+                        <Button type="submit" className="btnadd" onClick={handleConfirmed}>Confirmar</Button>
                     </Col>
 
                 </Container>
