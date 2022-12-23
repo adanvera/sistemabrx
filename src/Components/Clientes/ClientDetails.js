@@ -189,29 +189,28 @@ function ClientDetails() {
         }
 
 
+    
+
+    
+}
+    const handlePDF = ()=>{
+        var url =`http://localhost:4000/api/client/extractPDF/${id}?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}`;
+        console.log(url);
+        var oReq = new XMLHttpRequest();
+        oReq.open("GET", url, true);
+        oReq.responseType = "arraybuffer";
+
+        oReq.onload = function (oEvent) {
+            console.log(oReq.response);
+            var blob = new Blob([oReq.response], { type: "application/pdf" });
+            var win = window.open('', '_blank');
+            var URL = window.URL || window.webkitURL;
+            var dataUrl = URL.createObjectURL(blob);
+            win.location = dataUrl;
+        };
+        oReq.send();
     }
-
-    // const currentMonthName = () => {
-    //     const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-    //         "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-    //     ];
-    //     const date = new Date();
-    //     const month = date.getMonth();
-    //     return monthNames[month];
-    // }
-
-    // const getCurrentMonth = currentMonthName();
-
-    const PdfExtract = () => (
-
-        <PDFDownloadLink
-            document={<DocuPDF operations={dataOperations} cliente={clientData} />}
-            fileName="extracto.pdf"
-        >
-            <Button variant="info">Descargar Extracto </Button>
-        </PDFDownloadLink>
-
-    );
+    
 
     const handleFilterOperationNumber = (e)=>{
         console.log(numeroOperacion);
@@ -313,7 +312,8 @@ function ClientDetails() {
                                             <input type = "button" value='Limpiar' onClick={()=>handleCleanOperations()}/>
 
                                         </div>
-                                        {dataOperations !== ''?<PdfExtract/>:''}
+                                        
+                                        {dataOperations !== ''?<input  className='form-control col-4'type={"button"} value={"descargar extracto"} onClick={handlePDF}/>:''}
                                     
                                     </Row> 
                                 ) : ''
