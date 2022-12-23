@@ -5,9 +5,9 @@ import { Card, Col, Container, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { DataContext } from '../Commons/Context/DataContext'
 import ModalContainer from '../Commons/ModalContainer'
-import gastoimg from "../../assets/images/gastos.png"
-import param from "../../assets/images/param.png"
-import reports from "../../assets/images/reports.png"
+import gastoimg from "../../assets/images/bolsa-de-dinero.gif"
+import param from "../../assets/images/conexion.gif"
+import reports from "../../assets/images/grafico-de-linea.gif"
 
 const Negocio = (props) => {
     const { sidebarStatus, setSidebarStatus } = useContext(DataContext)

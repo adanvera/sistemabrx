@@ -1,3 +1,4 @@
+import moment from 'moment/moment'
 import React, { useEffect, useState } from 'react'
 import { Button, Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 import DatePicker from 'react-date-picker'
@@ -281,14 +282,31 @@ const InfoImportación = (props) => {
         setChanged(true)
     }
 
-
     const dateToCompare = dataImp ? new Date(dataImp.fecha_arribo) : ""
     const actualDate = new Date()
+    /**diff on days between actualDate and dateToCompare*/
+    const diffDays = Math.ceil((dateToCompare - actualDate) / (1000 * 60 * 60 * 24));
 
-    /**comparar dias y encontrar diferencia de dias */
-    const diffTime = Math.abs(dateToCompare - actualDate);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const showDaysToArrive = (data, dateToCompare) => {
 
+        /**format dateToCompare to dd/mm/yyy  */
+        const dateToCompareFormated = dateToCompare ? dateToCompare.toLocaleDateString() : ""
+
+        if (diffDays > 0) {
+            return (
+                <p className="">Faltan {diffDays} días para que llegue</p>
+            )
+        } else if (diffDays === 0) {
+            return (
+                <p className="">Importación llegó hoy</p>
+            )
+        } else if (diffDays < 0) {
+            return (
+                <p className="">Llegó hace {Math.abs(diffDays)} días</p>
+            )
+        }
+
+    }
 
     return (
         <div >
@@ -474,7 +492,9 @@ const InfoImportación = (props) => {
                             <Row className='mt-3'>
                                 <Col className='box-diff'>
                                     <div className='tdfe'>
-                                        FALTAN {diffDays} DÍAS PARA QUE LLEGUE
+                                        {
+                                            showDaysToArrive(diffDays, dateToCompare)
+                                        }
                                     </div>
                                 </Col>
                             </Row>

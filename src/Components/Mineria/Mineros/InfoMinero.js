@@ -34,6 +34,7 @@ const InfoMinero = (props) => {
     const id_machine = data ? data?.id_machine : ''
     const power = data ? data?.consume_machine : ''
     const { mineroGloabl, setMineroGlobal } = useContext(DataContext)
+    const [databtc, setDatabtc] = useState()
 
 
     const [chartData, setChartData] = useState({})
@@ -54,6 +55,9 @@ const InfoMinero = (props) => {
 
     const [valueBTC, setValueBTC] = useState('')
     const [ultimostrinta, setUltimostrinta] = useState()
+    const [coins, setCoins] = useState()
+
+    const idFinal = props?.datID
 
     useEffect(() => {
 
@@ -103,7 +107,7 @@ const InfoMinero = (props) => {
 
         const getConsumoId = async () => {
             try {
-                const res = await fetch(CONSUMO + props?.datID, optionsdd),
+                const res = await fetch(CONSUMO + idFinal, optionsdd),
                     json = await res.json()
                 console.log(json);
                 setChartData(json)
@@ -116,7 +120,7 @@ const InfoMinero = (props) => {
 
         const coinmining = async () => {
             try {
-                const res = await fetch(COINMINIG + props?.datID, options),
+                const res = await fetch(COINMINIG + idFinal, options),
                     json = await res.json()
                 setCoinmining(json);
             } catch (error) {
@@ -170,22 +174,64 @@ const InfoMinero = (props) => {
 
         getConsumoUltimos()
 
-    }, [id_machine])
+        const databtc = async () => {
+            const opptionss = {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                }
+            }
 
+            try {
+                const res = await fetch("https://api.minerstat.com/v2/coins?list=BTC", opptionss),
+                    json = await res.json()
+                setDatabtc(json)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        databtc()
+
+        const getCurrencies = async () => {
+            const optionns = {
+                method: 'GET',
+
+            }
+            try {
+
+                const res = await fetch("https://es.beincrypto.com/wp-json/ceranking/v2/filter-data?val=&filter=coinid-with-fiat", optionns),
+
+                    json = await res.json()
+                setCoins(json)
+            } catch (error) {
+                console.log(error);
+            }
+
+        }
+
+        getCurrencies()
+
+
+    }, [id_machine, props?.datID])
+
+    /**filtrar por Bitcoin */
+    const filterByBitcoin = coins ? coins?.filter((item) => item.name === 'Bitcoin') : ''
+    const logoBitcoin = filterByBitcoin ? filterByBitcoin[0]?.logo : ''
+    const priceBtc = databtc ? databtc[0].price : ''
     const filterPowerById = amountPower?.filter((item) => item?.id_machine === id_machine)
     const filterById = amountDay?.filter((item) => item?.id_machine === id_machine)
     const finalAmountDay = data ? filterById[0] : ''
 
     const btcValue = valueBTC ? valueBTC[0].price : ''
 
-    const formatedData = id_machine ? coinMinigFormated(coinmining, btcValue) : ''
+    const formatedData = id_machine ? coinMinigFormated(coinmining, btcValue, logoBitcoin) : ''
 
     const headers = {
-        amount: "Amount",
-        dollar: "Dollar",
-        created_at: "Recibido el",
+        amount: "MINADO",
+        dollar: "DOLARES",
+        created_at: "RECIBIDO EL",
     }
-
 
     const initialState = {
         filtros: {
@@ -239,22 +285,36 @@ const InfoMinero = (props) => {
     }
 
 
-    const getGanancia = (coinmining) => {
+    const consumoEnergia = ultimostrinta ? ultimostrinta[0]?.consumo?.toFixed(2) : ''
+
+    const getGanancia = (coinmining, priceBtc) => {
 
         var sum = 0
 
         if (coinmining) {
             Object.keys(coinmining)?.map((item) => {
-                const amount = Number(coinmining[item].dollar)
+                const amount = Number(coinmining[item].amount)
                 /**cast string to number */
                 sum += amount
             })
         }
-        return sum
+
+        const castToDollar = sum * priceBtc
+
+        return castToDollar
     }
 
+    const castGanancia = getGanancia(coinmining, priceBtc)
+    const ganancia = castGanancia.toFixed(2)
+    const gananciaMinando = Number(castGanancia.toFixed(2))
 
-    console.log(ultimostrinta);
+    console.log("minado", gananciaMinando);
+
+    const gananciaNeta = (gananciaMinando, consumoo) => {
+
+    }
+
+    gananciaNeta(gananciaMinando, consumoEnergia)
 
     return (
         <>

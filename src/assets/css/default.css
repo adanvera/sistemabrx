@@ -1677,3 +1677,56 @@ span.statusinfo.failtxt {
 span.dete ion-icon.md.hydrated {
     font-size: 34px;
 }
+
+ul.ulguia {
+    list-style: none;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+li.liguia {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.imgtkg img {
+    height: 60px;
+    width: 60px;
+}
+
+span.days.past {
+    background: rgb(255, 80, 80);
+    border-radius: 8px;
+    padding: 5px;
+    color: white;
+}
+
+button.button.btn-cli {
+    height: 38px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(0, 143, 143, 1);
+    width: 120px;
+    color: #fff;
+    border-radius: 6px;
+}
+
+h4.resumen.details.derd {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.dividefilters.row {
+    border-top: 1px solid #E5E7EB;
+    margin: 1px;
+}
+
+input#downloadextract:hover{
+    border: 1px solid #00a8ff;
+    color: #00a8ff;
+}

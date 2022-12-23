@@ -520,18 +520,64 @@ export const formatedDataImportaciones = (data) => {
 
 }
 
+// export const showDaysToArrive = (data, dateToCompare) => {
+
+//     /**format dateToCompare to dd/mm/yyy  */
+//     const dateToCompareFormated = dateToCompare ? dateToCompare.toLocaleDateString() : ""
+
+//     if (diffDays > 0) {
+//         return (
+//             <p className="">Faltan {diffDays} días para que llegue</p>
+//         )
+//     } else if (diffDays === 0) {
+//         return (
+//             <p className="">Importación llegó hoy</p>
+//         )
+//     } else if (diffDays < 0) {
+//         return (
+//             <p className="">Llegó hace {Math.abs(diffDays)} días</p>
+//         )
+//     }
+
+// }
+
 export const counterDays = (date) => {
-    let days = 0
-    if (date) {
-        const dateArrivo = new Date(date)
-        const dateNow = new Date()
-        const diffTime = Math.abs(dateNow - dateArrivo);
-        days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    const dateToCompare = date ? new Date(date) : ""
+    const actualDate = new Date()
+    /**diff on days between actualDate and dateToCompare*/
+    const diffDays = Math.ceil((dateToCompare - actualDate) / (1000 * 60 * 60 * 24));
+
+    console.log("diffDays", diffDays);
+
+    // let days = 0
+    // if (date) {
+    //     const dateArrivo = new Date(date)
+    //     const dateNow = new Date()
+    //     const diffTime = Math.abs(dateNow - dateArrivo);
+    //     days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    // }
+
+    // if (days === 0) return (<span className="days today">Llegó hoy</span>)
+    // if (days === 1) return (<span className=" days tommorrow">Llega mañana</span>)
+    // else return (<span className="days counting">Faltan {days} dias</span>)
+
+    if (diffDays > 0) {
+        return (
+            <span className="days counting">Faltan {diffDays} días para que llegue</span>
+        )
+    } else if (diffDays === 0) {
+        return (
+            <span className="days today">Llegó hoy</span>
+        )
+    } else if (diffDays < 0) {
+        return (
+            <span className="days past">Llegó hace {Math.abs(diffDays)} días</span>
+        )
     }
 
-    if (days === 0) return (<span className="days today">Llegó hoy</span>)
-    if (days === 1) return (<span className=" days tommorrow">Llega mañana</span>)
-    else return (<span className="days counting">Faltan {days} dias</span>)
+
+
 }
 
 export const formatImpShort = (data) => {
@@ -887,7 +933,7 @@ export const formatLogo = (logo) => {
 }
 
 
-export const coinMinigFormated = (data, btcValue) => {
+export const coinMinigFormated = (data, btcValue, logoBitcoin) => {
     let obData = {}
 
     if (data) {
@@ -896,16 +942,22 @@ export const coinMinigFormated = (data, btcValue) => {
             obData = {
                 ...obData,
                 [item?.id_coinmining]: {
-                    amount: item?.amount + " BTC ",
+                    amount: formatBtcData(logoBitcoin, item?.amount),
                     dollar: formatNumberrrr(item?.amount, btcValue),
                     created_at: formatoDate(item?.created_at),
-                    creatted_at_temp : item?.created_at,
+                    creatted_at_temp: item?.created_at,
                 }
             }
         })
     }
 
-    return obData
+    /**ORDER BY DATE */
+    const sorted = Object.values(obData).sort((a, b) => {
+
+        return new Date(a.creatted_at_temp) - new Date(b.creatted_at_temp);
+    });
+
+    return sorted
 }
 
 export const formatNumberrrr = (number, btcValue) => {
@@ -918,6 +970,10 @@ export const formatNumberrrr = (number, btcValue) => {
 
 }
 
+
+export const formatBtcData = (logoBitcoin, number) => {
+    return <span>{formatLogo(logoBitcoin)}  {"  " + number} BTC </span>
+}
 
 
 /**
@@ -940,9 +996,6 @@ export const filteredDataMiners = (dataList, filter) => {
         }
     }
 
-
-    console.log(dataList);
-
     Object.keys(filter).forEach(filtro => {
         /**
          * Si el Filtro es distinta al valor TODAS procedera a filtrar, ya que TODAS implica que debe devolver el objeto
@@ -956,7 +1009,7 @@ export const filteredDataMiners = (dataList, filter) => {
                 .filter(item => {
 
                     if (filtro === 'hasta') {
-                        const fechaMineer = new Date(filteredData[item].creatted_at_temp                            )
+                        const fechaMineer = new Date(filteredData[item].creatted_at_temp)
                         const fechaFiltro = filter[filtro]
                         return fechaMineer.toISOString().substring(0, 10) <= fechaFiltro.toISOString().substring(0, 10)
                     }

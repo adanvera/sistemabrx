@@ -5,9 +5,9 @@ import { DataContext } from '../Commons/Context/DataContext'
 import ModalContainer from '../Commons/ModalContainer'
 import MachineForm from './Forms/MachineForm'
 import TicketForm from './Forms/TicketForm'
-import tktimg from "../../assets/images/ticketimg.png"
-import mchimg from "../../assets/images/machine.png"
-import mcc from "../../assets/images/machine_Aa.png"
+import tktimg from "../../assets/images/ticketimg.gif"
+import mchimg from "../../assets/images/machine.gif"
+import mcc from "../../assets/images/machine_Aa.gif"
 import MineroForms from './Forms/MineroForms'
 import { Line } from 'react-chartjs-2'
 import {

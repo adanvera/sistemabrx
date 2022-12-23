@@ -220,9 +220,18 @@ const Sidebar = props => {
                         <span className="pl-3">Cerrar sesión</span>
                     </Link>
                 </li>
+
+            </ul>
+            <ul className="ulguia">
+                <li className="liguia">
+                    <span className="spanguia">Guia</span>
+                </li>
             </ul>
         </aside >
     )
 }
 
 export default Sidebar
+
+
+// http://guia.brxsgo.com/

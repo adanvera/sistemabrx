@@ -1,7 +1,8 @@
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import React, { useContext, useEffect, useState } from 'react'
+import { Fragment } from 'react';
 import { Button, Col, Container, Form, Nav, Row } from 'react-bootstrap'
-import { useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { DataContext } from '../Commons/Context/DataContext';
 import Table from '../Commons/Table/Table';
 import { CLIENT, MINING_SUMMARY, OPERATION_PROD } from '../Helpers/helper';
@@ -11,11 +12,11 @@ import CheckBox from './Forms/CheckBox';
 
 function ClientDetails() {
     const { id } = useParams();
-    const [fechaDesde,setFechaDesde] = useState('2022-12-01')
-    const [fechaHasta,setFechaHasta] = useState('2022-12-31')
-    const [numeroOperacion,setNumeroOperacion] = useState('')
-    const [operationTemporal,setOperationTemporal] = useState('')
-    const [typesOperations,setTypesOperations] = useState('')
+    const [fechaDesde, setFechaDesde] = useState('2022-12-01')
+    const [fechaHasta, setFechaHasta] = useState('2022-12-31')
+    const [numeroOperacion, setNumeroOperacion] = useState('')
+    const [operationTemporal, setOperationTemporal] = useState('')
+    const [typesOperations, setTypesOperations] = useState('')
     const initialState = {
         tab: {
             operations: true,
@@ -118,7 +119,6 @@ function ClientDetails() {
 
     const onHandleClick = e => {
         e.preventDefault()
-
         setState(prev => {
             const updated = {}
             Object.keys(prev.tab).forEach(item => {
@@ -129,7 +129,6 @@ function ClientDetails() {
                 tab: {
                     ...updated,
                 }
-
             }
         })
     }
@@ -190,12 +189,12 @@ function ClientDetails() {
         }
 
 
-    
 
-    
-}
-    const handlePDF = ()=>{
-        var url =`${CLIENT}extractPDF/${id}?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}&typeOperation=${typesOperations}`;
+
+
+    }
+    const handlePDF = () => {
+        var url = `${CLIENT}extractPDF/${id}?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}&typeOperation=${typesOperations}`;
         console.log(url);
         var oReq = new XMLHttpRequest();
         oReq.open("GET", url, true);
@@ -211,131 +210,184 @@ function ClientDetails() {
         };
         oReq.send();
     }
-    
 
-    const handleFilterOperationNumber = (e)=>{
+
+    const handleFilterOperationNumber = (e) => {
         console.log(numeroOperacion);
         const newData = dataOperations.filter(op => op.operation === Number(numeroOperacion))
         console.log(newData);
-        if(newData !== '' ){
+        if (newData !== '') {
             setOperationTemporal(dataOperations)
             setDataOperations(newData)
 
         }
 
     }
-    const handleCleanOperations = ()=>{
+    const handleCleanOperations = () => {
         setDataOperations(operationTemporal)
         setNumeroOperacion('')
     }
 
+    const copyToClipBoard = async copyMe => {
+        try {
+            await navigator.clipboard.writeText(copyMe);
+        } catch (err) {
+            return
+        }
+    };
+
     return (
-        <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
-            <Container fluid={true} className="">
-                <Row>
-                    <Col className='headtiket'>
-                        <h6>DETALLES DEL CLIENTE</h6>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <ClientInfo data={clientData} />
-                        <Row className="mt-5"><h4 className='resumen details'>Actividades del cliente</h4></Row>
-                        <section className='mt-3'>
-                            <Nav variant="tabs" defaultActiveKey="operations">
-                                <Nav.Item >
-                                    <Nav.Link id='operations' onClick={e => onHandleClick(e)} eventKey="operations">Operaciones</Nav.Link>
-                                </Nav.Item>
-                                <Nav.Item >
-                                    <Nav.Link id='mineria' onClick={e => onHandleClick(e)} eventKey="mineria">Mineria</Nav.Link>
-                                </Nav.Item>
-                               
-                            </Nav>
-                        </section>
-                        {
-                            state?.tab?.operations
-                                ? (
-                                    <Row className='justify-content-between mb-3'>
-                                        <Col className='mt-3'>
-                                            <label>Fecha desde:</label>
-                                            <Form.Group controlId="duedate" >
-                                                <Form.Control
-                                                    type="date"
-                                                    name="duedate"
-                                                    placeholder="--/--/--"
-                                                    value={fechaDesde}
-                                                    onChange={(e) => setFechaDesde(e.target.value)}
-                                                />
-
-                                            </Form.Group>
-
-                                        </Col>
-
-                                        <Col className='mt-3'>
-                                            <label>Fecha hasta:</label>
-                                            <Form.Group controlId="duedate" >
-                                                <Form.Control
-                                                    type="date"
-                                                    name="duedate"
-                                                    placeholder="--/--/--"
-                                                    value={fechaHasta}
-                                                    onChange={(e) => setFechaHasta(e.target.value)}
-                                                />
-                                            </Form.Group>
-                                        </Col>    
-                                        
-                                        <div className='col-2 mt-3 delete-btn tkt d-flex'>
-
-                                            <input type = "button" value='Filtrar' onClick={()=>handleFilterDateOperations()}/>
-
-                                        </div>
-                                        <div className='col-2 mt-3'>
-                                            <label>Nro operacion:</label>
-                                            <Form.Group controlId="duedate" >
-                                                <Form.Control
-                                                    type="text"
-                                                    name="nroOperacion"
-                                                    placeholder="Digite el numero de operacion"
-                                                    value={numeroOperacion}
-                                                    onChange={(e) => setNumeroOperacion(e.target.value)}
-                                                />
-
-                                            </Form.Group>
-                                            
-                                        </div>
-                                        <div className='col-2 mt-3 delete-btn tkt d-flex'>
-
-                                            <input type = "button" value='Filtrar' onClick={()=>handleFilterOperationNumber()}/>
-
-                                        </div>
-                                        <div className='col-2 mt-3 delete-btn tkt d-flex'>
-
-                                            <input type = "button" value='Limpiar' onClick={()=>handleCleanOperations()}/>
-
-                                        </div>
-                                        <CheckBox setTypesOperations ={setTypesOperations}/>
-                                        {dataOperations !== ''?<input  className='form-control col-4'type={"button"} value={"descargar extracto"} onClick={handlePDF}/>:''}
-                                    
-                                    </Row> 
-                                ) : ''
-                              
-                        }
-                        <section className='tabcontent'>
-                            <div id="operations" className={state?.tab?.operations ? 'content-tab' : 'content-tab is-hidden'}>
-                                {state?.tab?.operations &&
-                                    <Table headers={dataOperationsHeader} data={((dataOperations))} />
-                                }
+        <div className={sidebarStatus === 'open' ? 'main-content-tkt' : 'main-content-tkt extend'} >
+            <Row className=''>
+                <Col md={9} className="tiktop ml-1 pb-3">
+                    <Container fluid={true} className="">
+                        <Row className='d-grid pt-3 headerdetails'>
+                            <Col><div className='colorlink ticketsdetails'> <Link to="/clientes">{"< Clientes"}</Link> </div></Col>
+                            <Col className='headtiket imp d-flex'>
+                                <div>
+                                    <h4>{clientData?.name + clientData.last_name}  </h4>
+                                </div>
+                                <div className='text-end clipboard' onClick={() => copyToClipBoard(clientData?.name + clientData.last_name)} >
+                                    <span className='txttd'><ion-icon name="copy-outline"></ion-icon></span>
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row className='w-100' >
+                            <ClientInfo data={clientData} />
+                        </Row>
+                    </Container>
+                </Col>
+                <Col md={3}>
+                    <div className='tiktop'>
+                        <Col className='headtiket d-flex'>
+                            <div>
+                                <h6>Acciones</h6>
                             </div>
-                            <div id="mineria" className={state?.tab?.mineria ? 'content-tab' : 'content-tab is-hidden'}>
-                                {state?.tab?.mineria &&
-                                    <Table headers={minerHeader} data={((miningData))} />
-                                }
+                        </Col>
+                        <div className="actionstwo d-grid mt-3">
+                            <div className="delete-btn tkt d-flex" id='_btnDeletetkt'  >
+                                <span>Eliminar cliente </span>
+                                <div>
+                                    <ion-icon name="trash-outline"></ion-icon>
+                                </div>
                             </div>
-                           
-                        </section>
-                    </Col>
-                </Row>
-            </Container>
+                        </div>
+                    </div>
+                </Col>
+            </Row>
+            <Row className='mt-3'>
+                <Col md={9}>
+                    <Fragment>
+                        <div className='tiktop'>
+                            <Row className=""><h4 className='resumen details derd'>Actividades del cliente</h4></Row>
+                            <Row className='d-flex'>
+                                <Col md={10}>
+                                    <Nav variant="tabs" defaultActiveKey="operations">
+                                        <Nav.Item >
+                                            <Nav.Link id='operations' onClick={e => onHandleClick(e)} eventKey="operations">Operaciones</Nav.Link>
+                                        </Nav.Item>
+                                        <Nav.Item >
+                                            <Nav.Link id='mineria' onClick={e => onHandleClick(e)} eventKey="mineria">Mineria</Nav.Link>
+                                        </Nav.Item>
+                                    </Nav>
+                                </Col>
+                                <Col md={2}>
+                                    {
+                                        state?.tab?.operations &&
+                                        <input className='form-control col-4' type={"button"} value={"descargar extracto"} onClick={handlePDF} id="downloadextract" />
+                                    }
+                                </Col>
+                            </Row>
+                            <Row className='dividefilters'></Row>
+                            {
+                                state?.tab?.operations &&
+                                <>
+                                    <Row className='mt-2'>
+                                        <CheckBox setTypesOperations={setTypesOperations} />
+                                    </Row>
+                                    <Row className='dividefilters'></Row>
+                                </>
+
+                            }
+
+                            {
+                                state?.tab?.operations
+                                    ? (
+                                        <>
+                                            <Row className='mt-3'>
+                                                <Col className='d-flex'>
+                                                    <Form.Group controlId="duedate"   >
+                                                        <Form.Control
+                                                            type="text"
+                                                            name="nroOperacion"
+                                                            placeholder="Buscar n° operación"
+                                                            value={numeroOperacion}
+                                                            className="input is-normal searchinput"
+                                                            onChange={(e) => setNumeroOperacion(e.target.value)}
+                                                        />
+                                                    </Form.Group>
+                                                    <div className=''>
+                                                        <button className="  button btn-buscar ml-2 btn-cli" value='Buscar' onClick={() => handleFilterOperationNumber()} >Buscar</button>
+                                                    </div>
+                                                </Col>
+                                            </Row>
+                                            <Row className="mt-3 mb-3">
+                                                <Col >
+                                                    <label>Fecha desde:</label>
+                                                    <Form.Group controlId="duedate" >
+                                                        <Form.Control
+                                                            type="date"
+                                                            name="duedate"
+                                                            placeholder="--/--/--"
+                                                            value={fechaDesde}
+                                                            onChange={(e) => setFechaDesde(e.target.value)}
+                                                        />
+
+                                                    </Form.Group>
+                                                </Col>
+                                                <Col >
+                                                    <label>Fecha hasta:</label>
+                                                    <Form.Group controlId="duedate" >
+                                                        <Form.Control
+                                                            type="date"
+                                                            name="duedate"
+                                                            placeholder="--/--/--"
+                                                            value={fechaHasta}
+                                                            onChange={(e) => setFechaHasta(e.target.value)}
+                                                        />
+                                                    </Form.Group>
+                                                </Col>
+                                                <Col className="column align">
+                                                    <div className="item-column">
+                                                        <button className=" button btn-cli" value='Filtrar' onClick={() => handleFilterDateOperations()} >Filtrar</button>
+                                                    </div>
+                                                </Col>
+                                                <Col className="column align">
+                                                    <div className="item-column">
+                                                        <button className=" button btn-cli" value='Limpiar' onClick={() => handleCleanOperations()}>Limpiar</button>
+                                                    </div>
+                                                </Col>
+                                            </Row>
+                                        </>
+
+                                    ) : ''
+                            }
+                            <section className='tabcontent'>
+                                <div id="operations" className={state?.tab?.operations ? 'content-tab' : 'content-tab is-hidden'}>
+                                    {state?.tab?.operations &&
+                                        <Table headers={dataOperationsHeader} data={((dataOperations))} />
+                                    }
+                                </div>
+                                <div id="mineria" className={state?.tab?.mineria ? 'content-tab' : 'content-tab is-hidden'}>
+                                    {state?.tab?.mineria &&
+                                        <Table headers={minerHeader} data={((miningData))} />
+                                    }
+                                </div>
+                            </section>
+                        </div>
+                    </Fragment>
+                </Col>
+            </Row>
         </div>
     )
 }

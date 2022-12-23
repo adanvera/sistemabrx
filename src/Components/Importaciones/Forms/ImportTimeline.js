@@ -127,7 +127,6 @@ const ImportTimeline = (props) => {
                         </Row>
                     </Form>
                 }
-
                 {
                     clicked === 'comments' &&
                     Object.keys(comments).map((item => {
@@ -153,7 +152,6 @@ const ImportTimeline = (props) => {
                         )
                     }))
                 }
-
                 {/*                 
                 {
                     clicked === 'historial' &&
@@ -177,7 +175,6 @@ const ImportTimeline = (props) => {
                         )
                     }))
                 }  */}
-
             </div>
         </Fragment>
     )

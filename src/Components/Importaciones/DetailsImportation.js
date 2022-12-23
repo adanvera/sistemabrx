@@ -149,7 +149,6 @@ const DetailsImportation = (props) => {
                         <Row className='w-100'>
                             <InfoImportación idData={id} />
                         </Row>
-
                     </Container>
                 </Col>
                 <Col md={3}>

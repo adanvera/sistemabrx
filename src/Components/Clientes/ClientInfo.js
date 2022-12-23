@@ -79,19 +79,17 @@ const ClientInfo = (props) => {
             {modalstatus === true ? (<ClienteForm modalType="Delete" id_client={state.id_client} />)
                 : (
                     <div className='d-flex'>
-
-
                         {data && modalstatus === false &&
                             <>
-                                <Col md={9}>
+                                <Col md={12}>
                                     <Row className='mt-3'>
-                                        <Col>
+                                        <Col md={2}>
                                             <div className='datashow'>
                                                 <label className='labeltk' >Codigo</label>
-                                                <input className='form-control ' value={state.id_client} disabled />
+                                                <input className='form-control codecli' value={state.id_client} disabled />
                                             </div>
                                         </Col>
-                                        <Col>
+                                        <Col md={5}>
                                             <div className='datashow'>
                                                 <label className='labeltk'>Nombre</label>
                                                 <input className='form-control '
@@ -101,7 +99,7 @@ const ClientInfo = (props) => {
                                                 />
                                             </div>
                                         </Col>
-                                        <Col>
+                                        <Col md={5}>
                                             <div className='datashow'>
                                                 <label className='labeltk'>Apellido</label>
                                                 <input className='form-control'
@@ -112,7 +110,9 @@ const ClientInfo = (props) => {
                                                 />
                                             </div>
                                         </Col>
-                                        <Col>
+                                    </Row>
+                                    <Row className='mt-3'>
+                                        <Col md={4}>
                                             <div className='datashow'>
                                                 <label className='labeltk' >Documento</label>
                                                 <input className='form-control'
@@ -122,10 +122,7 @@ const ClientInfo = (props) => {
                                                     onChange={(e) => handleChange(e)} />
                                             </div>
                                         </Col>
-
-                                    </Row>
-                                    <Row className='mt-3'>
-                                        <Col>
+                                        <Col md={8}>
                                             <div className='datashow'>
                                                 <label className='labeltk' >Direccion</label>
 
@@ -136,10 +133,11 @@ const ClientInfo = (props) => {
                                                     onChange={(e) => handleChange(e)} />
                                             </div>
                                         </Col>
-                                        <Col>
+                                    </Row>
+                                    <Row className='mt-3'>
+                                        <Col md={4}>
                                             <div className='datashow'>
                                                 <label className='labeltk'>Correo</label>
-
                                                 <input className='form-control'
                                                     name='email'
                                                     value={state.email}
@@ -147,7 +145,7 @@ const ClientInfo = (props) => {
                                                     onChange={(e) => handleChange(e)} />
                                             </div>
                                         </Col>
-                                        <Col>
+                                        <Col md={4} >
                                             <div className='datashow'>
                                                 <label className='labeltk'>Telefono</label>
 
@@ -158,19 +156,18 @@ const ClientInfo = (props) => {
                                                     onChange={(e) => handleChange(e)} />
                                             </div>
                                         </Col>
-                                        {
-                                            changed === true &&
-                                            <Row className=' mt-3'>
-                                                <Col id='creatdfe'>
-                                                    <Button type="submit" onClick={handleSubmit}>Guardar cambios</Button>
-                                                </Col>
-                                            </Row>
-                                        }
 
                                     </Row>
-
+                                    {
+                                        changed === true &&
+                                        <Row className=' mt-3'>
+                                            <Col id='creatdfe'>
+                                                <Button type="submit" onClick={handleSubmit}>Guardar cambios</Button>
+                                            </Col>
+                                        </Row>
+                                    }
                                 </Col>
-                                <Col md={3}>
+                                {/* <Col md={3}>
                                     <div className='tiktop'>
                                         <Col className='headtiket d-flex'>
                                             <div>
@@ -186,7 +183,7 @@ const ClientInfo = (props) => {
                                             </div>
                                         </div>
                                     </div>
-                                </Col>
+                                </Col> */}
 
                             </>
 
