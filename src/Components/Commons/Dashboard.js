@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
-import { formatedCoins, formatedShortOp, formatImpShort, formatNowShoertTciket } from '../Helpers/formats';
+import { formatCoins, formatedCoins, formatedShortOp, formatImpShort, formatNowShoertTciket } from '../Helpers/formats';
 import { API_COINS, DOLLAR_API, IMPORTACIONES, OPERATION_PROD, TICKETS } from '../Helpers/helper';
 import { DataContext } from './Context/DataContext';
 import Table from './Table/Table';
@@ -66,6 +66,8 @@ function Dashboard() {
   }
 
   const [coins, setCoins] = useState('')
+  const [btcDolar, setBtcDolar] = useState('')
+  const [valueBTC, setValueBTC] = useState('')
 
   useEffect(() => {
     /** Obtenemos los valores que guardamos en el token para poder utilizarlos
@@ -163,7 +165,71 @@ function Dashboard() {
       }
     }
     getDollar()
+
+    const getCurrencies = async () => {
+      const optionns = {
+        method: 'GET',
+
+      }
+      try {
+
+        const res = await fetch("https://es.beincrypto.com/wp-json/ceranking/v2/filter-data?val=&filter=coinid-with-fiat", optionns),
+
+          json = await res.json()
+        setCoins(json)
+      } catch (error) {
+        console.log(error);
+      }
+
+    }
+
+    getCurrencies()
+
+    const btcDolarApi = async () => {
+      const optionns = {
+        method: 'GET',
+
+      }
+      try {
+
+        const res = await fetch("https://api.coingecko.com/api/v3/simple/price/?ids=bitcoin&vs_currencies=usd", optionns),
+          json = await res.json()
+        setBtcDolar(json)
+
+      } catch (error) {
+        console.log(error);
+      }
+
+    }
+
+    btcDolarApi()
+
+    const getBtc = async () => {
+      const optionns = {
+        method: 'GET',
+        // mode: 'no-cors',
+        // headers: {
+        //   'Access-Control-Allow-Origin': '*',
+        //   'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+        // }
+      }
+      try {
+
+        const res = await fetch("https://api.minerstat.com/v2/coins?list=BTC", optionns),
+          json = await res.json()
+        setValueBTC(json)
+
+      } catch (error) {
+        console.log(error);
+      }
+
+    }
+
+    getBtc()
+
   }, []);
+
+  const priceDollar = btcDolar ? btcDolar.bitcoin.usd : ''
 
   /**sort by date ticketlist */
   dataList && dataList.sort((a, b) => { return new Date(b.created_at) - new Date(a.created_at) })
@@ -182,15 +248,16 @@ function Dashboard() {
   const dataCoin = formatedCoins(coins)
 
   const coinheader = {
-    icon: '',
-    name: "name",
-    coin: "coin",
-    reward: "reward",
-    reward_block: "reward_block",
-    price: "price",
-    volume: "volume",
-    updated: "Updated"
+    logo: "",
+    name: "Name",
+    symbol: "Symbol",
+    price: "Price",
   }
+
+  /**filtrar por Bitcoin */
+  const filterByBitcoin = coins ? coins?.filter((item) => item.name === 'Bitcoin') : ''
+  // const filter = valueBTC ? valueBTC.filter((item) => item.coin === 'BTC') : ''
+  const formatedData = formatCoins(filterByBitcoin, priceDollar,)
 
   return (
     <>
@@ -264,32 +331,10 @@ function Dashboard() {
             </Row>
             <Col md={12}>
               <div className='shortlist item'>
-                {/* <Table className="tabledash" headers={coinheader} data={((dataCoin))} nopagination={true} /> */}
-                < div class="row widget" ><div class="element">
-                  <h3 data-responsive="BTC">Bitcoin</h3>
-                  <div class="price">16,907.70 USD</div>
-                  <div class="change green"><div class="icon arrow_up"></div>1.17%</div>
-                </div><div class="element">
-                    <h3 data-responsive="ETC">Ethereum Classic</h3>
-                    <div class="price">15.84 USD</div>
-                    <div class="change green"><div class="icon arrow_up"></div>1.42%</div>
-                  </div><div class="element">
-                    <h3 data-responsive="RVN">Ravencoin</h3>
-                    <div class="price">0.020 USD</div>
-                    <div class="change green"><div class="icon arrow_up"></div>3.31%</div>
-                  </div><div class="element">
-                    <h3 data-responsive="ERG">Ergo</h3>
-                    <div class="price">1.29 USD</div>
-                    <div class="change red"><div class="icon arrow_down"></div>-1.76%</div>
-                  </div><div class="element">
-                    <h3 data-responsive="LTC">Litecoin</h3>
-                    <div class="price">66.65 USD</div>
-                    <div class="change green"><div class="icon arrow_up"></div>2.91%</div>
-                  </div><div class="element">
-                    <h3 data-responsive="BNB">Binance Coin</h3>
-                    <div class="price">250.65 USD</div>
-                    <div class="change green"><div class="icon arrow_up"></div>1.37%</div>
-                  </div></div >
+                {
+                  coins &&
+                  <Table headers={coinheader} data={((formatedData))} nopagination={true} />
+                }
                 <span></span>
               </div>
             </Col>

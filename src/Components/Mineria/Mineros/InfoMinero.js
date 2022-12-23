@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { Line } from 'react-chartjs-2';
-import { AMOUNT_MINER_BY_DAY, AMOUNT_POWER_BY_DAY, CONSUMO } from '../../Helpers/helper';
+import { AMOUNT_MINER_BY_DAY, AMOUNT_POWER_BY_DAY, COINMINIG, CONSUMO, CONSUMO_MACHINE_ULTIMO, CONSUMO_MACHINE_ULTIMO_30_DIAS } from '../../Helpers/helper';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -13,6 +12,10 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
+import Table from '../../Commons/Table/Table';
+import { coinMinigFormated, filteredDataMiners } from '../../Helpers/formats';
+import { DataContext } from '../../Commons/Context/DataContext';
+import FilterMinerCoins from './FilterMinerCoins';
 
 ChartJS.register(
     CategoryScale,
@@ -26,9 +29,12 @@ ChartJS.register(
 
 
 const InfoMinero = (props) => {
+
     const { data } = props
     const id_machine = data ? data?.id_machine : ''
     const power = data ? data?.consume_machine : ''
+    const { mineroGloabl, setMineroGlobal } = useContext(DataContext)
+
 
     const [chartData, setChartData] = useState({})
 
@@ -43,6 +49,11 @@ const InfoMinero = (props) => {
 
     const [amountDay, setAmountDay] = useState()
     const [amountPower, setAmountPower] = useState()
+
+    const [coinmining, setCoinmining] = useState()
+
+    const [valueBTC, setValueBTC] = useState('')
+    const [ultimostrinta, setUltimostrinta] = useState()
 
     useEffect(() => {
 
@@ -80,7 +91,7 @@ const InfoMinero = (props) => {
 
         getPowerAmountByDay()
 
-        const id_machine = data?.id_machine 
+        const id_machine = data?.id_machine
 
         const optionsdd = {
             method: 'GET',
@@ -92,7 +103,7 @@ const InfoMinero = (props) => {
 
         const getConsumoId = async () => {
             try {
-                const res = await fetch(CONSUMO + id_machine, optionsdd),
+                const res = await fetch(CONSUMO + props?.datID, optionsdd),
                     json = await res.json()
                 console.log(json);
                 setChartData(json)
@@ -103,8 +114,61 @@ const InfoMinero = (props) => {
 
         getConsumoId()
 
+        const coinmining = async () => {
+            try {
+                const res = await fetch(COINMINIG + props?.datID, options),
+                    json = await res.json()
+                setCoinmining(json);
+            } catch (error) {
+                console.log(error);
+            }
+        }
 
+        coinmining()
 
+        const getBtc = async () => {
+            const optionns = {
+                method: 'GET',
+                // mode: 'no-cors',
+                // headers: {
+                //   'Access-Control-Allow-Origin': '*',
+                //   'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+                // }
+            }
+            try {
+
+                const res = await fetch("https://api.minerstat.com/v2/coins?list=BTC", optionns),
+                    json = await res.json()
+                setValueBTC(json)
+
+            } catch (error) {
+                console.log(error);
+            }
+
+        }
+
+        getBtc()
+
+        const getConsumoUltimos = async () => {
+
+            const optionfdsadfsdd = {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'token': token
+                },
+            }
+
+            try {
+                const res = await fetch(CONSUMO_MACHINE_ULTIMO + props?.datID, optionfdsadfsdd),
+                    json = await res.json()
+                setUltimostrinta(json)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        getConsumoUltimos()
 
     }, [id_machine])
 
@@ -112,8 +176,85 @@ const InfoMinero = (props) => {
     const filterById = amountDay?.filter((item) => item?.id_machine === id_machine)
     const finalAmountDay = data ? filterById[0] : ''
 
+    const btcValue = valueBTC ? valueBTC[0].price : ''
+
+    const formatedData = id_machine ? coinMinigFormated(coinmining, btcValue) : ''
+
+    const headers = {
+        amount: "Amount",
+        dollar: "Dollar",
+        created_at: "Recibido el",
+    }
 
 
+    const initialState = {
+        filtros: {
+            desde: '',
+            hasta: ''
+        }
+    }
+
+    const [state, setState] = useState(initialState)
+
+    //funcion para limpiar los valores de las variables a utilizar
+    const onCleanFilter = (data) => {
+        setState((prevState) => {
+            return {
+                ...prevState,
+                filtros: {
+                    ...data,
+                }
+            }
+        })
+    }
+
+
+    //funcion para setear y pasar que filtro se selecciono
+    const handleFilter = (data) => {
+
+        setState((prevState) => {
+            return {
+                ...prevState,
+                filtros: {
+                    ...prevState.filtros,
+                    [data.key]: data.value
+                }
+            }
+        })
+    }
+
+
+    const NumberToshow = (coinmining) => {
+
+        var sum = 0
+
+        if (coinmining) {
+            Object.keys(coinmining)?.map((item) => {
+                const amount = Number(coinmining[item].amount)
+                /**cast string to number */
+                sum += amount
+            })
+        }
+        return sum
+    }
+
+
+    const getGanancia = (coinmining) => {
+
+        var sum = 0
+
+        if (coinmining) {
+            Object.keys(coinmining)?.map((item) => {
+                const amount = Number(coinmining[item].dollar)
+                /**cast string to number */
+                sum += amount
+            })
+        }
+        return sum
+    }
+
+
+    console.log(ultimostrinta);
 
     return (
         <>
@@ -125,47 +266,67 @@ const InfoMinero = (props) => {
                         <>
                             <Row>
                                 <Col md={6} className="mt-3 mb-3">
+                                    <Row className='mt-3'>
+                                        <span className='dete'> <ion-icon name="hardware-chip-outline"></ion-icon> <strong> {useData?.name}</strong> </span>
+                                        <span>Marca :  <strong>{useData?.brand}</strong> </span>
+                                        <span>type :  <strong>{useData?.type}</strong> </span>
+                                    </Row>
+                                    <Row className='mt-3'>
+                                        <span className='dete'><ion-icon name="code-working-outline"></ion-icon></span>
+
+                                        <h6> Algorithms </h6>
+                                    </Row>
+                                    <Row>
+                                        <span>
+                                            <strong>
+                                                {replaceData(useData?.algorithms)}
+                                            </strong>
+                                        </span>
+                                    </Row>
+                                    <Row className='mt-3'>
+                                        <span className='dete'><ion-icon name="diamond-outline"></ion-icon></span>
+                                        <h6>specs </h6>
+                                    </Row>
+                                    <Row>
+                                        <span><strong>{replaceData(useData?.specs)}</strong> </span>
+                                    </Row>
+                                </Col>
+
+                                <Col md={6} className="mt-3 mb-3">
+                                    <div className='ganancia mb-3'>
+                                        <div>GANANCIA NETA DE MAQUINA</div>
+                                    </div>
 
                                     <div class="css-89u161">
                                         <div class="css-kb1ety"><dd class="css-pxccrj">{filterPowerById ? (filterPowerById[0]?.amount_day?.toFixed(2)) : '0'} USD</dd><dt class="css-6qnch9">Consume Energy 24hs</dt></div>
-                                        <div class="css-kb1ety"><dd class="css-pxccrj">99.80%</dd><dt class="css-6qnch9">Share Efficiency</dt></div>
-                                        <div class="css-kb1ety"><dd class="css-pxccrj">{finalAmountDay ? (finalAmountDay?.amount_day) : ''} BTC</dd><dt class="css-6qnch9">Mined Revenue 24hs</dt></div>
+                                        <div class="css-kb1ety">
+                                            <dd class="css-pxccrj">
+                                                {
+                                                    NumberToshow(coinmining)
+                                                } BTC</dd>
+                                            <dt class="css-6qnch9">Mined Revenue 24hs</dt>
+                                        </div>
                                     </div>
 
                                 </Col>
-
-                            </Row>
-                            <Row className='mt-3'>
-                                <span>Articulo :  <strong>{useData?.name}</strong> </span>
-                                <span>Marca :  <strong>{useData?.brand}</strong> </span>
-                                <span>type :  <strong>{useData?.type}</strong> </span>
-                            </Row>
-                            <Row className='mt-3'><h6>Algorithms </h6></Row>
-                            <Row>
-                                <span>
-                                    <strong>
-                                        {replaceData(useData?.algorithms)}
-                                    </strong>
-                                </span>
-                            </Row>
-                            <Row className='mt-3'><h6>specs </h6></Row>
-                            <Row>
-                                <span><strong>{replaceData(useData?.specs)}</strong> </span>
                             </Row>
                         </>
                     }
                 </Col>
             </Row>
-            <Row>
-                {/* <Col md={6}>
-                    <div className='ticketchart'>
-                        <div className="col-xl w-100" id='datapie'>
-                            <Row className='labeldata'>Ticket timeline</Row>
-                            <Line options={options} data={dataCoins} />
-                        </div>
-                    </div>
-                </Col> */}
-            </Row>
+            {
+                formatedData &&
+                <>
+                    <h4 class="resumen">Ultimos bloques minados</h4>
+                    <FilterMinerCoins onCleanFilter={onCleanFilter} getFilter={handleFilter} />
+                    <Container>
+
+                        <Table headers={headers} data={filteredDataMiners(formatedData, state?.filtros)} exportdata={true} title="minero" />
+
+                    </Container>
+                </>
+            }
+
         </>
 
     )

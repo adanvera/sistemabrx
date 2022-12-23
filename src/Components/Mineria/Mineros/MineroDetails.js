@@ -19,6 +19,7 @@ function MineroDetails() {
     const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
     const { modalstatus, setModalStatus } = useContext(DataContext)
     const modal = modalstatus
+    const { mineroGloabl, setMineroGlobal } = useContext(DataContext)
 
 
     const initialState = {
@@ -46,6 +47,7 @@ function MineroDetails() {
             const response = await fetch(MINING_MACHINES + idmin, options)
             const data = await response.json();
             setMinero(data);
+            setMineroGlobal(data)
         }
         getMinerData()
 
@@ -123,7 +125,7 @@ function MineroDetails() {
                             </Col>
                         </Row>
                         <Row className='w-100'>
-                            <InfoMinero data={minero} />
+                            <InfoMinero data={minero} datID={sendID} />
                         </Row>
 
                     </Container>

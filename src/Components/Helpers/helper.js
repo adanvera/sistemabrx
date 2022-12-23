@@ -24,6 +24,8 @@ const GASTOS = "https://backend.brxsgo.com/api/gastos/"
 const AMOUNT_MINER_BY_DAY = "https://backend.brxsgo.com/api/mining/get/day/coins/"
 const AMOUNT_POWER_BY_DAY = "https://backend.brxsgo.com/api/mining/get/power/amount"
 const CONSUMO = "http://localhost:4000/api/consumos/"
+const COINMINIG = "https://backend.brxsgo.com/api/coinmining/"
+const CONSUMO_MACHINE_ULTIMO= "https://backend.brxsgo.com/api/mining/get/power/mes/"
 
 /**exportamos nuestras declaraciones de valores
  * para poder utilizarlas en donde se requieran
@@ -53,5 +55,6 @@ export {
     GASTOS,
     AMOUNT_MINER_BY_DAY,
     AMOUNT_POWER_BY_DAY,
-    CONSUMO
+    CONSUMO,COINMINIG,
+    CONSUMO_MACHINE_ULTIMO
 }

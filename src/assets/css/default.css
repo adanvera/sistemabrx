@@ -1663,3 +1663,17 @@ span.statusinfo.failtxt {
     --tw-backdrop-saturate: var(--tw-empty, );
     --tw-backdrop-sepia: var(--tw-empty, );
 }
+
+.convert-table2 {
+    width: 100%;
+    text-align: left;
+}
+
+#exch-table .name-wrpapper, .convert-table2 .name-wrpapper {
+    display: flex;
+    align-items: center;
+}
+
+span.dete ion-icon.md.hydrated {
+    font-size: 34px;
+}

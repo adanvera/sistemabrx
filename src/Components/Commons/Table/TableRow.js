@@ -13,8 +13,6 @@ export default function TableRow(props) {
     const { pathname } = useLocation();
     const navigate = useNavigate();
 
-    console.log(pathname);
-
     const clickedItem = (e) => {
         e.preventDefault()
         if ((props?.link) && (pathname === '/tickets')) {
@@ -42,7 +40,8 @@ export default function TableRow(props) {
             data?.id_operaion : data?.id_ticket} className={data?.id_ticket ? "rowtable clickeable" : "rowtable"} onClick={e => clickedItem(e)} >
             {Object.keys(data).filter((col => col !== 'created_at_filter' && col !== 'id_importacion'
                 && col !== 'articulos' && col !== 'created' && col !== 'id_role' && col !== 'created_at_user'
-                && col !== 'id' && col !== 'id_user' && col !== "id_machine" && col !== 'id_gasto')).map(col => {
+                && col !== 'id' && col !== 'id_user' && col !== "id_machine" && col !== 'id_gasto'
+                && col !== 'creatted_at_temp')).map(col => {
                     return (
 
                         <Fragment key={col}>

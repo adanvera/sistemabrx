@@ -9,6 +9,7 @@ import DumpTable from '../../Commons/Table/DumpTable'
 import Table from '../../Commons/Table/Table'
 import { filteredDataGastos, gastosFormated } from '../../Helpers/formats'
 import { GASTOS } from '../../Helpers/helper'
+import FilterGastos from './FilterGastos'
 import GastoForm from './Forms/GastoForm'
 
 function Gastos() {
@@ -23,9 +24,7 @@ function Gastos() {
       actions: "Acciones"
     },
     filtros: {
-      gasto_name: '',
-      status: '',
-      priority: '',
+      description: '',
       desde: '',
       hasta: '',
     },
@@ -149,6 +148,35 @@ function Gastos() {
     }
   }
 
+
+
+  //funcion para limpiar los valores de las variables a utilizar
+  const onCleanFilter = (data) => {
+    setState((prevState) => {
+      return {
+        ...prevState,
+        filtros: {
+          ...data,
+        }
+      }
+    })
+  }
+
+
+  //funcion para setear y pasar que filtro se selecciono
+  const handleFilter = (data) => {
+
+    setState((prevState) => {
+      return {
+        ...prevState,
+        filtros: {
+          ...prevState.filtros,
+          [data.key]: data.value
+        }
+      }
+    })
+  }
+
   return (
     <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
       {modal && (
@@ -170,12 +198,7 @@ function Gastos() {
             <div className='limittic'><div onClick={() => handleModalForm('Gasto')} className="btnadd" id='Add'>Agregar gasto</div></div>
           </Col>
         </Row>
-        <Row className='mt-3' >
-          <Col>
-            filter section
 
-          </Col>
-        </Row>
         <Row className='mt-3'>
           <Col>
             <Card
@@ -202,7 +225,7 @@ function Gastos() {
               className="mb-2"
             >
               <Card.Body>
-                <Card.Title>Gasto del mes</Card.Title>
+                <Card.Title>Gasto de los ultimos 30 dias</Card.Title>
                 <Card.Text>
                   {formatNumber(monthAmount)}
                 </Card.Text>
@@ -226,6 +249,7 @@ function Gastos() {
             </Card>
           </Col>
         </Row>
+        <FilterGastos onCleanFilter={onCleanFilter} getFilter={handleFilter} />
         {
           isLoaded ?
             <DumpTable headers={state?.headers} data={formatedList} />
