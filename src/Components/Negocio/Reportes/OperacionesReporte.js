@@ -5,6 +5,7 @@ import { Card, Col, Row } from 'react-bootstrap'
 import { DataContext } from '../../Commons/Context/DataContext'
 import ModalContainer from '../../Commons/ModalContainer'
 import SearchTable from '../../Commons/SearchTable'
+import { OPERATION_PROD } from '../../Helpers/helper'
 import FiltroFechaReportes from './FiltroFechaReportes'
 
 function OperacionesReporte() {
@@ -64,7 +65,7 @@ function OperacionesReporte() {
                 },
                 body:JSON.stringify(dataRequest)
             }
-            const request  =await fetch("http://localhost:4000/api/operation/extractByDate",options),
+            const request  =await fetch(OPERATION_PROD+"extractByDate",options),
             response = await request.json()
             console.log(request);
             console.log(response);
