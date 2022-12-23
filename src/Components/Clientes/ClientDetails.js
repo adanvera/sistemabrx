@@ -7,14 +7,15 @@ import Table from '../Commons/Table/Table';
 import { CLIENT, MINING_SUMMARY, OPERATION_PROD } from '../Helpers/helper';
 import OperationsData from '../Operaciones/OperationsData';
 import ClientInfo from './ClientInfo';
-import DocuPDF from './Pdf/DocuPDF';
+import CheckBox from './Forms/CheckBox';
 
 function ClientDetails() {
     const { id } = useParams();
-    const [fechaDesde,setFechaDesde] = useState('')
-    const [fechaHasta,setFechaHasta] = useState('')
+    const [fechaDesde,setFechaDesde] = useState('2022-12-01')
+    const [fechaHasta,setFechaHasta] = useState('2022-12-31')
     const [numeroOperacion,setNumeroOperacion] = useState('')
     const [operationTemporal,setOperationTemporal] = useState('')
+    const [typesOperations,setTypesOperations] = useState('')
     const initialState = {
         tab: {
             operations: true,
@@ -189,29 +190,28 @@ function ClientDetails() {
         }
 
 
+    
+
+    
+}
+    const handlePDF = ()=>{
+        var url =`${CLIENT}extractPDF/${id}?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}&typeOperation=${typesOperations}`;
+        console.log(url);
+        var oReq = new XMLHttpRequest();
+        oReq.open("GET", url, true);
+        oReq.responseType = "arraybuffer";
+
+        oReq.onload = function (oEvent) {
+            console.log(oReq.response);
+            var blob = new Blob([oReq.response], { type: "application/pdf" });
+            var win = window.open('', '_blank');
+            var URL = window.URL || window.webkitURL;
+            var dataUrl = URL.createObjectURL(blob);
+            win.location = dataUrl;
+        };
+        oReq.send();
     }
-
-    // const currentMonthName = () => {
-    //     const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-    //         "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-    //     ];
-    //     const date = new Date();
-    //     const month = date.getMonth();
-    //     return monthNames[month];
-    // }
-
-    // const getCurrentMonth = currentMonthName();
-
-    const PdfExtract = () => (
-
-        <PDFDownloadLink
-            document={<DocuPDF operations={dataOperations} cliente={clientData} />}
-            fileName="extracto.pdf"
-        >
-            <Button variant="info">Descargar Extracto </Button>
-        </PDFDownloadLink>
-
-    );
+    
 
     const handleFilterOperationNumber = (e)=>{
         console.log(numeroOperacion);
@@ -313,7 +313,8 @@ function ClientDetails() {
                                             <input type = "button" value='Limpiar' onClick={()=>handleCleanOperations()}/>
 
                                         </div>
-                                        {dataOperations !== ''?<PdfExtract/>:''}
+                                        <CheckBox setTypesOperations ={setTypesOperations}/>
+                                        {dataOperations !== ''?<input  className='form-control col-4'type={"button"} value={"descargar extracto"} onClick={handlePDF}/>:''}
                                     
                                     </Row> 
                                 ) : ''
