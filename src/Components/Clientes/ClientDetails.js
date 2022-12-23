@@ -7,14 +7,15 @@ import Table from '../Commons/Table/Table';
 import { CLIENT, MINING_SUMMARY, OPERATION_PROD } from '../Helpers/helper';
 import OperationsData from '../Operaciones/OperationsData';
 import ClientInfo from './ClientInfo';
-import DocuPDF from './Pdf/DocuPDF';
+import CheckBox from './Forms/CheckBox';
 
 function ClientDetails() {
     const { id } = useParams();
-    const [fechaDesde,setFechaDesde] = useState('')
-    const [fechaHasta,setFechaHasta] = useState('')
+    const [fechaDesde,setFechaDesde] = useState('2022-12-01')
+    const [fechaHasta,setFechaHasta] = useState('2022-12-31')
     const [numeroOperacion,setNumeroOperacion] = useState('')
     const [operationTemporal,setOperationTemporal] = useState('')
+    const [typesOperations,setTypesOperations] = useState('')
     const initialState = {
         tab: {
             operations: true,
@@ -194,7 +195,7 @@ function ClientDetails() {
     
 }
     const handlePDF = ()=>{
-        var url =`http://localhost:4000/api/client/extractPDF/${id}?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}`;
+        var url =`${CLIENT}extractPDF/${id}?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}&typeOperation=${typesOperations}`;
         console.log(url);
         var oReq = new XMLHttpRequest();
         oReq.open("GET", url, true);
@@ -312,7 +313,7 @@ function ClientDetails() {
                                             <input type = "button" value='Limpiar' onClick={()=>handleCleanOperations()}/>
 
                                         </div>
-                                        
+                                        <CheckBox setTypesOperations ={setTypesOperations}/>
                                         {dataOperations !== ''?<input  className='form-control col-4'type={"button"} value={"descargar extracto"} onClick={handlePDF}/>:''}
                                     
                                     </Row> 
