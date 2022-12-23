@@ -3,8 +3,7 @@ import { useState } from 'react'
 import { useContext } from 'react'
 import { Card, Col, Row } from 'react-bootstrap'
 import { DataContext } from '../../Commons/Context/DataContext'
-import ModalContainer from '../../Commons/ModalContainer'
-import SearchTable from '../../Commons/SearchTable'
+import { OPERATION_PROD } from '../../Helpers/helper'
 import FiltroFechaReportes from './FiltroFechaReportes'
 
 function OperacionesReporte() {
@@ -38,7 +37,7 @@ function OperacionesReporte() {
             },
             body:JSON.stringify(dataRequest)
         }
-        const request  =await fetch("http://localhost:4000/api/operation/extractByDate",options),
+        const request  =await fetch(OPERATION_PROD+"extractByDate",options),
         response = await request.json()
         console.log(request);
         console.log(response);
@@ -64,7 +63,7 @@ function OperacionesReporte() {
                 },
                 body:JSON.stringify(dataRequest)
             }
-            const request  =await fetch("http://localhost:4000/api/operation/extractByDate",options),
+            const request  =await fetch(OPERATION_PROD+"extractByDate",options),
             response = await request.json()
             console.log(request);
             console.log(response);
@@ -86,6 +85,9 @@ function OperacionesReporte() {
                         setFechaHasta={setFechaHasta}
                         handleFilter= {handleFilter}/>          
             </Row>
+            <Row>
+
+            </Row>
             <Row className=' p-5'>
                 <Col>
                     <Card
@@ -96,7 +98,7 @@ function OperacionesReporte() {
                         className="mb-2"
                     >
                         <Card.Body>
-                            <Card.Title> Total operaciones  </Card.Title>
+                            <Card.Title> Cantidad de operaciones  </Card.Title>
                             <Card.Text>
                             {data.totalOperations}
                             </Card.Text>

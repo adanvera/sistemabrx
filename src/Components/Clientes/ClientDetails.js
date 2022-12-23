@@ -249,9 +249,7 @@ function ClientDetails() {
                                 <Nav.Item >
                                     <Nav.Link id='mineria' onClick={e => onHandleClick(e)} eventKey="mineria">Mineria</Nav.Link>
                                 </Nav.Item>
-                                <Nav.Item >
-                                    <Nav.Link id='modificaciones' onClick={e => onHandleClick(e)} eventKey="modificaciones">Modificaciones</Nav.Link>
-                                </Nav.Item>
+                               
                             </Nav>
                         </section>
                         {
@@ -332,11 +330,7 @@ function ClientDetails() {
                                     <Table headers={minerHeader} data={((miningData))} />
                                 }
                             </div>
-                            <div id="modificaciones" className={state?.tab?.modificaciones ? 'content-tab' : 'content-tab is-hidden'}>
-                                {state?.tab?.modificaciones &&
-                                    <>Tabla/info referente a modificaciones del cliente</>
-                                }
-                            </div>
+                           
                         </section>
                     </Col>
                 </Row>
