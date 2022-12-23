@@ -78,13 +78,7 @@ const Reporte = (props) => {
 
                         </div>
                     </Col>
-                    <Col md={4}  >
-                        <div id="tkprev">
-
-                            <h6>Mineria</h6>
-
-                        </div>
-                    </Col>
+                   
 
 
                 </Row>
