@@ -11,25 +11,7 @@ const ImportTimeline = (props) => {
     const { user } = useContext(DataContext)
     const userAuthed = user
     const idImport = props?.idImp
-
-
-    /**cast to parse */
-    const castParse = (data) => {
-        try {
-            const dataParsed = JSON.parse(data)
-            return dataParsed
-
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    const dasde = props?.historial
-
-    const historial = castParse(dasde)
-  
-
-   console.log();
+    const historial = formatHistorial(props?.historial)
 
     const initialState = {
         variables: {
@@ -102,8 +84,8 @@ const ImportTimeline = (props) => {
         } else if (btn === '_importHistorial') {
             setClicked('historial')
         }
-
     }
+
 
     return (
         <Fragment>
@@ -164,23 +146,24 @@ const ImportTimeline = (props) => {
                         )
                     }))
                 }
-
                 {
                     clicked === 'historial' &&
                     Object.keys(historial).map((item => {
                         return (
-                            <div class="card-body p-4 mt-2">
+                            <div class="card-body p-2">
                                 <div class="d-flex flex-start">
-                                    <div>
-                                        <div class="d-flex align-items-center mb-3">
+                                    <div class="d-flex ">
+                                        <div class="align-items-center">
                                             <p class="mb-0">{historial[item]?.historial_date}</p>
-                                            <a href="#!" class="link-muted"><i class="fas fa-pencil-alt ms-2"></i></a>
-                                            <a href="#!" class="link-muted"><i class="fas fa-redo-alt ms-2"></i></a>
-                                            <a href="#!" class="link-muted"><i class="fas fa-heart ms-2"></i></a>
+                                            <p class="mb-0">
+                                                por <ion-icon name="arrow-forward-outline"></ion-icon> <span class="fw-bold">{historial[item]?.userdata}</span>
+                                            </p>
                                         </div>
-                                        <p class="mb-0">
-                                            <span className='colorfont'>{historial[item]?.historial_action}</span> por <ion-icon name="arrow-forward-outline"></ion-icon> <span class="fw-bold">{historial[item]?.userdata}</span>
-                                        </p>
+                                        <div className='' id='historiaal' >
+                                            <p class="mb-0">
+                                                <span className='colorfont'>{historial[item]?.historial_action}</span>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

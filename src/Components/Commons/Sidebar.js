@@ -223,9 +223,11 @@ const Sidebar = props => {
 
             </ul>
             <ul className="ulguia">
-                <li className="liguia">
-                    <span className="spanguia">Guia</span>
-                </li>
+                <a href="http://guia.brxsgo.com/" target="_blank" >
+                    <li className="liguia">
+                        <span className="spanguia">Guía</span>
+                    </li>
+                </a>
             </ul>
         </aside >
     )
@@ -234,4 +236,4 @@ const Sidebar = props => {
 export default Sidebar
 
 
-// http://guia.brxsgo.com/
+// 

@@ -80,13 +80,6 @@ const TicketTimeline = (props) => {
         return new Date(b.created_at) - new Date(a.created_at);
     }) : ''
 
-
-
-    console.log(dataShowTickets);
-
-
-
-
     const handleChange = (e) => {
 
         setState(prevState => {

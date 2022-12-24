@@ -1,17 +1,46 @@
 import React, { useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { Button, Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 import DatePicker from 'react-date-picker'
 import { toast, Toaster } from 'react-hot-toast'
+import { DataContext } from '../Commons/Context/DataContext'
 import { formatoDate } from '../Helpers/formats'
 import { CLIENT, IMPORTACIONES, MACHINES, MACHINES_API, PROVEEDORES } from '../Helpers/helper'
 
 const InfoImportación = (props) => {
 
+    /**declaramos variables e inicializamos las mismas */
+    const { user } = useContext(DataContext)
+    const userAuthed = user
     const [changed, setChanged] = useState(false)
     const [clients, setClients] = useState([])
     const [dataImp, setDataImp] = useState([])
     const idImp = props.idData
+    const { data } = props
+    const actualHistorial = data?.historial
+    const cliente = data?.id_cliente
+    const proveedor = data?.id_proveedor
+    const fecha_arribo = data?.fecha_arribo
+    const fecha_envio = data?.fecha_envio
+    const valor_envio = data?.valor_envio
+    const tracking_number = data?.tracking_number
+    const empresa_envio = data?.empresa_envio
+    const cantidad = data?.cantidad
+    const articulo = data?.articulos
 
+    /**format date dd/mm/yyy whitout hour */
+    const formateDate = (date) => {
+        const dateFormated = new Date(date)
+        const day = dateFormated.getDate()
+        const month = dateFormated.getMonth() + 1
+        const year = dateFormated.getFullYear()
+        const dateFormatedFinal = `${day}/${month}/${year}`
+        return dateFormatedFinal
+    }
+
+    const fecha_arribo_temp = formateDate(fecha_arribo)
+    const fecha_envio_temp = formateDate(fecha_envio)
+    
     const initialState = {
         id_importacion: "",
         id_cliente: dataImp ? dataImp.id_client : "",
@@ -143,17 +172,108 @@ const InfoImportación = (props) => {
         const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
         const id_importacion = props?.data?.id_importacion
 
-        // const toUpHistory = {
-        //     historilal_id: Math.random().toString(36).slice(-8),
-        //     historial_action: 'Se cambio a estado ' + state.variables.status,
-        //     id_user: userAuthed?.id_user,
-        //     userdata: userAuthed ? userAuthed.name + " " + userAuthed.last_name : '',
-        //     historial_date: new Date(),
-        // }
+        const empresaSendUpdate = {
+            historilal_id: Math.random().toString(36).slice(-8),
+            historial_action: 'Se cambio la empresa de envio de la importacion ' + empresa_envio + ' a ' + state.empresa_envio,
+            id_user: userAuthed?.id_user,
+            userdata: userAuthed ? userAuthed.name + " " + userAuthed.last_name : '',
+            historial_date: new Date(),
+        }
 
-        // const historialToSend = isChangeStatus !== state.variables.status ? JSON.stringify(toUpHistory) + "," + actualHistorial : actualHistorial
+        const trackingNumberUpdate = {
+            historilal_id: Math.random().toString(36).slice(-8),
+            historial_action: 'Se cambio el tracking number de la importacion ' + tracking_number + ' a ' + state.tracking_number,
+            id_user: userAuthed?.id_user,
+            userdata: userAuthed ? userAuthed.name + " " + userAuthed.last_name : '',
+            historial_date: new Date(),
+        }
 
+        const valorEnvioUpdate = {
+            historilal_id: Math.random().toString(36).slice(-8),
+            historial_action: 'Se cambio el valor de envio de la importacion ' + valor_envio + ' a ' + state.valor_envio,
+            id_user: userAuthed?.id_user,
+            userdata: userAuthed ? userAuthed.name + " " + userAuthed.last_name : '',
+            historial_date: new Date(),
+        }
 
+        const fechaEnvioUpdate = {
+            historilal_id: Math.random().toString(36).slice(-8),
+            historial_action: 'Se cambio la fecha de envio de la importacion ' + fecha_envio + ' a ' + state.fecha_envio,
+            id_user: userAuthed?.id_user,
+            userdata: userAuthed ? userAuthed.name + " " + userAuthed.last_name : '',
+            historial_date: new Date(),
+        }
+
+        const fechaArriboUpdate = {
+            historilal_id: Math.random().toString(36).slice(-8),
+            historial_action: 'Se cambio la fecha de arribo de la importacion ' + fecha_arribo + ' a ' + state.fecha_arribo,
+            id_user: userAuthed?.id_user,
+            userdata: userAuthed ? userAuthed.name + " " + userAuthed.last_name : '',
+            historial_date: new Date(),
+        }
+
+        const clienteUpdate = {
+            historilal_id: Math.random().toString(36).slice(-8),
+            historial_action: 'Se cambio el cliente de la importacion ' + cliente + ' a ' + state.client,
+            id_user: userAuthed?.id_user,
+            userdata: userAuthed ? userAuthed.name + " " + userAuthed.last_name : '',
+            historial_date: new Date(),
+        }
+
+        const proveedorUpdate = {
+            historilal_id: Math.random().toString(36).slice(-8),
+            historial_action: 'Se cambio el proveedor de la importacion ' + proveedor + ' a ' + state.id_proveedor,
+            id_user: userAuthed?.id_user,
+            userdata: userAuthed ? userAuthed.name + " " + userAuthed.last_name : '',
+            historial_date: new Date(),
+        }
+
+        const articulosUpdate = {
+            historilal_id: Math.random().toString(36).slice(-8),
+            historial_action: 'Se cambio el articulo de la importacion ',
+            id_user: userAuthed?.id_user,
+            userdata: userAuthed ? userAuthed.name + " " + userAuthed.last_name : '',
+            historial_date: new Date(),
+        }
+
+        const cantidadUpdate = {
+            historilal_id: Math.random().toString(36).slice(-8),
+            historial_action: 'Se cambio la cantidad de la importacion ' + cantidad + ' a ' + state.cantidad,
+            id_user: userAuthed?.id_user,
+            userdata: userAuthed ? userAuthed.name + " " + userAuthed.last_name : '',
+            historial_date: new Date(),
+        }
+
+        const verifyHistorial = () => {
+
+            if (cliente !== state.id_cliente) {
+                return JSON.stringify(clienteUpdate) + "," + actualHistorial
+            }
+            if (proveedor !== state.id_proveedor) {
+                return JSON.stringify(proveedorUpdate) + "," + actualHistorial
+            }
+            if (articulo !== state.articulos) {
+                return JSON.stringify(articulosUpdate) + "," + actualHistorial
+            }
+            if (cantidad !== state.cantidad) {
+                return JSON.stringify(cantidadUpdate) + "," + actualHistorial
+            }
+            if (empresa_envio !== state.empresa_envio) {
+                return JSON.stringify(empresaSendUpdate) + "," + actualHistorial
+            }
+            if (tracking_number !== state.tracking_number) {
+                return JSON.stringify(trackingNumberUpdate) + "," + actualHistorial
+            }
+            if (valor_envio !== state.valor_envio) {
+                return JSON.stringify(valorEnvioUpdate) + "," + actualHistorial
+            }
+            if (fecha_envio_temp !== formateDate(state.fecha_envio)) {
+                return JSON.stringify(fechaEnvioUpdate) + "," + actualHistorial
+            }
+            if (fecha_arribo_temp !== formateDate(state.fecha_arribo)) {
+                return JSON.stringify(fechaArriboUpdate) + "," + actualHistorial
+            }
+        }
 
         if (validateChangeArticle === true) {
             const ImpToUp = {
@@ -167,6 +287,7 @@ const InfoImportación = (props) => {
                 articulos: JSON.stringify(externalData.filter((item) => item.id === state.articulos)),
                 cantidad: Number(state.cantidad),
                 fecha_arribo: state.fecha_arribo,
+                historial: verifyHistorial()
             }
 
             const editImport = async () => {
@@ -187,7 +308,6 @@ const InfoImportación = (props) => {
                     console.log(error.msg);
                 }
             }
-
             editImport()
         } else if (validateChangeArticle === false) {
 
@@ -201,6 +321,7 @@ const InfoImportación = (props) => {
                 comentario_importacion: state.comentario_importacion,
                 cantidad: Number(state.cantidad),
                 fecha_arribo: state.fecha_arribo,
+                historial: verifyHistorial()
             }
 
             const editImport = async () => {
@@ -301,7 +422,7 @@ const InfoImportación = (props) => {
             )
         } else if (diffDays < 0) {
             return (
-                <p className="">Llegó hace {Math.abs(diffDays)} días</p>
+                <p className="">Llegó hace {Math.abs(diffDays)} día(s)</p>
             )
         }
 

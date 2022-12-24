@@ -157,11 +157,13 @@ const ImpForms = (props) => {
 
         const historial = JSON.stringify({
             historilal_id: Math.random().toString(36).slice(-8),
-            historial_action: 'Importación creada',
+            historial_action: 'Se ha creado la importacion',
             historial_date: new Date(),
             userdata: userAuthed ? userAuthed.name + " " + userAuthed.last_name : '',
             id_user: userAuthed?.id_user,
         })
+
+
 
         const createImportacion = {
             id_cliente: Number(state.id_cliente),
@@ -174,7 +176,7 @@ const ImpForms = (props) => {
             comentario_importacion: state.comentario_importacion === '' ? '' : JSON.stringify(commentTo),
             cantidad: Number(state.cantidad),
             articulos: JSON.stringify(externalData.filter((item) => item.id === state.articulos)),
-            historial: JSON.stringify(historial),
+            historial: (historial),
         }
 
         const pushImportación = async () => {
@@ -260,7 +262,7 @@ const ImpForms = (props) => {
                             <Form.Group as={Col} md="12" controlId="cliente">
                                 <Form.Label>Seleccionar articulo:</Form.Label>
                                 <Form.Select value={state.articulos} name="articulos" onChange={handleChange} required >
-                                    <option selected disabled>Seleccionar articulo</option>
+                                    <option selected>Seleccionar articulo</option>
                                     {
                                         Object.keys(externalData).map((item) => {
                                             return <option value={externalData[item]?.id} >{externalData[item].name + " " + externalData[item].brand} </option>

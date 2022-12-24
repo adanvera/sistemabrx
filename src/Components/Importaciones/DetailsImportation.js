@@ -123,7 +123,6 @@ const DetailsImportation = (props) => {
         }
     }
 
-
     return (
         <div className={sidebarStatus === 'open' ? 'main-content-tkt' : 'main-content-tkt extend'} >
             {modal && (
@@ -150,7 +149,7 @@ const DetailsImportation = (props) => {
                             </Col>
                         </Row>
                         <Row className='w-100'>
-                            <InfoImportación idData={id} />
+                            <InfoImportación idData={id} data={dataToUse} />
                         </Row>
                     </Container>
                 </Col>
