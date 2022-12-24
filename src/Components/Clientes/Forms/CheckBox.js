@@ -1,18 +1,25 @@
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 
-function CheckBox({ setTypesOperations }) {
-  const [checkedCompra, setCheckedCompra] = useState(true);
-  const [checkedVenta, setcheckedVenta] = useState(false);
-  const handleChecked = (e) => {
+function CheckBox({ setTypesOperations,setCheckedCompra,checkedCompra,checkedVenta,setcheckedVenta }) {
+  
+  
+  const handleChecked = async (e) => {
+    console.log('Valueeee',e.target.value);
+    
+      setTypesOperations(e.target.value)
     if (e.target.value === '1') {
       setCheckedCompra(true)
       setcheckedVenta(false)
+      
     } else {
       setCheckedCompra(false)
       setcheckedVenta(true)
     }
-    setTypesOperations(e.target.value)
+  
+  
+    
+
 
   }
 
