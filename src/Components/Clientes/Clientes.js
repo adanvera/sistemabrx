@@ -43,8 +43,6 @@ const Clientes = props => {
     const [isLoaded, setIsLoaded] = useState(false);
     const formatedList = formatedDataClient(dataList)
 
-
-
     const modal = modalstatus
 
     /**funcion para setear form clickeado */
@@ -70,6 +68,8 @@ const Clientes = props => {
 
     /*Aca obtenemos los clientes*/
     useEffect(() => {
+
+        setModalStatus(false)
 
         /** Obtenemos los valores que guardamos en el token para poder utilizarlos
          * en la siguiente consulta

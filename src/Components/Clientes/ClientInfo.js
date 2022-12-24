@@ -68,132 +68,97 @@ const ClientInfo = (props) => {
         }
     }
 
-    const handleUserDelete = (e) => {
-        setModalStatus(true)
 
-
-    }
 
     return (
-        <>
-            {modalstatus === true ? (<ClienteForm modalType="Delete" id_client={state.id_client} />)
-                : (
-                    <div className='d-flex'>
-                        {data && modalstatus === false &&
-                            <>
-                                <Col md={12}>
-                                    <Row className='mt-3'>
-                                        <Col md={2}>
-                                            <div className='datashow'>
-                                                <label className='labeltk' >Codigo</label>
-                                                <input className='form-control codecli' value={state.id_client} disabled />
-                                            </div>
-                                        </Col>
-                                        <Col md={5}>
-                                            <div className='datashow'>
-                                                <label className='labeltk'>Nombre</label>
-                                                <input className='form-control '
-                                                    value={state.name}
-                                                    name="name"
-                                                    onChange={(e) => handleChange(e)}
-                                                />
-                                            </div>
-                                        </Col>
-                                        <Col md={5}>
-                                            <div className='datashow'>
-                                                <label className='labeltk'>Apellido</label>
-                                                <input className='form-control'
-                                                    value={state.last_name}
-                                                    /*  disabled={isEditable === true ? false : true} */
-                                                    name='last_name'
-                                                    onChange={(e) => handleChange(e)}
-                                                />
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                    <Row className='mt-3'>
-                                        <Col md={4}>
-                                            <div className='datashow'>
-                                                <label className='labeltk' >Documento</label>
-                                                <input className='form-control'
-                                                    value={state.document}
-                                                    name="document"
-                                                    /* disabled={isEditable === true ? false : true} */
-                                                    onChange={(e) => handleChange(e)} />
-                                            </div>
-                                        </Col>
-                                        <Col md={8}>
-                                            <div className='datashow'>
-                                                <label className='labeltk' >Direccion</label>
+        <div className='d-flex'>
+            <Col md={12}>
+                <Row className='mt-3'>
+                    <Col md={2}>
+                        <div className='datashow'>
+                            <label className='labeltk' >Codigo</label>
+                            <input className='form-control codecli' value={state.id_client} disabled />
+                        </div>
+                    </Col>
+                    <Col md={5}>
+                        <div className='datashow'>
+                            <label className='labeltk'>Nombre</label>
+                            <input className='form-control '
+                                value={state.name}
+                                name="name"
+                                onChange={(e) => handleChange(e)}
+                            />
+                        </div>
+                    </Col>
+                    <Col md={5}>
+                        <div className='datashow'>
+                            <label className='labeltk'>Apellido</label>
+                            <input className='form-control'
+                                value={state.last_name}
+                                /*  disabled={isEditable === true ? false : true} */
+                                name='last_name'
+                                onChange={(e) => handleChange(e)}
+                            />
+                        </div>
+                    </Col>
+                </Row>
+                <Row className='mt-3'>
+                    <Col md={4}>
+                        <div className='datashow'>
+                            <label className='labeltk' >Documento</label>
+                            <input className='form-control'
+                                value={state.document}
+                                name="document"
+                                /* disabled={isEditable === true ? false : true} */
+                                onChange={(e) => handleChange(e)} />
+                        </div>
+                    </Col>
+                    <Col md={8}>
+                        <div className='datashow'>
+                            <label className='labeltk' >Direccion</label>
 
-                                                <input className='form-control'
-                                                    value={state.address}
-                                                    name="address"
-                                                    /* disabled={isEditable === true ? false : true} */
-                                                    onChange={(e) => handleChange(e)} />
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                    <Row className='mt-3'>
-                                        <Col md={4}>
-                                            <div className='datashow'>
-                                                <label className='labeltk'>Correo</label>
-                                                <input className='form-control'
-                                                    name='email'
-                                                    value={state.email}
-                                                    /* disabled={isEditable === true ? false : true} */
-                                                    onChange={(e) => handleChange(e)} />
-                                            </div>
-                                        </Col>
-                                        <Col md={4} >
-                                            <div className='datashow'>
-                                                <label className='labeltk'>Telefono</label>
+                            <input className='form-control'
+                                value={state.address}
+                                name="address"
+                                /* disabled={isEditable === true ? false : true} */
+                                onChange={(e) => handleChange(e)} />
+                        </div>
+                    </Col>
+                </Row>
+                <Row className='mt-3'>
+                    <Col md={4}>
+                        <div className='datashow'>
+                            <label className='labeltk'>Correo</label>
+                            <input className='form-control'
+                                name='email'
+                                value={state.email}
+                                /* disabled={isEditable === true ? false : true} */
+                                onChange={(e) => handleChange(e)} />
+                        </div>
+                    </Col>
+                    <Col md={4} >
+                        <div className='datashow'>
+                            <label className='labeltk'>Telefono</label>
 
-                                                <input className='form-control'
-                                                    name='phone'
-                                                    value={state.phone}
-                                                    /* disabled={isEditable === true ? false : true} */
-                                                    onChange={(e) => handleChange(e)} />
-                                            </div>
-                                        </Col>
+                            <input className='form-control'
+                                name='phone'
+                                value={state.phone}
+                                /* disabled={isEditable === true ? false : true} */
+                                onChange={(e) => handleChange(e)} />
+                        </div>
+                    </Col>
 
-                                    </Row>
-                                    {
-                                        changed === true &&
-                                        <Row className=' mt-3'>
-                                            <Col id='creatdfe'>
-                                                <Button type="submit" onClick={handleSubmit}>Guardar cambios</Button>
-                                            </Col>
-                                        </Row>
-                                    }
-                                </Col>
-                                {/* <Col md={3}>
-                                    <div className='tiktop'>
-                                        <Col className='headtiket d-flex'>
-                                            <div>
-                                                <h6>Acciones</h6>
-                                            </div>
-                                        </Col>
-                                        <div className="actionstwo d-grid mt-3">
-                                            <div className="delete-btn tkt d-flex" id='_btnDeletetkt' onClick={() => handleUserDelete()} >
-                                                <span>Eliminar cliente </span>
-                                                <div>
-                                                    <ion-icon name="trash-outline"></ion-icon>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </Col> */}
-
-                            </>
-
-                        }
-                    </div>
-
-                )
-            }
-        </>
-
+                </Row>
+                {
+                    changed === true &&
+                    <Row className=' mt-3'>
+                        <Col id='creatdfe'>
+                            <Button type="submit" onClick={handleSubmit}>Guardar cambios</Button>
+                        </Col>
+                    </Row>
+                }
+            </Col>
+        </div>
     )
 }
 

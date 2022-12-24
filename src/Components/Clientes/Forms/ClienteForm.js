@@ -2,6 +2,8 @@ import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { CLIENT } from '../../Helpers/helper';
 import { DataContext } from '../../Commons/Context/DataContext';
+import { useNavigate } from 'react-router-dom';
+import PuffLoader from "react-spinners/PuffLoader";
 
 const ClienteForm = (props) => {
   //datos para las peticiones al API
@@ -12,15 +14,13 @@ const ClienteForm = (props) => {
   }
 
   const modalType = props.modalType
-  const id_client = props.id_client 
-
-
+  const id_client = props.id_client
   /**delcaramos nuestras variables a utilizar */
   const { modalstatus, setModalStatus } = useContext(DataContext)
   const [dataValidate, setDataVerify] = useState(false)
   const [isDelete, setIsDelete] = useState(false)
   const [currentClient, setCurrentClient] = useState(false)
-  
+
   const initialState = {
     name: '',
     last_name: '',
@@ -35,7 +35,7 @@ const ClienteForm = (props) => {
 
   function refreshPage() {
     setModalStatus(false)
-    setTimeout(()=>{},600)
+    setTimeout(() => { }, 600)
     window.location.reload(false);
   }
 
@@ -54,25 +54,23 @@ const ClienteForm = (props) => {
         const res = await fetch(CLIENT + id_client, options),
           json = await res.json()
         /*seteamos loading */
-        
+
         console.log(json)
         setState(json)
         setCurrentClient(true)
-        
+
       } catch (error) {
-        
+
         console.log("Esto es el error" + error);
       }
     }
-    if(modalType === 'Edit'){
-
+    if (modalType === 'Edit') {
       getClient()
     }
 
-  
-
   }, []);
 
+  let navigate = useNavigate();
 
   //Aca eliminamos el cliente 
   const handleDelete = async (e) => {
@@ -91,17 +89,13 @@ const ClienteForm = (props) => {
       if (!req.ok) return
 
       setDataVerify(true)
-      //refreshPage()
+      setTimeout(() => {
+        navigate('/clientes')
+      }, 1500)
     } catch (e) {
       console.log(e);
     }
-
-
-
-
-
   }
-
 
   /**funcion onchange para setear los valores ingresados */
   const handleChange = (e) => {
@@ -125,12 +119,10 @@ const ClienteForm = (props) => {
       e.preventDefault();
       e.stopPropagation();
     }
-
     /**nos aseguramos de que los campos no esten vacios */
     if ([state?.name, state?.last_name, state?.address, state?.document, state?.phone].includes("")) {
       return
     }
-
     /**guardamos nuestros valores en  clientToCreate
      * para pasar al recurso de creacion de cliente
      */
@@ -153,10 +145,7 @@ const ClienteForm = (props) => {
       }
       setDataVerify(true)
       //refreshPage()
-
-
     } catch (error) { console.log(error); }
-
   }
 
 
@@ -169,19 +158,15 @@ const ClienteForm = (props) => {
       e.preventDefault();
       e.stopPropagation();
     }
-
     /**nos aseguramos de que los campos no esten vacios */
     if ([state?.name, state?.last_name, state?.address, state?.document, state?.phone].includes("")) {
       return
     }
-
     console.log(state);
-
     /**guardamos nuestros valores en  clientToCreate
      * para pasar al recurso de creacion de cliente
      */
     const clientToUpdate = state
-
     /**metodo para setear y enviar a 
      * recurso de creación del cliente
      */
@@ -199,17 +184,13 @@ const ClienteForm = (props) => {
       }
       setDataVerify(true)
       //refreshPage()
-
-
     } catch (error) { console.log(error); }
-
   }
 
 
   /**vista form correspondiente si el tipo de modal es añadir cliente */
   //para agregar clientes
   if (modalType === 'Add') return (
-
     <Fragment>
       {
         dataValidate === true ?
@@ -219,7 +200,7 @@ const ClienteForm = (props) => {
               <span>Cliente creado exitosamente</span>
             </Row>
             <Row id='close'>
-              <Button className='btn closeBtn' onClick={() => refreshPage() }>Cerrar</Button>
+              <Button className='btn closeBtn' onClick={() => refreshPage()}>Cerrar</Button>
             </Row>
           </div>
           :
@@ -273,17 +254,17 @@ const ClienteForm = (props) => {
               </Form.Group>
             </Row>
             <Row className="mb-3" >
-                <Form.Group as={Col} md="12" controlId="validationmail">
-                  <Form.Label>Correo electrónico</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Correo electrónico"
-                    required
-                    name='email'
-                    onChange={(e) => handleChange(e)} />
-                  <Form.Control.Feedback type="invalid">Escribir correo electrónico válido</Form.Control.Feedback>
-                </Form.Group>
-              </Row> *
+              <Form.Group as={Col} md="12" controlId="validationmail">
+                <Form.Label>Correo electrónico</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Correo electrónico"
+                  required
+                  name='email'
+                  onChange={(e) => handleChange(e)} />
+                <Form.Control.Feedback type="invalid">Escribir correo electrónico válido</Form.Control.Feedback>
+              </Form.Group>
+            </Row> *
             <Row className="mb-3" >
               <Form.Group as={Col} md="12" controlId="validationmail">
                 <Form.Label>Dirección</Form.Label>
@@ -309,7 +290,6 @@ const ClienteForm = (props) => {
     </Fragment>
   )
 
-
   //para eliminar cliente
   if (modalType === 'Delete') return (
 
@@ -317,13 +297,14 @@ const ClienteForm = (props) => {
       {
         dataValidate === true ?
           <div className='dataIsOk'>
-            <Row className='dataIsOkContent'>
-              <ion-icon name="checkmark-circle-outline"></ion-icon>
-              <span>Cliente eliminado exitosamente</span>
-            </Row>
-            <Row id='close'>
-              <Button className='btn closeBtn' onClick={() => refreshPage()}>Cerrar</Button>
-            </Row>
+            <div className="main-dump delete">
+              <div className="ddd">
+                <PuffLoader color="#36d7b7" />
+              </div>
+              <div className="ddd">
+                <spam>Eliminando cliente...</spam>
+              </div>
+            </div>
           </div>
           :
           <Form onSubmit={handleDelete}>
@@ -351,7 +332,6 @@ const ClienteForm = (props) => {
   )
   //modificar cliente
   if (modalType === 'Edit' && currentClient === true) return (
-
     <Fragment>
       {
         dataValidate === true ?

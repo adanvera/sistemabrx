@@ -4,11 +4,13 @@ import { Fragment } from 'react';
 import { Button, Col, Container, Form, Nav, Row } from 'react-bootstrap'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { DataContext } from '../Commons/Context/DataContext';
+import ModalContainer from '../Commons/ModalContainer';
 import Table from '../Commons/Table/Table';
 import { CLIENT, MINING_SUMMARY, OPERATION_PROD } from '../Helpers/helper';
 import OperationsData from '../Operaciones/OperationsData';
 import ClientInfo from './ClientInfo';
 import CheckBox from './Forms/CheckBox';
+import ClienteForm from './Forms/ClienteForm';
 
 function ClientDetails() {
     const { id } = useParams();
@@ -17,6 +19,8 @@ function ClientDetails() {
     const [numeroOperacion, setNumeroOperacion] = useState('')
     const [operationTemporal, setOperationTemporal] = useState('')
     const [typesOperations, setTypesOperations] = useState('')
+    const { modalstatus, setModalStatus } = useContext(DataContext)
+
     const initialState = {
         tab: {
             operations: true,
@@ -31,7 +35,9 @@ function ClientDetails() {
             tempmax: "TEMP MAX",
             maxfan: "VENTILADOR MAX",
             uptime: "UPTIME",
-        }
+        },
+        form: 'Cliente',
+        title: 'CLIENTE',
     }
 
     const [state, setState] = useState(initialState)
@@ -44,6 +50,8 @@ function ClientDetails() {
     const [miningData, setMiningData] = useState('')
     const [dataOperations, setDataOperations] = useState('')
     const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
+    const { modalType, setModalType } = useContext(DataContext)
+    const modal = modalstatus
 
     useEffect(() => {
 
@@ -236,8 +244,36 @@ function ClientDetails() {
         }
     };
 
+    const handleUserDelete = (e, btn) => {
+        e.preventDefault()
+        setModalStatus(true)
+
+
+        if (btn === '_btnDelete') {
+            setModalType('Delete')
+            // setDataIdRow(dataIDc)
+        }
+    }
+
+
+    /**funcion para setear form clickeado */
+    const pickForm = () => {
+        switch (state?.form) {
+            case 'Cliente':
+                return <ClienteForm modalType={modalType} id_client={clientData?.id_client} />
+        }
+    }
+
     return (
         <div className={sidebarStatus === 'open' ? 'main-content-tkt' : 'main-content-tkt extend'} >
+            {modal && (
+                <ModalContainer
+                    title={state?.title}
+                    form={pickForm()}
+                    modalStatus={modal}
+                    modalType={modalType}
+                />
+            )}
             <Row className=''>
                 <Col md={9} className="tiktop ml-1 pb-3">
                     <Container fluid={true} className="">
@@ -265,7 +301,7 @@ function ClientDetails() {
                             </div>
                         </Col>
                         <div className="actionstwo d-grid mt-3">
-                            <div className="delete-btn tkt d-flex" id='_btnDeletetkt'  >
+                            <div className="delete-btn tkt d-flex" id='_btnDeletetkt' onClick={(e) => handleUserDelete(e, '_btnDelete')} >
                                 <span>Eliminar cliente </span>
                                 <div>
                                     <ion-icon name="trash-outline"></ion-icon>
@@ -307,9 +343,7 @@ function ClientDetails() {
                                     </Row>
                                     <Row className='dividefilters'></Row>
                                 </>
-
                             }
-
                             {
                                 state?.tab?.operations
                                     ? (
@@ -369,7 +403,6 @@ function ClientDetails() {
                                                 </Col>
                                             </Row>
                                         </>
-
                                     ) : ''
                             }
                             <section className='tabcontent'>
