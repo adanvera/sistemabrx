@@ -27,6 +27,9 @@ export default function TableRow(props) {
         if ((props?.link) && (pathname === '/importaciones')) {
             navigate(`${props?.link}${data?.id_importacion}`)
         }
+        if ((props?.link) && (pathname === '/operaciones')) {
+            navigate(`${props?.link}${data?.id_operations}`)
+        }
     }
 
     const veifyData = (data, col) => {

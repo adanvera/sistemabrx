@@ -31,6 +31,7 @@ import Gastos from './Components/Negocio/Gastos/Gastos';
 import Reporte from './Components/Negocio/Reportes/Reporte';
 import OperacionesReporte from './Components/Negocio/Reportes/OperacionesReporte';
 import TicketsReporte from './Components/Negocio/Reportes/TicketsReporte';
+import DetailsOperations from './Components/Operaciones/DetailsOperations';
 
 const App = (props) => {
 
@@ -61,6 +62,7 @@ const App = (props) => {
                 <Route path="/seguridad" element={<ProtectedRoute><Seguridad /></ProtectedRoute>} />
                 <Route path='/adjust' element={<ProtectedRoute><ChangePass /></ProtectedRoute>} />
                 <Route path='/operaciones' element={<ProtectedRoute><Operaciones /></ProtectedRoute>} />
+                <Route path='/operaciones/:id' element={<ProtectedRoute><DetailsOperations /></ProtectedRoute>} />
                 <Route path="/mineros/:id" element={<ProtectedRoute><MineroDetails /></ProtectedRoute>} />
                 <Route path="/maquinas/" element={<ProtectedRoute><Maquinas /></ProtectedRoute>} />
                 <Route path="/importaciones" element={<ProtectedRoute><Importaciones /></ProtectedRoute>} />
@@ -70,7 +72,6 @@ const App = (props) => {
                 <Route path="/reportes" element={<ProtectedRoute><Reporte /></ProtectedRoute>} />
                 <Route path="/reportes/operaciones" element={<ProtectedRoute><OperacionesReporte /></ProtectedRoute>} />
                 <Route path="/reportes/tickets" element={<ProtectedRoute><TicketsReporte /></ProtectedRoute>} />
-
               </Route>
               <Route>
                 <Route path='/reset' element={<Reset />} />
