@@ -320,7 +320,6 @@ const InfoImportación = (props) => {
                         <Col md={6} className="mt-3">
                             {
                                 <>
-
                                     {
                                         validateChangeArticle === false &&
                                         <Row className='pl-3'>
@@ -333,11 +332,15 @@ const InfoImportación = (props) => {
                                                                     <Col>
                                                                         <h6>Detalles </h6>
                                                                     </Col>
-                                                                    <Col className='aend' onClick={(e) => setValidateChangeArticle(true)}>
-                                                                        <div>
-                                                                            <p>Cambiar articulo</p>
-                                                                        </div>
-                                                                    </Col>
+                                                                    {
+                                                                        diffDays > 0 &&
+                                                                        <Col className='aend' onClick={(e) => setValidateChangeArticle(true)}>
+                                                                            <div>
+                                                                                <p>Cambiar articulo</p>
+                                                                            </div>
+                                                                        </Col>
+                                                                    }
+
                                                                 </Row>
                                                                 <Row>
                                                                     <span>Articulo :  <strong>{datede[key].name}</strong> </span>
@@ -385,7 +388,7 @@ const InfoImportación = (props) => {
                                             controlId="floatingSelectGrid"
                                             label="Empresa envio"
                                         >
-                                            <Form.Select onChange={handleChange} value={state.empresa_envio} name="empresa_envio" >
+                                            <Form.Select onChange={handleChange} value={state.empresa_envio} name="empresa_envio" disabled={diffDays <= 0 ? true : false} >
                                                 <option selected disabled>Seleccionar empresa</option>
                                                 <option selected value="DHL"> DHL </option>
                                                 <option selected value="FEDEX"> FEDEX </option>
@@ -398,7 +401,11 @@ const InfoImportación = (props) => {
                                             controlId="floatingSelectGrid"
                                             label="Proveedor"
                                         >
-                                            <Form.Select onChange={handleChangeValue} value={state.id_proveedor} name="id_proveedor" >
+                                            <Form.Select
+                                                onChange={handleChangeValue}
+                                                value={state.id_proveedor}
+                                                name="id_proveedor"
+                                                disabled={diffDays <= 0 ? true : false} >
                                                 <option selected disabled>Seleccionar proveedor</option>
                                                 {
                                                     Object.keys(proveedores).map((item) => {
@@ -406,13 +413,17 @@ const InfoImportación = (props) => {
                                                     })
                                                 }
                                             </Form.Select>
-
                                         </FloatingLabel>
                                     </Row>
-
                                     <Row className='mt-3'>
                                         <FloatingLabel className="tkt" controlId="floatingInputGrid" label="Tracking number">
-                                            <Form.Control type="text" name="tracking_number" placeholder="tracking_number" value={state.tracking_number} onChange={handleChange} />
+                                            <Form.Control
+                                                type="text"
+                                                name="tracking_number"
+                                                placeholder="tracking_number"
+                                                value={state.tracking_number}
+                                                onChange={handleChange}
+                                                disabled={diffDays <= 0 ? true : false} />
                                         </FloatingLabel>
                                     </Row>
 
@@ -421,7 +432,13 @@ const InfoImportación = (props) => {
                                             controlId="floatingSelectGrid"
                                             label="Cliente"
                                         >
-                                            <Form.Select aria-label="id_client" name="id_cliente" value={state.id_cliente} onChange={handleChange} id="id_cliente">
+                                            <Form.Select
+                                                aria-label="id_client"
+                                                name="id_cliente"
+                                                value={state.id_cliente}
+                                                onChange={handleChange}
+                                                id="id_cliente"
+                                                disabled={diffDays <= 0 ? true : false} >
                                                 {
                                                     Object.keys(clients).map((key, index) => {
                                                         return (
@@ -442,7 +459,14 @@ const InfoImportación = (props) => {
                                     <Form.Group controlId="cantidad">
                                         <Form.Label>Cantidad</Form.Label>
                                         <Form.Control
-                                            type="number" min={0} name="cantidad" placeholder="cantidad" value={state.cantidad} onChange={handleChange} />
+                                            type="number"
+                                            min={0}
+                                            name="cantidad"
+                                            placeholder="cantidad"
+                                            value={state.cantidad}
+                                            onChange={handleChange}
+                                            disabled={diffDays <= 0 ? true : false}
+                                        />
                                         <Form.Control.Feedback type="invalid">Escribir cantidad de articulo</Form.Control.Feedback>
                                     </Form.Group>
                                 </Col>
@@ -452,7 +476,14 @@ const InfoImportación = (props) => {
                                     <Form.Group controlId="valor_envio">
                                         <Form.Label>Valor envio (USD)</Form.Label>
                                         <Form.Control
-                                            type="number" min={0} name="valor_envio" placeholder="valor_envio" value={state.valor_envio} onChange={handleChange} />
+                                            type="number"
+                                            min={0}
+                                            name="valor_envio"
+                                            placeholder="valor_envio"
+                                            value={state.valor_envio}
+                                            onChange={handleChange}
+                                            disabled={diffDays <= 0 ? true : false}
+                                        />
                                         <Form.Control.Feedback type="invalid">Escribir valor envio</Form.Control.Feedback>
                                     </Form.Group>
                                 </Col>
@@ -465,7 +496,9 @@ const InfoImportación = (props) => {
                                             clearIcon={null}
                                             onChange={handleFechaEnvio}
                                             value={state.fecha_envio}
-                                            className='date-input' />
+                                            className='date-input'
+                                            disabled={diffDays <= 0 ? true : false}
+                                        />
                                     </div>
                                 </Col>
                                 <Col>
@@ -475,7 +508,9 @@ const InfoImportación = (props) => {
                                             clearIcon={null}
                                             onChange={handleFechaArribo}
                                             value={state.fecha_arribo}
-                                            className='date-input' />
+                                            className='date-input'
+                                            disabled={diffDays <= 0 ? true : false}
+                                        />
                                     </div>
                                 </Col>
                             </Row>

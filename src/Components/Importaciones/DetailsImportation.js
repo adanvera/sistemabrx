@@ -67,7 +67,9 @@ const DetailsImportation = (props) => {
     const commetsToShow = dataToUse ? "[" + dataToUse?.comentario_importacion + "]" : ''
     const comments = dataToUse ? JSON.parse(commetsToShow) : ''
 
+    const historialToShow = dataToUse ? "[" + dataToUse?.historial + "]" : ''
 
+    const parseDataa = dataToUse ? JSON.parse(historialToShow) : ''
 
     const handleSubmitDelete = (e) => {
         const id_importacion = dataidrow ? dataidrow : ''
@@ -121,6 +123,7 @@ const DetailsImportation = (props) => {
         }
     }
 
+
     return (
         <div className={sidebarStatus === 'open' ? 'main-content-tkt' : 'main-content-tkt extend'} >
             {modal && (
@@ -157,7 +160,7 @@ const DetailsImportation = (props) => {
             </Row>
             <Row className='mt-3'>
                 <Col md={9}>
-                    <ImportTimeline data={comments} dataToSend={dataToUse?.comentario_importacion} idImp={id} />
+                    <ImportTimeline data={comments} dataToSend={dataToUse?.comentario_importacion} idImp={id} historial={parseDataa} />
                 </Col>
             </Row>
         </div>

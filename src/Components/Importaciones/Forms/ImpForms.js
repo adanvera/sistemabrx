@@ -155,6 +155,14 @@ const ImpForms = (props) => {
             comment_at: new Date(),
         }
 
+        const historial = JSON.stringify({
+            historilal_id: Math.random().toString(36).slice(-8),
+            historial_action: 'Importación creada',
+            historial_date: new Date(),
+            userdata: userAuthed ? userAuthed.name + " " + userAuthed.last_name : '',
+            id_user: userAuthed?.id_user,
+        })
+
         const createImportacion = {
             id_cliente: Number(state.id_cliente),
             id_proveedor: Number(state.id_proveedor),
@@ -166,6 +174,7 @@ const ImpForms = (props) => {
             comentario_importacion: state.comentario_importacion === '' ? '' : JSON.stringify(commentTo),
             cantidad: Number(state.cantidad),
             articulos: JSON.stringify(externalData.filter((item) => item.id === state.articulos)),
+            historial: JSON.stringify(historial),
         }
 
         const pushImportación = async () => {
@@ -228,7 +237,7 @@ const ImpForms = (props) => {
         });
     }
 
-
+    console.log(state);
 
     if (modalType === 'Add') {
         return (<Fragment>
@@ -293,7 +302,7 @@ const ImpForms = (props) => {
                             <Form.Group as={Col} md="12" controlId="cliente">
                                 <Form.Label>Cliente:</Form.Label>
                                 <Form.Select value={state.id_cliente} name="id_cliente" onChange={handleChange} >
-                                    <option selected disabled>Seleccionar cliente</option>
+                                    <option selected>Seleccionar cliente</option>
                                     {
                                         Object.keys(dataList).map((item) => {
                                             return <option value={dataList[item]?.id_client} >{dataList[item]?.name + " " + dataList[item]?.last_name}</option>
@@ -307,7 +316,7 @@ const ImpForms = (props) => {
                                 <Form.Group controlId="id_proveedor">
                                     <Form.Label>Proveedor:</Form.Label>
                                     <Form.Select onChange={handleChangeValue} value={state.id_proveedor} name="id_proveedor" >
-                                        <option selected disabled>Seleccionar proveedor</option>
+                                        <option selected >Seleccionar proveedor</option>
                                         {
                                             Object.keys(proveedores).map((item) => {
                                                 return <option value={proveedores[item]?.id_proveedor} >{proveedores[item]?.description}</option>
@@ -320,9 +329,9 @@ const ImpForms = (props) => {
                                 <Form.Group controlId="empresa_envio">
                                     <Form.Label>Empresa envio:</Form.Label>
                                     <Form.Select onChange={handleChange} value={state.empresa_envio} name="empresa_envio" >
-                                        <option selected disabled>Seleccionar empresa</option>
-                                        <option selected value="DHL"> DHL </option>
-                                        <option selected value="FEDEX"> FEDEX </option>
+                                        <option selected >Seleccionar empresa</option>
+                                        <option value="DHL"> DHL </option>
+                                        <option value="FEDEX"> FEDEX </option>
                                     </Form.Select>
                                 </Form.Group>
                             </Col>

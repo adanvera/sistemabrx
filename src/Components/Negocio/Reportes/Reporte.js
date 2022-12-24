@@ -5,6 +5,9 @@ import { Card, Col, Container, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { DataContext } from '../../Commons/Context/DataContext'
 import ModalContainer from '../../Commons/ModalContainer'
+import operaciones from "../../../assets/images/pago.gif"
+import tktimg from "../../../assets/images/ticketimg.gif"
+
 
 
 
@@ -59,30 +62,29 @@ const Reporte = (props) => {
                 <Row className='mt-3'>
                     <h1>Reportes</h1>
                 </Row>
-
                 <Row className='content-mineria justify-content-between mb-3' >
-
-
-                    <Col md={4} onClick={() => navigate('/reportes/operaciones')}  >
+                    <Col md={4} onClick={() => navigate('/reportes/operaciones')} >
                         <div id="tkprev">
-
-                            <h6>Operaciones </h6>
-
-
+                            <div className='imgtkg'>
+                                <img src={operaciones} />
+                            </div>
+                            <div className='contentticket'>
+                                <h6>Operaciones </h6>
+                            </div>
                         </div>
                     </Col>
-                    <Col md={4}  onClick= {()=>navigate('/reportes/tickets')}>
+                    <Col md={4} onClick={() => navigate('/reportes/tickets')}>
                         <div id="tkprev">
-
-                            <h6>Tickets</h6>
-
+                            <div className='imgtkg'>
+                                <img src={tktimg} />
+                            </div>
+                            <div className='contentticket'>
+                                <h6>Tickets</h6>
+                            </div>
                         </div>
                     </Col>
-                   
-
-
+                    <Col md={4} >   </Col>
                 </Row>
-
             </Container>
         </div>
 
@@ -90,3 +92,5 @@ const Reporte = (props) => {
 }
 
 export default Reporte
+
+

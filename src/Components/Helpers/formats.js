@@ -207,6 +207,7 @@ export const formatedDataMiners = (data) => {
             obData = {
                 ...obData,
                 [item?.id_machine]: {
+                    id_machine_tex: item.id_machine,
                     machine_name: item.machine_name,
                     id_machine: item.id_machine,
                     status: verifyStatusMachine(item.status),
@@ -455,6 +456,28 @@ export const formatHistorial = (data) => {
 
     if (data) {
         data?.map(item => {
+            obData = {
+                ...obData,
+                [item?.historilal_id]: {
+                    historial_action: item?.historial_action,
+                    historial_date: formatoDate(item?.historial_date),
+                    id_user: (item?.id_user),
+                    userdata: item?.userdata,
+                }
+
+            }
+        })
+    }
+
+    return obData
+}
+
+export const formatHistorialimp = (data) => {
+    let obData = {}
+
+    if (data) {
+        data?.map(item => {
+
             obData = {
                 ...obData,
                 [item?.historilal_id]: {

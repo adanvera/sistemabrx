@@ -21,6 +21,7 @@ function Mineros() {
 
     },
     headers: {
+      id_machine_tex: '',
       machine_name: "NOMBRE",
       status: "ESTADO",
       name: "CLIENTE",
@@ -42,6 +43,7 @@ function Mineros() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
+  const [valueBTC, setValueBTC] = useState('')
 
 
   /**funcion para setear form clickeado */
@@ -98,11 +100,34 @@ function Mineros() {
 
     getMiningMachines()
 
+    const getBtc = async () => {
+      const optionns = {
+        method: 'GET',
+        // mode: 'no-cors',
+        // headers: {
+        //   'Access-Control-Allow-Origin': '*',
+        //   'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+        // }
+      }
+      try {
+
+        const res = await fetch("https://api.minerstat.com/v2/coins?list=BTC", optionns),
+          json = await res.json()
+        setValueBTC(json)
+
+      } catch (error) {
+        console.log(error);
+      }
+
+    }
+
+    getBtc()
 
   }, []);
 
   const formatedList = formatedDataMiners(dataList)
 
+  console.log(valueBTC);
 
   return (
     <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
@@ -129,15 +154,12 @@ function Mineros() {
         </Row>
         <Row>
           <Col md={6} className="mt-3 mb-3">
-
             <div class="css-89u161">
               <div class="css-kb1ety"><dd class="css-pxccrj">454.11 TH</dd><dt class="css-6qnch9">Hashrate</dt></div>
               <div class="css-kb1ety"><dd class="css-pxccrj">99.80%</dd><dt class="css-6qnch9">Share Efficiency</dt></div>
               <div class="css-kb1ety"><dd class="css-pxccrj">0.00001696 BTC</dd><dt class="css-6qnch9">Mined Revenue</dt></div>
             </div>
-
           </Col>
-          
         </Row>
         {
           isLoaded === false ?

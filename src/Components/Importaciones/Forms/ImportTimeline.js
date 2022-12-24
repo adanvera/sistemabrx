@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useState } from 'react'
 import { Button, Col, FloatingLabel, Form, Row } from 'react-bootstrap';
 import { DataContext } from '../../Commons/Context/DataContext';
-import { formatComments } from '../../Helpers/formats';
+import { formatComments, formatHistorial, formatHistorialimp } from '../../Helpers/formats';
 import { IMPORTACIONES } from '../../Helpers/helper';
 
 const ImportTimeline = (props) => {
@@ -11,9 +11,25 @@ const ImportTimeline = (props) => {
     const { user } = useContext(DataContext)
     const userAuthed = user
     const idImport = props?.idImp
-    // const historial = formatHistorial(props?.historial)
 
-    // console.log(historial);
+
+    /**cast to parse */
+    const castParse = (data) => {
+        try {
+            const dataParsed = JSON.parse(data)
+            return dataParsed
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const dasde = props?.historial
+
+    const historial = castParse(dasde)
+  
+
+   console.log();
 
     const initialState = {
         variables: {
@@ -89,10 +105,6 @@ const ImportTimeline = (props) => {
 
     }
 
-
-    console.log(comments);
-
-
     return (
         <Fragment>
             <div className='tiktop'>
@@ -152,7 +164,7 @@ const ImportTimeline = (props) => {
                         )
                     }))
                 }
-                {/*                 
+
                 {
                     clicked === 'historial' &&
                     Object.keys(historial).map((item => {
@@ -174,7 +186,7 @@ const ImportTimeline = (props) => {
                             </div>
                         )
                     }))
-                }  */}
+                }
             </div>
         </Fragment>
     )

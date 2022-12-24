@@ -15,10 +15,7 @@ const TicketTimeline = (props) => {
     const userAuthed = user
     const idTicket = props?.idTicket
     const historial = formatHistorial(props?.historial)
-
-    console.log(props);
-
-    const id_machine = props?.id_machine
+    const id_machine = props.id_machine
 
     const initialState = {
         variables: {
@@ -44,8 +41,10 @@ const TicketTimeline = (props) => {
     const [state, setState] = useState(initialState)
     const [clicked, setClicked] = useState('comments')
     const [dataList, setDataList] = useState('')
+    const [dataTicket, setDataTicket] = useState('')
 
     useEffect(() => {
+
         /** Obtenemos los valores que guardamos en el token para poder utilizarlos
          * en la siguiente consulta
         */
@@ -60,13 +59,33 @@ const TicketTimeline = (props) => {
             },
         }
 
-        setTimeout(() => {
-            
-        }, 2500);
+        const getTickets = async () => {
+            try {
+                const response = await fetch(TICKETS, options)
+                const data = await response.json()
+                setDataTicket((data))
+            } catch (error) {
+                console.log(error);
+            }
+        }
 
-
+        getTickets()
 
     }, [])
+
+    const filteredTicket = dataTicket ? dataTicket?.filter(ticket => ticket.id_machine === id_machine) : ''
+
+    /**order by date maior to minor */
+    const dataShowTickets = filteredTicket ? filteredTicket?.sort((a, b) => {
+        return new Date(b.created_at) - new Date(a.created_at);
+    }) : ''
+
+
+
+    console.log(dataShowTickets);
+
+
+
 
     const handleChange = (e) => {
 
@@ -132,9 +151,7 @@ const TicketTimeline = (props) => {
     }
 
 
-    const formatedList = formatedDataTicket(dataList)
-    console.log(formatedList);
-
+    const formatedList = filteredTicket ? formatedDataTicket(dataShowTickets) : ''
 
 
     return (
@@ -223,12 +240,13 @@ const TicketTimeline = (props) => {
                         )
                     }))
                 }
+                <Row className='mt-3'></Row>
                 {
                     clicked === 'historialTickets'
                     &&
                     <Table link='/tickets/' headers={state?.headers} data={formatedList} exportdata={true} title="tickets" />
                 }
-
+                <Row className='mb-3'></Row>
             </div>
         </Fragment>
     )

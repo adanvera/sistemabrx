@@ -35,8 +35,6 @@ const InfoMinero = (props) => {
     const power = data ? data?.consume_machine : ''
     const { mineroGloabl, setMineroGlobal } = useContext(DataContext)
     const [databtc, setDatabtc] = useState()
-
-
     const [chartData, setChartData] = useState({})
 
     // funcion para reemplazar "" y {} y : en un string
@@ -45,22 +43,16 @@ const InfoMinero = (props) => {
     }
 
     const parseData = data ? JSON.parse(data?.machinedata) : ''
-
     const useData = data ? parseData[0] : ''
-
     const [amountDay, setAmountDay] = useState()
     const [amountPower, setAmountPower] = useState()
-
     const [coinmining, setCoinmining] = useState()
-
     const [valueBTC, setValueBTC] = useState('')
     const [ultimostrinta, setUltimostrinta] = useState()
     const [coins, setCoins] = useState()
-
-    const idFinal = props?.datID
+    const idFinal = props ? props?.datID : ''
 
     useEffect(() => {
-
         const token = localStorage.getItem('token')
         const options = {
             method: 'GET',

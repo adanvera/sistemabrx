@@ -8,7 +8,7 @@ import { useRef } from "react";
 import { DataContext } from "../Context/DataContext.js";
 
 export default function Table(props) {
-    
+
     const { headers, data } = props
     const [state, setState] = useState({ sort: {}, currentPage: 1 })
     const { subPermissons, setSubPermissons } = useContext(DataContext)
@@ -55,11 +55,9 @@ export default function Table(props) {
         if (sub === 1 && exp === true) {
             return <div className="exportdata" onClick={onDownload}> Exportar datos </div>
         } else return ''
-
     }
 
     const dataSize = listData?.length
-
 
     return (
         <Fragment>
@@ -91,7 +89,7 @@ export default function Table(props) {
             }
             {
                 props?.nopagination === true ? '' :
-                <Pagination data={listData} activeLabel={state?.currentPage}> {items} </ Pagination>
+                    <Pagination data={listData} activeLabel={state?.currentPage}> {items} </ Pagination>
             }
         </Fragment>
     )
