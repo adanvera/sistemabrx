@@ -14,11 +14,13 @@ import ClienteForm from './Forms/ClienteForm';
 
 function ClientDetails() {
     const { id } = useParams();
+    const [loadingFirst, setLoadingFirst] = useState(true);
     const [fechaDesde, setFechaDesde] = useState('2022-12-01')
     const [fechaHasta, setFechaHasta] = useState('2022-12-31')
     const [numeroOperacion, setNumeroOperacion] = useState('')
     const [operationTemporal, setOperationTemporal] = useState('')
     const [typesOperations, setTypesOperations] = useState('1')
+    
     const { modalstatus, setModalStatus } = useContext(DataContext)
 
     const initialState = {
@@ -52,7 +54,16 @@ function ClientDetails() {
     const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
     const { modalType, setModalType } = useContext(DataContext)
     const modal = modalstatus
-    const getOperations = async () => {
+
+    //checbox
+    const [checkedCompra, setCheckedCompra] = useState(true);
+    const [checkedVenta, setcheckedVenta] = useState(false);
+    
+   
+    const getOperations = async (typeChecked = '') => {
+        console.log('typeChecked'+typeChecked);
+        let type = typeChecked === ''?typesOperations:typeChecked
+
         const optionsData = {
             method: 'POST',
             headers: {
@@ -60,7 +71,7 @@ function ClientDetails() {
                 'content-type':'application/json'
                 
             },
-            body:JSON.stringify({fechaDesde,fechaHasta,typeOperation:typesOperations})
+            body:JSON.stringify({fechaDesde,fechaHasta,typeOperation:type})
         }   
         try {
             const res = await fetch(OPERATION_PROD + 'extractByDate/' + id, optionsData),
@@ -69,14 +80,16 @@ function ClientDetails() {
                 console.log(json);
                 
             setDataOperations(handleDataOperationToShow(json));
-            setOperationTemporal(handleDataOperationToShow(json))
+            if(loadingFirst){
+
+                setOperationTemporal(handleDataOperationToShow(json))
+            }
             
         } catch (error) {
             //setError(error);
             console.log("Esto es el error" + error);
         }
     }
-
 
 
     useEffect(() => {
@@ -131,7 +144,10 @@ function ClientDetails() {
         }
         getMiners()
 
-                getOperations()
+        getOperations()
+        
+        
+
 
     }, [state]);
 
@@ -150,6 +166,9 @@ function ClientDetails() {
             }
         })
     }
+    useEffect(()=>{
+      getOperations()      
+    },[typesOperations])
     const handleDataOperationToShow = ( operation ) => {
         
         let listToShow = []
@@ -202,6 +221,7 @@ function ClientDetails() {
         
 
     }
+    
     const handleFilterDateOperations = async () => {
         console.log('Enviare estas fechas');
         if (fechaDesde === '' || fechaHasta === '') return alert('La fecha no puede ser vacia')
@@ -262,7 +282,8 @@ function ClientDetails() {
 
     const handleFilterOperationNumber = (e) => {
         console.log(numeroOperacion);
-        const newData = dataOperations.filter(op => op.operation === Number(numeroOperacion))
+        console.log(dataOperations);
+        const newData = dataOperations.filter(op => op.operacion === Number(numeroOperacion))
         console.log(newData);
         if (newData !== '') {
             setDataOperations(newData)
@@ -275,6 +296,9 @@ function ClientDetails() {
         setNumeroOperacion('')
         setFechaDesde('2022-12-01')
         setFechaHasta('2022-12-31')
+        setTypesOperations('1')
+        setCheckedCompra(true)
+        setcheckedVenta(false)
     }
 
     const copyToClipBoard = async copyMe => {
@@ -315,6 +339,7 @@ function ClientDetails() {
                     modalType={modalType}
                 />
             )}
+            
             <Row className=''>
                 <Col md={9} className="tiktop ml-1 pb-3">
                     <Container fluid={true} className="">
@@ -380,7 +405,12 @@ function ClientDetails() {
                                 state?.tab?.operations &&
                                 <>
                                     <Row className='mt-2'>
-                                        <CheckBox setTypesOperations={setTypesOperations} />
+                                        <CheckBox 
+                                        setTypesOperations={setTypesOperations} 
+                                        checkedCompra={checkedCompra} 
+                                        setCheckedCompra={setCheckedCompra}
+                                        checkedVenta={checkedVenta}
+                                        setcheckedVenta={setcheckedVenta}/>
                                     </Row>
                                     <Row className='dividefilters'></Row>
                                 </>
