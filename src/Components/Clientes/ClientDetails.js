@@ -63,7 +63,7 @@ function ClientDetails() {
             body:JSON.stringify({fechaDesde,fechaHasta,typeOperation:typesOperations})
         }   
         try {
-            const res = await fetch("http://localhost:4000/api/operation/" + 'extractByDate/' + id, optionsData),
+            const res = await fetch(OPERATION_PROD + 'extractByDate/' + id, optionsData),
                 json = await res.json()
                 console.log(res);
                 console.log(json);
