@@ -1,4 +1,3 @@
-import moment from 'moment/moment'
 import React, { useEffect, useState } from 'react'
 import { Button, Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 import DatePicker from 'react-date-picker'

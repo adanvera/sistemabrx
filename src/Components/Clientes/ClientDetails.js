@@ -18,7 +18,7 @@ function ClientDetails() {
     const [fechaHasta, setFechaHasta] = useState('2022-12-31')
     const [numeroOperacion, setNumeroOperacion] = useState('')
     const [operationTemporal, setOperationTemporal] = useState('')
-    const [typesOperations, setTypesOperations] = useState('')
+    const [typesOperations, setTypesOperations] = useState('1')
     const { modalstatus, setModalStatus } = useContext(DataContext)
 
     const initialState = {
@@ -39,7 +39,7 @@ function ClientDetails() {
         form: 'Cliente',
         title: 'CLIENTE',
     }
-
+    
     const [state, setState] = useState(initialState)
     const [clientData, setClientData] = useState('')
     /**acciones que son utilizadas al cargar datos de
@@ -52,6 +52,32 @@ function ClientDetails() {
     const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
     const { modalType, setModalType } = useContext(DataContext)
     const modal = modalstatus
+    const getOperations = async () => {
+        const optionsData = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'content-type':'application/json'
+                
+            },
+            body:JSON.stringify({fechaDesde,fechaHasta,typeOperation:typesOperations})
+        }   
+        try {
+            const res = await fetch(OPERATION_PROD + 'extractByDate/' + id, optionsData),
+                json = await res.json()
+                console.log(res);
+                console.log(json);
+                
+            setDataOperations(handleDataOperationToShow(json));
+            setOperationTemporal(handleDataOperationToShow(json))
+            
+        } catch (error) {
+            //setError(error);
+            console.log("Esto es el error" + error);
+        }
+    }
+
+
 
     useEffect(() => {
 
@@ -105,23 +131,7 @@ function ClientDetails() {
         }
         getMiners()
 
-        const getOperations = async () => {
-            try {
-                const res = await fetch(OPERATION_PROD + 'extract/' + id, options),
-                    json = await res.json()
-                /**seteamos loading */
-                //json.map(op => delete op.created)
-                /**seteamos el listado de tickets */
-
-
-                setDataOperations(json);
-            } catch (error) {
-                //setError(error);
-                console.log("Esto es el error" + error);
-            }
-        }
-
-        getOperations()
+                getOperations()
 
     }, [state]);
 
@@ -140,6 +150,35 @@ function ClientDetails() {
             }
         })
     }
+    const handleDataOperationToShow = ( operation ) => {
+        
+        let listToShow = []
+        operation.forEach( op => {
+            const formatOperation = {
+                fecha:'',
+                operacion:'',
+                montoRecibidoEnviado:'',
+                comision:'',
+                tipoMoneda:'',
+                monto:'',
+                tipoOperacion:''
+            }
+            formatOperation.comision = op.comision
+            formatOperation.fecha = op.fecha
+            formatOperation.operacion = op.operation
+            formatOperation.tipoMoneda = op.btc !== '0'? 'BTC':'USDT'
+            formatOperation.monto = op.btc !== '0'? op.btc:op.usdt
+            formatOperation.tipoOperacion = typesOperations === '0'? 'Venta':'Compra'
+            
+            if(typesOperations === '1'){
+                formatOperation.montoRecibidoEnviado = op.compra
+            }else if(typesOperations === '0'){
+                formatOperation.montoRecibidoEnviado = op.venta
+            }
+            listToShow.push(formatOperation)
+        })
+        return listToShow
+    }
 
     const minerHeader = {
         machine_name: "NOMBRE",
@@ -152,14 +191,15 @@ function ClientDetails() {
     }
 
     const dataOperationsHeader = {
-        id: 'Operacion ',
-        cliente: "Cliente",
-        compra: 'Compra',
-        venta: 'Venta',
-        comision: 'Comision',
-        btc: 'BTC',
-        usdt: 'USDT',
         fecha: 'Fecha',
+        id: 'Operacion',    
+        type:(typesOperations ==='1'?'Enviado al cliente':'Recibido por el cliente'),
+        comision: 'Comision',
+        tipoMoneda:'Tipo de moneda',
+        monto:(typesOperations ==='1'?'Monto recibido':'Monto enviado'),
+        tipoOperacion:'Tipo de operacion'
+        
+        
 
     }
     const handleFilterDateOperations = async () => {
@@ -225,7 +265,6 @@ function ClientDetails() {
         const newData = dataOperations.filter(op => op.operation === Number(numeroOperacion))
         console.log(newData);
         if (newData !== '') {
-            setOperationTemporal(dataOperations)
             setDataOperations(newData)
 
         }
@@ -234,6 +273,8 @@ function ClientDetails() {
     const handleCleanOperations = () => {
         setDataOperations(operationTemporal)
         setNumeroOperacion('')
+        setFechaDesde('2022-12-01')
+        setFechaHasta('2022-12-31')
     }
 
     const copyToClipBoard = async copyMe => {
@@ -393,7 +434,7 @@ function ClientDetails() {
                                                 </Col>
                                                 <Col className="column align">
                                                     <div className="item-column">
-                                                        <button className=" button btn-cli" value='Filtrar' onClick={() => handleFilterDateOperations()} >Filtrar</button>
+                                                        <button className=" button btn-cli" value='Filtrar' onClick={() => getOperations()} >Filtrar</button>
                                                     </div>
                                                 </Col>
                                                 <Col className="column align">
