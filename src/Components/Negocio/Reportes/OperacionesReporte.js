@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useContext } from 'react'
-import { Card, Col, Row } from 'react-bootstrap'
+import { Card, Col, Container, Row } from 'react-bootstrap'
 import CheckBox from '../../Clientes/Forms/CheckBox'
 import { DataContext } from '../../Commons/Context/DataContext'
 import Table from '../../Commons/Table/Table'
@@ -29,21 +29,21 @@ function OperacionesReporte() {
     const [checkedCompra, setCheckedCompra] = useState(false);
     const [checkedAll, setCheckedAll] = useState(true);
     const [checkedVenta, setcheckedVenta] = useState(false);
-    
+
     const header = {
         fecha: 'Fecha',
-        cliente:'Nro cliente',
+        cliente: 'Nro cliente',
         id: 'Operacion',
-        type: (typesOperations === '1' ? 'Enviado al cliente' : (typesOperations === '0'?'Recibido por el cliente':'Recibido o enviado ')),
+        type: (typesOperations === '1' ? 'Enviado al cliente' : (typesOperations === '0' ? 'Recibido por el cliente' : 'Recibido o enviado ')),
         comision: 'Comision',
         tipoMoneda: 'Tipo de moneda',
-        monto: (typesOperations === '1' ? 'Monto recibido' : (typesOperations === '0'?'Monto enviado':'Recibido o enviado ')),
+        monto: (typesOperations === '1' ? 'Monto recibido' : (typesOperations === '0' ? 'Monto enviado' : 'Recibido o enviado ')),
         tipoOperacion: 'Tipo de operacion'
 
 
 
     }
-    
+
 
     const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
     const getAllOperations = async () => {
@@ -114,148 +114,150 @@ function OperacionesReporte() {
         setData(response)
 
     }
-    const handleDataOperationToShow = ( operation ) => {
-        
+    const handleDataOperationToShow = (operation) => {
+
         let listToShow = []
-        operation.forEach( op => {
-            
+        operation.forEach(op => {
+
             const formatOperation = {
-                fecha:'',
-                cliente:'',
-                operacion:'',
-                montoRecibidoEnviado:'',
-                comision:'',
-                tipoMoneda:'',
-                monto:'',
-                tipoOperacion:''
+                fecha: '',
+                cliente: '',
+                operacion: '',
+                montoRecibidoEnviado: '',
+                comision: '',
+                tipoMoneda: '',
+                monto: '',
+                tipoOperacion: ''
             }
             formatOperation.cliente = op.id_client
             formatOperation.comision = op.commission
-                formatOperation.fecha = op.created
-                formatOperation.fecha = (formatOperation.fecha).replace(/T/, ' ').      // replace T with a space
+            formatOperation.fecha = op.created
+            formatOperation.fecha = (formatOperation.fecha).replace(/T/, ' ').      // replace T with a space
                 replace(/\..+/, '')      // replace T with a space
-                
-                formatOperation.operacion = op.id_operations
-                formatOperation.tipoMoneda = op.btc !== '0'? 'BTC':'USDT'
-                formatOperation.monto = op.btc !== '0'? op.btc:op.amount
-                formatOperation.tipoOperacion = typesOperations === '0'? 'Venta':(typesOperations === '1'?'Compra':op.type)
-            if(typesOperations === '1'){
-                    formatOperation.montoRecibidoEnviado = op.amount
-            }else if(typesOperations === '0'){
-                    formatOperation.montoRecibidoEnviado = op.amount
+
+            formatOperation.operacion = op.id_operations
+            formatOperation.tipoMoneda = op.btc !== '0' ? 'BTC' : 'USDT'
+            formatOperation.monto = op.btc !== '0' ? op.btc : op.amount
+            formatOperation.tipoOperacion = typesOperations === '0' ? 'Venta' : (typesOperations === '1' ? 'Compra' : op.type)
+            if (typesOperations === '1') {
+                formatOperation.montoRecibidoEnviado = op.amount
+            } else if (typesOperations === '0') {
+                formatOperation.montoRecibidoEnviado = op.amount
             }
-            if(op.type === 'Venta'&& typesOperations === '0'){
+            if (op.type === 'Venta' && typesOperations === '0') {
 
                 listToShow.push(formatOperation)
-            }else if(op.type === 'Compra'&& typesOperations === '1'){
+            } else if (op.type === 'Compra' && typesOperations === '1') {
                 listToShow.push(formatOperation)
 
-            }else if(typesOperations === '2'){
-                formatOperation.montoRecibidoEnviado = op.amount+' USD'
+            } else if (typesOperations === '2') {
+                formatOperation.montoRecibidoEnviado = op.amount + ' USD'
 
                 listToShow.push(formatOperation)
 
             }
-                
-                
-               
 
-            
+
+
+
+
         })
         return listToShow
     }
-    useEffect(()=>{
+    useEffect(() => {
         getAllOperations()
-    },typesOperations)
+    }, typesOperations)
 
     return (
         <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
-            <Row className='mt-3'>
-                <h1 className='text-center'>Operaciones</h1>
-            </Row>
-            <Row >
-                <FiltroFechaReportes
-                    fechaDesde={fechaDesde}
-                    fechaHasta={fechaHasta}
-                    setFechaDesde={setFechaDesde}
-                    setFechaHasta={setFechaHasta}
-                    handleFilter={handleFilter} />
-            </Row>
-            <Row>
+            <Container fluid={true}>
+                <Row className='mt-3'>
+                    <h4 className=''>Operaciones</h4>
+                </Row>
+                <Row className='dividefilters mb-3'></Row>
+                <Row >
+                    <FiltroFechaReportes
+                        fechaDesde={fechaDesde}
+                        fechaHasta={fechaHasta}
+                        setFechaDesde={setFechaDesde}
+                        setFechaHasta={setFechaHasta}
+                        handleFilter={handleFilter} />
+                </Row>
+                <Row className='dividefilters mt-3 mb-3'></Row>
+                <Row>
+                </Row>
+                <Row className=''>
+                    <Col>
+                        <Card
+                            bg='white'
+                            text='dark'
+                            style={{ width: '18rem' }}
+                            className="mb-2"
+                        >
+                            <Card.Body>
+                                <Card.Title> Cantidad de operaciones  </Card.Title>
+                                <Card.Text>
+                                    {data.totalOperations}
+                                </Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col>
+                        <Card
+                            bg='white'
 
-            </Row>
-            <Row className=' p-5'>
-                <Col>
-                    <Card
-                        bg='white'
+                            text='dark'
+                            style={{ width: '18rem' }}
+                            className="mb-2"
+                        >
+                            <Card.Body>
+                                <Card.Title> Total compra  </Card.Title>
+                                <Card.Text>
+                                    {data.totalAmountCompra + ' USD'} <br></br>
+                                    {data.totalAmountBTCCompra + ' BTC'}<br></br>
+                                    {data.totalAmountCompra + ' USDT'}
+                                </Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col>
+                        <Card
+                            bg='white'
 
-                        text='dark'
-                        style={{ width: '18rem' }}
-                        className="mb-2"
-                    >
-                        <Card.Body>
-                            <Card.Title> Cantidad de operaciones  </Card.Title>
-                            <Card.Text>
-                                {data.totalOperations}
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col>
-                    <Card
-                        bg='white'
+                            text='dark'
+                            style={{ width: '18rem' }}
+                            className="mb-2"
+                        >
+                            <Card.Body>
+                                <Card.Title> Total venta  </Card.Title>
+                                <Card.Text>
+                                    {data.totalAmountVenta + ' USD'} <br></br>
+                                    {data.totalAmountBTCVenta + ' BTC'}<br></br>
+                                    {data.totalAmountUSDTVenta + ' USDT'}
+                                </Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+                <Row className='mt-2'>
+                    <CheckBox
+                        setTypesOperations={setTypesOperations}
+                        checkedCompra={checkedCompra}
+                        setCheckedCompra={setCheckedCompra}
+                        checkedVenta={checkedVenta}
+                        setcheckedVenta={setcheckedVenta}
+                        checkedAll={checkedAll}
+                        setCheckedAll={setCheckedAll}
+                        isAll={true} />
+                </Row>
+                {isLoading ? '' : (
+                    <Table link='/operaciones/' headers={header} data={operations} exportdata={true} title="Operaciones" />
 
-                        text='dark'
-                        style={{ width: '18rem' }}
-                        className="mb-2"
-                    >
-                        <Card.Body>
-                            <Card.Title> Total compra  </Card.Title>
-                            <Card.Text>
-                                {data.totalAmountCompra + ' USD'} <br></br>
-                                {data.totalAmountBTCCompra + ' BTC'}<br></br>
-                                {data.totalAmountCompra + ' USDT'}
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col>
-                    <Card
-                        bg='white'
-
-                        text='dark'
-                        style={{ width: '18rem' }}
-                        className="mb-2"
-                    >
-                        <Card.Body>
-                            <Card.Title> Total venta  </Card.Title>
-                            <Card.Text>
-                                {data.totalAmountVenta + ' USD'} <br></br>
-                                {data.totalAmountBTCVenta + ' BTC'}<br></br>
-                                {data.totalAmountUSDTVenta + ' USDT'}
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
-            <Row className='mt-2'>
-                                        <CheckBox 
-                                        setTypesOperations={setTypesOperations} 
-                                        checkedCompra={checkedCompra} 
-                                        setCheckedCompra={setCheckedCompra}
-                                        checkedVenta={checkedVenta}
-                                        setcheckedVenta={setcheckedVenta}
-                                        checkedAll = {checkedAll }
-                                        setCheckedAll = { setCheckedAll}
-                                        isAll={true}/>
-                                    </Row>
-            {isLoading ? '' : (
-                <Table link='/operaciones/' headers={header} data={operations} exportdata={true} title="Operaciones" />
-
-            )
+                )
 
 
-            }
+                }
+            </Container>
         </div>
     )
 }
