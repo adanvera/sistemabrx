@@ -1,5 +1,5 @@
 import { Fragment, useContext, useState } from "react";
-import { Pagination } from "react-bootstrap";
+import { Pagination, Row } from "react-bootstrap";
 import { perPage } from "../../Helpers/formats.js";
 import TableHeader from "./TableHeader.js";
 import TableRow from "./TableRow.js";
@@ -61,6 +61,7 @@ export default function Table(props) {
 
     return (
         <Fragment>
+            <Row className="mt-1"></Row>
             {validateExport(subPermissons, exportData)}
             <table className="table-list table mt-2 " ref={tableRef}>
                 <TableHeader headers={headers} />
@@ -91,6 +92,7 @@ export default function Table(props) {
                 props?.nopagination === true ? '' :
                     <Pagination data={listData} activeLabel={state?.currentPage}> {items} </ Pagination>
             }
+            <Row className="mb-3"></Row>
         </Fragment>
     )
 }

@@ -51,7 +51,6 @@ const InfoMinero = (props) => {
     const [ultimostrinta, setUltimostrinta] = useState()
     const [coins, setCoins] = useState()
     const idFinal = props ? props?.datID : ''
-
     useEffect(() => {
         const token = localStorage.getItem('token')
         const options = {

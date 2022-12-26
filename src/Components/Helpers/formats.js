@@ -200,26 +200,30 @@ export const takeDataSearch = (data, page) => {
 
 
 export const formatedDataMiners = (data) => {
+
     let obData = {}
 
     if (data) {
-        data?.map(item => {
-            obData = {
-                ...obData,
-                [item?.id_machine]: {
-                    id_machine_tex: item.id_machine,
-                    machine_name: item.machine_name,
-                    id_machine: item.id_machine,
-                    status: verifyStatusMachine(item.status),
-                    name: item.name,
-                    hashrate: item.hashrate + " THs",
-                    tempmax: item.tempmax,
-                    maxfan: item.maxfan + " RPM",
-                    uptime: item.uptime,
+        try {
+            data?.map(item => {
+                obData = {
+                    ...obData,
+                    [item?.id_machine]: {
+                        id_machine_tex: item.id_machine,
+                        machine_name: item.machine_name,
+                        id_machine: item.id_machine,
+                        status: verifyStatusMachine(item.status),
+                        name: item.name,
+                        hashrate: item.hashrate + " THs",
+                        tempmax: item.tempmax,
+                        maxfan: item.maxfan + " RPM",
+                        uptime: item.uptime,
+                    }
                 }
-
-            }
-        })
+            })
+        } catch (error) {
+            console.log(error);
+        }
     }
     return obData
 }
@@ -227,21 +231,21 @@ export const formatedDataMiners = (data) => {
 export const verifyStatusMachine = (data) => {
     if (data === 0) {
         return (
-            <span className='statusinfo online'>Online</span>
+            <span className='statusinfo online'>En linea</span>
         )
     } else if (data === 1) {
         return (
-            <span className='statusinfo offline'>Offline</span>
+            <span className='statusinfo offline'>Fuera de linea</span>
         )
     }
     else if (data === 3) {
         return (
-            <span className="statusinfo offtxt">Manteniance</span>
+            <span className="statusinfo offtxt">En mantenimiento</span>
         )
     }
     else if (data === 4) {
         return (
-            <span className="statusinfo failtxt">Out</span>
+            <span className="statusinfo failtxt">De baja</span>
         )
     }
 }

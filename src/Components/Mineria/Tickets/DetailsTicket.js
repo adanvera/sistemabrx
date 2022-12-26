@@ -90,6 +90,7 @@ function DetailsTicket() {
             }
         }
         darDeAlta()
+
     }
 
     const handleSubmitBaja = (e) => {

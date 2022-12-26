@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { Button, Col, Container, FloatingLabel, Form, Row } from "react-bootstrap"
+import { useNavigate, useParams } from "react-router-dom"
 import { DataContext } from "../../Commons/Context/DataContext"
 import { CLIENT, MINING_MACHINES, TICKETS, USER } from "../../Helpers/helper"
 import SelectMachine from "../Forms/SelectMachine"
@@ -109,6 +110,9 @@ const TicketForm = (props) => {
 
     }, [])
 
+    // React router for redirect to login
+    let navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         /**obtenemos el token */
@@ -147,6 +151,7 @@ const TicketForm = (props) => {
             const res = await fetch(TICKETS, ticketOptions),
                 json = await res.json();
             setDataVerify(true)
+            navigate("/tickets")
         } catch (error) {
             console.log(error.msg);
         }
@@ -175,7 +180,9 @@ const TicketForm = (props) => {
 
         editarMaquinaNuevo()
 
-
+        setModalStatus(false)
+        navigate('/tickets')
+        window.location.reload()
     }
 
     const handleChange = (e) => {

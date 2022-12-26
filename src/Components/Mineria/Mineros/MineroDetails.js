@@ -20,6 +20,7 @@ function MineroDetails() {
     const { modalstatus, setModalStatus } = useContext(DataContext)
     const modal = modalstatus
     const { mineroGloabl, setMineroGlobal } = useContext(DataContext)
+    const navigate = useNavigate()
 
 
     const initialState = {
@@ -51,6 +52,7 @@ function MineroDetails() {
         }
         getMinerData()
 
+        navigate('/mineros/' + id)
 
     }, []);
 
@@ -74,26 +76,24 @@ function MineroDetails() {
         }
     }
 
-
-
     const formatStatus = (data) => {
         if (data === 0) {
             return (
-                <span className='statusinfo online'>Online</span>
+                <span className='statusinfo online'>En linea</span>
             )
         } else if (data === 1) {
             return (
-                <span className='statusinfo offline'>Offline</span>
+                <span className='statusinfo offline'>Fuera de linea</span>
             )
         }
         else if (data === 3) {
             return (
-                <span className="statusinfo offtxt">Manteniance</span>
+                <span className="statusinfo offtxt">En mantenimiento</span>
             )
         }
         else if (data === 4) {
             return (
-                <span className="statusinfo failtxt">Out</span>
+                <span className="statusinfo failtxt">De baja</span>
             )
         }
     }

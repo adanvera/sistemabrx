@@ -69,6 +69,7 @@ function Mineros() {
   }
 
   useEffect(() => {
+    setModalStatus(false)
     /** Obtenemos los valores que guardamos en el token para poder utilizarlos
      * en la siguiente consulta
     */

@@ -198,6 +198,9 @@ const MineroForms = (props) => {
       }
     }
     darDeAlta()
+    setTimeout(() => {
+      navigate('/mineros')
+    }, 2500);
   }
 
 
@@ -224,34 +227,11 @@ const MineroForms = (props) => {
     }
     darDeBaja()
 
+    setTimeout(() => {
+      navigate('/mineros')
+    }, 2500);
+
   }
-
-  const handleSubmitDelete = (e) => {
-    const id_machine = dataidrow ? dataidrow : ''
-    /**obtenemos el token */
-    const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
-
-    const deleletTicket = async () => {
-      const options = {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          'token': token
-        }
-      }
-
-      try {
-        const res = await fetch(MINING_MACHINES + id_machine, options),
-          json = await res.json();
-      } catch (error) {
-        console.log(error.msg);
-      }
-    }
-    deleletTicket()
-    setModalType('other')
-    setModalStatus(false)
-  }
-
 
   if (modalType === "Add") {
     return (
@@ -338,27 +318,6 @@ const MineroForms = (props) => {
           <Row className='dataIsOkContent'>
             <ion-icon name="checkmark-circle-outline"></ion-icon>
             <span>¿Estas seguro de que quieres dar de baja a esta maquina?</span>
-          </Row>
-          <Row className='addusr mt-3'>
-            <Col id='create'>
-              <Button type="submit">Aceptar</Button>
-            </Col>
-            <Col id='closeone' className='closee'>
-              <Button onClick={() => setModalStatus(false)}>Cerrar</Button>
-            </Col>
-          </Row>
-        </div>
-      </Form>
-    )
-  }
-
-  if (modalType === 'Delete') {
-    return (
-      <Form onSubmit={handleSubmitDelete}>
-        <div className='dataIsOk'>
-          <Row className='dataIsOkContent'>
-            <ion-icon name="checkmark-circle-outline"></ion-icon>
-            <span>¿Estas seguro de eliminar este minero?</span>
           </Row>
           <Row className='addusr mt-3'>
             <Col id='create'>

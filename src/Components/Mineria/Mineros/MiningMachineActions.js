@@ -30,22 +30,12 @@ const MiningMachineActions = (props) => {
     }
 
 
-    return (
-        <Fragment>
-            <div className='tiktop'>
-                <Col className='headtiket d-flex'>
-                    <div>
-                        <h6>Acciones</h6>
-                    </div>
-                </Col>
-                <div className="actionstwo d-grid mt-3">
-                    <div className="delete-btn tkt d-flex" id='_btnAlta' onClick={(e) => handleOnClick(e, '_btnAlta')} >
-                        <span>Dar de alta a la maquina</span>
-                        <div className='ml-2'>
-                            <ion-icon name="checkmark-done-circle-outline"></ion-icon>
-                        </div>
-                    </div>
-                </div>
+    const minerStatus = Number(props?.data?.status)
+
+    const showActions = (status) => {
+
+        if (status === 0) {
+            return (
                 <div className="actionstwo d-grid mt-2">
                     <div className="delete-btn tkt d-flex" id='_btnBaja' onClick={(e) => handleOnClick(e, '_btnBaja')} >
                         <span>Dar de baja a la maquina</span>
@@ -54,14 +44,42 @@ const MiningMachineActions = (props) => {
                         </div>
                     </div>
                 </div>
-                <div className="actionstwo d-grid mt-2">
+            )
+        }
+
+        if (status !== 0) {
+            return (
+                <div className="actionstwo d-grid mt-3">
+                    <div className="delete-btn tkt d-flex" id='_btnAlta' onClick={(e) => handleOnClick(e, '_btnAlta')} >
+                        <span>Dar de alta a la maquina</span>
+                        <div className='ml-2'>
+                            <ion-icon name="checkmark-done-circle-outline"></ion-icon>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+    }
+
+    return (
+        <Fragment>
+            <div className='tiktop'>
+                <Col className='headtiket d-flex'>
+                    <div>
+                        <h6>Acciones</h6>
+                    </div>
+                </Col>
+                {
+                    showActions(minerStatus)
+                }
+                {/* <div className="actionstwo d-grid mt-2">
                     <div className="delete-btn tkt d-flex" id='_btnDeletetkt' onClick={(e) => handleOnClick(e, '_btnDelete')} >
                         <span>Eliminar minero  </span>
                         <div className='ml-2'>
                             <ion-icon name="trash-outline"></ion-icon>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </Fragment>
     )
