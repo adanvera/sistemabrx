@@ -29,6 +29,7 @@ function OperacionesReporte() {
     const [checkedCompra, setCheckedCompra] = useState(false);
     const [checkedAll, setCheckedAll] = useState(true);
     const [checkedVenta, setcheckedVenta] = useState(false);
+    const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
 
     const header = {
         fecha: 'Fecha',
@@ -45,7 +46,6 @@ function OperacionesReporte() {
     }
 
 
-    const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
     const getAllOperations = async () => {
         const options = {
             method: 'GET',

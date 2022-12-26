@@ -719,10 +719,10 @@ export const formatedOperationsData = (data) => {
                 [item?.id_operations]: {
                     id_operations: item?.id_operations,
                     cliente: item?.id_client,
-                    monto: item?.amount,
+                    monto: (item?.btc !== '0'? item.btc:item.amount),
                     comision: item?.commission,
                     tipoOperaciones: item?.type,
-                    tipoMoneda: item?.currency,
+                    tipoMoneda: (item?.btc !== '0'?'BTC':'USDT'),
                     fecha: formatoDate(item?.created),
                     created: item?.created,
                 }

@@ -27,8 +27,9 @@ export default function TableRow(props) {
         if ((props?.link) && (pathname === '/importaciones')) {
             navigate(`${props?.link}${data?.id_importacion}`)
         }
+        console.log(props);
         if ((props?.link) && (pathname === '/operaciones')) {
-            navigate(`${props?.link}${data?.id_operations}`)
+            navigate(`${props?.link}${data?.id_operations}?idClient=${props.data?.cliente}`)
         }
     }
 
