@@ -48,7 +48,9 @@ const ParametrizacionForm = (props) => {
         });
 
     }
-
+    const handleSubmitDelete = ()=>{
+        console.log('eliminare');
+    }
 
     if (modalType === 'Add') {
         return (
@@ -109,7 +111,54 @@ const ParametrizacionForm = (props) => {
         )
 
 
-    }}
+    }
+
+    if (modalType === 'Delete') {
+        return (
+            
+                <>
+                {dataValidate === true ?
+                <div className='dataIsOk'>
+                    <Row className='dataIsOkContent'>
+                        <ion-icon name="checkmark-circle-outline"></ion-icon>
+                        <span>Pametro eliminado exitosamente</span>
+                    </Row>
+                    <Row id='close'>
+                        <div className='mddlebtn'>
+                            <Button className='btn closeBtn' onClick={() => setModalStatus(false)}>Cerrar</Button>
+                        </div>
+                    </Row>
+                </div> :
+                <Form onSubmit={handleSubmitDelete}>
+                    <div className='dataIsOk'>
+                        <Row className='dataIsOkContent warning'>
+                            <ion-icon name="alert-circle-outline"></ion-icon>
+                            <span>¿Estas seguro de eliminar este parametro?</span>
+                        </Row>
+                        <Row className='addusr mt-3'>
+                            <Col id='create'>
+                                <Button type="submit">Aceptar</Button>
+                            </Col>
+                            <Col id='closeone' className='closee'>
+                                <Button onClick={() => setModalStatus(false)}>Cerrar</Button>
+                            </Col>
+                        </Row>
+                    </div>
+                </Form>
+                    }
+                </>
+        )
+
+
+    }
+
+
+
+
+
+
+
+}
 
 
 

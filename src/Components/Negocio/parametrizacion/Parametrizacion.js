@@ -62,7 +62,7 @@ const Parametrizacion = () => {
         }
     }
 
-
+    
     useEffect(() => {
         const getAllParams = async ()=>{
             const request = await fetch("http://localhost:4000/api/params/"),
@@ -70,13 +70,32 @@ const Parametrizacion = () => {
                   console.log(request);
                   console.log(response);
                   
-            setData(response) 
+            setData(formatParams(response.params)) 
+            
             setIsLoaded(true)     
 
 
         }
         getAllParams()
     }, []);
+
+    const formatParams = (params)=>{
+        console.log(params);
+        let listParams = []
+        params.forEach( el => {
+            let format = {
+                codigo:0,
+                name:'',
+                value:'',
+                actions:'x x'
+            }
+            format.codigo = el.codigo
+            format.name = el.name
+            format.value = el.value
+            listParams.push(format)
+        });
+        return listParams
+    }
     return (
         <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
             <Container fluid={true} className="">
