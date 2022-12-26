@@ -1,4 +1,5 @@
 /**declaramos las apis correspondientes y asignamos su dirección correspondiente*/
+const PARAMS_API = 'https://backend.brxsgo.com/api/params/'
 const URL_AUTH_USER = 'https://backend.brxsgo.com/api/auth/login'
 const USER = 'https://backend.brxsgo.com/api/user/'
 const USER_PSW = 'https://backend.brxsgo.com/api/user/psw/'
