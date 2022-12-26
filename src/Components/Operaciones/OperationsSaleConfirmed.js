@@ -5,6 +5,7 @@ import { OPERATION_PROD, OPERATION_TEST } from '../Helpers/helper';
 
 const OperationsSaleConfirmed = (props) => {
     console.log(props);
+    
     const { operationsClient, dataOPeration, idClientToSale, setShowModalOperation,showModalOperation ,modalstatus, setModalStatus} = useContext(DataContext)
     const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
     let btc,usdt;

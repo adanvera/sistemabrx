@@ -18,7 +18,7 @@ const Parametrizacion = () => {
       valor: "Valor",
       actions: "Acciones",
     },
-    title: "Agregar parametro",
+    title: "parametro",
     actions: "Acciones",
 
     filtros: {
@@ -33,6 +33,7 @@ const Parametrizacion = () => {
   const { dataidrow } = useContext(DataContext);
   const modal = modalstatus;
   const [data, setData] = useState();
+  const [paramsSelected,setParamsSelected] = useState('')
 
   const handleModalForm = (form) => {
     setModalStatus(true);
@@ -52,7 +53,7 @@ const Parametrizacion = () => {
     switch (state?.form) {
       case "Parametrizacion":
         return (
-          <ParametrizacionForm modalType={modalType} id_param={id_param} />
+          <ParametrizacionForm modalType={modalType} id_param={id_param} datas ={data}/>
         )
       default:
         return <ParametrizacionForm modalType={modalType} id_param={id_param} />
