@@ -21,7 +21,6 @@ const Clientes = props => {
             id: 'Codigo ',
             document: "Nro de documento",
             name: 'Nombre y apellido',
-            address: 'Dirección',
             phone: 'Nro de telefono',
         },
         title: 'Agregar Cliente',

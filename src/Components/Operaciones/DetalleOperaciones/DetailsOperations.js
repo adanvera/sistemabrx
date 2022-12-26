@@ -49,7 +49,7 @@ function DetailsOperations() {
             },
         }
         try {
-            const res = await fetch("http://localhost:4000/api/operation/"+'all/'+id,options),
+            const res = await fetch(OPERATION_PROD+'all/'+id,options),
                 json = await res.json()
             /**seteamos loading */
             console.log(json);
