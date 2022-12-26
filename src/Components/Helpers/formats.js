@@ -27,6 +27,31 @@ export const formatedDataTicket = (data) => {
     return obData
 }
 
+export const formatedParametersList = (data) => {
+
+    let obData = {}
+
+    if (data) {
+        data?.map(item => {
+            obData = {
+                ...obData,
+                [item?.codigo]: {
+                    codigo: item.codigo,
+                    name: item.name,
+                    value: item.value,
+                    actions: "x x",
+                }
+
+            }
+        })
+    
+    }
+
+    console.log(obData);
+
+    return obData
+}
+
 export const formateddStaatus = (data) => {
     if (data === "0") {
         return <span className="statusinfo failtxt">ELIMINADO</span>

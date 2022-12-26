@@ -27,6 +27,7 @@ const AMOUNT_POWER_BY_DAY = "https://backend.brxsgo.com/api/mining/get/power/amo
 const CONSUMO = "https://backend.brxsgo.com/api/consumos/"
 const COINMINIG = "https://backend.brxsgo.com/api/coinmining/"
 const CONSUMO_MACHINE_ULTIMO= "https://backend.brxsgo.com/api/mining/get/power/mes/"
+const PARAMETRIZACIONES = "https://backend.brxsgo.com/api/parametrizaciones/"
 
 /**exportamos nuestras declaraciones de valores
  * para poder utilizarlas en donde se requieran
@@ -57,5 +58,6 @@ export {
     AMOUNT_MINER_BY_DAY,
     AMOUNT_POWER_BY_DAY,
     CONSUMO,COINMINIG,
-    CONSUMO_MACHINE_ULTIMO
+    CONSUMO_MACHINE_ULTIMO,
+    PARAMETRIZACIONES
 }
