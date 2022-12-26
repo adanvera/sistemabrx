@@ -40,6 +40,7 @@ const Tickets = props => {
     const [dataList, setDataList] = useState('')
     const { modalstatus, setModalStatus } = useContext(DataContext)
     const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
+    const { subPermissons, setSubPermissons } = useContext(DataContext)
 
     //onchange correspondiente para hacer la busqueda 
     const handleSearch = data => {
@@ -148,6 +149,21 @@ const Tickets = props => {
         })
     }
 
+    const verifyRoleSub = (data) => {
+        if (data === 1) {
+            return (
+                <Col md={6} className="endmain">
+                    <div className='limittic'><div onClick={() => handleModalForm('Ticket')} className="btnadd" id='ticketmain'> Crear ticket</div></div>
+                </Col>
+            )
+        } else {
+            return (
+                <Col md={6} className="endmain">
+                    <div className='limittic notallowed'><div className="btnadd-not-allowed" id='ticketmain'> Crear ticket</div></div>
+                </Col>
+            )
+        }
+    }
 
     return (
         <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
@@ -168,9 +184,10 @@ const Tickets = props => {
                             handleChange={handleSearch}
                         />
                     </Col>
-                    <Col md={6} className="endmain">
-                        <div className='limittic'><div onClick={() => handleModalForm('Ticket')} className="btnadd" id='ticketmain'> Crear ticket</div></div>
-                    </Col>
+                    {
+                        verifyRoleSub(subPermissons)
+                    }
+                   
                 </Row>
                 <Row>
                     <FilterTicket onCleanFilter={onCleanFilter} getFilter={handleFilter} />

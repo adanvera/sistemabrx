@@ -126,11 +126,8 @@ const MineroForms = (props) => {
     const createMinero = async () => {
 
       const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
-
       const extractData = ((externalData.filter((item) => item.id === state.datamachine)));
-
       const exxt = JSON.parse(extractData[0]?.algorithms)
-
       const der = Object.keys(exxt).map((key) => {
         return {
           name: key,
@@ -173,6 +170,12 @@ const MineroForms = (props) => {
     }
 
     createMinero()
+
+    setTimeout(() => {
+      navigate('/mineros')
+      window.location.reload()
+    }, 1500)
+
 
   }
 

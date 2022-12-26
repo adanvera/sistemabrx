@@ -7,6 +7,8 @@ const GastosActions = (props) => {
     const { modalType, setModalType } = useContext(DataContext)
     const { modalStatus, setModalStatus } = useContext(DataContext)
     const { setDataIdRow } = useContext(DataContext)
+    const { subPermissons, setSubPermissons } = useContext(DataContext)
+
     /**seteamos las variables respectivas dependiendo de que 
      * opcion seleccionemos
      */
@@ -26,12 +28,29 @@ const GastosActions = (props) => {
 
     }
 
+    const verifySubPermissons = (subPermissons) => {
+        if (subPermissons === 1) {
+            return (
+                <div className="actionstwo d-flex">
+                    <div className="edit-btn" id='_btnEdit' onClick={(e) => handleOnClick(e, '_btnEdit')}><ion-icon dataid={props?.dataID} name="create-outline"></ion-icon></div>
+                    <div className="delete-btn" id='_btnDelete' onClick={(e) => handleOnClick(e, '_btnDelete')} ><ion-icon dataid={props?.dataID} name="trash-outline"></ion-icon></div>
+                </div>
+            )
+        } else {
+            return (
+                <div className="actionstwo d-flex">
+                    <div className="edit-btn" id='_btnEditd'><ion-icon dataid={props?.dataID} name="create-outline"></ion-icon></div>
+                    <div className="delete-btn" id='_btnDeleted' ><ion-icon dataid={props?.dataID} name="trash-outline"></ion-icon></div>
+                </div>
+            )
+        }
+    }
+
     return (
         <Fragment>
-            <div className="actionstwo d-flex">
-                <div className="edit-btn" id='_btnEdit' onClick={(e) => handleOnClick(e, '_btnEdit')}><ion-icon dataid={props?.dataID} name="create-outline"></ion-icon></div>
-                <div className="delete-btn" id='_btnDelete' onClick={(e) => handleOnClick(e, '_btnDelete')} ><ion-icon dataid={props?.dataID} name="trash-outline"></ion-icon></div>
-            </div>
+            {
+                verifySubPermissons(subPermissons)
+            }
         </Fragment>
     )
 }

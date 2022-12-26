@@ -21,7 +21,7 @@ function ClientDetails() {
     const [numeroOperacion, setNumeroOperacion] = useState('')
     const [operationTemporal, setOperationTemporal] = useState('')
     const [typesOperations, setTypesOperations] = useState('1')
-
+    const { subPermissons, setSubPermissons } = useContext(DataContext)
     const { modalstatus, setModalStatus } = useContext(DataContext)
 
     const initialState = {
@@ -332,6 +332,32 @@ function ClientDetails() {
 
     const titleClient = clientData ? clientData?.name + " " + clientData.last_name : 'Cliente'
 
+    const verifySubPermissons = (subPermiso) => {
+        if (subPermiso === 1) {
+            return (
+                <div className="actionstwo d-grid mt-3">
+                    <div className="delete-btn tkt d-flex" id='_btnDeletetkt' onClick={(e) => handleUserDelete(e, '_btnDelete')} >
+                        <span>Eliminar cliente </span>
+                        <div>
+                            <ion-icon name="trash-outline"></ion-icon>
+                        </div>
+                    </div>
+                </div>
+            )
+        } else {
+            return (
+                <div className="actionstwo d-grid mt-3 notallowed">
+                    <div className="delete-btn tkt d-flex btnadd-not-allowed" id='_btnDeletetktd' >
+                        <span>Eliminar cliente </span>
+                        <div>
+                            <ion-icon name="trash-outline"></ion-icon>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+    }
+
     return (
         <div className={sidebarStatus === 'open' ? 'main-content-tkt' : 'main-content-tkt extend'} >
             {modal && (
@@ -369,14 +395,9 @@ function ClientDetails() {
                                 <h6>Acciones</h6>
                             </div>
                         </Col>
-                        <div className="actionstwo d-grid mt-3">
-                            <div className="delete-btn tkt d-flex" id='_btnDeletetkt' onClick={(e) => handleUserDelete(e, '_btnDelete')} >
-                                <span>Eliminar cliente </span>
-                                <div>
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </div>
-                            </div>
-                        </div>
+                        {
+                            verifySubPermissons(subPermissons)
+                        }
                     </div>
                 </Col>
             </Row>

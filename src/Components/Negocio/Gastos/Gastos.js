@@ -45,7 +45,7 @@ function Gastos() {
   const formatedList = gastosFormated(amountList)
   const modal = modalstatus
   const { modalType, setModalType } = useContext(DataContext)
-
+  const { subPermissons, setSubPermissons } = useContext(DataContext)
 
   useEffect(() => {
 
@@ -177,6 +177,23 @@ function Gastos() {
     })
   }
 
+
+  const verifySubpermissons = (sub) => {
+    if (sub === 1) {
+      return (
+        <Col md={6} className="endmain">
+          <div className='limittic'><div onClick={() => handleModalForm('Gasto')} className="btnadd" id='Add'>Agregar gasto</div></div>
+        </Col>
+      )
+    } else {
+      return (
+        <Col md={6} className="endmain">
+          <div className='limittic notallowed'><div className="btnadd-not-allowed" id='Add'>Agregar gasto</div></div>
+        </Col>
+      )
+    }
+  }
+
   return (
     <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
       {modal && (
@@ -194,9 +211,9 @@ function Gastos() {
               handleChange={handleSearch}
             />
           </Col>
-          <Col md={6} className="endmain">
-            <div className='limittic'><div onClick={() => handleModalForm('Gasto')} className="btnadd" id='Add'>Agregar gasto</div></div>
-          </Col>
+          {
+            verifySubpermissons(subPermissons)
+          }
         </Row>
 
         <Row className='mt-3'>
