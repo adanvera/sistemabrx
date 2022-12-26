@@ -115,7 +115,7 @@ function TicketsReporte() {
         <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
             <Container fluid={true}>
                 <Row className='mt-3'>
-                    <h1 className='text-center'>Tickets</h1>
+                    <h4 className=''>Reportes general tickets</h4>
                 </Row>
                 <Row  >
                     <FiltroFechaReportes
@@ -229,7 +229,7 @@ function TicketsReporte() {
                 {
                     dataTicket.length === 0 ?
                         <DumpTable headers={headers} data={formatedList} /> :
-                        <Table headers={headers} data={formatedList} />
+                        <Table headers={headers} data={formatedList} exportdata={true} title="Reportes tickets" />
                 }
             </Container>
         </div>

@@ -27,21 +27,46 @@ export const formatedDataTicket = (data) => {
     return obData
 }
 
+export const formatedParametersList = (data) => {
+
+    let obData = {}
+
+    if (data) {
+        data?.map(item => {
+            obData = {
+                ...obData,
+                [item?.codigo]: {
+                    codigo: item.codigo,
+                    name: item.name,
+                    value: item.value,
+                    actions: "x x",
+                }
+
+            }
+        })
+    
+    }
+
+    console.log(obData);
+
+    return obData
+}
+
 export const formateddStaatus = (data) => {
     if (data === "0") {
-        return <span className="statusinfo failtxt">Eliminado</span>
+        return <span className="statusinfo failtxt">ELIMINADO</span>
     }
     if (data === "PENDING") {
-        return <span className="statusinfo offtxt">PENDING</span>
+        return <span className="statusinfo offtxt">PENDIENTE</span>
     }
     if (data === "INPROGRESS") {
-        return <span className="statusinfo prgrss">IN PROGRESS</span>
+        return <span className="statusinfo prgrss">EN PROGRESO</span>
     }
     if (data === "ONHOLD") {
-        return <span className="statusinfo failtxt">ON HOLD</span>
+        return <span className="statusinfo failtxt">DETENIDO</span>
     }
     if (data === "CLOSED") {
-        return <span className="statusinfo online">CLOSED</span>
+        return <span className="statusinfo online">FINALIZADO</span>
     }
 }
 

@@ -3,7 +3,6 @@ import { DataContext } from '../../Commons/Context/DataContext'
 import ProtectedComponent from '../../Commons/ProtectedComponent';
 
 const ParametrizacionActions = (props) => {
-    console.log(props);
 
     const { modalType, setModalType } = useContext(DataContext)
     const { modalStatus, setModalStatus } = useContext(DataContext)
