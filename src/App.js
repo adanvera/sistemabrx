@@ -31,7 +31,7 @@ import Gastos from './Components/Negocio/Gastos/Gastos';
 import Reporte from './Components/Negocio/Reportes/Reporte';
 import OperacionesReporte from './Components/Negocio/Reportes/OperacionesReporte';
 import TicketsReporte from './Components/Negocio/Reportes/TicketsReporte';
-import DetailsOperations from './Components/Operaciones/DetailsOperations';
+import DetailsOperations from './Components/Operaciones/DetalleOperaciones/DetailsOperations';
 
 const App = (props) => {
 
