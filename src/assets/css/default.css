@@ -1737,3 +1737,58 @@ input#downloadextract:hover{
     align-items: center;
     grid-auto-columns: min-content;
 }
+
+.card-header {
+    display: flex;
+    align-items: center;
+    border-bottom-width: 1px;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 0.625rem;
+    height: 3.5rem;
+}
+
+.card-header.card-header-tab .card-header-title {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.btn-actions-pane-right {
+    margin-left: auto;
+    white-space: nowrap;
+}
+
+.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.widget-chart.text-left {
+    flex-direction: row;
+    align-items: center;
+}
+
+.widget-chart {
+    text-align: center;
+    padding: 1rem;
+    position: relative;
+}
+
+.widget-chart.text-left {
+    flex-direction: row;
+    align-items: center;
+}
+
+.icon-wrapper.rounded-circle ion-icon.md.hydrated {
+    background: #ffffff;
+    font-size: 24px;
+    height: 30px;
+    width: 30px;
+    color: rgb(31, 172, 248);
+}
+
+span.cierremining {
+    font-size: 12px;
+    color: blue;
+}

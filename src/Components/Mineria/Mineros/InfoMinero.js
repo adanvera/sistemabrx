@@ -51,6 +51,8 @@ const InfoMinero = (props) => {
     const [ultimostrinta, setUltimostrinta] = useState()
     const [coins, setCoins] = useState()
     const idFinal = props ? props?.datID : ''
+    const [dayBtc, setByDay] = useState()
+
     useEffect(() => {
         const token = localStorage.getItem('token')
         const options = {
@@ -65,7 +67,6 @@ const InfoMinero = (props) => {
             try {
                 const res = await fetch(AMOUNT_MINER_BY_DAY, options),
                     json = await res.json()
-                console.log(json);
                 setAmountDay(json)
             } catch (error) {
                 console.log(error);
@@ -98,9 +99,8 @@ const InfoMinero = (props) => {
 
         const getConsumoId = async () => {
             try {
-                const res = await fetch(CONSUMO + idFinal, optionsdd),
+                const res = await fetch(CONSUMO + props?.datID, optionsdd),
                     json = await res.json()
-                console.log(json);
                 setChartData(json)
             } catch (error) {
                 console.log(error);
@@ -111,7 +111,7 @@ const InfoMinero = (props) => {
 
         const coinmining = async () => {
             try {
-                const res = await fetch(COINMINIG + idFinal, options),
+                const res = await fetch(COINMINIG + props?.datID, options),
                     json = await res.json()
                 setCoinmining(json);
             } catch (error) {
@@ -124,28 +124,19 @@ const InfoMinero = (props) => {
         const getBtc = async () => {
             const optionns = {
                 method: 'GET',
-                // mode: 'no-cors',
-                // headers: {
-                //   'Access-Control-Allow-Origin': '*',
-                //   'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-                // }
             }
             try {
-
                 const res = await fetch("https://api.minerstat.com/v2/coins?list=BTC", optionns),
                     json = await res.json()
                 setValueBTC(json)
-
             } catch (error) {
                 console.log(error);
             }
-
         }
 
         getBtc()
 
         const getConsumoUltimos = async () => {
-
             const optionfdsadfsdd = {
                 method: 'GET',
                 headers: {
@@ -153,7 +144,6 @@ const InfoMinero = (props) => {
                     'token': token
                 },
             }
-
             try {
                 const res = await fetch(CONSUMO_MACHINE_ULTIMO + props?.datID, optionfdsadfsdd),
                     json = await res.json()
@@ -172,7 +162,6 @@ const InfoMinero = (props) => {
                     'Accept': 'application/json, text/plain, */*',
                 }
             }
-
             try {
                 const res = await fetch("https://api.minerstat.com/v2/coins?list=BTC", opptionss),
                     json = await res.json()
@@ -187,12 +176,9 @@ const InfoMinero = (props) => {
         const getCurrencies = async () => {
             const optionns = {
                 method: 'GET',
-
             }
             try {
-
                 const res = await fetch("https://es.beincrypto.com/wp-json/ceranking/v2/filter-data?val=&filter=coinid-with-fiat", optionns),
-
                     json = await res.json()
                 setCoins(json)
             } catch (error) {
@@ -202,6 +188,26 @@ const InfoMinero = (props) => {
         }
 
         getCurrencies()
+
+        const getMiningByDay = async () => {
+            const optionns = {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'token': token
+                },
+            }
+            try {
+                const res = await fetch(COINMINIG + "get/day/coins/" + props?.datID, optionns),
+                    json = await res.json()
+                setByDay(json)
+            } catch (error) {
+                console.log(error);
+            }
+
+        }
+
+        getMiningByDay()
 
 
     }, [id_machine, props?.datID])
@@ -298,14 +304,55 @@ const InfoMinero = (props) => {
     const castGanancia = getGanancia(coinmining, priceBtc)
     const ganancia = castGanancia.toFixed(2)
     const gananciaMinando = Number(castGanancia.toFixed(2))
-
-    console.log("minado", gananciaMinando);
+    const consumoo = Number(consumoEnergia)
 
     const gananciaNeta = (gananciaMinando, consumoo) => {
 
+        if (consumoo === undefined) { return 0 }
+        else {
+            const gananciaNeta = gananciaMinando - consumoo
+            return gananciaNeta
+        }
     }
 
-    gananciaNeta(gananciaMinando, consumoEnergia)
+    const gananciaNetaClienteMes = coinmining ? gananciaNeta(gananciaMinando, consumoEnergia).toFixed(2) : ''
+
+    const getMinadoDolarDia = (data) => {
+        var sum = 0
+        if (data) {
+            Object.keys(data)?.map((item) => {
+                const amountDolar = Number(data[item].todollar)
+                sum += amountDolar
+            })
+        }
+        return sum
+    }
+
+    const derfds = getMinadoDolarDia(dayBtc)
+    const minadoDolarDia = derfds.toFixed(2)
+
+
+    const getMindadoBtcDia = (data) => {
+        var sum = 0
+        if (data) {
+            Object.keys(data)?.map((item) => {
+                const amountBtc = Number(data[item].amount)
+                sum += amountBtc
+            })
+        }
+        return sum
+    }
+
+
+    const mindadoBtcDia = getMindadoBtcDia(dayBtc)
+
+    const filteredDataConsumoMes = (data) => {
+        if (data === undefined) { return <strong>0</strong> }
+        else {
+            return <strong>{data}</strong>
+        }
+
+    }
 
     return (
         <>
@@ -324,7 +371,6 @@ const InfoMinero = (props) => {
                                     </Row>
                                     <Row className='mt-3'>
                                         <span className='dete'><ion-icon name="code-working-outline"></ion-icon></span>
-
                                         <h6> Algorithms </h6>
                                     </Row>
                                     <Row>
@@ -344,18 +390,35 @@ const InfoMinero = (props) => {
                                 </Col>
 
                                 <Col md={6} className="mt-3 mb-3">
-                                    <div className='ganancia mb-3'>
-                                        <div>GANANCIA NETA DE MAQUINA</div>
-                                    </div>
 
                                     <div class="css-89u161">
-                                        <div class="css-kb1ety"><dd class="css-pxccrj">{filterPowerById ? (filterPowerById[0]?.amount_day?.toFixed(2)) : '0'} USD</dd><dt class="css-6qnch9">Consume Energy 24hs</dt></div>
                                         <div class="css-kb1ety">
                                             <dd class="css-pxccrj">
-                                                {
-                                                    NumberToshow(coinmining)
-                                                } BTC</dd>
-                                            <dt class="css-6qnch9">Mined Revenue 24hs</dt>
+                                                <strong> {gananciaNetaClienteMes}</strong> USD</dd>
+                                            <dt class="css-6qnch9">GANANCIA DEL MES NETA DEl CLIENTE</dt> <span className='cierremining'>(Las ganancias se calculan al cierre del dia 00hs)</span>
+                                        </div>
+                                    </div>
+                                    <Row className='mt-1 mb-1'></Row>
+
+                                    <div class="css-89u161">
+                                        <div class="css-kb1ety">
+                                            <dd class="css-pxccrj">
+                                                <strong> {mindadoBtcDia + " "}</strong>BTC  <strong>{' <-> ' + minadoDolarDia}</strong> USD</dd>
+                                            <dt class="css-6qnch9">Minado ultimos 24 horas</dt>
+                                        </div>
+                                    </div>
+
+
+                                    <Row className='mt-1 mb-1'></Row>
+                                    <div class="css-89u161">
+                                        <div class="css-kb1ety">
+                                            <dd class="css-pxccrj">{filterPowerById ? (filteredDataConsumoMes(filterPowerById[0]?.amount_day?.toFixed(2))) : '0'} USD</dd>
+                                            <dt class="css-6qnch9">Consumo energía ultimos 30 días</dt>
+                                        </div>
+                                        <div class="css-kb1ety">
+                                            <dd class="css-pxccrj">
+                                                <strong>{NumberToshow(coinmining) + " "}</strong> BTC</dd>
+                                            <dt class="css-6qnch9">Minado ultimos 30 días</dt>
                                         </div>
                                     </div>
 

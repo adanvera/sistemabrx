@@ -258,6 +258,7 @@ function Dashboard() {
   const filterByBitcoin = coins ? coins?.filter((item) => item.name === 'Bitcoin') : ''
   // const filter = valueBTC ? valueBTC.filter((item) => item.coin === 'BTC') : ''
   const formatedData = formatCoins(filterByBitcoin, priceDollar,)
+  const imgBtc = filterByBitcoin ? filterByBitcoin[0]?.logo : ''
 
   return (
     <>
@@ -329,15 +330,60 @@ function Dashboard() {
             <Row >
               <h4 className='resumen'>Market</h4>
             </Row>
-            <Col md={12}>
-              <div className='shortlist item'>
-                {
-                  coins &&
-                  <Table headers={coinheader} data={((formatedData))} nopagination={true} />
-                }
-                <span></span>
+            <Col md={12} className="mt-3 mb-3">
+            <div class="mb-3 card">
+              <div class="card-header-tab card-header">
+                <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                  <i class="header-icon lnr-charts icon-gradient bg-happy-green"> </i>
+                  <img className='pr-1' src={imgBtc} alt="btc" height={30} width={30} /> <span className='ml-1'  >Bitcoin</span>
+                </div>
               </div>
-            </Col>
+              <div class="no-gutters row mb-3 mt-3">
+                <div class="col-sm-6 col-md-4 col-xl-4">
+                  <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
+                    <div class="icon-wrapper rounded-circle">
+                      <div class="">
+                        <ion-icon name="pulse-outline"></ion-icon>
+                      </div>
+                    </div>
+                    <div class="widget-chart-content">
+                      <div class="widget-numbers">Difficulty</div>
+                      <div class="widget-numbers">{valueBTC[0]?.difficulty}</div>
+                    </div>
+                  </div>
+                  <div class="divider m-0 d-md-none d-sm-block"></div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-xl-4">
+                  <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
+                    <div class="icon-wrapper rounded-circle">
+                      <div class="">
+                        <ion-icon name="podium-outline"></ion-icon>
+                      </div>
+                    </div>
+                    <div class="widget-chart-content">
+                      <div class="widget-subheading">Network hashrate</div>
+                      <div class="widget-numbers"><span>{valueBTC[0]?.network_hashrate}</span></div>
+                    </div>
+                  </div>
+                  <div class="divider m-0 d-md-none d-sm-block"></div>
+                </div>
+                <div class="col-sm-12 col-md-4 col-xl-4">
+                  <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
+                    <div class="icon-wrapper rounded-circle">
+                      <div class="">
+                        <ion-icon name="flash-outline"></ion-icon>
+                      </div>
+                    </div>
+                    <div class="widget-chart-content">
+                      <div class="widget-subheading">Precio</div>
+                      <div class="widget-numbers text-success"><span>{valueBTC[0]?.price}</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </Col>
           </Row>
         </Row>
       </div>
