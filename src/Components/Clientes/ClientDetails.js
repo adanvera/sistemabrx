@@ -147,10 +147,12 @@ function ClientDetails() {
 
         getOperations()
 
-
-
-
     }, [state]);
+
+    const formatedData = miningData
+    const formatedDataMiner = miningData
+
+    console.log(miningData);
 
     const onHandleClick = e => {
         e.preventDefault()
@@ -199,7 +201,6 @@ function ClientDetails() {
         return listToShow
     }
 
-    const formatedData = miningData ? formatedDataMiners(miningData) : ''
 
     const minerHeader = {
         id_machine_tex: '',

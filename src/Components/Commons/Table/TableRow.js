@@ -45,7 +45,8 @@ export default function TableRow(props) {
             {Object.keys(data).filter((col => col !== 'created_at_filter' && col !== 'id_importacion'
                 && col !== 'articulos' && col !== 'created' && col !== 'id_role' && col !== 'created_at_user'
                 && col !== 'id' && col !== 'id_user' && col !== "id_machine" && col !== 'id_gasto'
-                && col !== 'creatted_at_temp')).map(col => {
+                && col !== 'creatted_at_temp'
+                && col !== 'created_at_gasto')).map(col => {
                     return (
 
                         <Fragment key={col}>

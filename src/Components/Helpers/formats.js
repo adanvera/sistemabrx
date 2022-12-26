@@ -204,28 +204,22 @@ export const formatedDataMiners = (data) => {
     let obData = {}
 
     if (data) {
-        try {
-            data?.map(item => {
-                obData = {
-                    ...obData,
-                    [item?.id_machine]: {
-                        id_machine_tex: item.id_machine,
-                        machine_name: item.machine_name,
-                        id_machine: item.id_machine,
-                        status: verifyStatusMachine(item.status),
-                        name: item.name,
-                        hashrate: item.hashrate + " THs",
-                        tempmax: item.tempmax,
-                        maxfan: item.maxfan + " RPM",
-                        uptime: item.uptime,
-                    }
+        data?.map(item => {
+            obData = {
+                ...obData,
+                [item?.id_machine]: {
+                    id_machine_tex: item.id_machine,
+                    machine_name: item.machine_name,
+                    id_machine: item.id_machine,
+                    status: verifyStatusMachine(item.status),
+                    name: item.name,
+                    uptime: item.uptime,
                 }
-            })
-        } catch (error) {
-            console.log(error);
-        }
+            }
+        })
     }
     return obData
+
 }
 
 export const verifyStatusMachine = (data) => {
@@ -719,10 +713,10 @@ export const formatedOperationsData = (data) => {
                 [item?.id_operations]: {
                     id_operations: item?.id_operations,
                     cliente: item?.id_client,
-                    monto: (item?.btc !== '0'? item.btc:item.amount),
+                    monto: (item?.btc !== '0' ? item.btc : item.amount),
                     comision: item?.commission,
                     tipoOperaciones: item?.type,
-                    tipoMoneda: (item?.btc !== '0'?'BTC':'USDT'),
+                    tipoMoneda: (item?.btc !== '0' ? 'BTC' : 'USDT'),
                     fecha: formatoDate(item?.created),
                     created: item?.created,
                 }
@@ -864,6 +858,7 @@ export const gastosFormated = (data) => {
                     type: item?.type,
                     created_at: formatoDate(item?.created_at),
                     updated_at: formatoDate(item?.updated_at),
+                    created_at_gasto: item?.created_at,
                     actions: 'x x',
                 }
             }
@@ -910,13 +905,13 @@ export const filteredDataGastos = (dataList, filter) => {
                 .filter(item => {
 
                     if (filtro === 'hasta') {
-                        const fechaGasto = new Date(filteredData[item].created_at)
+                        const fechaGasto = new Date(filteredData[item].created_at_gasto)
                         const fechaFiltro = filter[filtro]
                         return fechaGasto.toISOString().substring(0, 10) <= fechaFiltro.toISOString().substring(0, 10)
                     }
 
                     if (filtro === 'desde') {
-                        const fechaGasto = new Date(filteredData[item].created_at)
+                        const fechaGasto = new Date(filteredData[item].created_at_gasto)
                         const fechaFiltro = filter[filtro]
                         return fechaGasto.toISOString().substring(0, 10) >= fechaFiltro.toISOString().substring(0, 10)
                     }

@@ -25,9 +25,6 @@ function Mineros() {
       machine_name: "NOMBRE",
       status: "ESTADO",
       name: "CLIENTE",
-      hashrate: "HASHRATE",
-      tempmax: "TEMP MAX",
-      maxfan: "VENTILADOR MAX",
       uptime: "UPTIME",
     }
   }
@@ -44,7 +41,7 @@ function Mineros() {
   const [isLoaded, setIsLoaded] = useState(false);
   const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
   const [valueBTC, setValueBTC] = useState('')
-
+  const [coins, setCoins] = useState('')
 
   /**funcion para setear form clickeado */
   const pickForm = () => {
@@ -104,31 +101,37 @@ function Mineros() {
     const getBtc = async () => {
       const optionns = {
         method: 'GET',
-        // mode: 'no-cors',
-        // headers: {
-        //   'Access-Control-Allow-Origin': '*',
-        //   'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-        // }
       }
       try {
-
         const res = await fetch("https://api.minerstat.com/v2/coins?list=BTC", optionns),
           json = await res.json()
         setValueBTC(json)
-
       } catch (error) {
         console.log(error);
       }
-
     }
 
     getBtc()
+    const getCurrenc = async () => {
+      const optionns = {
+        method: 'GET',
 
+      }
+      try {
+        const res = await fetch("https://es.beincrypto.com/wp-json/ceranking/v2/filter-data?val=&filter=coinid-with-fiat", optionns),
+          json = await res.json()
+        setCoins(json)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getCurrenc()
   }, []);
 
   const formatedList = formatedDataMiners(dataList)
-
-  console.log(valueBTC);
+  /**filtrar por Bitcoin */
+  const filterByBitcoin = coins ? coins?.filter((item) => item.name === 'Bitcoin') : ''
+  const imgBtc = filterByBitcoin ? filterByBitcoin[0]?.logo : ''
 
   return (
     <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
@@ -154,11 +157,58 @@ function Mineros() {
           </Col>
         </Row>
         <Row>
-          <Col md={6} className="mt-3 mb-3">
-            <div class="css-89u161">
-              <div class="css-kb1ety"><dd class="css-pxccrj">454.11 TH</dd><dt class="css-6qnch9">Hashrate</dt></div>
-              <div class="css-kb1ety"><dd class="css-pxccrj">99.80%</dd><dt class="css-6qnch9">Share Efficiency</dt></div>
-              <div class="css-kb1ety"><dd class="css-pxccrj">0.00001696 BTC</dd><dt class="css-6qnch9">Mined Revenue</dt></div>
+          <Col md={12} className="mt-3 mb-3">
+            <div class="mb-3 card">
+              <div class="card-header-tab card-header">
+                <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                  <i class="header-icon lnr-charts icon-gradient bg-happy-green"> </i>
+                  <img className='pr-1' src={imgBtc} alt="btc" height={30} width={30} /> <span className='ml-1'  >Bitcoin</span>
+                </div>
+              </div>
+              <div class="no-gutters row mb-3 mt-3">
+                <div class="col-sm-6 col-md-4 col-xl-4">
+                  <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
+                    <div class="icon-wrapper rounded-circle">
+                      <div class="">
+                        <ion-icon name="pulse-outline"></ion-icon>
+                      </div>
+                    </div>
+                    <div class="widget-chart-content">
+                      <div class="widget-numbers">Difficulty</div>
+                      <div class="widget-numbers">{valueBTC[0]?.difficulty}</div>
+                    </div>
+                  </div>
+                  <div class="divider m-0 d-md-none d-sm-block"></div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-xl-4">
+                  <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
+                    <div class="icon-wrapper rounded-circle">
+                      <div class="">
+                        <ion-icon name="podium-outline"></ion-icon>
+                      </div>
+                    </div>
+                    <div class="widget-chart-content">
+                      <div class="widget-subheading">Network hashrate</div>
+                      <div class="widget-numbers"><span>{valueBTC[0]?.network_hashrate}</span></div>
+                    </div>
+                  </div>
+                  <div class="divider m-0 d-md-none d-sm-block"></div>
+                </div>
+                <div class="col-sm-12 col-md-4 col-xl-4">
+                  <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
+                    <div class="icon-wrapper rounded-circle">
+                      <div class="">
+                        <ion-icon name="flash-outline"></ion-icon>
+                      </div>
+                    </div>
+                    <div class="widget-chart-content">
+                      <div class="widget-subheading">Precio</div>
+                      <div class="widget-numbers text-success"><span>{valueBTC[0]?.price}</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </Col>
         </Row>

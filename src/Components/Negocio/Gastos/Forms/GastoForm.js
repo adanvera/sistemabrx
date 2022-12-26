@@ -6,6 +6,7 @@ import { Button, Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 import { DataContext } from '../../../Commons/Context/DataContext'
 import { GASTOS } from '../../../Helpers/helper'
 import { PuffLoader } from 'react-spinners';
+import { useNavigate } from 'react-router-dom'
 
 const GastoForm = (props) => {
 
@@ -60,7 +61,7 @@ const GastoForm = (props) => {
 
 
 
-
+    let navigate = useNavigate()
 
     const submitForm = (e) => {
         e.preventDefault()
@@ -98,6 +99,11 @@ const GastoForm = (props) => {
         }
 
         createGasto()
+
+        setTimeout(() => {
+            navigate("/gastos")
+            window.location.reload()
+        }, 1500);
     }
 
     /**funcion onchange para setear los valores ingresados */
@@ -139,6 +145,11 @@ const GastoForm = (props) => {
         }
 
         deleteGasto()
+
+        setTimeout(() => {
+            navigate("/gastos")
+            window.location.reload()
+        }, 1500);
     }
 
     const submitFormEdit = (e) => {
@@ -172,6 +183,11 @@ const GastoForm = (props) => {
         }
 
         editGasto()
+
+        setTimeout(() => {
+            navigate("/gastos")
+            window.location.reload()
+        }, 1500);
 
     }
 

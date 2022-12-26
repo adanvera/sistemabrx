@@ -67,13 +67,11 @@ export default function Table(props) {
                 <TableHeader headers={headers} />
                 <tbody>
                     {
-
                         Object.keys(listData).map(item => {
                             return (
                                 <TableRow link={props?.link} data={listData[item]} />
                             )
                         })
-
                     }
                 </tbody>
             </table>
