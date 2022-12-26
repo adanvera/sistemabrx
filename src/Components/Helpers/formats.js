@@ -65,7 +65,6 @@ export const formatedDataClient = (data) => {
                     id_cliente: item.id_client,
                     documento: item.document,
                     name: item.name + " " + item.last_name,
-                    direccion: item.address,
                     telefono: item.phone,
                     actions: 'x x',
                 }
