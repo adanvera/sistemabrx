@@ -39,6 +39,7 @@ function DetailsOperations() {
             console.log("Esto es el error" + error);
         }
     }
+    
     const getOperations = async ()=>{
         const options = {
             method: 'GET',
@@ -62,7 +63,7 @@ function DetailsOperations() {
             console.log("Esto es el error" + error);
         }
     }
-
+    
     console.log("ID DE LA OPERACION" , id);
     useEffect(()=>{
           getClient()  

@@ -9,9 +9,11 @@ import btcLogo from '../../assets/images/btc-logo.png'
 import usdtLogo from '../../assets/images/usdt-logo.png'
 
 const OperationsBuyConfirmed = (props) => {
+    const qrBtc = localStorage.getItem("QR-BTC") ? localStorage.getItem("QR-BTC") : ''
+    const qrUSDT = localStorage.getItem("QR-USDT") ? localStorage.getItem("QR-USDT") : ''
     const { operationsClient, dataOPeration, idClientToSale, setShowModalOperation,showModalOperation,setModalStatus } = useContext(DataContext)
     const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
-    const data = dataOPeration.currentCurrency === '1'?'BTC-abcdefigxfasdfasdf':'USDT-zzzmamsfasdfasa'
+    const data = dataOPeration.currentCurrency === '1'?qrBtc:qrUSDT
     const images = dataOPeration.currentCurrency === '1'?btcLogo:usdtLogo
     const handleConfirmed = async () => {
         let btc,usdt;

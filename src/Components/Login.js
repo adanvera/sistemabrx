@@ -1,10 +1,10 @@
-import { Fragment, useContext, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from "react-router-dom";
 import urlLogo from '../assets/images/logologin.png'
 import { DataContext } from "./Commons/Context/DataContext";
-import { URL_AUTH_USER } from "./Helpers/helper";
+import { PARAMETRIZACIONES, URL_AUTH_USER } from "./Helpers/helper";
 import { Col, FloatingLabel } from "react-bootstrap";
 import packageInfo from '../../package.json';
 import ModalContainer from "./Commons/ModalContainer";
@@ -28,7 +28,7 @@ const Login = () => {
     let timeToWait
     const [dataToVerify, setDataToVerify] = useState(5)
     const [messageLog, setMessageLog] = useState('')
-    const { modalstatus, setModalStatus } = useContext(DataContext)
+    const { modalstatus, setModalStatus,setQrBtc,setQrUSDT } = useContext(DataContext)
     const modal = modalstatus
     const { modalType, setModalType } = useContext(DataContext)
     const usermodal = modalType
@@ -130,7 +130,36 @@ const Login = () => {
             return (console.log('Ocurrio un error ' + error))
         }
     }
+    const getAllParams = async () => {
+        try {
+            const req =  await fetch(PARAMETRIZACIONES),
+            res = await req.json()
+            console.log(req);
+            console.log(res);
+            filterParam(res)
 
+
+        } catch (error) {
+            
+        }
+    }
+    getAllParams()
+    useEffect(()=>{
+        getAllParams()
+    },[])
+
+    const filterParam = (params)=>{
+        params.forEach( op =>{
+        if(op.name === 'QR-BTC' ){
+            localStorage.setItem('QR-BTC',op.value)
+            setQrBtc(op.value)
+        }else if(op.name === 'QR-USDT'){
+            setQrUSDT(op.value)
+            localStorage.setItem('QR-USDT',op.value)
+        }
+        })
+    }
+    
     /**funcion onchange para setear el correo ingresado */
     const handleChangeCorreo = (e) => {
         setState(state => {

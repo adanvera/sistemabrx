@@ -40,6 +40,8 @@ export const DataProvider = ({ children }) => {
     const [showModalOperation,setShowModalOperation] = useState(false)
     const [handleModalForm, setHandeModalForm] = useState('')
     const [mineroGloabl , setMineroGlobal] = useState('')
+    const [qrBtc,setQrBtc] = useState()
+    const [qrUSDT,setQrUSDT] = useState()
 
 
     /**conusltas para setear datos del usuario logueado
@@ -106,7 +108,9 @@ export const DataProvider = ({ children }) => {
                 operationsClient,setOperationsClient,dataOPeration,setDataOperation,
                 isSelling,setIsSelling,idClientToSale,setIdClientToSale,
                 showModalOperation,setShowModalOperation, handleModalForm, setHandeModalForm,
-                mineroGloabl , setMineroGlobal
+                mineroGloabl , setMineroGlobal,
+                qrBtc,setQrBtc,
+                qrUSDT,setQrUSDT
             }}>
             {children}
         </DataContext.Provider>
