@@ -51,6 +51,8 @@ const Mineria = props => {
     const [dataList, setDataList] = useState([])
     const [coins, setCoins] = useState([])
     const [chartTicket, setChartTicket] = useState([])
+    const { subPermissons, setSubPermissons } = useContext(DataContext)
+
 
     useEffect(() => {
 
@@ -244,6 +246,24 @@ const Mineria = props => {
         ]
     }
 
+    const verifyRoleSub = (data) => {
+        if (data === 1) {
+            return (
+                <>
+                    <Col md={2} className="a-end"> <div onClick={() => handleModalForm('Ticket')} className="btnadd"> Crear ticket</div></Col>
+                    <Col md={2} className="a-end">  <div onClick={() => handleModalForm('Minero')} className="btnadd" > Agregar minero</div></Col>
+                </>
+            )
+        } else {
+            return (
+                <>
+                    <Col md={2} className="a-end notallowed"> <div className="btnadd-not-allowed"> Crear ticket</div></Col>
+                    <Col md={2} className="a-end notallowed">  <div className="btnadd-not-allowed" > Agregar minero</div></Col>
+                </>
+
+            )
+        }
+    }
 
     return (
         <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
@@ -258,8 +278,10 @@ const Mineria = props => {
             <Container fluid={true} className="">
                 <Row className='mt-3'>
                     <Col md={8}> </Col>
-                    <Col md={2} className="a-end"> <div onClick={() => handleModalForm('Ticket')} className="btnadd"> Crear ticket</div></Col>
-                    <Col md={2} className="a-end">  <div onClick={() => handleModalForm('Minero')} className="btnadd" > Agregar minero</div></Col>
+                    {
+                        verifyRoleSub(subPermissons)
+                    }
+
                 </Row>
 
                 <Row className='content-mineria justify-content-between mb-3' >

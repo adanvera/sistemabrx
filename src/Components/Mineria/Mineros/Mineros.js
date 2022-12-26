@@ -42,6 +42,7 @@ function Mineros() {
   const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
   const [valueBTC, setValueBTC] = useState('')
   const [coins, setCoins] = useState('')
+  const { subPermissons, setSubPermissons } = useContext(DataContext)
 
   /**funcion para setear form clickeado */
   const pickForm = () => {
@@ -133,6 +134,22 @@ function Mineros() {
   const filterByBitcoin = coins ? coins?.filter((item) => item.name === 'Bitcoin') : ''
   const imgBtc = filterByBitcoin ? filterByBitcoin[0]?.logo : ''
 
+  const verifySubpermissons = (subPermissons) => {
+    if (subPermissons === 1) {
+      return (
+        <Col md={6} className="endmain">
+          <div className='limittic'><div onClick={() => handleModalForm('Minero')} className="btnadd" id='ticketmain'> Agregar minero</div></div>
+        </Col>
+      )
+    } else {
+      return (
+        <Col md={6} className="endmain">
+          <div className='limittic notallowed'><div className="btnadd-not-allowed" id='ticketmain'> Agregar minero</div></div>
+        </Col>
+      )
+    }
+  }
+
   return (
     <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
       {modal && (
@@ -152,9 +169,10 @@ function Mineros() {
             // handleChange={handleSearch}
             />
           </Col>
-          <Col md={6} className="endmain">
-            <div className='limittic'><div onClick={() => handleModalForm('Minero')} className="btnadd" id='ticketmain'> Agregar minero</div></div>
-          </Col>
+          {
+            verifySubpermissons(subPermissons)
+          }
+
         </Row>
         <Row>
           <Col md={12} className="mt-3 mb-3">

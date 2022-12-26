@@ -7,6 +7,8 @@ const UserActions = (props) => {
     const { modalType, setModalType } = useContext(DataContext)
     const { modalStatus, setModalStatus } = useContext(DataContext)
     const { setDataIdRow } = useContext(DataContext)
+    const { subPermissons, setSubPermissons } = useContext(DataContext)
+
     /**seteamos las variables respectivas dependiendo de que 
      * opcion seleccionemos
      */
@@ -29,13 +31,33 @@ const UserActions = (props) => {
 
     }
 
+    const verifySubPermissons = (subPermissons) => {
+        if (subPermissons === 1) {
+            return (
+                <>
+                    <div className="edit-btn" id='_btnEdit' onClick={(e) => handleOnClick(e, '_btnEdit')}><ion-icon dataid={props?.dataID} name="create-outline"></ion-icon></div>
+                    <div className="delete-btn" id='_btnBloq' onClick={(e) => handleOnClick(e, '_btnBloq')} ><ion-icon dataid={props?.dataID} name="ban-outline"></ion-icon></div>
+                    <div className="delete-btn" id='_btnDelete' onClick={(e) => handleOnClick(e, '_btnDelete')} ><ion-icon dataid={props?.dataID} name="trash-outline"></ion-icon></div>
+                </>
+            )
+        } else {
+            return (
+                <>
+                    <div className="edit-btn notallowed" id='_btnEditd' >
+                        <ion-icon dataid={props?.dataID} name="create-outline"></ion-icon>
+                    </div>
+                    <div className="delete-btn notallowed" id='_btnBloqd'  ><ion-icon dataid={props?.dataID} name="ban-outline"></ion-icon></div>
+                    <div className="delete-btn notallowed" id='_btnDeleted'  ><ion-icon dataid={props?.dataID} name="trash-outline"></ion-icon></div>
+                </>
+            )
+        }
+    }
+
     return (
         <Fragment>
             <div className="actionstwo d-flex">
                 <ProtectedComponent allowedRoles={['SEGURIDAD']}>
-                    <div className="edit-btn" id='_btnEdit' onClick={(e) => handleOnClick(e, '_btnEdit')}><ion-icon dataid={props?.dataID} name="create-outline"></ion-icon></div>
-                    <div className="delete-btn" id='_btnBloq' onClick={(e) => handleOnClick(e, '_btnBloq')} ><ion-icon dataid={props?.dataID} name="ban-outline"></ion-icon></div>
-                    <div className="delete-btn" id='_btnDelete' onClick={(e) => handleOnClick(e, '_btnDelete')} ><ion-icon dataid={props?.dataID} name="trash-outline"></ion-icon></div>
+                    {verifySubPermissons(subPermissons)}
                 </ProtectedComponent>
             </div>
         </Fragment>

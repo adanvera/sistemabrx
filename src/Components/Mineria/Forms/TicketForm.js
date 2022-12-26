@@ -180,9 +180,12 @@ const TicketForm = (props) => {
 
         editarMaquinaNuevo()
 
-        setModalStatus(false)
-        navigate('/tickets')
-        window.location.reload()
+        setTimeout(() => {
+            setModalStatus(false)
+            navigate('/tickets')
+            window.location.reload()
+        }, 1500);
+
     }
 
     const handleChange = (e) => {

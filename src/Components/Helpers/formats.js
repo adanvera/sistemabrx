@@ -15,7 +15,7 @@ export const formatedDataTicket = (data) => {
                     created_at: formatoDate(item.created_at),
                     created_at_filter: item.created_at,
                     created_by_user: item.id_user,
-                    status: (item.status),
+                    status: formateddStaatus(item.status),
                     priority: item.priority,
                     assigned_to: item.assigned_to,
                     updated_at: formatoDate(item.updated_at),
@@ -25,6 +25,24 @@ export const formatedDataTicket = (data) => {
         })
     }
     return obData
+}
+
+export const formateddStaatus = (data) => {
+    if (data === "0") {
+        return <span className="statusinfo failtxt">Eliminado</span>
+    }
+    if (data === "PENDING") {
+        return <span className="statusinfo offtxt">PENDING</span>
+    }
+    if (data === "INPROGRESS") {
+        return <span className="statusinfo prgrss">IN PROGRESS</span>
+    }
+    if (data === "ONHOLD") {
+        return <span className="statusinfo failtxt">ON HOLD</span>
+    }
+    if (data === "CLOSED") {
+        return <span className="statusinfo online">CLOSED</span>
+    }
 }
 
 export const formatTex = (text) => {

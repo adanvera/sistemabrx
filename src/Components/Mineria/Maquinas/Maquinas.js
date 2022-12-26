@@ -16,7 +16,7 @@ const Maquinas = (props) => {
             name: "test",
             type: "Tipo",
             brand: "Marca",
-            status : "Estado"
+            status: "Estado"
         },
         form: 'Maquina'
     }
@@ -28,7 +28,7 @@ const Maquinas = (props) => {
     const [dataList, setDataList] = useState([])
     const [isLoaded, setIsLoaded] = useState(false)
     const modal = modalstatus
-
+    const { subPermissons, setSubPermissons } = useContext(DataContext)
 
     /**funcion para setear form clickeado */
     const pickForm = () => {
@@ -93,9 +93,23 @@ const Maquinas = (props) => {
 
     }, [])
 
-    console.log(dataList);
-
     const dataFormated = formatMachines(dataList)
+
+    const verifySubPermissons = (subPermissons) => {
+        if (subPermissons === 1) {
+            return (
+                <Col md={6} className="endmain">
+                    <div className='limittic'><div onClick={() => handleModalForm('Maquina')} className="btnadd" id='Maquina'>Agregar maquina</div></div>
+                </Col>
+            )
+        } else {
+            return (
+                <Col md={6} className="endmain notallowed">
+                    <div className='limittic'><div className="btnadd-not-allowed" id='Maquina'>Agregar maquina</div></div>
+                </Col>
+            )
+        }
+    }
 
     return (
         <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
@@ -116,9 +130,10 @@ const Maquinas = (props) => {
                             handleChange={handleSearch}
                         />
                     </Col>
-                    <Col md={6} className="endmain">
-                        <div className='limittic'><div onClick={() => handleModalForm('Maquina')} className="btnadd" id='Maquina'>Agregar maquina</div></div>
-                    </Col>
+                    {
+                        verifySubPermissons(subPermissons)
+                    }
+
                 </Row>
                 {/* <Row>
                     <FilterTicket onCleanFilter={onCleanFilter} getFilter={handleFilter} />

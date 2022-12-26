@@ -5,18 +5,19 @@ const BTC_COTIZACION = 0.00005
 
 const OperationsData = () => {
 
-    const [typesOperations, setTypesOperations] = useState([{ label: "Seleccione", value: 2 },{ label: "Compra", value: 1 }, { label: "Venta", value: 0 }])
-    const currency = [{label: "Seleccione", value: 2},{ label: "BTC", value: 1 },{ label: "USDT", value: 0 }]
+    const [typesOperations, setTypesOperations] = useState([{ label: "Seleccione", value: 2 }, { label: "Compra", value: 1 }, { label: "Venta", value: 0 }])
+    const currency = [{ label: "Seleccione", value: 2 }, { label: "BTC", value: 1 }, { label: "USDT", value: 0 }]
     const [comision, setComision] = useState(0)
     const [isLoaded, setIsLoaded] = useState(false);
-    const { isBuying, setIsBuying, setModalStatus, typeCurrency, setTypeCurrency, setDataOperation, setIsSelling,showModalOperation,setShowModalOperation } = useContext(DataContext)
+    const { isBuying, setIsBuying, setModalStatus, typeCurrency, setTypeCurrency, setDataOperation, setIsSelling, showModalOperation, setShowModalOperation } = useContext(DataContext)
     const [currentCurrency, setCurrentCurrency] = useState('')
     const [amount, setAmount] = useState(0)
     const [totalAmount, setTotalAmount] = useState(0)
     const [dataValidate, setDataVerify] = useState(false)
-    const [isTypeOperationSelected,setIsTypeOperationSelected]  = useState(false)
-    const [isTypeCurrencySelected,setIsTypeCurrencySelected]  = useState(false)
-   
+    const [isTypeOperationSelected, setIsTypeOperationSelected] = useState(false)
+    const [isTypeCurrencySelected, setIsTypeCurrencySelected] = useState(false)
+    const { subPermissons, setSubPermissons } = useContext(DataContext)
+
     const handleTypeChange = (e) => {
         const type = e.target.value;
         console.log("Cambiando");
@@ -26,7 +27,7 @@ const OperationsData = () => {
             setIsBuying(true)
             setIsSelling(false)
             return
-        } else if(type === '0'){
+        } else if (type === '0') {
             setIsTypeOperationSelected(true)
 
             setIsSelling(true)
@@ -38,14 +39,14 @@ const OperationsData = () => {
     }
 
     const handleCurreyncyChange = (e) => {
-        if(e.target.value === '2') {
+        if (e.target.value === '2') {
             setIsTypeCurrencySelected(false)
-        }else{
+        } else {
             setIsTypeCurrencySelected(true)
             setCurrentCurrency(e.target.value);
 
         }
-            
+
 
     }
 
@@ -53,22 +54,22 @@ const OperationsData = () => {
         e.preventDefault()
         console.log('Hice click');
 
-        if(isTypeOperationSelected === false)return alert("Seleccione el tipo de operacion")
-        if(isTypeCurrencySelected === false)return alert("Seleccione el tipo de moneda")
+        if (isTypeOperationSelected === false) return alert("Seleccione el tipo de operacion")
+        if (isTypeCurrencySelected === false) return alert("Seleccione el tipo de moneda")
         //calculamos el totalAMoun
         updateTotalAMount(amount, comision)
-        
+
         //llamamos al api en caso de que la moneda sea BTC
         let amountBTC = 0;
         if (currentCurrency === '1') {
             const req = await fetch(`https://blockchain.info/tobtc?currency=USD&value=${totalAmount}`),
                 res = await req.json()
-                console.log("res ->>>>>>>>",req);
-                if(req.ok){
-                    amountBTC = res
-                }else{ //en caso de que la API explote ponemos valor por defecto
-                    amountBTC = totalAmount * BTC_COTIZACION
-                }
+            console.log("res ->>>>>>>>", req);
+            if (req.ok) {
+                amountBTC = res
+            } else { //en caso de que la API explote ponemos valor por defecto
+                amountBTC = totalAmount * BTC_COTIZACION
+            }
         } else {
             setTypeCurrency(currentCurrency)
             amountBTC = totalAmount
@@ -111,56 +112,100 @@ const OperationsData = () => {
         setTotalAmount(amountCommission + Number(amount))
     }
 
-    
-    return (
-        <Fragment>
-          
-            <form md={12} onSubmit={handleSubmit} >
-                    <h5 className="title-details ml-5 pt-3 ">Datos de operacion</h5>
-                    <Row className="mt-2">
-                        <FloatingLabel className="tkt"
-                            controlId="floatingSelectGrid"
-                            label="Tipo de operacion">
-                            <Form.Select aria-label="Seleccionar Tipo de operacion" onChange={(e) => handleTypeChange(e)} >
-                                {typesOperations.map((option) => (
-                                    <option required value={option.value} >{option.label}</option>
-                                ))}
-                            </Form.Select>
-                        </FloatingLabel>
-                    </Row>
+    // const verifySubPermissons = (data) => {
+    //     if (data === 1) {
+    //         return (
+    //             <Col>
+    //                 <div className='datashow mt-3'>
+    //                     <input type="submit" className=" btnadd" value={"Realizar operacion"} />
+    //                 </div>
+    //             </Col>
+    //         )
+    //     } else {
+    //         return (
+    //             <Col>
+    //                 <div className='datashow mt-3 notallowed'>
+    //                     <input type="submit" disabled className=" btnadd" disabled value={"Realizar operacion"} />
+    //                 </div>
+    //             </Col>
+    //         )
+    //     }
+    // }
 
-                    <Row className="mt-2">
-                        <FloatingLabel className="tkt"
-                            controlId="floatingSelectGrid"
-                            label="Tipo de moneda">
-                            <Form.Select aria-label="Seleccionar Tipo de moneda" onChange={(e) => handleCurreyncyChange(e)} >
-                                {currency.map((option) => (
-                                    <option required value={option.value}>{option.label}</option>
-                                ))}
-                            </Form.Select>
-                        </FloatingLabel>
-                    </Row>
-                    <Col>
-                        <div className='datashow mt-3'>
-                            <label className='labeltk' >Comision</label>
-                            <input className='inputshow client' required onChange={(e) => handleComssion(e)} />
+    const verifyRoleSub = (data) => {
+        if (data === 1) {
+            return (
+                <Col className="">
+                    <div className='datashow mt-3'>
+                        <div type="submit" className="btnadd">
+                            <input type="submit" className=" btnadd op" value={"Realizar operacion"} />
                         </div>
-                    </Col>
-                    <Col>
-                        <div className='datashow mt-3'>
-                            <label className='labeltk' >Monto transaccion</label>
-                            <input className='inputshow client' required onChange={(e) => handleAmount(e)} />
-                        </div>
-                    </Col>
-                    <Col>
-                        <div className='datashow mt-3'>
+                    </div>
+                </Col>
+            )
+        } else {
+            return (
+                <Col className=" notallowed">
+                    <div className='datashow mt-3'>
+                        <div className="btnadd-not-allowed">
                             <input type="submit" className=" btnadd" value={"Realizar operacion"} />
                         </div>
-                    </Col>
+                    </div>
+                </Col>
+            )
+        }
+    }
+
+
+    return (
+        <Fragment>
+
+            <form md={12} onSubmit={handleSubmit} >
+                <h5 className="title-details ml-5 pt-3 ">Datos de operacion</h5>
+                <Row className="mt-2">
+                    <FloatingLabel className="tkt"
+                        controlId="floatingSelectGrid"
+                        label="Tipo de operacion">
+                        <Form.Select aria-label="Seleccionar Tipo de operacion" onChange={(e) => handleTypeChange(e)} >
+                            {typesOperations.map((option) => (
+                                <option required value={option.value} >{option.label}</option>
+                            ))}
+                        </Form.Select>
+                    </FloatingLabel>
+                </Row>
+
+                <Row className="mt-2">
+                    <FloatingLabel className="tkt"
+                        controlId="floatingSelectGrid"
+                        label="Tipo de moneda">
+                        <Form.Select aria-label="Seleccionar Tipo de moneda" onChange={(e) => handleCurreyncyChange(e)} >
+                            {currency.map((option) => (
+                                <option required value={option.value}>{option.label}</option>
+                            ))}
+                        </Form.Select>
+                    </FloatingLabel>
+                </Row>
+                <Col>
+                    <div className='datashow mt-3'>
+                        <label className='labeltk' >Comision</label>
+                        <input className='inputshow client' required onChange={(e) => handleComssion(e)} />
+                    </div>
+                </Col>
+                <Col>
+                    <div className='datashow mt-3'>
+                        <label className='labeltk' >Monto transaccion</label>
+                        <input className='inputshow client' required onChange={(e) => handleAmount(e)} />
+                    </div>
+                </Col>
+                {
+                    verifyRoleSub(subPermissons)
+                }
+
+
             </form>
 
 
-            
+
 
         </Fragment>
 
