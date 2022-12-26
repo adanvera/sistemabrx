@@ -6,6 +6,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { DataContext } from '../Commons/Context/DataContext';
 import ModalContainer from '../Commons/ModalContainer';
 import Table from '../Commons/Table/Table';
+import { formatedDataMiners } from '../Helpers/formats';
 import { CLIENT, MINING_SUMMARY, OPERATION_PROD } from '../Helpers/helper';
 import OperationsData from '../Operaciones/OperationsData';
 import ClientInfo from './ClientInfo';
@@ -20,7 +21,7 @@ function ClientDetails() {
     const [numeroOperacion, setNumeroOperacion] = useState('')
     const [operationTemporal, setOperationTemporal] = useState('')
     const [typesOperations, setTypesOperations] = useState('1')
-    
+
     const { modalstatus, setModalStatus } = useContext(DataContext)
 
     const initialState = {
@@ -41,7 +42,7 @@ function ClientDetails() {
         form: 'Cliente',
         title: 'CLIENTE',
     }
-    
+
     const [state, setState] = useState(initialState)
     const [clientData, setClientData] = useState('')
     /**acciones que son utilizadas al cargar datos de
@@ -58,33 +59,33 @@ function ClientDetails() {
     //checbox
     const [checkedCompra, setCheckedCompra] = useState(true);
     const [checkedVenta, setcheckedVenta] = useState(false);
-    
-   
+
+
     const getOperations = async (typeChecked = '') => {
-        console.log('typeChecked'+typeChecked);
-        let type = typeChecked === ''?typesOperations:typeChecked
+        console.log('typeChecked' + typeChecked);
+        let type = typeChecked === '' ? typesOperations : typeChecked
 
         const optionsData = {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'content-type':'application/json'
-                
+                'content-type': 'application/json'
+
             },
-            body:JSON.stringify({fechaDesde,fechaHasta,typeOperation:type})
-        }   
+            body: JSON.stringify({ fechaDesde, fechaHasta, typeOperation: type })
+        }
         try {
             const res = await fetch(OPERATION_PROD + 'extractByDate/' + id, optionsData),
                 json = await res.json()
-                console.log(res);
-                console.log(json);
-                
+            console.log(res);
+            console.log(json);
+
             setDataOperations(handleDataOperationToShow(json));
-            if(loadingFirst){
+            if (loadingFirst) {
 
                 setOperationTemporal(handleDataOperationToShow(json))
             }
-            
+
         } catch (error) {
             //setError(error);
             console.log("Esto es el error" + error);
@@ -145,8 +146,8 @@ function ClientDetails() {
         getMiners()
 
         getOperations()
-        
-        
+
+
 
 
     }, [state]);
@@ -166,32 +167,31 @@ function ClientDetails() {
             }
         })
     }
-    useEffect(()=>{
-      getOperations()      
-    },[typesOperations])
-    const handleDataOperationToShow = ( operation ) => {
-        
+    useEffect(() => {
+        getOperations()
+    }, [typesOperations])
+    const handleDataOperationToShow = (operation) => {
         let listToShow = []
-        operation.forEach( op => {
+        operation.forEach(op => {
             const formatOperation = {
-                fecha:'',
-                operacion:'',
-                montoRecibidoEnviado:'',
-                comision:'',
-                tipoMoneda:'',
-                monto:'',
-                tipoOperacion:''
+                fecha: '',
+                operacion: '',
+                montoRecibidoEnviado: '',
+                comision: '',
+                tipoMoneda: '',
+                monto: '',
+                tipoOperacion: ''
             }
             formatOperation.comision = op.comision
             formatOperation.fecha = op.fecha
             formatOperation.operacion = op.operation
-            formatOperation.tipoMoneda = op.btc !== '0'? 'BTC':'USDT'
-            formatOperation.monto = op.btc !== '0'? op.btc:op.usdt
-            formatOperation.tipoOperacion = typesOperations === '0'? 'Venta':'Compra'
-            
-            if(typesOperations === '1'){
+            formatOperation.tipoMoneda = op.btc !== '0' ? 'BTC' : 'USDT'
+            formatOperation.monto = op.btc !== '0' ? op.btc : op.usdt
+            formatOperation.tipoOperacion = typesOperations === '0' ? 'Venta' : 'Compra'
+
+            if (typesOperations === '1') {
                 formatOperation.montoRecibidoEnviado = op.compra
-            }else if(typesOperations === '0'){
+            } else if (typesOperations === '0') {
                 formatOperation.montoRecibidoEnviado = op.venta
             }
             listToShow.push(formatOperation)
@@ -199,7 +199,10 @@ function ClientDetails() {
         return listToShow
     }
 
+    const formatedData = miningData ? formatedDataMiners(miningData) : ''
+
     const minerHeader = {
+        id_machine_tex: '',
         machine_name: "NOMBRE",
         status: "ESTADO",
         name: "CLIENTE",
@@ -211,17 +214,14 @@ function ClientDetails() {
 
     const dataOperationsHeader = {
         fecha: 'Fecha',
-        id: 'Operacion',    
-        type:(typesOperations ==='1'?'Enviado al cliente':'Recibido por el cliente'),
+        id: 'Operacion',
+        type: (typesOperations === '1' ? 'Enviado al cliente' : 'Recibido por el cliente'),
         comision: 'Comision',
-        tipoMoneda:'Tipo de moneda',
-        monto:(typesOperations ==='1'?'Monto recibido':'Monto enviado'),
-        tipoOperacion:'Tipo de operacion'
-        
-        
-
+        tipoMoneda: 'Tipo de moneda',
+        monto: (typesOperations === '1' ? 'Monto recibido' : 'Monto enviado'),
+        tipoOperacion: 'Tipo de operacion'
     }
-    
+
     const handleFilterDateOperations = async () => {
         console.log('Enviare estas fechas');
         if (fechaDesde === '' || fechaHasta === '') return alert('La fecha no puede ser vacia')
@@ -329,6 +329,8 @@ function ClientDetails() {
         }
     }
 
+    const titleClient = clientData ? clientData?.name + " " + clientData.last_name : 'Cliente'
+
     return (
         <div className={sidebarStatus === 'open' ? 'main-content-tkt' : 'main-content-tkt extend'} >
             {modal && (
@@ -339,7 +341,7 @@ function ClientDetails() {
                     modalType={modalType}
                 />
             )}
-            
+
             <Row className=''>
                 <Col md={9} className="tiktop ml-1 pb-3">
                     <Container fluid={true} className="">
@@ -347,7 +349,7 @@ function ClientDetails() {
                             <Col><div className='colorlink ticketsdetails'> <Link to="/clientes">{"< Clientes"}</Link> </div></Col>
                             <Col className='headtiket imp d-flex'>
                                 <div>
-                                    <h4>{clientData?.name + clientData.last_name}  </h4>
+                                    <h4>{clientData?.name + " " + clientData.last_name}  </h4>
                                 </div>
                                 <div className='text-end clipboard' onClick={() => copyToClipBoard(clientData?.name + clientData.last_name)} >
                                     <span className='txttd'><ion-icon name="copy-outline"></ion-icon></span>
@@ -405,12 +407,12 @@ function ClientDetails() {
                                 state?.tab?.operations &&
                                 <>
                                     <Row className='mt-2'>
-                                        <CheckBox 
-                                        setTypesOperations={setTypesOperations} 
-                                        checkedCompra={checkedCompra} 
-                                        setCheckedCompra={setCheckedCompra}
-                                        checkedVenta={checkedVenta}
-                                        setcheckedVenta={setcheckedVenta}/>
+                                        <CheckBox
+                                            setTypesOperations={setTypesOperations}
+                                            checkedCompra={checkedCompra}
+                                            setCheckedCompra={setCheckedCompra}
+                                            checkedVenta={checkedVenta}
+                                            setcheckedVenta={setcheckedVenta} />
                                     </Row>
                                     <Row className='dividefilters'></Row>
                                 </>
@@ -484,7 +486,7 @@ function ClientDetails() {
                                 </div>
                                 <div id="mineria" className={state?.tab?.mineria ? 'content-tab' : 'content-tab is-hidden'}>
                                     {state?.tab?.mineria &&
-                                        <Table headers={minerHeader} data={((miningData))} />
+                                        <Table headers={minerHeader} data={((formatedData))} exportdata={true} title={titleClient} />
                                     }
                                 </div>
                             </section>
