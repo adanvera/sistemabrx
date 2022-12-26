@@ -1636,6 +1636,19 @@ span.statusinfo.offtxt {
     margin-right: 10px;
 }
 
+span.statusinfo.prgrss {
+    background-color: orange;
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 400;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+
 span.statusinfo.failtxt {
     background-color: rgb(255, 0, 0);
     color: white;
@@ -1893,3 +1906,4 @@ div#_btnDeleted {
     color: red;
     border: 1px solid red;
 }
+
