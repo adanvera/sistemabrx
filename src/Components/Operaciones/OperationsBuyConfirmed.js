@@ -106,7 +106,7 @@ const OperationsBuyConfirmed = (props) => {
                     </Col>
                     <Col md={12}>
                         <div className='datashow'>
-                            <label className='labeltk' ><b>Monto envidado al cliente:</b> {dataOPeration.totalAmount + " USD"} </label>
+                            <label className='labeltk' ><b>Monto entregado al cliente:</b> {dataOPeration.totalAmount + " USD"} </label>
                         </div>
                     </Col>
                     <Col md={12}>

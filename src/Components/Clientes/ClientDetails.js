@@ -255,7 +255,7 @@ function ClientDetails() {
 
 
     const minerHeader = {
-        id_machine_tex: '',
+        id_machine_tex: 'Id',
         machine_name: "NOMBRE",
         status: "ESTADO",
         name: "CLIENTE",
