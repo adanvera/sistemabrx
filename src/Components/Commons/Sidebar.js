@@ -88,6 +88,14 @@ const Sidebar = props => {
 
     const handleOnLoad = () => { }
 
+    const handleSetActiveGuia = (e, guia) => {
+        e.preventDefault()
+        if (guia === 'guia') {
+            navigate('www.guia.brxsgo.com')
+        }
+
+    }
+
     return (
         <aside className={sidebarStatus === 'open' ? 'sidebar' : 'menu sidebar small'} onLoad={handleOnLoad()} >
             <ul className="menu-list ">
@@ -202,14 +210,13 @@ const Sidebar = props => {
                 <ProtectedComponent allowedRoles={['OPERACIONES', 'SEGURIDAD', 'MINERIA', 'USUARIOS', 'CLIENTES']}>
                     <li className={state?.guia ? "mt-4 classli is-active" : "mt-4 classli"}
                         id="guia"
-                        onClick={(e) => handleSetActive('guia')}
                     >
-                        <Link to="https://guia.brxsgo.com/" target="_blank" rel="noreferrer" className="d-flex">
+                        <a href='https://guia.brxsgo.com/' target='_blank' rel='noreferrer' className="d-flex">
                             <div>
                                 <ion-icon name="book-outline"></ion-icon>
                             </div>
                             <span className="pl-3">Guía</span>
-                        </Link>
+                        </a>
                     </li>
                 </ProtectedComponent>
             </ul>
