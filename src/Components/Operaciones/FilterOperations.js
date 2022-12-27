@@ -2,6 +2,7 @@ import React, { Component, useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import DatePicker from "react-date-picker";
 import Select from "../Commons/Select";
+import { OPERATION_PROD } from "../Helpers/helper";
 
 const FilterOperations = props => {
 
@@ -11,7 +12,7 @@ const FilterOperations = props => {
         hasta: '',
         tipoOperaciones: 'TODAS'
     }
-
+    const [operationsId,setOPerationsID]= useState('')
     //inicializamos las variables 
     const [state, setState] = useState(initialState)
     const [selectOperation, setOperation] = useState('')
@@ -80,7 +81,49 @@ const FilterOperations = props => {
             }
         ))
     }
+    const getOperationsById = async ()=>{
 
+        try {
+            const req= await fetch(OPERATION_PROD+'all/'+operationsId),
+            res = await req.json()
+            console.log(req);
+            console.log(res);
+            if(req.ok){
+                props.setDataList([res.operation])
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+    const getAllOperation = async ()=>{
+        const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
+
+        /**mandamos el header de nuestra consulta */
+        const options = {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'token': token
+            },
+        }
+        
+        try {
+            const res = await fetch(OPERATION_PROD, options),
+                json = await res.json()
+            /**seteamos loading */
+            // json.map(op => delete op.created)
+            /**seteamos el listado de tickets */
+            setOPerationsID('')
+            props.setDataList(json)
+
+
+        } catch (error) {
+            //setError(error);
+            console.log("Esto es el error" + error);
+        }
+    }
     return (
         <Row className="mt-3 mb-3">
             <Col>
@@ -114,6 +157,28 @@ const FilterOperations = props => {
                     <button className="button btn-other" onClick={() => handleCleanFilter()}>Limpiar</button>
                 </div>
             </Col>
+            <Row>
+            <Col>
+            <label className="mb-1" htmlFor="">Nro operacion:</label>
+
+                <div className="item-column has-text-left">
+                    <input className="form-control" value={operationsId} onChange={(e)=>setOPerationsID(e.target.value)} type={"text"} placeholder="Nro operacion"/>
+                </div>
+            </Col>
+            
+            <Col className="column align">
+                <div className="item-column">
+                    <button className="button btn-other" onClick={() => getOperationsById()}>Filtrar</button>
+                </div>
+            </Col>
+            <Col className="column align">
+                <div className="item-column">
+                    <button className="button btn-other" onClick={() => getAllOperation()}>Limpiar</button>
+                </div>
+            </Col>
+            </Row>
+   
+   
         </Row>
     )
 }

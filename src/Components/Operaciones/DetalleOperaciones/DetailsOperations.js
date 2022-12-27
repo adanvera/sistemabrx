@@ -3,9 +3,10 @@ import { useContext } from 'react'
 import { Container, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { DataContext } from '../../Commons/Context/DataContext'
-import { CLIENT, OPERATION_PROD } from '../../Helpers/helper'
+import { CLIENT, OPERATION_PROD, USER } from '../../Helpers/helper'
 import DatosCliente from './DatosCliente'
 import DatosOperacion from './DatosOperacion'
+import DatosUsuario from './DatosUsuario'
 
 function DetailsOperations() {
     const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
@@ -14,8 +15,32 @@ function DetailsOperations() {
     const idClient = (new URLSearchParams(window.location.search)).get("idClient")
     const [clients, setClients] = useState();
     const [operations, setOperations] = useState();
+    const [user, setUser] = useState();
     const [isloading,setIsLoading] = useState(true)
     const [isloadingOperation,setIsLoadingOperation] = useState(true)
+    const [isloadingUser,setIsLoadingUser] = useState(true)
+    
+    const getUser = async (idUser)=>{
+        const options = {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'token': token,
+                'content-type': 'application/json'
+            },
+        }
+        try {
+            const req = await fetch(USER+idUser,options),
+            res = await req.json()
+            console.log(req);
+            console.log(res);
+            setUser(res)
+            setIsLoadingUser(false)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    
     const getClient = async ()=>{
         const options = {
             method: 'GET',
@@ -39,6 +64,7 @@ function DetailsOperations() {
             console.log("Esto es el error" + error);
         }
     }
+
     
     const getOperations = async ()=>{
         const options = {
@@ -58,6 +84,7 @@ function DetailsOperations() {
             /**seteamos el listado de tickets */
             setOperations(json);
             setIsLoadingOperation(false)
+            getUser(json.operation.id_user)
         } catch (error) {
 
             console.log("Esto es el error" + error);
@@ -78,6 +105,7 @@ function DetailsOperations() {
                 </Row>
                 {isloading?'':<DatosCliente data = {clients}/>}
                 {isloadingOperation?'':<DatosOperacion data={operations}/>}
+                {isloadingUser?'':<DatosUsuario data={user}/>}
                 <br/>
             </Container>
         </div>
