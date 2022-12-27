@@ -233,6 +233,9 @@ const RoleForms = (props) => {
       if(usuarios && clientes && seguridad){
         return usuarios + "," + clientes + "," + seguridad
       }
+      if(usuarios && mineria && seguridad){
+        return usuarios + "," + mineria + "," + seguridad
+      }
     }
 
     const permisosAsignados = verifyAccessRole()
@@ -392,6 +395,12 @@ const RoleForms = (props) => {
           }
           if (negocio) {
             return negocio
+          }
+          if(usuarios && seguridad && mineria){
+            return usuarios + "," + seguridad + "," + mineria
+          }
+          if(usuarios && mineria && seguridad){
+            return usuarios + "," + mineria + "," + seguridad
           }
         }
 
