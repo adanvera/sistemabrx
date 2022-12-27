@@ -5,8 +5,9 @@ import { Button, Col, Container, Form, Nav, Row } from 'react-bootstrap'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { DataContext } from '../Commons/Context/DataContext';
 import ModalContainer from '../Commons/ModalContainer';
+import DumpTable from '../Commons/Table/DumpTable';
 import Table from '../Commons/Table/Table';
-import { formatedDataMiners } from '../Helpers/formats';
+import { formatedDataMiners, formatedDataMinersdfdsafd } from '../Helpers/formats';
 import { CLIENT, MINING_SUMMARY, OPERATION_PROD } from '../Helpers/helper';
 import OperationsData from '../Operaciones/OperationsData';
 import ClientInfo from './ClientInfo';
@@ -14,6 +15,7 @@ import CheckBox from './Forms/CheckBox';
 import ClienteForm from './Forms/ClienteForm';
 
 function ClientDetails() {
+
     const { id } = useParams();
     const [loadingFirst, setLoadingFirst] = useState(true);
     const [fechaDesde, setFechaDesde] = useState('2022-12-01')
@@ -23,6 +25,8 @@ function ClientDetails() {
     const [typesOperations, setTypesOperations] = useState('1')
     const { subPermissons, setSubPermissons } = useContext(DataContext)
     const { modalstatus, setModalStatus } = useContext(DataContext)
+    const [isloademiner, setIsLoademiner] = useState(false)
+
 
     const initialState = {
         tab: {
@@ -50,7 +54,7 @@ function ClientDetails() {
   */
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [miningData, setMiningData] = useState('')
+    const [miningData, setMiningData] = useState([])
     const [dataOperations, setDataOperations] = useState('')
     const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
     const { modalType, setModalType } = useContext(DataContext)
@@ -130,29 +134,31 @@ function ClientDetails() {
 
             console.log(clientData?.document);
 
+            const document = clientData ? clientData.document : ''
+
             try {
-                const res = await fetch(MINING_SUMMARY + clientData?.document, options),
+                const res = await fetch(MINING_SUMMARY + document, options),
                     json = await res.json()
                 /**seteamos loading */
-                setIsLoaded(true);
+                setIsLoademiner(true);
                 /**seteamos datos del ticket */
                 setMiningData(json)
             } catch (error) {
-                setIsLoaded(true);
+                setIsLoademiner(false);
                 setError(error);
                 console.log(error);
             }
         }
+
         getMiners()
 
         getOperations()
 
     }, [state]);
 
-    const formatedData = miningData
-    const formatedDataMiner = miningData
+    const formatedList = formatedDataMiners(miningData)
 
-    console.log(miningData);
+    const verifyOp = state?.tab?.operations
 
     const onHandleClick = e => {
         e.preventDefault()
@@ -207,9 +213,6 @@ function ClientDetails() {
         machine_name: "NOMBRE",
         status: "ESTADO",
         name: "CLIENTE",
-        hashrate: "HASHRATE",
-        tempmax: "TEMP MAX",
-        maxfan: "VENTILADOR MAX",
         uptime: "UPTIME",
     }
 
@@ -507,8 +510,9 @@ function ClientDetails() {
                                     }
                                 </div>
                                 <div id="mineria" className={state?.tab?.mineria ? 'content-tab' : 'content-tab is-hidden'}>
-                                    {state?.tab?.mineria &&
-                                        <Table headers={minerHeader} data={((formatedData))} exportdata={true} title={titleClient} />
+
+                                    {state?.tab?.mineria && isloademiner === true ?
+                                        <Table headers={minerHeader} data={formatedList} exportdata={true} title={titleClient} /> : ''
                                     }
                                 </div>
                             </section>

@@ -49,7 +49,8 @@ const Sidebar = props => {
             seguridad: '',
             changePass: '',
             importaciones: '',
-            negocio: ''
+            negocio: '',
+            guia: ''
         }
         setState(prevState => ({
             ...blankState,
@@ -198,6 +199,19 @@ const Sidebar = props => {
                         </Link>
                     </li>
                 </ProtectedComponent>
+                <ProtectedComponent allowedRoles={['OPERACIONES', 'SEGURIDAD', 'MINERIA', 'USUARIOS', 'CLIENTES']}>
+                    <li className={state?.negocio ? "mt-4 classli is-active" : "mt-4 classli"}
+                        id="guia"
+                        onClick={(e) => handleSetActive('guia')}
+                    >
+                        <Link to="https://guia.brxsgo.com/" target="_blank" rel="noreferrer" className="d-flex">
+                            <div>
+                                <ion-icon name="book-outline"></ion-icon>
+                            </div>
+                            <span className="pl-3">Guía</span>
+                        </Link>
+                    </li>
+                </ProtectedComponent>
             </ul>
             <ul className="menu-list">
                 <li className={state?.logOut ? "mt-4 classli is-active " : "mt-4 classli"}
@@ -222,13 +236,6 @@ const Sidebar = props => {
                 </li>
 
             </ul>
-            <ul className="ulguia">
-                <a href="http://guia.brxsgo.com/" target="_blank" >
-                    <li className="liguia">
-                        <span className="spanguia">Guía</span>
-                    </li>
-                </a>
-            </ul>
         </aside >
     )
 }
@@ -236,4 +243,4 @@ const Sidebar = props => {
 export default Sidebar
 
 
-// 
+// <ion-icon name="umbrella-outline"></ion-icon>

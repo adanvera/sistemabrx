@@ -256,11 +256,11 @@ const Negocio = (props) => {
                 </Row>
                 <Row>
                     <Col md={3}>
-                        <h4>Cantidad de gastos por mes</h4>
+                        <h5>Cantidad de gastos por mes</h5>
                         <PolarArea data={dataGastos} />
                     </Col>
                     <Col md={3}>
-                        <h4>Monto de gastos por mes</h4>
+                        <h5>Monto de gastos por mes</h5>
                         <PolarArea data={amountMonth} />
                     </Col>
                 </Row>

@@ -347,7 +347,7 @@ function Dashboard() {
                       </div>
                     </div>
                     <div class="widget-chart-content">
-                      <div class="widget-numbers">Difficulty</div>
+                      <div class="widget-numbers">Dificultad</div>
                       <div class="widget-numbers">{valueBTC[0]?.difficulty}</div>
                     </div>
                   </div>
@@ -361,7 +361,7 @@ function Dashboard() {
                       </div>
                     </div>
                     <div class="widget-chart-content">
-                      <div class="widget-subheading">Network hashrate</div>
+                      <div class="widget-subheading">Tasa de hash de red</div>
                       <div class="widget-numbers"><span>{valueBTC[0]?.network_hashrate}</span></div>
                     </div>
                   </div>

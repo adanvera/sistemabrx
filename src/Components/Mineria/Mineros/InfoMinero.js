@@ -354,6 +354,8 @@ const InfoMinero = (props) => {
 
     }
 
+    
+
     return (
         <>
             <Row className='pl-3'>
