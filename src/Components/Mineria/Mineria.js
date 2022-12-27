@@ -276,13 +276,13 @@ const Mineria = props => {
                 />
             )}
             <Container fluid={true} className="">
-                <Row className='mt-3'>
+                {/* <Row className='mt-3'>
                     <Col md={8}> </Col>
                     {
                         verifyRoleSub(subPermissons)
                     }
 
-                </Row>
+                </Row> */}
 
                 <Row className='content-mineria justify-content-between mb-3' >
 
