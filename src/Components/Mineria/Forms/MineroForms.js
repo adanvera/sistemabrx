@@ -173,10 +173,8 @@ const MineroForms = (props) => {
 
     setTimeout(() => {
       navigate('/mineros')
-      window.location.reload()
-    }, 1500)
-
-
+      window.location = window.location.href
+    }, 1500);
   }
 
   const handleSubmitAlta = (e) => {

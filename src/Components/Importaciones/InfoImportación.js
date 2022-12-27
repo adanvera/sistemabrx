@@ -303,7 +303,9 @@ const InfoImportación = (props) => {
                 try {
                     const res = await fetch(IMPORTACIONES + idImp, options),
                         json = await res.json();
-                    window.location.reload()
+                        setTimeout(() => {
+                            window.location = window.location.href
+                        }, 1500);
                 } catch (error) {
                     console.log(error.msg);
                 }

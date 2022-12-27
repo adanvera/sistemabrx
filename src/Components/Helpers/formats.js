@@ -283,6 +283,33 @@ export const formatedDataMiners = (data) => {
 
 }
 
+export const formatedDataMinersdfdsafd = (data) => {
+
+    let obData = {}
+
+    try {
+        if (data) {
+            data?.map(item => {
+                obData = {
+                    ...obData,
+                    [item?.id_machine]: {
+                        id_machine_tex: item.id_machine,
+                        machine_name: item.machine_name,
+                        id_machine: item.id_machine,
+                        status: verifyStatusMachine(item.status),
+                        name: item.name,
+                        uptime: item.uptime,
+                    }
+                }
+            })
+        }
+        return obData
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
 export const verifyStatusMachine = (data) => {
     if (data === 0) {
         return (

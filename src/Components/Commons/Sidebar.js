@@ -49,7 +49,8 @@ const Sidebar = props => {
             seguridad: '',
             changePass: '',
             importaciones: '',
-            negocio: ''
+            negocio: '',
+            guia: ''
         }
         setState(prevState => ({
             ...blankState,
@@ -86,6 +87,14 @@ const Sidebar = props => {
     }
 
     const handleOnLoad = () => { }
+
+    const handleSetActiveGuia = (e, guia) => {
+        e.preventDefault()
+        if (guia === 'guia') {
+            navigate('www.guia.brxsgo.com')
+        }
+
+    }
 
     return (
         <aside className={sidebarStatus === 'open' ? 'sidebar' : 'menu sidebar small'} onLoad={handleOnLoad()} >
@@ -198,6 +207,18 @@ const Sidebar = props => {
                         </Link>
                     </li>
                 </ProtectedComponent>
+                <ProtectedComponent allowedRoles={['OPERACIONES', 'SEGURIDAD', 'MINERIA', 'USUARIOS', 'CLIENTES']}>
+                    <li className={state?.guia ? "mt-4 classli is-active" : "mt-4 classli"}
+                        id="guia"
+                    >
+                        <a href='https://guia.brxsgo.com/' target='_blank' rel='noreferrer' className="d-flex">
+                            <div>
+                                <ion-icon name="book-outline"></ion-icon>
+                            </div>
+                            <span className="pl-3">Guía</span>
+                        </a>
+                    </li>
+                </ProtectedComponent>
             </ul>
             <ul className="menu-list">
                 <li className={state?.logOut ? "mt-4 classli is-active " : "mt-4 classli"}
@@ -222,13 +243,6 @@ const Sidebar = props => {
                 </li>
 
             </ul>
-            <ul className="ulguia">
-                <a href="http://guia.brxsgo.com/" target="_blank" >
-                    <li className="liguia">
-                        <span className="spanguia">Guía</span>
-                    </li>
-                </a>
-            </ul>
         </aside >
     )
 }
@@ -236,4 +250,4 @@ const Sidebar = props => {
 export default Sidebar
 
 
-// 
+// <ion-icon name="umbrella-outline"></ion-icon>

@@ -5,15 +5,17 @@ import { Button, Col, Container, Form, Nav, Row } from 'react-bootstrap'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { DataContext } from '../Commons/Context/DataContext';
 import ModalContainer from '../Commons/ModalContainer';
+import DumpTable from '../Commons/Table/DumpTable';
 import Table from '../Commons/Table/Table';
-import { formatedDataMiners } from '../Helpers/formats';
-import { CLIENT, MINING_SUMMARY, OPERATION_PROD } from '../Helpers/helper';
+import { formatedDataImportaciones, formatedDataMiners, formatedDataMinersdfdsafd } from '../Helpers/formats';
+import { CLIENT, IMPORTACIONES, MINING_SUMMARY, OPERATION_PROD } from '../Helpers/helper';
 import OperationsData from '../Operaciones/OperationsData';
 import ClientInfo from './ClientInfo';
 import CheckBox from './Forms/CheckBox';
 import ClienteForm from './Forms/ClienteForm';
 
 function ClientDetails() {
+
     const { id } = useParams();
     const [loadingFirst, setLoadingFirst] = useState(true);
     const [fechaDesde, setFechaDesde] = useState('2022-12-01')
@@ -23,12 +25,14 @@ function ClientDetails() {
     const [typesOperations, setTypesOperations] = useState('1')
     const { subPermissons, setSubPermissons } = useContext(DataContext)
     const { modalstatus, setModalStatus } = useContext(DataContext)
+    const [isloademiner, setIsLoademiner] = useState(false)
+
 
     const initialState = {
         tab: {
             operations: true,
             mineria: false,
-            modificaciones: false
+            importaciones: false
         },
         headerMiners: {
             machine_name: "NOMBRE",
@@ -50,7 +54,7 @@ function ClientDetails() {
   */
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [miningData, setMiningData] = useState('')
+    const [miningData, setMiningData] = useState([])
     const [dataOperations, setDataOperations] = useState('')
     const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
     const { modalType, setModalType } = useContext(DataContext)
@@ -59,6 +63,7 @@ function ClientDetails() {
     //checbox
     const [checkedCompra, setCheckedCompra] = useState(true);
     const [checkedVenta, setcheckedVenta] = useState(false);
+    const [importaciones, setImportaciones] = useState([])
 
 
     const getOperations = async (typeChecked = '') => {
@@ -130,29 +135,62 @@ function ClientDetails() {
 
             console.log(clientData?.document);
 
+            const document = clientData ? clientData.document : ''
+
             try {
-                const res = await fetch(MINING_SUMMARY + clientData?.document, options),
+                const res = await fetch(MINING_SUMMARY + document, options),
                     json = await res.json()
                 /**seteamos loading */
-                setIsLoaded(true);
+                setIsLoademiner(true);
                 /**seteamos datos del ticket */
                 setMiningData(json)
             } catch (error) {
-                setIsLoaded(true);
+                setIsLoademiner(false);
                 setError(error);
                 console.log(error);
             }
         }
+
         getMiners()
 
         getOperations()
 
+        const getImportaciones = async () => {
+            /** Obtenemos los valores que guardamos en el token para poder utilizarlos
+            * en la siguiente consulta
+            */
+            const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
+            const options = {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'token': token
+                },
+            }
+
+            try {
+                const res = await fetch(IMPORTACIONES, options),
+                    json = await res.json()
+                /**seteamos loading */
+                setIsLoaded(true);
+                /**seteamos el listado de tickets */
+                setImportaciones(json);
+
+            } catch (error) {
+                console.log(error);
+            }
+
+        }
+
+        getImportaciones()
+
     }, [state]);
 
-    const formatedData = miningData
-    const formatedDataMiner = miningData
+    const formatedList = formatedDataMiners(miningData)
+    const id_client = clientData ? clientData.id_client : ''
 
-    console.log(miningData);
+    const filteredImportacionesById = importaciones ? importaciones.filter(importacion => importacion.id_cliente === id_client) : []
+    const formatedImportaciones = importaciones ? formatedDataImportaciones(filteredImportacionesById) : ''
 
     const onHandleClick = e => {
         e.preventDefault()
@@ -172,6 +210,20 @@ function ClientDetails() {
     useEffect(() => {
         getOperations()
     }, [typesOperations])
+
+
+    const headers_imp = {
+        id_cliente: "CLIENTE",
+        id_proveedor: "ID PROVEEDOR",
+        empresa_envio: "EMPRESA ENVIO",
+        tracking_number: "TRACKING NUMBER",
+        valor_envio: "VALOR ENVIO",
+        fecha_envio: "FECHA ENVIO",
+        fecha_arribo: "FECHA ARRIBO",
+        created_at_imp: "FECHA CREACION",
+        days_counter: "CONTADOR DIAS",
+    }
+
     const handleDataOperationToShow = (operation) => {
         let listToShow = []
         operation.forEach(op => {
@@ -207,9 +259,6 @@ function ClientDetails() {
         machine_name: "NOMBRE",
         status: "ESTADO",
         name: "CLIENTE",
-        hashrate: "HASHRATE",
-        tempmax: "TEMP MAX",
-        maxfan: "VENTILADOR MAX",
         uptime: "UPTIME",
     }
 
@@ -415,6 +464,9 @@ function ClientDetails() {
                                         <Nav.Item >
                                             <Nav.Link id='mineria' onClick={e => onHandleClick(e)} eventKey="mineria">Mineria</Nav.Link>
                                         </Nav.Item>
+                                        <Nav.Item >
+                                            <Nav.Link id='importaciones' onClick={e => onHandleClick(e)} eventKey="importaciones">Importaciones</Nav.Link>
+                                        </Nav.Item>
                                     </Nav>
                                 </Col>
                                 <Col md={2}>
@@ -507,8 +559,13 @@ function ClientDetails() {
                                     }
                                 </div>
                                 <div id="mineria" className={state?.tab?.mineria ? 'content-tab' : 'content-tab is-hidden'}>
-                                    {state?.tab?.mineria &&
-                                        <Table headers={minerHeader} data={((formatedData))} exportdata={true} title={titleClient} />
+                                    {state?.tab?.mineria && isloademiner === true ?
+                                        <Table headers={minerHeader} data={formatedList} exportdata={true} title={titleClient} /> : ''
+                                    }
+                                </div>
+                                <div id="importaciones" className={state?.tab?.importaciones ? 'content-tab' : 'content-tab is-hidden'}>
+                                    {state?.tab?.importaciones && isloademiner === true ?
+                                        <Table headers={headers_imp} data={formatedImportaciones} exportdata={true} title={titleClient} /> : ''
                                     }
                                 </div>
                             </section>

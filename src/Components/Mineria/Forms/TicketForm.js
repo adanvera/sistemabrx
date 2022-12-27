@@ -183,9 +183,8 @@ const TicketForm = (props) => {
         setTimeout(() => {
             setModalStatus(false)
             navigate('/tickets')
-            window.location.reload()
+            window.location = window.location.href
         }, 1500);
-
     }
 
     const handleChange = (e) => {
