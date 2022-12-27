@@ -102,7 +102,7 @@ const GastoForm = (props) => {
 
         setTimeout(() => {
             navigate("/gastos")
-            window.location.reload()
+            window.location = window.location.href
         }, 1500);
     }
 
@@ -148,7 +148,7 @@ const GastoForm = (props) => {
 
         setTimeout(() => {
             navigate("/gastos")
-            window.location.reload()
+            window.location = window.location.href
         }, 1500);
     }
 
@@ -186,7 +186,7 @@ const GastoForm = (props) => {
 
         setTimeout(() => {
             navigate("/gastos")
-            window.location.reload()
+            window.location = window.location.href
         }, 1500);
 
     }

@@ -64,11 +64,10 @@ const ClientInfo = (props) => {
 
             }
         }
-
         editCliente()
         setTimeout(() => {
-            window.location.reload()
-        }, 1500)
+            window.location = window.location.href
+        }, 1500);
 
     }
 

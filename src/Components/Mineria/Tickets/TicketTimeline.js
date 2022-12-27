@@ -121,12 +121,11 @@ const TicketTimeline = (props) => {
             const res = await fetch(TICKETS + idTicket, ticketOptions),
                 json = await res.json();
             setState(initialState)
-            window.location.reload()
+            window.location = window.location.href
         } catch (error) {
             console.log(error.msg);
         }
         setState(initialState)
-
     }
 
 
