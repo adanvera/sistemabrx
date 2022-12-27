@@ -147,7 +147,7 @@ const Parametrizacion = () => {
           </Col>
         </Row>
         {isLoaded === true ? (
-          <Table link="/parametrizaciones/" headers={state?.headers} data={formatedParameters} />
+          <Table headers={state?.headers} data={formatedParameters} />
         ) : (
           ""
         )}

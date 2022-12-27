@@ -34,7 +34,6 @@ const ParametrizacionActions = (props) => {
             <div className="actionstwo d-flex">
                 <ProtectedComponent allowedRoles={['SEGURIDAD']}>
                     <div className="edit-btn" id='_btnEdit' onClick={(e) => handleOnClick(e, '_btnEdit')}><ion-icon dataid={props?.dataID} name="create-outline"></ion-icon></div>
-                    <div className="delete-btn" id='_btnBloq' onClick={(e) => handleOnClick(e, '_btnBloq')} ><ion-icon dataid={props?.dataID} name="ban-outline"></ion-icon></div>
                     <div className="delete-btn" id='_btnDelete' onClick={(e) => handleOnClick(e, '_btnDelete')} ><ion-icon dataid={props?.dataID} name="trash-outline"></ion-icon></div>
                 </ProtectedComponent>
             </div>

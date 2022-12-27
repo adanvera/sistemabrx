@@ -397,7 +397,7 @@ const InfoMinero = (props) => {
                                         <div class="css-kb1ety">
                                             <dd class="css-pxccrj">
                                                 <strong> {gananciaNetaClienteMes}</strong> USD</dd>
-                                            <dt class="css-6qnch9">GANANCIA DEL MES NETA DEl CLIENTE</dt> <span className='cierremining'>(Las ganancias se calculan al cierre del dia 00hs)</span>
+                                            <dt class="css-6qnch9">GANANCIA DEL MES NETA DEl CLIENTE</dt>
                                         </div>
                                     </div>
                                     <Row className='mt-1 mb-1'></Row>

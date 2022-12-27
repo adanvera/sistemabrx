@@ -45,6 +45,9 @@ const ParametrizacionForm = (props) => {
             console.log(response);
 
             setDataVerify(true)
+            setTimeout(() => {
+                window.location.reload()
+            }, 1500);
 
         } catch (error) {
             console.log(error);
@@ -82,6 +85,9 @@ const ParametrizacionForm = (props) => {
             console.log(req);
             console.log(res);
             setDataVerify(true)
+            setTimeout(() => {
+                window.location.reload()
+            }, 1500);
         } catch (error) {
             
             console.log();
@@ -98,6 +104,10 @@ const ParametrizacionForm = (props) => {
             console.log(request);
             console.log(response);
             setDataVerify(true) 
+            setTimeout(() => {
+                window.location.reload()
+            }
+            , 1500);
         } catch (error) {
             console.log(error);
         }
