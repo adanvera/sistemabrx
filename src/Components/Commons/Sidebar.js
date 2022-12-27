@@ -200,7 +200,7 @@ const Sidebar = props => {
                     </li>
                 </ProtectedComponent>
                 <ProtectedComponent allowedRoles={['OPERACIONES', 'SEGURIDAD', 'MINERIA', 'USUARIOS', 'CLIENTES']}>
-                    <li className={state?.negocio ? "mt-4 classli is-active" : "mt-4 classli"}
+                    <li className={state?.guia ? "mt-4 classli is-active" : "mt-4 classli"}
                         id="guia"
                         onClick={(e) => handleSetActive('guia')}
                     >
