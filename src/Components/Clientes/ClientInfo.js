@@ -51,21 +51,25 @@ const ClientInfo = (props) => {
             body: JSON.stringify(state)
         }
         console.log(JSON.stringify(state));
-        try {
-            const req = await fetch(CLIENT + state.id_client, options),
-                res = await req.json()
-            if (req.ok) {
-                console.log("Actualizacion correcta");
-                setTimeout(() => {
-                    window.location.reload()
-                }, 300)
-            }
-            alert(res.msg)
-        } catch (error) {
-            console.log(error);
-            alert(error)
+        const editCliente = async () => {
+            try {
+                const req = await fetch(CLIENT + state.id_client, options),
+                    res = await req.json()
+                if (req.ok) {
+                    console.log("Actualizacion correcta");
+                }
+            } catch (error) {
+                console.log(error);
+                alert(error)
 
+            }
         }
+
+        editCliente()
+        setTimeout(() => {
+            window.location.reload()
+        }, 1500)
+
     }
 
 
