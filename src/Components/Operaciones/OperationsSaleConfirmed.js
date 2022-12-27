@@ -103,12 +103,12 @@ const OperationsSaleConfirmed = (props) => {
                     </Col>
                     <Col md={12}>
                         <div className='datashow'>
-                            <label className='labeltk' ><b>Monto a enviar al cliente:</b> {dataOPeration.totalAmount + " USD"} </label>
+                            <label className='labeltk' ><b>Monto recibio:</b> {dataOPeration.totalAmount + " USD"} </label>
                         </div>
                     </Col>
                     <Col md={12}>
                         <div className='datashow'>
-                            <label className='labeltk' ><b>Monto a enviar en {dataOPeration.currentCurrency === "1" ? "BTC" : "USDT"}:</b> {dataOPeration.amountBTC} </label>
+                            <label className='labeltk' ><b>Monto a enviar al cliente en {dataOPeration.currentCurrency === "1" ? "BTC" : "USDT"}:</b> {dataOPeration.amountBTC} </label>
                         </div>
                     </Col>
 
