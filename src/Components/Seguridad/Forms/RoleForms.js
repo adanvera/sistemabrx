@@ -112,12 +112,110 @@ const RoleForms = (props) => {
         */
     const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
 
+    const verifyAccessRole = () => {
+      if (seguridad && clientes && operaciones && usuarios && mineria) {
+        return seguridad + "," + clientes + "," + operaciones + "," + usuarios + "," + mineria
+      }
+      if (seguridad && clientes && operaciones && usuarios) {
+        return seguridad + "," + clientes + "," + operaciones + "," + usuarios
+      }
+      if (seguridad && clientes && operaciones && mineria) {
+        return seguridad + "," + clientes + "," + operaciones + "," + mineria
+      }
+      if (seguridad && clientes && usuarios && mineria) {
+        return seguridad + "," + clientes + "," + usuarios + "," + mineria
+      }
+      if (seguridad && operaciones && usuarios && mineria) {
+        return seguridad + "," + operaciones + "," + usuarios + "," + mineria
+      }
+      if (clientes && operaciones && usuarios && mineria) {
+        return clientes + "," + operaciones + "," + usuarios + "," + mineria
+      }
+      if (seguridad && clientes && operaciones) {
+        return seguridad + "," + clientes + "," + operaciones
+      }
+      if (seguridad && clientes && usuarios) {
+        return seguridad + "," + clientes + "," + usuarios
+      }
+      if (seguridad && clientes && mineria) {
+        return seguridad + "," + clientes + "," + mineria
+      }
+      if (seguridad && operaciones && usuarios) {
+        return seguridad + "," + operaciones + "," + usuarios
+      }
+      if (seguridad && operaciones && mineria) {
+        return seguridad + "," + operaciones + "," + mineria
+      }
+      if (seguridad && usuarios && mineria) {
+        return seguridad + "," + usuarios + "," + mineria
+      }
+      if (clientes && operaciones && usuarios) {
+        return clientes + "," + operaciones + "," + usuarios
+      }
+      if (clientes && operaciones && mineria) {
+        return clientes + "," + operaciones + "," + mineria
+      }
+      if (clientes && usuarios && mineria) {
+        return clientes + "," + usuarios + "," + mineria
+      }
+      if (operaciones && usuarios && mineria) {
+        return operaciones + "," + usuarios + "," + mineria
+      }
+      if (seguridad && clientes) {
+        return seguridad + "," + clientes
+      }
+      if (seguridad && operaciones) {
+        return seguridad + "," + operaciones
+      }
+      if (seguridad && usuarios) {
+        return seguridad + "," + usuarios
+      }
+      if (seguridad && mineria) {
+        return seguridad + "," + mineria
+      }
+      if (clientes && operaciones) {
+        return clientes + "," + operaciones
+      }
+      if (clientes && usuarios) {
+        return clientes + "," + usuarios
+      }
+      if (clientes && mineria) {
+        return clientes + "," + mineria
+      }
+      if (operaciones && usuarios) {
+        return operaciones + "," + usuarios
+      }
+      if (operaciones && mineria) {
+        return operaciones + "," + mineria
+      }
+      if (usuarios && mineria) {
+        return usuarios + "," + mineria
+      }
+      if (seguridad) {
+        return seguridad
+      }
+      if (clientes) {
+        return clientes
+      }
+      if (operaciones) {
+        return operaciones
+      }
+      if (usuarios) {
+        return usuarios
+      }
+      if (mineria) {
+        return mineria
+      }
+    }
+
+    const permisosAsignados = verifyAccessRole()
+
     if (props.modalType === "Add") {
       const createRol = {
         description: state.variables.description,
         status: Number(state.variables.status),
         sub_permissons: subp,
-        access: `${seguridad ? seguridad + "," : ''} ${clientes ? clientes + "," : ''} ${operaciones ? operaciones + "," : ''} ${usuarios ? usuarios + "," : ''} ${mineria ? mineria : ''}`
+        access: `${permisosAsignados}`
       }
 
       const rolesOptions = {
@@ -159,6 +257,65 @@ const RoleForms = (props) => {
 
         const id_role = dataidrow ? Number(dataidrow) : ''
 
+        const verifyAccessRoleToEdit = () => {
+          if (seguridad && clientes && operaciones && usuarios) {
+            return seguridad + "," + clientes + "," + operaciones + "," + usuarios
+          }
+          if (seguridad && clientes && operaciones && mineria) {
+            return seguridad + "," + clientes + "," + operaciones + "," + mineria
+          }
+          if (seguridad && clientes && usuarios && mineria) {
+            return seguridad + "," + clientes + "," + usuarios + "," + mineria
+          }
+          if (seguridad && operaciones && usuarios && mineria) {
+            return seguridad + "," + operaciones + "," + usuarios + "," + mineria
+          }
+          if (clientes && operaciones && usuarios && mineria) {
+            return clientes + "," + operaciones + "," + usuarios + "," + mineria
+          }
+          if (seguridad && clientes && operaciones) {
+            return seguridad + "," + clientes + "," + operaciones
+          }
+          if (seguridad && clientes && usuarios) {
+            return seguridad + "," + clientes + "," + usuarios
+          }
+          if (seguridad && clientes && mineria) {
+            return seguridad + "," + clientes + "," + mineria
+          }
+          if (seguridad && operaciones && usuarios) {
+            return seguridad + "," + operaciones + "," + usuarios
+          }
+          if (seguridad && operaciones && mineria) {
+            return seguridad + "," + operaciones + "," + mineria
+          }
+          if (seguridad && usuarios && mineria) {
+            return seguridad + "," + usuarios + "," + mineria
+          }
+          if (clientes && operaciones && usuarios) {
+            return clientes + "," + operaciones + "," + usuarios
+          }
+          if (clientes && operaciones && mineria) {
+            return clientes + "," + operaciones + "," + mineria
+          }
+          if (clientes && usuarios && mineria) {
+            return clientes + "," + usuarios + "," + mineria
+          }
+          if (operaciones && usuarios && mineria) {
+            return operaciones + "," + usuarios + "," + mineria
+          }
+          if (seguridad && clientes) {
+            return seguridad + "," + clientes
+          }
+          if (seguridad && operaciones) {
+            return seguridad + "," + operaciones
+          }
+          if (seguridad && usuarios) {
+            return seguridad + "," + usuarios
+          }
+        }
+
+        const permisosAsignadosEdit = verifyAccessRoleToEdit()
+
         const rolesOptions = {
           method: "PUT",
           headers: {
@@ -167,7 +324,7 @@ const RoleForms = (props) => {
           },
           body: JSON.stringify({
             description: NewDesc,
-            access: `${seguridad ? seguridad + "," : ''} ${clientes ? clientes + "," : ''} ${operaciones ? operaciones + "," : ''} ${usuarios ? usuarios + "," : ''} ${mineria ? mineria : ''}`,
+            access: `${permisosAsignadosEdit}`,
             status: 1,
             sub_permissons: newwSub
           })

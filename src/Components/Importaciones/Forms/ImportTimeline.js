@@ -67,9 +67,7 @@ const ImportTimeline = (props) => {
             const res = await fetch(IMPORTACIONES + idImport, importOptions),
                 json = await res.json();
             setState(initialState)
-            setTimeout(() => {
-                window.location = window.location.href
-            }, 1500);
+            window.location.reload()
         } catch (error) {
             console.log(error.msg);
         }
