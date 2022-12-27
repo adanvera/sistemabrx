@@ -91,10 +91,14 @@ function EnergyComponent() {
             const res = fetch(ENERGIA + id, options)
             const data = res.json();
             console.log(data);
+           
         } catch (error) {
             console.log(error);
         }
-
+        setTimeout(() => {
+            window.location.reload()
+        }
+        , 1500);
     }
 
     return (

@@ -207,7 +207,7 @@ const TicketForm = (props) => {
     }
 
     /**filtra el listado de maquinas minando por el nombre del cliente */
-    const filterDataMining = dataMining.filter((item) => item.name.includes(documento) && item.status === 0)
+    const filterDataMining = dataMining.filter((item) => item.name.includes(documento))
 
     /**parsear string y eliminar llaves y parentesis */
     const parseData = (data, dataId) => {

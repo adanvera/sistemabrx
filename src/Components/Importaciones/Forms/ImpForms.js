@@ -204,6 +204,10 @@ const ImpForms = (props) => {
 
         pushImportación()
 
+        setTimeout(() => {
+            window.location.reload()
+        }, 1500);
+
     }
 
 

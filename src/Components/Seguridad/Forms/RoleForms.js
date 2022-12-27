@@ -5,6 +5,7 @@ import { Button, Col, Container, FloatingLabel, Form, Row } from 'react-bootstra
 import { DataContext } from '../../Commons/Context/DataContext'
 import { ROLEID, ROLES } from '../../Helpers/helper'
 import { PuffLoader } from 'react-spinners';
+import { min } from 'moment/moment'
 
 const RoleForms = (props) => {
 
@@ -32,6 +33,7 @@ const RoleForms = (props) => {
   const [NewDesc, setNewDesc] = useState('')
   const [accessToModify, setAccessToModify] = useState('')
   const [newwSub, setNewSub] = useState('')
+  const [negocio, setNegocio] = useState('')
   /**onchange correspondiente para validar por su estado */
   const handleClickSeguridad = (data, checked) => { checked === true ? setSeguridad(data) : setSeguridad('') }
   const handleClickMineria = (data, checked) => { checked === true ? setMineria(data) : setMineria('') }
@@ -40,7 +42,9 @@ const RoleForms = (props) => {
   const handleClickOperaciones = (data, checked) => { checked === true ? setOperaciones(data) : setOperaciones('') }
   const handleConfirmChange = (data, checked) => { checked === true ? setConfirmChange(true) : setConfirmChange(false) }
   const handleConfirmChangeSub = (data, checked) => { checked === true ? setSubp(1) : setSubp(0) }
+  const handleClickNegocio = (data, checked) => { checked === true ? setNegocio(data) : setNegocio('') }
   const handleNewSub = (data, checked) => { checked === true ? setNewSub(1) : setNewSub(0) }
+
 
   /**onchange para setear descipcion */
   const handleChange = (e) => {
@@ -102,6 +106,7 @@ const RoleForms = (props) => {
   const newUsuarios = accessTo ? accessTo?.filter((item) => { return item?.title?.includes("USUARIOS") }) : ''
   const newMineria = accessTo ? accessTo?.filter((item) => { return item?.title?.includes("MINERIA") }) : ''
   const newOperaciones = accessTo ? accessTo?.filter((item) => { return item?.title?.includes("OPERACIONES") }) : ''
+  const newNegocio = accessTo ? accessTo?.filter((item) => { return item?.title?.includes("NEGOCIO") }) : ''
 
   /**envio correspondiente a recurso para insertar  */
   const handleSubmit = async (e) => {
@@ -112,12 +117,132 @@ const RoleForms = (props) => {
         */
     const token = localStorage.getItem("token") ? localStorage.getItem("token") : ''
 
+    const verifyAccessRole = () => {
+      /**falta agregar condicionales con negocio */
+      if (seguridad && clientes && operaciones && usuarios && mineria && negocio) {
+        return seguridad + "," + clientes + "," + operaciones + "," + usuarios + "," + mineria + "," + negocio
+      }
+      if (seguridad && clientes && operaciones && usuarios && mineria) {
+        return seguridad + "," + clientes + "," + operaciones + "," + usuarios + "," + mineria
+      }
+      if (seguridad && clientes && operaciones && usuarios) {
+        return seguridad + "," + clientes + "," + operaciones + "," + usuarios
+      }
+      if (seguridad && clientes && operaciones) {
+        return seguridad + "," + clientes + "," + operaciones
+      }
+      if (seguridad && clientes && usuarios) {
+        return seguridad + "," + clientes + "," + usuarios
+      }
+      if (seguridad && clientes && mineria) {
+        return seguridad + "," + clientes + "," + mineria
+      }
+      if (seguridad && clientes) {
+        return seguridad + "," + clientes
+      }
+      if (seguridad && operaciones) {
+        return seguridad + "," + operaciones
+      }
+      if (seguridad && usuarios) {
+        return seguridad + "," + usuarios
+      }
+      if (seguridad && mineria) {
+        return seguridad + "," + mineria
+      }
+      if (seguridad && negocio) {
+        return seguridad + "," + negocio
+      }
+      if (seguridad) {
+        return seguridad
+      }
+      if (clientes && operaciones && usuarios && mineria && negocio) {
+        return clientes + "," + operaciones + "," + usuarios + "," + mineria + "," + negocio
+      }
+      if (clientes && operaciones && usuarios && mineria) {
+        return clientes + "," + operaciones + "," + usuarios + "," + mineria
+      }
+      if (clientes && operaciones && usuarios) {
+        return clientes + "," + operaciones + "," + usuarios
+      }
+      if (clientes && operaciones && mineria) {
+        return clientes + "," + operaciones + "," + mineria
+      }
+      if (clientes && operaciones && negocio) {
+        return clientes + "," + operaciones + "," + negocio
+      }
+      if (clientes && operaciones) {
+        return clientes + "," + operaciones
+      }
+      if (clientes && usuarios) {
+        return clientes + "," + usuarios
+      }
+      if (clientes && mineria) {
+        return clientes + "," + mineria
+      }
+      if (clientes && negocio) {
+        return clientes + "," + negocio
+      }
+      if (clientes) {
+        return clientes
+      }
+      if (operaciones && usuarios && mineria && negocio) {
+        return operaciones + "," + usuarios + "," + mineria + "," + negocio
+      }
+      if (operaciones && usuarios && mineria) {
+        return operaciones + "," + usuarios + "," + mineria
+      }
+      if (operaciones && usuarios && negocio) {
+        return operaciones + "," + usuarios + "," + negocio
+      }
+      if (operaciones && usuarios) {
+        return operaciones + "," + usuarios
+      }
+      if (operaciones && mineria) {
+        return operaciones + "," + mineria
+      }
+      if (operaciones && negocio) {
+        return operaciones + "," + negocio
+      }
+      if (operaciones) {
+        return operaciones
+      }
+      if (usuarios && mineria && negocio) {
+        return usuarios + "," + mineria + "," + negocio
+      }
+      if (usuarios && mineria) {
+        return usuarios + "," + mineria
+      }
+      if (usuarios && negocio) {
+        return usuarios + "," + negocio
+      }
+      if (usuarios) {
+        return usuarios
+      }
+      if (mineria && negocio) {
+        return mineria + "," + negocio
+      }
+      if (mineria) {
+        return mineria
+      }
+      if (negocio) {
+        return negocio
+      }
+      if(usuarios && negocio){
+        return usuarios + "," + negocio
+      }
+      if(usuarios && clientes && seguridad){
+        return usuarios + "," + clientes + "," + seguridad
+      }
+    }
+
+    const permisosAsignados = verifyAccessRole()
+
     if (props.modalType === "Add") {
       const createRol = {
         description: state.variables.description,
         status: Number(state.variables.status),
         sub_permissons: subp,
-        access: `${seguridad ? seguridad + "," : ''} ${clientes ? clientes + "," : ''} ${operaciones ? operaciones + "," : ''} ${usuarios ? usuarios + "," : ''} ${mineria ? mineria : ''}`
+        access: `${permisosAsignados}`
       }
 
       const rolesOptions = {
@@ -159,6 +284,119 @@ const RoleForms = (props) => {
 
         const id_role = dataidrow ? Number(dataidrow) : ''
 
+        const verifyAccessRoleToEdit = () => {
+          if (seguridad && clientes && operaciones && usuarios && mineria && negocio) {
+            return seguridad + "," + clientes + "," + operaciones + "," + usuarios + "," + mineria + "," + negocio
+          }
+          if (seguridad && clientes && operaciones && usuarios && mineria) {
+            return seguridad + "," + clientes + "," + operaciones + "," + usuarios + "," + mineria
+          }
+          if (seguridad && clientes && operaciones && usuarios) {
+            return seguridad + "," + clientes + "," + operaciones + "," + usuarios
+          }
+          if (seguridad && clientes && operaciones) {
+            return seguridad + "," + clientes + "," + operaciones
+          }
+          if (seguridad && clientes && usuarios) {
+            return seguridad + "," + clientes + "," + usuarios
+          }
+          if (seguridad && clientes && mineria) {
+            return seguridad + "," + clientes + "," + mineria
+          }
+          if (seguridad && clientes) {
+            return seguridad + "," + clientes
+          }
+          if (seguridad && operaciones) {
+            return seguridad + "," + operaciones
+          }
+          if (seguridad && usuarios) {
+            return seguridad + "," + usuarios
+          }
+          if (seguridad && mineria) {
+            return seguridad + "," + mineria
+          }
+          if (seguridad && negocio) {
+            return seguridad + "," + negocio
+          }
+          if (seguridad) {
+            return seguridad
+          }
+          if (clientes && operaciones && usuarios && mineria && negocio) {
+            return clientes + "," + operaciones + "," + usuarios + "," + mineria + "," + negocio
+          }
+          if (clientes && operaciones && usuarios && mineria) {
+            return clientes + "," + operaciones + "," + usuarios + "," + mineria
+          }
+          if (clientes && operaciones && usuarios) {
+            return clientes + "," + operaciones + "," + usuarios
+          }
+          if (clientes && operaciones && mineria) {
+            return clientes + "," + operaciones + "," + mineria
+          }
+          if (clientes && operaciones && negocio) {
+            return clientes + "," + operaciones + "," + negocio
+          }
+          if (clientes && operaciones) {
+            return clientes + "," + operaciones
+          }
+          if (clientes && usuarios) {
+            return clientes + "," + usuarios
+          }
+          if (clientes && mineria) {
+            return clientes + "," + mineria
+          }
+          if (clientes && negocio) {
+            return clientes + "," + negocio
+          }
+          if (clientes) {
+            return clientes
+          }
+          if (operaciones && usuarios && mineria && negocio) {
+            return operaciones + "," + usuarios + "," + mineria + "," + negocio
+          }
+          if (operaciones && usuarios && mineria) {
+            return operaciones + "," + usuarios + "," + mineria
+          }
+          if (operaciones && usuarios && negocio) {
+            return operaciones + "," + usuarios + "," + negocio
+          }
+          if (operaciones && usuarios) {
+            return operaciones + "," + usuarios
+          }
+          if (operaciones && mineria) {
+            return operaciones + "," + mineria
+          }
+          if (operaciones && negocio) {
+            return operaciones + "," + negocio
+          }
+          if (operaciones) {
+            return operaciones
+          }
+          if (usuarios && mineria && negocio) {
+            return usuarios + "," + mineria + "," + negocio
+          }
+          if (usuarios && mineria) {
+            return usuarios + "," + mineria
+          }
+          if (usuarios && negocio) {
+            return usuarios + "," + negocio
+          }
+          if (usuarios) {
+            return usuarios
+          }
+          if (mineria && negocio) {
+            return mineria + "," + negocio
+          }
+          if (mineria) {
+            return mineria
+          }
+          if (negocio) {
+            return negocio
+          }
+        }
+
+        const permisosAsignadosEdit = verifyAccessRoleToEdit()
+
         const rolesOptions = {
           method: "PUT",
           headers: {
@@ -167,7 +405,7 @@ const RoleForms = (props) => {
           },
           body: JSON.stringify({
             description: NewDesc,
-            access: `${seguridad ? seguridad + "," : ''} ${clientes ? clientes + "," : ''} ${operaciones ? operaciones + "," : ''} ${usuarios ? usuarios + "," : ''} ${mineria ? mineria : ''}`,
+            access: `${permisosAsignadosEdit}`,
             status: 1,
             sub_permissons: newwSub
           })
@@ -312,6 +550,16 @@ const RoleForms = (props) => {
                   value='{"title":"SEGURIDAD"}'
                   defaultChecked={false}
                   onClick={(e) => { handleClickSeguridad(e.target.value, e.target.checked) }}
+                />
+                <Form.Check
+                  className='my-3'
+                  type='switch'
+                  label='NEGOCIO'
+                  id='NEGOCIO'
+                  name='NEGOCIO'
+                  value='{"title":"NEGOCIO"}'
+                  defaultChecked={false}
+                  onClick={(e) => { handleClickNegocio(e.target.value, e.target.checked) }}
                 />
               </div>
               <Row className='addusr mt-3'>
@@ -458,6 +706,17 @@ const RoleForms = (props) => {
                               defaultChecked={false}
                               onClick={(e) => { handleClickSeguridad(e.target.value, e.target.checked) }}
                             />
+                            <Form.Check
+                              className='my-3'
+                              type='switch'
+                              label='NEGOCIO'
+                              id='NEGOCIO'
+                              name='NEGOCIO'
+                              value='{"title":"NEGOCIO"}'
+                              defaultChecked={false}
+                              onClick={(e) => { handleClickNegocio(e.target.value, e.target.checked) }}
+                            />
+
                           </Col>
                         </>
                       }
