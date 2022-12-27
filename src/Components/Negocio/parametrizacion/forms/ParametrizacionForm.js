@@ -5,7 +5,7 @@ import { DataContext } from "../../../Commons/Context/DataContext"
 import { IMPORTACIONES, PARAMETRIZACIONES } from "../../../Helpers/helper"
 
 const ParametrizacionForm = (props) => {
-
+    
 
     const initialState = {
         name: '',
@@ -21,7 +21,7 @@ const ParametrizacionForm = (props) => {
     const [currentParams,setCurrentParams] = useState(initialState)
     const [isLoading,setIsLoading] = useState(true)
 
-    
+
     const getParamById = async () => {
         const req = await fetch(PARAMETRIZACIONES+props.id_param),
         res = await req.json()
@@ -83,6 +83,7 @@ const ParametrizacionForm = (props) => {
             console.log(res);
             setDataVerify(true)
         } catch (error) {
+            
             console.log();
         }
     }

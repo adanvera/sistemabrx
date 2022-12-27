@@ -11,6 +11,8 @@ import EnergyComponent from "./EnergyComponent";
 import ParametrizacionForm from "./forms/ParametrizacionForm";
 
 const Parametrizacion = () => {
+  const qrBtc = localStorage.getItem("QR-BTC") ? localStorage.getItem("QR-BTC") : ''
+  const qrUSDT = localStorage.getItem("QR-USDT") ? localStorage.getItem("QR-USDT") : ''
   const initialState = {
     modalShow: false,
     form: "Parametrizacion",
@@ -44,6 +46,19 @@ const Parametrizacion = () => {
   const { dataidrow } = useContext(DataContext);
   const modal = modalstatus;
   const [data, setData] = useState();
+  const [paramsSelected,setParamsSelected] = useState('')
+  const verifyBitcoin = (params)=>{
+    console.log('Verify token');
+    params.forEach( p =>{
+      if(p.name === 'QR-BTC' && p.value !== qrBtc){
+        localStorage.setItem("QR-BTC",p.value)
+      }else if(p.name === 'QR-USDT' && p.value !== qrUSDT){
+        localStorage.setItem("QR-USDT",p.value)
+
+      }
+    })
+
+  }
 
   const handleModalForm = (form) => {
     setModalStatus(true);
@@ -72,14 +87,11 @@ const Parametrizacion = () => {
   useEffect(() => {
 
     const getAllParams = async () => {
-      try {
-        const request = await fetch(PARAMS_API),
-          response = await request.json();
-        setData(response);
-        setIsLoaded(true);
-      } catch (error) {
-        console.log(error);
-      }
+      const request = await fetch("https://backend.brxsgo.com/api/params/"),
+        response = await request.json();
+      setData(response);
+      setIsLoaded(true);
+      verifyBitcoin(response)
     };
 
     getAllParams()
