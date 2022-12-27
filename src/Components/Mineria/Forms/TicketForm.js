@@ -262,7 +262,7 @@ const TicketForm = (props) => {
                                 label="Seleccionar maquina"
                             >
                                 <Form.Select aria-label="Seleccionar maquina" name="id_machine" onChange={handleChange} value={(state.variables.id_machine)}>
-                                    <option selected disabled>Seleccionar</option>
+                                    <option selected >Seleccionar</option>
 
                                     {
                                         Object.keys(filterDataMining).map((key, index) => {
