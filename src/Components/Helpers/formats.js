@@ -44,9 +44,9 @@ export const formatedParametersList = (data) => {
 
             }
         })
-    
+
     }
-    
+
     return obData
 }
 
@@ -368,10 +368,11 @@ export const dataAccess = (data) => {
         const usuarios = accessTo ? accessTo.filter((item) => { return item?.title?.includes("USUARIOS") }) : ''
         const mineria = accessTo ? accessTo.filter((item) => { return item?.title?.includes("MINERIA") }) : ''
         const operaciones = accessTo ? accessTo.filter((item) => { return item?.title?.includes("OPERACIONES") }) : ''
+        const negocio = accessTo ? accessTo.filter((item) => { return item?.title?.includes("NEGOCIO") }) : ''
 
         return `${seguridad[0]?.title === undefined ? '' : seguridad[0]?.title + ","} 
     ${clientes[0]?.title === undefined ? '' : clientes[0]?.title + ","} ${operaciones[0]?.title === undefined ? '' : operaciones[0]?.title + ","}
-     ${usuarios[0]?.title === undefined ? '' : usuarios[0]?.title + ","} ${mineria[0]?.title === undefined ? '' : mineria[0]?.title}`
+     ${usuarios[0]?.title === undefined ? '' : usuarios[0]?.title + ","} ${mineria[0]?.title === undefined ? '' : mineria[0]?.title}` + "," + `${negocio[0]?.title === undefined ? '' : negocio[0]?.title}`
     }
 
 }
