@@ -66,7 +66,7 @@ const ClientInfo = (props) => {
         }
         editCliente()
         setTimeout(() => {
-            window.location = window.location.href
+            navigate('/clientes')
         }, 1500);
 
     }
