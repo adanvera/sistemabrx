@@ -135,7 +135,7 @@ const Operaciones = () => {
                     {/* Tabla en donde se obtiene todas las operaciones */}
                     <Col md={8} className="operations">
                         <Row className=" is-3 text-al-ini titlemodule"><h5 className="title-details ml-5 pt-3">Listado de operaciones</h5></Row>
-                        <FilterOperations onCleanFilter={onCleanFilter} getFilter={handleFilter} />
+                        <FilterOperations onCleanFilter={onCleanFilter} getFilter={handleFilter} setDataList={setDataList} />
 
                         <Table link='/operaciones/' headers={state?.headers} data={filteredDataOperations(formatedData, state?.filtros)} exportdata={true} title="Operaciones" />
 
