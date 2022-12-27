@@ -5,7 +5,9 @@ import ModalContainer from "../../Commons/ModalContainer";
 import SearchTable from "../../Commons/SearchTable";
 import DumpTable from "../../Commons/Table/DumpTable";
 import Table from "../../Commons/Table/Table";
-import { formatedParametersList } from "../../Helpers/formats";
+import { formatedEnerdffdsafdgy, formatedParametersList } from "../../Helpers/formats";
+import { ENERGIA, PARAMS_API } from "../../Helpers/helper";
+import EnergyComponent from "./EnergyComponent";
 import ParametrizacionForm from "./forms/ParametrizacionForm";
 
 const Parametrizacion = () => {
@@ -26,10 +28,19 @@ const Parametrizacion = () => {
     filtros: {
       name: "",
     },
-  };
+    headersEnergy: {
+      id____: "Codigo ",
+      precio: "Precio (USD)",
+      created_at: "Fecha de creacion",
+      updated_at: "Fecha de actualizacion",
+      actions: "Acciones"
+    }
+  }
+
+
   const [state, setState] = useState(initialState);
   const { modalstatus, setModalStatus } = useContext(DataContext);
-  const { sidebarStatus, setSidebarStatus } = useContext(DataContext);
+  const { sidebarStatus } = useContext(DataContext);
   const { modalType, setModalType } = useContext(DataContext);
   const [isLoaded, setIsLoaded] = useState(false);
   const { dataidrow } = useContext(DataContext);
@@ -63,11 +74,10 @@ const Parametrizacion = () => {
   const id_param = dataidrow;
 
   const pickForm = () => {
-    console.log("Pick");
     switch (state?.form) {
       case "Parametrizacion":
         return (
-          <ParametrizacionForm modalType={modalType} id_param={id_param} datas ={data}/>
+          <ParametrizacionForm modalType={modalType} id_param={id_param} datas={data} />
         )
       default:
         return <ParametrizacionForm modalType={modalType} id_param={id_param} />
@@ -75,6 +85,7 @@ const Parametrizacion = () => {
   };
 
   useEffect(() => {
+
     const getAllParams = async () => {
       const request = await fetch("https://backend.brxsgo.com/api/params/"),
         response = await request.json();
@@ -82,6 +93,7 @@ const Parametrizacion = () => {
       setIsLoaded(true);
       verifyBitcoin(response)
     };
+
     getAllParams()
 
   }, []);
@@ -112,8 +124,8 @@ const Parametrizacion = () => {
             modalType={modalType}
           />
         )}
-        <Row className=" is-3 text-al-ini titlemodule">
-          <h5 className="title-details ml-5 pt-3">Parametrizaciones</h5>
+        <Row className="mt-3">
+          <h4 className="">Parametrizaciones</h4>
         </Row>
         <Row>
           <Col md={6}>
@@ -139,6 +151,9 @@ const Parametrizacion = () => {
         ) : (
           ""
         )}
+      </Container>
+      <Container fluid={true} className="">
+        <EnergyComponent />
       </Container>
     </div>
   );
