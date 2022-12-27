@@ -8,10 +8,22 @@ import ModalContainer from '../Commons/ModalContainer'
 import gastoimg from "../../assets/images/bolsa-de-dinero.gif"
 import param from "../../assets/images/conexion.gif"
 import reports from "../../assets/images/grafico-de-linea.gif"
+import {
+    Chart as ChartJS,
+    RadialLinearScale,
+    ArcElement,
+    Tooltip,
+    Legend,
+} from 'chart.js';
+import { PolarArea } from 'react-chartjs-2'
+import { useEffect } from 'react'
+import { GASTOS } from '../Helpers/helper'
+ChartJS.register(RadialLinearScale, ArcElement, Tooltip, Legend);
+
 
 const Negocio = (props) => {
-    const { sidebarStatus, setSidebarStatus } = useContext(DataContext)
 
+    const { sidebarStatus } = useContext(DataContext)
     /**declaramos e inicializamos variables a utilizar */
     const initialState = {
         form: 'Negocio',
@@ -19,23 +31,50 @@ const Negocio = (props) => {
     }
     const [state, setState] = useState(initialState)
     const { modalstatus, setModalStatus } = useContext(DataContext)
-    const { modalType, setModalType } = useContext(DataContext)
+    const { modalType } = useContext(DataContext)
     const usermodal = modalType
     const modal = modalstatus
     let navigate = useNavigate()
+    const [gastoSummary, setGastoSummary] = useState([])
+    const [gastoAmountMonth, setGastoAmountMonth] = useState([])
 
+    useEffect(() => {
 
-    /** funcion onchange para seteo de form */
-    const handleModalForm = (form) => {
-        setModalStatus(true)
-        setState(prev => {
-            return {
-                ...prev,
-                form: form,
-                title: form
+        const token = localStorage.getItem('token') ? localStorage.getItem('token') : null
+
+        const options = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                token: token
+            },
+        }
+
+        const getGastosByMonth = async () => {
+            try {
+                const res = await fetch(GASTOS + "get/summary", options)
+                const data = await res.json()
+                setGastoSummary(data);
+            } catch (error) {
+                console.log(error);
             }
-        })
-    }
+        }
+
+        getGastosByMonth()
+
+        const amountGastoByMonth = async () => {
+            try {
+                const res = await fetch(GASTOS + "/get/mes", options)
+                const data = await res.json()
+                setGastoAmountMonth(data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        amountGastoByMonth()
+
+    }, [])
 
     const pickForm = () => {
         switch (state.form) {
@@ -45,6 +84,119 @@ const Negocio = (props) => {
                 return 'Negocio'
         }
     }
+
+    console.log(gastoAmountMonth);
+
+    const labelsMonth = gastoAmountMonth?.map(
+        (item) => {
+            if (item.month === 1) { return 'Enero' } if (item.month === 2) { return 'Febrero' }
+            if (item.month === 3) {
+                return 'Marzo'
+            }
+            if (item.month === 4) {
+                return 'Abril'
+            }
+            if (item.month === 5) {
+                return 'Mayo'
+            }
+            if (item.month === 6) {
+                return 'Junio'
+            }
+            if (item.month === 7) {
+                return 'Julio'
+            }
+            if (item.month === 8) {
+                return 'Agosto'
+            }
+            if (item.month === 9) {
+                return 'Septiembre'
+            }
+            if (item.month === 10) {
+                return 'Octubre'
+            }
+            if (item.month === 11) {
+                return 'Noviembre'
+            }
+            if (item.month === 12) {
+                return 'Diciembre'
+            }
+        }
+    )
+
+    const labels = gastoSummary?.map(
+        (item) => {
+            if (item.month === 1) { return 'Enero' } if (item.month === 2) { return 'Febrero' }
+            if (item.month === 3) {
+                return 'Marzo'
+            }
+            if (item.month === 4) {
+                return 'Abril'
+            }
+            if (item.month === 5) {
+                return 'Mayo'
+            }
+            if (item.month === 6) {
+                return 'Junio'
+            }
+            if (item.month === 7) {
+                return 'Julio'
+            }
+            if (item.month === 8) {
+                return 'Agosto'
+            }
+            if (item.month === 9) {
+                return 'Septiembre'
+            }
+            if (item.month === 10) {
+                return 'Octubre'
+            }
+            if (item.month === 11) {
+                return 'Noviembre'
+            }
+            if (item.month === 12) {
+                return 'Diciembre'
+            }
+        }
+    )
+
+    const dataGastos = {
+        labels,
+        datasets: [
+            {
+                label: 'Gastos',
+                data: gastoSummary?.map((item) => item.cantidad),
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(75, 192, 192, 0.5)',
+                    'rgba(153, 102, 255, 0.5)',
+                    'rgba(255, 159, 64, 0.5)',
+                ],
+                borderWidth: 1,
+            },
+        ],
+    };
+
+    const amountMonth = {
+        labels: labelsMonth,
+        datasets: [
+            {
+                label: 'Gastos',
+                data: gastoAmountMonth?.map((item) => item?.amount),
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(75, 192, 192, 0.5)',
+                    'rgba(153, 102, 255, 0.5)',
+                    'rgba(255, 159, 64, 0.5)',
+                ],
+                borderWidth: 1,
+            },
+        ],
+    }
+
 
     return (
         <div className={sidebarStatus === 'open' ? 'main-content' : 'main-content extend'} >
@@ -100,6 +252,16 @@ const Negocio = (props) => {
                                 <h6>de parametrizaciones</h6>
                             </div>
                         </div>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md={3}>
+                        <h4>Cantidad de gastos por mes</h4>
+                        <PolarArea data={dataGastos} />
+                    </Col>
+                    <Col md={3}>
+                        <h4>Monto de gastos por mes</h4>
+                        <PolarArea data={amountMonth} />
                     </Col>
                 </Row>
 

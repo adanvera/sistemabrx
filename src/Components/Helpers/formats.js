@@ -46,9 +46,28 @@ export const formatedParametersList = (data) => {
         })
     
     }
+    
+    return obData
+}
 
-    console.log(obData);
+export const formatedEnerdffdsafdgy = (data) => {
+    let obData = {}
 
+    if (data) {
+        data?.map(item => {
+            obData = {
+                ...obData,
+                [item?.id]: {
+                    id____: item.id,
+                    precio: item.precio,
+                    created_at: formatoDate(item.created_at),
+                    updated_at: formatoDate(item.updated_at),
+                    actions: "x x",
+                }
+
+            }
+        })
+    }
     return obData
 }
 

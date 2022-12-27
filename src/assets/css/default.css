@@ -1907,3 +1907,43 @@ div#_btnDeleted {
     border: 1px solid red;
 }
 
+
+
+.cardddsfadsfd {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
+
+#cards .icon-wrap {
+    position: relative;
+}
+
+.px-4 {
+    padding-left: 1.5rem !important;
+}
+
+.card-title {
+    margin-bottom: 0.75rem;
+}
+
+.btn-info:hover {
+    color: #fff;
+    background-color: #038fce;
+    border-color: #0286c2;
+}
+
+.btn.btn-info {
+    color: #fff;
+}

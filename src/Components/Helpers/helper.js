@@ -1,5 +1,4 @@
 /**declaramos las apis correspondientes y asignamos su dirección correspondiente*/
-const PARAMS_API = 'https://backend.brxsgo.com/api/params/'
 const URL_AUTH_USER = 'https://backend.brxsgo.com/api/auth/login'
 const USER = 'https://backend.brxsgo.com/api/user/'
 const USER_PSW = 'https://backend.brxsgo.com/api/user/psw/'
@@ -28,6 +27,8 @@ const CONSUMO = "https://backend.brxsgo.com/api/consumos/"
 const COINMINIG = "https://backend.brxsgo.com/api/coinmining/"
 const CONSUMO_MACHINE_ULTIMO= "https://backend.brxsgo.com/api/mining/get/power/mes/"
 const PARAMETRIZACIONES = "https://backend.brxsgo.com/api/parametrizaciones/"
+const PARAMS_API = 'https://backend.brxsgo.com/api/params/'
+const ENERGIA = "https://backend.brxsgo.com/api/energias/"
 
 /**exportamos nuestras declaraciones de valores
  * para poder utilizarlas en donde se requieran
@@ -59,5 +60,7 @@ export {
     AMOUNT_POWER_BY_DAY,
     CONSUMO,COINMINIG,
     CONSUMO_MACHINE_ULTIMO,
-    PARAMETRIZACIONES
+    PARAMETRIZACIONES,
+    ENERGIA,
+    PARAMS_API
 }
